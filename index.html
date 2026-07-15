@@ -2104,7 +2104,7 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 .ca-proc.collapsed .ca-proc-apis{max-height:0;opacity:0}
 .ca-result-cap{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--t0);margin-bottom:2px}
 .ca-result-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.ca-proc{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.ca-proc{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;display:none}
 .ca-proc-head{display:flex;align-items:center;gap:11px;padding:15px 20px;border-bottom:1px solid var(--border)}
 .ca-proc-ic{width:34px;height:34px;border-radius:10px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ca-proc-ic svg{width:18px;height:18px;stroke:var(--accent2);stroke-width:1.8;fill:none}
@@ -2568,6 +2568,7 @@ table.ca-cmp .ca-you-tag{font-size:9px;font-weight:700;color:#fff;background:var
 
 /* Modal body — when used for full report, give it a wider max-width */
 .aud-modal-card.wide{max-width:920px}
+.aud-modal-card.ca-content-wide{max-width:1400px;width:96vw;max-height:90vh}
 .aud-modal-toc{
   display:flex;flex-wrap:wrap;gap:6px;
   padding:12px 16px;background:var(--bg-card2);
@@ -2829,6 +2830,11 @@ table.ca-cmp .ca-you-tag{font-size:9px;font-weight:700;color:#fff;background:var
             <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <span>Listing分析记录</span>
             <span id="listing-record-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
+          </div>
+          <div class="nav-item" onclick="setPage('competitor_records')" style="font-size:12px;padding:6px 10px">
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>竞品分析记录</span>
+            <span id="ca-record-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
           </div>
           <div class="nav-item" onclick="setPage('sensitive_words')" style="font-size:12px;padding:6px 10px">
             <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -3373,6 +3379,17 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
         </div>
       </div>
 
+      <!-- 竞品分析 · 分析内容弹窗 -->
+      <div class="aud-modal" id="ca-content-modal" onclick="caCloseContent(event)">
+        <div class="aud-modal-card wide ca-content-wide" onclick="event.stopPropagation()">
+          <div class="aud-modal-head">
+            <div class="aud-modal-title">竞品分析内容</div>
+            <button class="aud-modal-close" onclick="caCloseContent()" title="关闭">✕</button>
+          </div>
+          <div class="aud-modal-body" id="ca-content-body"></div>
+        </div>
+      </div>
+
       <!-- 竞品分析 · Keepa 价格曲线放大弹窗 -->
       <div class="aud-modal" id="ca-chart-modal" onclick="caCloseChart(event)">
         <div class="aud-modal-card wide" onclick="event.stopPropagation()">
@@ -3801,6 +3818,17 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
       </div>
 
       <!-- PAGE: AGENT -->
+      <!-- PAGE: 竞品分析记录 -->
+      <div class="page" id="page-competitor_records">
+        <div class="section-header">
+          <div>
+            <div class="section-title">竞品分析记录</div>
+            <div class="section-sub" id="ca-rec-count-text">共 0 条记录</div>
+          </div>
+        </div>
+        <div id="ca-rec-list"></div>
+      </div>
+
       <!-- PAGE: 产品分析报告 -->
       <div class="page" id="page-product_reports">
         <div class="section-header">
@@ -4736,6 +4764,9 @@ function setPage(p, sub){
     document.getElementById('page-listing_records').classList.add('active');
     _lrState.page=1; _lrState.selected.clear();
     renderListingScoreRecords();
+  } else if(p==='competitor_records'){
+    document.getElementById('page-competitor_records').classList.add('active');
+    renderCaRecords();
   } else if(p==='recharge'){
     document.getElementById('page-recharge').classList.add('active');
     rcInit();
@@ -4766,7 +4797,7 @@ function setPage(p, sub){
   }
   // Update topbar title
   const titleText = document.getElementById('topbar-title-text');
-  const titleMap={listing:'Listing 生成','listing-score':'ASIN 审计',competitor_analysis:'竞品分析',score:'选品打分',flow:'选品工具',product_pool:'优选商品库',aiask:'AI 问一问',history:'历史记录',agent:'Agents',org:'组织架构',product_reports:'产品分析报告',listing_records:'Listing分析记录',user_mgmt:'用户管理',invite:'邀请 / 分销',perm_config:'角色管理',user_recharge:'用户充值',user_profile:'个人信息',change_pwd:'修改密码',usage_dashboard:'用量看板',recharge:'会员充值',sensitive_words:'敏感词库'};
+  const titleMap={listing:'Listing 生成','listing-score':'ASIN 审计',competitor_analysis:'竞品分析',score:'选品打分',flow:'选品工具',product_pool:'优选商品库',aiask:'AI 问一问',history:'历史记录',agent:'Agents',org:'组织架构',product_reports:'产品分析报告',listing_records:'Listing分析记录',competitor_records:'竞品分析记录',user_mgmt:'用户管理',invite:'邀请 / 分销',perm_config:'角色管理',user_recharge:'用户充值',user_profile:'个人信息',change_pwd:'修改密码',usage_dashboard:'用量看板',recharge:'会员充值',sensitive_words:'敏感词库'};
   titleText.textContent=titleMap[p]||p;
   // Show/hide nav flow sub-steps
   const nfs = document.getElementById('nav-flow-steps');
@@ -19387,6 +19418,64 @@ function caApplyPastedAsins(asins, meAsin){
   return {used:use.length, ignored:Math.max(0, asins.length-use.length)};
 }
 
+// ── 竞品分析记录（分析完成后自动保存到 产品管理/竞品分析记录）──
+var _caRecords=[];
+function caFmtTime(d){ const p=n=>(n<10?'0':'')+n; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function caUpdateRecCount(){ const b=document.getElementById('ca-record-count'); if(b){ b.textContent=_caRecords.length; b.style.display=_caRecords.length?'inline-block':'none'; } }
+function caSaveRecord(){
+  var me=caMe(), rivals=caRivals();
+  var rec={
+    id:'ca'+Date.now(), time:new Date(), country:(caEl('ca-site')&&caEl('ca-site').value)||'US',
+    me: me?me.asin:'—', comps: rivals.map(function(r){return r.asin;}),
+    snapshot: JSON.parse(JSON.stringify(CA_DATA))
+  };
+  _caRecords.unshift(rec);
+  caUpdateRecCount();
+}
+function caRestoreRecord(r){
+  if(!r||!r.snapshot) return false;
+  CA_DATA.length=0; Array.prototype.push.apply(CA_DATA, JSON.parse(JSON.stringify(r.snapshot)));
+  CA_SORTED.length=0; Array.prototype.push.apply(CA_SORTED, CA_DATA.slice().sort(function(a,b){return a.rank-b.rank;}));
+  return true;
+}
+var _caStageHome=null;
+function caViewContent(id){
+  var r=_caRecords.find(function(x){return x.id===id;}); if(!caRestoreRecord(r)) return;
+  var stage=caEl('ca-stage1'); if(!stage) return;
+  stage.style.display='block';
+  try{ caRenderCards(); caRenderTraffic(); caRenderPrice(); }catch(e){}
+  var body=caEl('ca-content-body');
+  if(body && stage.parentNode!==body){ _caStageHome=stage.parentNode; body.appendChild(stage); }
+  var m=caEl('ca-content-modal'); if(m){ m.classList.add('active'); document.body.style.overflow='hidden'; }
+}
+function caCloseContent(e){
+  if(e && e.target!==caEl('ca-content-modal')) return;
+  var stage=caEl('ca-stage1');
+  if(stage && _caStageHome){ _caStageHome.appendChild(stage); }
+  var m=caEl('ca-content-modal'); if(m){ m.classList.remove('active'); document.body.style.overflow=''; }
+}
+function caViewReport(id){
+  var r=_caRecords.find(function(x){return x.id===id;}); if(!caRestoreRecord(r)) return;
+  caOpenReport();
+}
+function renderCaRecords(){
+  var list=caEl('ca-rec-list'); if(!list) return;
+  var ct=caEl('ca-rec-count-text'); if(ct) ct.textContent='共 '+_caRecords.length+' 条记录';
+  if(!_caRecords.length){ list.innerHTML='<div style="padding:48px;text-align:center"><div style="font-size:30px;margin-bottom:8px">📊</div><div style="font-size:14px;color:var(--t3)">暂无竞品分析记录</div><div style="font-size:12px;color:var(--t4);margin-top:4px">在「竞品分析」完成一次分析后，将自动保存到这里</div></div>'; return; }
+  list.innerHTML=_caRecords.map(function(r){
+    return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
+      +'<div style="width:36px;height:36px;border-radius:9px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--accent2);stroke-width:1.8;fill:none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>'
+      +'<div style="min-width:200px">'
+        +'<div style="font-size:14px;font-weight:600;color:var(--t0)">竞品分析 · 我方 <span style="font-family:monospace">'+r.me+'</span> vs '+r.comps.length+' 个竞品</div>'
+        +'<div style="font-size:11px;color:var(--t3);margin-top:3px">'+caFmtTime(r.time)+' · 站点 '+r.country+' · 竞品 '+r.comps.join('、')+'</div>'
+      +'</div>'
+      +'<div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">'
+        +'<button onclick="caViewContent(\''+r.id+'\')" style="padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--t1);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">查看分析内容</button>'
+        +'<button onclick="caViewReport(\''+r.id+'\')" style="padding:7px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">查看分析报告</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
 function caRun(){
   const v=(caEl('ca-input')?.value||'').trim();
   if(!v) return;
@@ -19464,7 +19553,8 @@ function caRun(){
    caTrace(2,()=>{ caRenderTraffic();
     caTrace(3,()=>{ caRenderPrice();
           caEl('ca-next1').style.display='flex';
-          caEl('ca-tip').textContent='分析完成 · 点击「生成分析报告」查看攻防建议';
+          caSaveRecord();
+          caEl('ca-tip').textContent='分析完成 · 已存入「产品管理 / 竞品分析记录」· 点击「生成分析报告」查看攻防建议';
     });
    });
   });
@@ -19507,7 +19597,6 @@ function caRenderCards(){
     <div class="ca-result-cap" style="margin-bottom:10px"><span class="ca-result-dot"></span>分析结果 · 竞品画像卡片</div>
     <div class="ca-block-cardhint">
       <div style="font-size:12.5px;font-weight:600;color:var(--t1)">已从粘贴链接解析 ${caRivals().length} 个竞品 · 按月销排序</div>
-      <div style="font-size:11px;color:var(--t3)">数据来源 batchAsinDetail · getAsinRelationship · asinsHistorySales · batchAsinPrice</div>
     </div>
     <div class="ca-cards">${CA_SORTED.map(c=>{
       const bsrD=c.prevBsr-c.bsr, brand=(c.title||'').trim().split(/\s+/)[0];
@@ -19613,7 +19702,8 @@ function caBuildKw(){
 }
 function caKwNf(r){ if(r.nfRank==null) return '<span style="color:var(--t3)">无自然</span>'; const t=48,pg=r.nfRank<=16?1:(r.nfRank<=32?2:3); return 'p'+pg+','+r.nfRank+'/'+t; }
 function caKwSp(r){ if(r.spRank==null) return '<span style="color:var(--t3)">无SP</span>'; const pg=r.spRank<=8?1:2; return 'p'+pg+','+r.spRank+'/'+r.spTotal; }
-function caHint(label,tip){ return `<span class="ca-hint" data-tip="${(tip||'').replace(/"/g,'&quot;')}">${label}</span>`; }
+function caStripTip(t){ t=(t||'').trim(); t=t.replace(/^[^一-龥：:]*[：:]\s*/,''); t=t.replace(/^[a-z][A-Za-z0-9.]*\s+(?=[一-龥])/,''); return t; }
+function caHint(label,tip){ return `<span class="ca-hint" data-tip="${caStripTip(tip).replace(/"/g,'&quot;')}">${label}</span>`; }
 // 自定义悬浮气泡（替代不显示的原生 title）
 function caTipInit(){
   if(window.__caTip) return;
@@ -19637,8 +19727,7 @@ function caRenderKwSummary(d){
   const tile=(l,tip,v)=>`<div class="ca-kwsum-item"><div class="ca-kwsum-l">${caHint(l,tip)}</div><div class="ca-kwsum-v">${v}</div></div>`;
   const G=[
     ['流量得分',[
-      ['总得分','totalScore：该 ASIN 在关键词流量中的综合竞争力得分（自然+广告加权），为相对竞争指标，非真实销量。', s.totalScore.toFixed(0)],
-      ['环比','本期 totalScore 相对上一周期的变化百分比。', `<span class="${chg>=0?'ca-up':'ca-down'}">${chg>=0?'+':''}${chg.toFixed(1)}%</span>`],
+      ['总得分（环比）','该 ASIN 在关键词流量中的综合竞争力得分（自然+广告加权），为相对竞争指标非真实销量；后面的百分比是相对上一周期的涨跌。', `${s.totalScore.toFixed(0)} <span style="font-size:11.5px;font-weight:600;margin-left:2px" class="${chg>=0?'ca-up':'ca-down'}">${chg>=0?'+':''}${chg.toFixed(1)}%</span>`],
       ['自然占比','nfScoreRatio /（nfScoreRatio + adScoreRatio）：自然流量在总流量中的占比。', `<span style="color:var(--accent2)">${nf}%</span>`],
       ['广告占比','adScoreRatio /（nfScoreRatio + adScoreRatio）：广告流量（SP/SB/SBV/推荐）在总流量中的占比。', `<span style="color:var(--orange)">${ad}%</span>`]
     ]],
@@ -19706,7 +19795,7 @@ function caRenderKw(){
       <div class="ca-rcard-body" style="padding-top:12px">
         <div class="ca-kwtabs">${tabs}</div>
         <div id="ca-kwtab-body" style="overflow-x:auto">${caRenderKwBody(_caKwActive)}</div>
-        <div class="ca-note">切换页签查看每个竞品的流量结构汇总（上）与关键词流量占比（下，默认 Top ${CA_KW_MIN}，可展开 Top ${CA_KW_MAX}）。表头悬停查看各字段的 SIF 口径说明。🏆 最高总占比词，✅ 最佳转化词，↑ 广告占比上升。</div>
+        <div class="ca-note">切换页签查看每个竞品的流量结构汇总（上）与关键词流量占比（下，默认 Top ${CA_KW_MIN}，可展开 Top ${CA_KW_MAX}）。表头悬停查看各字段说明。🏆 最高总占比词，✅ 最佳转化词，↑ 广告占比上升。</div>
       </div>
     </div>`;
 }
@@ -19773,7 +19862,6 @@ function caMergedTimeline(c){
   for(let wk=0;wk<N;wk++){
     const keepa=[];
     if(wk>0){ const dp=bb[wk]-bb[wk-1]; if(dp<-0.5) keepa.push({t:'priceDown',txt:'降价 '+caMoney(bb[wk-1])+'→'+caMoney(bb[wk])+' ↓'}); else if(dp>0.5) keepa.push({t:'priceUp',txt:'涨价 '+caMoney(bb[wk-1])+'→'+caMoney(bb[wk])+' ↑'}); }
-    if(wk>0){ const d0=rank[wk-1],d1=rank[wk],imp=d0-d1; if(imp>d0*0.05) keepa.push({t:'bsrUp',txt:'BSR↑ #'+caFmt(d0)+'→#'+caFmt(d1)}); else if(imp<-d0*0.05) keepa.push({t:'bsrDown',txt:'BSR↓ #'+caFmt(d0)+'→#'+caFmt(d1)}); }
     if(revInc[wk]>=surgeTh) keepa.push({t:'reviewSurge',txt:'评论激增 +'+revInc[wk]+' ⚡'});
     if(wk>0 && rate[wk]!==rate[wk-1]) keepa.push({t:rate[wk]>rate[wk-1]?'ratingUp':'ratingDown',txt:'评分 '+rate[wk-1]+'→'+rate[wk]+(rate[wk]>rate[wk-1]?' ↑':' ↓')});
     if(wk>0 && seller[wk]!==seller[wk-1]) keepa.push({t:'buybox',txt:'Buybox 换手 → '+CA_KP_SELLERS[seller[wk]%CA_KP_SELLERS.length]});
@@ -19783,13 +19871,13 @@ function caMergedTimeline(c){
     const acts=actMap[CA_WK[wk]]||[];
     if(!keepa.length && !acts.length) continue;
     if(!keepa.length) keepa.push({t:'flat',txt:'指标平稳'});
-    // 效果 = 该「SIF 动作」之后约 2 周的 BSR 变化；无动作则不归因效果，显示 —
+    // 效果 = 该时间点 BSR（销量排名）的变化：数字变小=改善。BSR 归入效果列
     let effect='—',effCls='';
-    if(acts.length){
-      const j=Math.min(11,wk+2), dr=rank[wk]-rank[j];
-      if(dr>rank[wk]*0.06){ effect='BSR 改善 '+caFmt(Math.round(Math.abs(rank[j]-rank[wk])))+' 名'; effCls='up'; }
-      else if(dr<-rank[wk]*0.06){ effect='BSR 回落 '+caFmt(Math.round(Math.abs(rank[j]-rank[wk])))+' 名'; effCls='down'; }
-      else { effect='排名平稳'; effCls=''; }
+    if(wk>0){
+      const d0=rank[wk-1],d1=rank[wk],imp=d0-d1, seq=' <span style="color:var(--t3);font-weight:400">#'+caFmt(d0)+'→#'+caFmt(d1)+'</span>';
+      if(imp>d0*0.05){ effect='BSR 改善 '+caFmt(Math.round(imp))+' 名'+seq; effCls='up'; }
+      else if(imp<-d0*0.05){ effect='BSR 回落 '+caFmt(Math.round(Math.abs(imp)))+' 名'+seq; effCls='down'; }
+      else { effect='排名平稳'+seq; effCls=''; }
     }
     rows.push({date:CA_WK[wk],keepa,acts,effect,effCls});
   }
@@ -19882,6 +19970,7 @@ function caKeepaSeries(c){
   const N=12, p=c.currentPrice, h=caHash(c.asin+'|series');
   const hasDeal=!!c.dealNow||c.couponNow!=null;
   const prime=((caHash(c.asin+'|of')%100)<55);
+  const noAmazon=(c.priceExceptionTags||[]).indexOf('no_amazon_offer')>=0;
   const dealWk=6+(h%4);
   const start=Math.round(p*1.10), end=Math.round(p);
   const bb=[]; for(let i=0;i<N;i++){ bb.push(Math.round(start-(start-end)*(i/(N-1)))); }
@@ -19987,6 +20076,11 @@ function caRenderPrice(){
               </div>
               <div class="ca-pr-right">
                 <div class="ca-ks-ct k" style="margin-bottom:8px">◐ Keepa 价格历史（近 12 周 · 悬停看数值 · 点击放大）</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--t2);margin-bottom:10px;align-items:center">
+                  <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#e6007e;display:inline-block"></span>Buy Box <b style="color:var(--t0)">${caMoney(c.currentPrice)}</b></span>
+                  <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#ff9900;display:inline-block"></span>Amazon <b style="color:var(--t0)">${(c.priceExceptionTags||[]).indexOf('no_amazon_offer')>=0?'无':caMoney(c.currentPrice)}</b></span>
+                  <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#7c3aed;display:inline-block"></span>New <b style="color:var(--t0)">${caMoney(Math.round(c.currentPrice)-1)}</b></span>
+                </div>
                 <div class="ca-mini-wrap" onclick="caOpenChart('${c.asin}')" title="点击放大查看完整价格曲线">${caMiniChart(c)}<span class="ca-mini-zoom">⤢ 点击放大</span></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:11px;color:var(--t2);margin-top:12px">
                   <span>${caHint('价格波动','Keepa 价格序列振幅，高=频繁调价/促销。')}：${vol}</span>
@@ -20186,15 +20280,7 @@ function caRenderReport(){
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">5</div><h3>逐个产品明细（画像 · 流量 · 广告 · 价格）</h3></div>
-      <div class="ca-rcard-body">
-        ${CA_SORTED.map(profCard).join('')}
-        <div class="ca-note">每个产品（含我方）的四维完整画像，用于导出对比：画像 = batchAsinDetail / getAsinRelationship；流量结构 = asinSummaryCompareGroupByMonthly；广告投放 = ad/keywords；价格与促销 = batchAsinPrice。</div>
-      </div>
-    </div>
-
-    <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">6</div><h3>我方攻防建议</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">5</div><h3>我方攻防建议</h3></div>
       <div class="ca-rcard-body">
         <div class="ca-insight threat">
           <div class="ca-ins-ic"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
