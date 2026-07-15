@@ -1467,6 +1467,134 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 .gen-url-bar input::placeholder{color:var(--t4)}
 .gen-url-bar-close{width:28px;height:28px;border-radius:50%;border:none;background:var(--bg-input);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .gen-url-bar-close svg{width:12px;height:12px;stroke:var(--t2);stroke-width:2;fill:none}
+.gen-url-bar-add{flex-shrink:0;padding:7px 14px;border:none;border-radius:var(--radius-sm);background:var(--accent);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap;transition:all .15s}
+.gen-url-bar-add:hover{background:var(--accent2)}
+.gen-url-chip{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:rgba(0,122,255,0.06);border:1px solid rgba(0,122,255,0.2);font-size:12px;color:var(--accent2);font-weight:500;max-width:340px}
+.gen-url-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gen-url-chip-remove{width:16px;height:16px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;color:var(--t3);flex-shrink:0}
+.gen-url-chip-remove:hover{color:var(--red)}
+.gen-url-chip-remove svg{width:11px;height:11px;stroke:currentColor;stroke-width:2.5;fill:none}
+.gen-url-bar-extract{flex-shrink:0;padding:7px 14px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#0a84ff,#5e5ce6);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap;transition:all .15s}
+.gen-url-bar-extract:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* ══ 链接提取产品信息卡片 (仿截图) ══ */
+.ext-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:0;margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.ext-card-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg-card2)}
+.ext-card-badge{font-size:11px;font-weight:800;color:#fff;padding:3px 10px;border-radius:20px}
+.ext-card-badge.own{background:var(--accent)}
+.ext-card-badge.comp{background:var(--orange)}
+.ext-card-badge.link{background:var(--accent)}
+.ext-card-host{font-size:12px;color:var(--t2);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ext-card-collapse{width:26px;height:26px;border:none;background:var(--bg-input);border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--t2)}
+.ext-card-collapse svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.4;fill:none;transition:transform .2s}
+.ext-card-preview{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid rgba(0,122,255,0.3);border-radius:20px;background:var(--accent-bg);color:var(--accent2);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap}
+.ext-card-preview:hover{background:var(--accent);color:#fff}
+.ext-card-preview svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none}
+.ext-card-gen{flex-shrink:0;padding:5px 12px;border:none;border-radius:20px;background:linear-gradient(135deg,#0a84ff,#5e5ce6);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap}
+.ext-card-gen:hover{filter:brightness(1.08)}
+.ext-card-summary{padding:12px 16px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:background .15s}
+.ext-card-summary:hover{background:var(--bg-card2)}
+.ext-sum-name{font-size:13px;font-weight:700;color:var(--t0);line-height:1.4}
+.ext-sum-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--t3)}
+.ext-sum-meta span{white-space:nowrap}
+.ext-card-body{padding:16px 18px;display:flex;flex-direction:column;gap:18px}
+.ext-sec-title{font-size:13px;font-weight:800;color:var(--t0);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ext-sec-title .ext-sec-tag{font-size:10px;font-weight:600;color:var(--t3)}
+.ext-lbl{font-size:11px;font-weight:700;color:var(--t2);margin-bottom:6px;display:block}
+.ext-lbl .req{color:var(--red);margin-left:3px}
+.ext-inp{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:var(--f);color:var(--t0);background:var(--bg-input);outline:none;transition:border .15s}
+.ext-inp:focus{border-color:var(--accent);background:var(--bg-card)}
+.ext-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ext-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ext-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:var(--accent-bg);border:1px solid rgba(0,122,255,0.2);font-size:12px;color:var(--accent2);font-weight:600}
+.ext-chip-x{cursor:pointer;font-weight:800;opacity:.6}
+.ext-chip-x:hover{opacity:1;color:var(--red)}
+.ext-chip-add{padding:4px 10px;border-radius:20px;border:1px dashed var(--border2);background:transparent;font-size:12px;color:var(--t3);cursor:pointer;font-family:var(--f)}
+.ext-chip-add:hover{border-color:var(--accent);color:var(--accent)}
+.ext-biz{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ext-biz-tile{background:var(--bg-card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.ext-biz-tile .k{font-size:10px;color:var(--t3);font-weight:600;margin-bottom:4px}
+.ext-biz-tile .v{font-size:17px;font-weight:800;color:var(--t0)}
+.ext-quickadd{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.ext-quick-chip{padding:4px 11px;border-radius:20px;border:1px solid rgba(0,122,255,0.25);background:transparent;font-size:12px;color:var(--accent2);cursor:pointer;font-family:var(--f);font-weight:600}
+.ext-quick-chip:hover{background:var(--accent-bg)}
+.ext-attr-row{display:grid;grid-template-columns:1fr 1fr 40px;gap:8px;align-items:center}
+.ext-attr-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.ext-attr-item{display:grid;grid-template-columns:1fr 1.4fr 30px;gap:8px;align-items:center;background:var(--bg-card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px}
+.ext-attr-item .ak{font-weight:700;color:var(--t1)}
+.ext-attr-item .av{color:var(--t2)}
+.ext-attr-del{border:none;background:transparent;color:var(--t3);cursor:pointer;font-size:15px}
+.ext-attr-del:hover{color:var(--red)}
+.ext-src-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:12px;background:var(--bg-card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.ext-src-grid .sk{color:var(--t3);font-weight:600}
+.ext-src-grid .sv{color:var(--t1);overflow:hidden;text-overflow:ellipsis}
+.ext-src-grid .sv a{color:var(--accent2);text-decoration:none}
+.ext-imgs-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ext-imgs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.ext-img-tile{aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);overflow:hidden;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700;text-align:center;padding:4px}
+.ext-img-tile.picked{border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,122,255,0.25)}
+.ext-img-check{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center}
+.ext-img-tile.picked .ext-img-check{display:flex}
+.ext-img-check svg{width:10px;height:10px;stroke:#fff;stroke-width:3;fill:none}
+.ext-push-btn{padding:5px 12px;border:1px solid rgba(0,122,255,0.3);border-radius:20px;background:var(--accent-bg);color:var(--accent2);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--f)}
+.ext-push-btn:hover{background:var(--accent);color:#fff}
+.ext-ta{width:100%;min-height:88px;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:12.5px;font-family:var(--f);color:var(--t0);background:var(--bg-input);outline:none;resize:vertical;line-height:1.55}
+.ext-ta:focus{border-color:var(--accent);background:var(--bg-card)}
+.ext-use-btn{width:100%;padding:12px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--f);display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 2px 10px rgba(0,122,255,0.3)}
+.ext-use-btn:hover{background:var(--accent2)}
+.ext-use-btn svg{width:16px;height:16px;stroke:#fff;stroke-width:2.2;fill:none}
+
+/* ══ 提取确认弹窗 ══ */
+.ext-modal-overlay{position:fixed;inset:0;background:rgba(15,17,26,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .18s ease}
+.ext-modal{background:var(--bg-card);border-radius:var(--radius-lg);width:580px;max-width:100%;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 28px 80px rgba(0,0,0,0.32);animation:slideUp .24s cubic-bezier(.2,.8,.2,1);overflow:hidden}
+.ext-modal-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 22px 16px;border-bottom:1px solid var(--border)}
+.ext-modal-hd-ico{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0a84ff,#5e5ce6);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.ext-modal-title{font-size:16px;font-weight:800;color:var(--t0)}
+.ext-modal-sub{font-size:12px;color:var(--t3);margin-top:3px;line-height:1.5}
+.ext-modal-x{width:30px;height:30px;border:none;background:var(--bg-input);border-radius:8px;cursor:pointer;color:var(--t2);font-size:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ext-modal-x:hover{background:var(--border2);color:var(--t0)}
+.ext-modal-body{padding:16px 22px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.ext-modal-ft{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 22px;border-top:1px solid var(--border);background:var(--bg-card2)}
+.ext-modal-ft-hint{font-size:11px;color:var(--t3)}
+.ext-modal-cancel{padding:9px 20px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--t2);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)}
+.ext-modal-cancel:hover{background:var(--bg-input)}
+.ext-modal-ok{padding:9px 22px;border:none;border-radius:var(--radius-sm);background:var(--accent);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--f);box-shadow:0 2px 10px rgba(0,122,255,0.3);display:inline-flex;align-items:center;gap:6px}
+.ext-modal-ok:hover{background:var(--accent2)}
+.ext-modal-ok svg{width:15px;height:15px;stroke:#fff;stroke-width:2.4;fill:none}
+.ext-confirm-card{border:1px solid var(--border);border-radius:var(--radius);padding:14px;background:var(--bg-card2);position:relative}
+.ext-cc-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ext-cc-name{font-size:13px;font-weight:700;color:var(--t0);line-height:1.45;margin-bottom:8px}
+.ext-cc-imgs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:10px 0}
+.ext-cc-img{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:7.5px;font-weight:700;text-align:center;padding:2px;overflow:hidden;line-height:1.15}
+.ext-cc-drop{position:absolute;top:12px;right:12px;width:24px;height:24px;border:none;border-radius:6px;background:var(--bg-input);color:var(--t3);cursor:pointer;font-size:14px}
+.ext-cc-drop:hover{background:rgba(255,59,48,0.1);color:var(--red)}
+
+/* ══ 右侧商品信息抽屉 ══ */
+.gen-url-chip.clickable{cursor:pointer;transition:background .15s,border-color .15s}
+.gen-url-chip.clickable:hover{background:rgba(0,122,255,0.12);border-color:var(--accent)}
+.pd-overlay{position:fixed;inset:0;background:rgba(15,17,26,0.42);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:10000;opacity:0;transition:opacity .24s ease}
+.pd-overlay.show{opacity:1}
+.pd-drawer{position:fixed;top:0;right:0;height:100vh;width:460px;max-width:92vw;background:var(--bg-card);z-index:10001;box-shadow:-14px 0 44px rgba(0,0,0,0.2);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.85,.25,1)}
+.pd-drawer.show{transform:translateX(0)}
+.pd-hd{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.pd-close{width:30px;height:30px;border:none;background:var(--bg-input);border-radius:8px;cursor:pointer;color:var(--t2);font-size:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.pd-close:hover{background:var(--border2);color:var(--t0)}
+.pd-body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:18px}
+.pd-ft{display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--border);background:var(--bg-card2);flex-shrink:0}
+.pd-ft .ext-use-btn{width:auto}
+
+/* ══ Listing 翻译下拉 ══ */
+.tr-dd{position:relative;display:inline-block}
+.chip.chip-blue{background:rgba(0,122,255,0.1);color:var(--accent2);cursor:pointer}
+.chip.chip-blue:hover{background:rgba(0,122,255,0.2)}
+.tr-menu{display:none;position:absolute;top:calc(100% + 6px);right:0;z-index:60;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 34px rgba(0,0,0,0.18);padding:6px;min-width:158px}
+.tr-menu.show{display:block;animation:fadeIn .12s ease}
+.tr-menu-hd{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;padding:4px 10px 6px}
+.tr-item{padding:8px 12px;font-size:12.5px;color:var(--t1);border-radius:7px;cursor:pointer;white-space:nowrap;transition:background .12s}
+.tr-item:hover{background:var(--accent-bg);color:var(--accent2)}
+.tr-item.tr-orig{border-top:1px solid var(--border);margin-top:4px;color:var(--t3)}
+.mini-spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(0,122,255,0.25);border-top-color:var(--accent2);border-radius:50%;animation:trspin .7s linear infinite;vertical-align:-1px;margin-right:2px}
+@keyframes trspin{to{transform:rotate(360deg)}}
 
 /* 上传文件列表（嵌入inputbox中） */
 .gen-attached-files{padding:8px 16px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px}
@@ -1687,6 +1815,8 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 }
 .ai-optimize-btn:hover{background:linear-gradient(135deg,rgba(0,122,255,0.08),rgba(175,82,222,0.08));border-color:rgba(175,82,222,0.5);box-shadow:0 2px 12px rgba(108,92,231,0.15)}
 .ai-optimize-btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none}
+.ai-optimize-btn.compact{width:auto;padding:6px 13px;font-size:12px;flex-shrink:0}
+.ai-optimize-btn.compact svg{width:14px;height:14px}
 
 /* 查看记录Tab */
 .view-rec-tab{
@@ -2870,13 +3000,16 @@ table.ca-cmp .ca-you-tag{font-size:9px;font-weight:700;color:#fff;background:var
               onkeydown="if(event.key==='Enter'&&event.ctrlKey){event.preventDefault();startQuestionnaire()}"></textarea>
             <!-- 已附加文件展示 -->
             <div class="gen-attached-files" id="gen-attached-files" style="display:none"></div>
-            <!-- URL输入条 -->
+            <!-- URL输入条 (支持多个竞品链接) -->
             <div class="gen-url-bar" id="gen-url-bar">
-              <input type="text" id="gen-url-input" placeholder="粘贴竞品或产品链接，如 https://www.amazon.com/dp/...">
+              <input type="text" id="gen-url-input" placeholder="粘贴竞品/产品链接后回车即「添加并提取」（可多个），如 https://www.ozon.ru/product/... 或 https://www.wildberries.ru/catalog/..." onkeydown="if(event.key==='Enter'){event.preventDefault();extractAndConfirm()}">
+              <button class="gen-url-bar-extract" onclick="extractAndConfirm()" title="添加链接并自动提取产品信息，确认后加入">⚡ 添加并提取</button>
               <button class="gen-url-bar-close" onclick="toggleUrlBar()">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
+            <!-- 已添加竞品链接 chips -->
+            <div class="gen-attached-files" id="gen-url-chips" style="display:none"></div>
             <!-- 自定义敏感词输入条 -->
             <div class="gen-url-bar" id="gen-sw-bar">
               <input type="text" id="gen-sw-input" oninput="updateGenSend()" placeholder="自定义敏感词（本次生成额外检测，逗号或空格分隔），如：best, 100%, FDA">
@@ -2905,13 +3038,15 @@ table.ca-cmp .ca-you-tag{font-size:9px;font-weight:700;color:#fff;background:var
               </div>
               <div class="gen-send-wrap">
                 <!-- 市场选择器 -->
-                <select class="gen-selector" id="market-sel">
+                <select class="gen-selector" id="market-sel" onchange="onMarketChange()">
                   <option>🇺🇸 Amazon US</option>
                   <option>🇬🇧 Amazon UK</option>
                   <option>🇩🇪 Amazon DE</option>
                   <option>🛒 Walmart US</option>
                   <option>🛒 eBay US</option>
                   <option>🏪 Shopify</option>
+                  <option>🇷🇺 Ozon</option>
+                  <option>🇷🇺 Wildberries</option>
                 </select>
                 <!-- 类目选择器 -->
                 <select class="gen-selector" id="cat-sel">
@@ -2934,6 +3069,9 @@ table.ca-cmp .ca-you-tag{font-size:9px;font-weight:700;color:#fff;background:var
           <!-- 敏感词提示（生成时检测，非阻断） -->
           <div id="sw-warn-box" style="display:none;max-width:760px;margin:0 auto 16px;padding:12px 16px;background:rgba(255,59,48,0.05);border:1px solid rgba(255,59,48,0.2);border-radius:var(--radius);"></div>
         </div>
+
+        <!-- 链接提取结果（点击「提取信息」后，按截图形式展示每个URL的产品信息卡片） -->
+        <div id="gen-extract-result" style="max-width:860px;margin:0 auto 8px"></div>
 
         <!-- 属性问卷区 -->
         <div id="aq-wrap" style="display:none"></div>
@@ -7479,7 +7617,7 @@ const LS_MODEL_7D = [
    ]}
 ];
 
-const LS_SOURCE_COLOR = {官方:'#007aff',官方论文:'#007aff',行业研究:'#af52de',操作建议:'#ff9500',官方IDQ:'#5ac8fa','穿透数据':'#34c759','卖家精灵API':'#0aa','广告数据':'#ff9500','Sorftime VOC':'#ff3b30'};
+const LS_SOURCE_COLOR = {官方:'#007aff',官方论文:'#007aff',行业研究:'#af52de',操作建议:'#ff9500',官方IDQ:'#5ac8fa','穿透数据':'#34c759','卖家精灵API':'#0aa','广告数据':'#ff9500','Sorftime VOC':'#ff3b30','Ozon官方':'#005bff','WB官方':'#cb11ab','竞对分析':'#ff9500','关键词研究':'#af52de'};
 
 // ══════════════════════════════════════════════
 // WALMART LISTING SCORE MODEL (基于沃尔玛知识库 PDF 100分制)
@@ -7518,6 +7656,82 @@ function makeWmModel(sc){
 const WM_MODEL_A = makeWmModel([15,14,9, 5,10,5,4,4, 5,5,4,4, 3,3,4]);
 const WM_MODEL_B = makeWmModel([15,13,8, 5,9,5,5,5, 5,5,5,4, 3,3,4]);
 const WM_MODEL = WM_MODEL_A;
+
+// ══════════════════════════════════════════════════════════════════════
+// OZON 评分模型 —— 对齐《Ozon 与 Wildberries Listing 智能生成与打分方案》报告
+// 精简版 100 分制 5 维 10 细则：完整性25 / 合规性20 / SEO检索覆盖25 / 转化代理15 / 内容与图片15
+// Ozon 侧重点：Контент-рейтинг(媒体+属性+描述) · 必填特征不填不过审 · type 选错降权 · hashtags 可点击可搜索 · 最多8图+1视频
+// sc[] 共 10 项（每维 2 细则）
+// ══════════════════════════════════════════════════════════════════════
+function makeOzonModel(sc){
+  return [
+    {id:'complete',name:'Полнота 完整性',weight:25,color:'#007aff',bg:'rgba(0,122,255,0.1)',desc:'Ozon Контент-рейтинг · 必填特征 + 描述/Rich',
+     criteria:[
+       {name:'必填特征 100% 填写且填对 + type 正确（不填不过审）',rule:'Ozon 必填特征缺失无法过审、影响筛选进入结果页；填错=不得分；type 选错会降权甚至被屏蔽。填充率 = filled_required/required_total',deduct:'检测到 1 个必填特征（如「材质амбушюр」）未填/填错，按比例扣分',ref:'Ozon官方',max:15,score:sc[0]},
+       {name:'描述已填 + Rich Content 已配置',rule:'描述与 Rich-контент 是 Контент-рейтинг 三大构成之一（媒体/属性/描述），需补齐',deduct:'Rich Content 模块偏少，未补齐富内容卡片',ref:'Ozon官方',max:10,score:sc[1]}
+     ]},
+    {id:'comply',name:'Соответствие 合规性',weight:20,color:'#ff3b30',bg:'rgba(255,59,48,0.1)',desc:'禁词/联系方式 · 无堆砌 · 无矛盾/品牌一致',
+     criteria:[
+       {name:'标题/描述无禁词/联系方式/误导 + 无关键词堆砌',rule:'任一硬规则失败即判红；素材横幅须俄语、禁虚假信息与误导性 UI；关键词堆砌属降分项',deduct:'描述存在 1 处夸大表述，建议改为可验证事实',ref:'Ozon官方',max:12,score:sc[2]},
+       {name:'无多品牌/多用途矛盾 + 品牌写法一致（冲突=0）',rule:'同卡混写多品牌/多颜色/多无关用途会让算法无法判断核心属性；品牌须与词典一致',deduct:'',ref:'Ozon官方',max:8,score:sc[3]}
+     ]},
+    {id:'seo',name:'SEO / Обнаружение 检索覆盖',weight:25,color:'#af52de',bg:'rgba(175,82,222,0.1)',desc:'标题实体 · 可筛选属性 · hashtags',
+     criteria:[
+       {name:'标题含 品牌+类型+系列+关键规格 实体（实体优先，不堆词）',rule:'Ozon 命名示例：[Тип]+[Бренд]+[Серия/модель]+[спецификация]+[цвет/объём]',deduct:'标题可再补 1 个关键规格实体（如接口/续航）',ref:'Ozon官方',max:13,score:sc[4]},
+       {name:'可筛选属性 100% + hashtags 8-12（可点击可搜索）',rule:'可筛选特征缺失则进不了筛选结果页；Ozon hashtags 是可点击可搜索字段，输出 8-12 个',deduct:'可筛选属性约 92%、hashtags 可再补 2-3 个高相关词',ref:'关键词研究',max:12,score:sc[5]}
+     ]},
+    {id:'cvr',name:'Прокси конверсии 转化代理',weight:15,color:'#ff9500',bg:'rgba(255,149,0,0.1)',desc:'预测CVR/价格分位 · 评论/订单/配送',
+     criteria:[
+       {name:'预测 PDP 转化率 ≥ 类目 P60 + 价格竞争力分位',rule:'基于历史 query×card 估计；Ozon 官方明确价格与订单/配送/评论共同影响搜索位置',deduct:'预测 CVR 落在 P55、价格偏中位偏高',ref:'广告数据',max:8,score:sc[6]},
+       {name:'评论/订单/配送信号（Ozon 仓可得性）',rule:'同价时 Ozon 仓内可得性更优先；评论数与配送速度是高可信排名因素',deduct:'',ref:'广告数据',max:7,score:sc[7]}
+     ]},
+    {id:'content',name:'Контент и медиа 内容与图片',weight:15,color:'#f1117e',bg:'rgba(241,17,126,0.1)',desc:'俄语地道·无混排 · 主图/图数≤8+视频',
+     criteria:[
+       {name:'俄语地道、无中英俄混排/机翻，重复 <18%',rule:'中文源→俄文走「属性标准化→俄语生成→俄语QA」，避免 accidental translation；描述具体解释特点与质地',deduct:'个别句子机翻感明显，需俄语母语润色',ref:'行业研究',max:7,score:sc[8]},
+       {name:'主图白底达标 + 图数(最多8)+1视频 + 图文一致',rule:'主图清晰度/主体占比/分辨率达标；补齐至 8 图 + 1 视频拿满媒体分；CLIP 图文一致',deduct:'当前 6 张图、缺 1 个视频，未填满 8 图上限',ref:'Ozon官方',max:8,score:sc[9]}
+     ]}
+  ];
+}
+const OZ_MODEL_A = makeOzonModel([14,10, 12,7, 13,12, 6,5, 7,7]); // 标题/关键词SEO导向 ≈93
+const OZ_MODEL_B = makeOzonModel([13,9, 11,7, 10,9, 8,7, 6,7]);    // 场景/转化导向 ≈87
+const OZ_MODEL = OZ_MODEL_A;
+
+// ══════════════════════════════════════════════════════════════════════
+// WILDBERRIES 评分模型 —— 同一 5 维 10 细则 100 分制，criteria 按 WB 真实机制定制
+// WB 侧重点：标题≤60硬限 · 卡片质量评分影响排序 · 搜索簇(同义/词形/错拼) · sizes 仅有尺码类目必填 · 配送时效影响30-40% · 评级门槛不达标不进搜索
+// ══════════════════════════════════════════════════════════════════════
+function makeWbModel(sc){
+  return [
+    {id:'complete',name:'Полнота 完整性',weight:25,color:'#007aff',bg:'rgba(0,122,255,0.1)',desc:'WB 卡片质量 · 必填特征 · 尺码(仅有尺码类目) · 描述≥1000',
+     criteria:[
+       {name:'必填特征 100% 填对（有尺码类目再填 sizes）',rule:'特征由 subject/category 决定，带筛选标记的特征缺失可能进不了检索；sizes 仅对有尺码的类目（服饰/鞋等）必填，无尺码类目（电子等）用单一默认尺码位放条码/SKU 即可',deduct:'检测到 1 个带筛选标记的特征未填，按比例扣分',ref:'WB官方',max:15,score:sc[0]},
+       {name:'描述 ≥ 1000 字符 + subject characteristics 填满',rule:'WB 描述 API 标准 2000、最低 1000、最高 5000；特征尽量填满且填对',deduct:'描述接近 1000 下限，可扩充至 1500-2000 提升簇覆盖',ref:'WB官方',max:10,score:sc[1]}
+     ]},
+    {id:'comply',name:'Соответствие 合规性',weight:20,color:'#ff3b30',bg:'rgba(255,59,48,0.1)',desc:'标题≤60 · 无堆砌 · 无矛盾/品牌一致',
+     criteria:[
+       {name:'标题 ≤ 60 字符 + 无关键词堆砌 SEO 文本',rule:'WB 标题硬上限 60 字符，超限即判红；官方明确把堆砌、语法差、矛盾信息视为降分项',deduct:'描述关键词密度略高，建议下沉部分同义词到属性',ref:'WB官方',max:12,score:sc[2]},
+       {name:'无多品牌/多用途矛盾 + 品牌一致（冲突=0）',rule:'同卡混写多品牌/多颜色/多无关用途会失去相关查询展示；品牌须与词典一致',deduct:'',ref:'WB官方',max:8,score:sc[3]}
+     ]},
+    {id:'seo',name:'SEO / Обнаружение 检索覆盖',weight:25,color:'#af52de',bg:'rgba(175,82,222,0.1)',desc:'head term · 搜索簇覆盖 · 全域一致',
+     criteria:[
+       {name:'标题含核心 head term + 主卖点 + 品牌（60字内聚焦）',rule:'60 字内优先覆盖搜索簇核心 head term + 一个主卖点 + 品牌，避免长尾稀释',deduct:'',ref:'关键词研究',max:13,score:sc[4]},
+       {name:'搜索簇覆盖 ≥0.8（同义/词形/错拼下沉）+ 关键词全域一致',rule:'WB 搜索基于 search clusters；同义/词形/错拼沉到描述与属性；维护内部 keyword bank 映射标题/描述/特征/广告',deduct:'簇覆盖约 0.72，仍有 2-3 个词形/错拼变体未覆盖',ref:'关键词研究',max:12,score:sc[5]}
+     ]},
+    {id:'cvr',name:'Прокси конверсии 转化代理',weight:15,color:'#ff9500',bg:'rgba(255,149,0,0.1)',desc:'转化率 · 物流时效 · 评级门槛',
+     criteria:[
+       {name:'转化率信号 + 物流/配送时效（对搜索位影响 30-40%）',rule:'WB 官方七因素：转化率、物流等；平均配送时间对搜索位置影响可达 30%-40%',deduct:'搜索加购转化率略低于类目中位，需强化首图与主卖点',ref:'广告数据',max:8,score:sc[6]},
+       {name:'商品评级/卖家评级达门槛（不达标不进搜索）',rule:'特定评分组合下商品直接不出现在搜索结果里',deduct:'',ref:'广告数据',max:7,score:sc[7]}
+     ]},
+    {id:'content',name:'Контент и медиа 内容与图片',weight:15,color:'#cb11ab',bg:'rgba(203,17,171,0.1)',desc:'俄语地道·无混排 · ≥700×900+视频',
+     criteria:[
+       {name:'俄语地道、无混合脚本，重复 <18%',rule:'避免中式形容词直译、避免中英俄混排、统一西里尔主写法；重复 n-gram <18%，严重语病=0',deduct:'',ref:'行业研究',max:7,score:sc[8]},
+       {name:'主图 ≥700×900 + 图数(≤30,建议≥6)+视频≤50MB + 图文一致',rule:'WB 图片最小 700×900、质量≥65%；每卡≤30 图、1 视频≤50MB；裁切差/图文矛盾会被扣分',deduct:'当前 6 张图、缺 1 个视频',ref:'WB官方',max:8,score:sc[9]}
+     ]}
+  ];
+}
+const WB_MODEL_A = makeWbModel([14,10, 12,7, 13,12, 6,5, 7,7]); // SEO/关键词导向 ≈93
+const WB_MODEL_B = makeWbModel([13,9, 11,7, 10,9, 8,7, 6,7]);   // 场景/转化导向 ≈87
+const WB_MODEL = WB_MODEL_A;
 
 function lsScoreColor(p){return p>=80?'#007aff':p>=65?'#007aff':p>=50?'#ff9500':'#ff3b30';}
 
@@ -7594,7 +7808,7 @@ function buildLsCriteriaPanel(dim, anchorId){
   // 克制配色：白底 header + 左侧细色条；权重胶囊用维度淡色（唯一彩色点缀）
   const contrib = Math.round(pct*dim.weight/100);
   return `
-  <div class="ls-criteria-panel themed"${anchorId?` id="${anchorId}"`:''} style="scroll-margin-top:12px;border-left:3px solid ${dim.color}">
+  <div class="ls-criteria-panel themed"${anchorId?` id="${anchorId}"`:''} data-detail-open="1" style="scroll-margin-top:12px;border-left:3px solid ${dim.color}">
     <div class="ls-cp-header" onclick="toggleCritDetail(this)" style="cursor:pointer;user-select:none">
       <div class="ls-cp-dot" style="background:${dim.color}"></div>
       <div class="ls-cp-title">${dim.name}</div>
@@ -7605,10 +7819,10 @@ function buildLsCriteriaPanel(dim, anchorId){
         <div class="ls-cp-contrib">贡献 ${contrib}/${dim.weight} 分</div>
       </div>
       <span class="ls-cp-toggle" style="display:inline-flex;align-items:center;gap:4px;margin-left:10px;font-size:10px;font-weight:600;color:var(--accent2);white-space:nowrap">
-        <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none;transition:transform .2s;transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>明细
+        <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none;transition:transform .2s;transform:rotate(0deg)"><polyline points="6 9 12 15 18 9"/></svg>明细
       </span>
     </div>
-    <div class="ls-crit-rows" style="display:none">${rows}</div>
+    <div class="ls-crit-rows">${rows}</div>
   </div>`;
 }
 
@@ -7707,15 +7921,20 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
   },0));
   const circ=263.9,off=circ*(1-total/100);
   const isWalmart = market && market.indexOf('Walmart') >= 0;
-  // v2.0 评级：沃尔玛走旧逻辑（保持兼容），Amazon 走「穿透分析」新标准
-  // Amazon 新标准（与 Sorftime/Claude Skill 评级对齐）:
-  //   80-100 优秀 (推荐发布) · 70-79 良好 (可上架) · 50-69 一般 (需优化) · 0-49 较差 (重写)
+  const isRu = market && /Ozon|Wildberries/i.test(market);
+  // 评级：沃尔玛旧逻辑；Ozon/WB 用 S/A/B/C（与页签、提示词 md 一致）；Amazon 用「穿透分析」标准
   let stroke, grade, gc, verdict;
   if(isWalmart){
     stroke = total>=85?'#007aff':total>=75?'#007aff':total>=60?'#ff9500':'#ff3b30';
     grade  = total>=90?'S':total>=80?'A':total>=75?'B+':total>=60?'B':'C';
     gc     = total>=90?'gs':total>=80?'ga':total>=75?'gb':total>=60?'gc':'gd';
     verdict= '';
+  } else if(isRu){
+    // S≥90 · A 80-89 · B 70-79 · C<70（与 generateRuListing 页签 & prompt md 对齐）
+    stroke = total>=90?'#34c759':total>=80?'#007aff':total>=70?'#ff9500':'#ff3b30';
+    grade  = total>=90?'S':total>=80?'A':total>=70?'B':'C';
+    gc     = total>=90?'gs':total>=80?'ga':total>=70?'gc':'gd';
+    verdict= total>=90?'推荐直接发布':total>=80?'可上架，建议小幅优化':total>=70?'需优化 2-3 项再发布':'建议重写后再发布';
   } else {
     stroke = total>=80?'#34c759':total>=70?'#007aff':total>=50?'#ff9500':'#ff3b30';
     grade  = total>=80?'优秀':total>=70?'良好':total>=50?'一般':'较差';
@@ -7726,6 +7945,10 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
     '属性完整度达标，Polaris 排名信号极佳',
     '建议在 Key Features 中增加更多场景化语义短语，提升 Sparky 推荐率',
     'Product Description 可补充常见问答内容（融入段落，禁用Q/A格式）'
+  ] : isRu ? [
+    '关键词/搜索簇覆盖到位，检索可发现性强',
+    '建议补齐必填特征并把同义/词形/错拼下沉到描述与特征',
+    '主图与信息图可再优化，补 1 条竖版视频提升转化'
   ] : [
     '所有核心关键词已精准覆盖，SEO 基础极佳',
     '建议在 Bullet 3-4 中进一步嵌入长尾场景词',
@@ -7734,6 +7957,8 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
   ]);
   const scoreModelDesc = isWalmart
     ? '基于沃尔玛知识库 PDF 100分制模型 · Polaris/Sparky/Item Spec 5.0 四维评分'
+    : isRu
+    ? ('五维 100 分制 · 完整性/合规/检索覆盖/转化/内容与图片 · 对齐 ' + (/Ozon/i.test(market)?'Ozon Контент-рейтинг':'WB 卡片质量评分'))
     : '四维 100 分制 v2.1 · A10 关键词 / COSMO / Rufus 语义 + CDQ 完整性（CDQ 权重对齐）';
   const sugId = 'sug-' + suffix + '-' + Date.now();
   return `
@@ -7757,7 +7982,7 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
             <text class="ring-val" x="50" y="46" fill="${stroke}">${total}</text>
             <text class="ring-sub" x="50" y="60">/ 100</text>
           </svg>
-          <div class="score-grade-pill ${gc}">${isWalmart?'Grade ':''}${grade}</div>
+          <div class="score-grade-pill ${gc}">${(isWalmart||isRu)?'Grade ':''}${grade}</div>
           ${verdict?`<div style="margin-top:6px;font-size:11px;color:${stroke};font-weight:600;text-align:center">${verdict}</div>`:''}
         </div>
         <div class="ls-radar-wrap" style="padding:10px">
@@ -7767,8 +7992,11 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
       </div>
       <!-- Row 2: AI 优化建议 -->
       <div class="suggest-card" id="${sugId}">
-        <div style="margin-bottom:8px">
+        <div style="margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
           <div class="suggest-title" style="margin:0">AI 优化建议</div>
+          ${/Ozon|Wildberries/i.test(market) ? `<button class="ai-optimize-btn compact" onclick="ruOptimize('ls-pane${suffix}')">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 一键优化
+          </button>` : ''}
         </div>
         ${suggestions.map(s=>`<div class="suggest-item"><div class="suggest-dot"></div><span>${s}</span></div>`).join('')}
       </div>
@@ -8318,6 +8546,10 @@ function generateListing(){
   const kw=(kwEl?kwEl.value:'').trim();
   const marketRaw=document.getElementById('market-sel').value; const market=marketRaw.replace(/^[\u{1F000}-\u{1FFFF}\s]+/u,'').trim();
   if(!kw){if(kwEl)kwEl.focus();return;}
+  // 把「提取信息」卡片组装成参考上下文（提示词）喂给生成；未提取则为 null
+  try{ window._genContext = (typeof buildGenContext==='function') ? buildGenContext(window._genOwnIdx||0) : null; }catch(e){ window._genContext=null; }
+  // 俄罗斯平台（Ozon / Wildberries）走独立的俄文 Listing 生成流程
+  if(/Ozon|Wildberries/i.test(market)){ generateRuListing(kw, market); return; }
   // Prevent duplicate submit
   const btn=document.getElementById('gen-btn-wrap');
   if(btn){btn.innerHTML='<div class="loading-wrap" style="padding:16px"><div class="loading-spinner"></div><div class="loading-text">正在生成...</div></div>'; }
@@ -8710,6 +8942,7 @@ function generateListing(){
         ${compHTML}
       </div>
     </div>`;
+    // 参考上下文（喂给大模型的提示词）不在前端展示，仅用于生成 & 记录在 prompt md
     addHist('listing',`${kw} · ${market} · A/B双方案`,sA);
     // Auto-apply AI optimization to both plans
     setTimeout(()=>{
@@ -8723,6 +8956,491 @@ function regenerateListing(){
   const area=document.getElementById('listing-result');
   area.innerHTML=`<div class="result-panel fade-in"><div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">重新生成 2 套高分方案中...</div></div></div>`;
   setTimeout(generateListing,750);
+}
+
+// ══════════════════════════════════════════════════════════════
+// Listing 翻译（常用语言）—— 免翻译 key 的 MyMemory API + 原文还原
+// ══════════════════════════════════════════════════════════════
+const TR_LANGS=[
+  {c:'zh-CN',n:'中文',f:'🇨🇳'},{c:'en',n:'English',f:'🇬🇧'},{c:'es',n:'Español',f:'🇪🇸'},
+  {c:'de',n:'Deutsch',f:'🇩🇪'},{c:'fr',n:'Français',f:'🇫🇷'},{c:'ja',n:'日本語',f:'🇯🇵'},
+  {c:'ko',n:'한국어',f:'🇰🇷'},{c:'ar',n:'العربية',f:'🇸🇦'},{c:'tr',n:'Türkçe',f:'🇹🇷'}
+];
+function trMenuHTML(paneId, source){
+  return `<div class="tr-dd">
+    <div class="chip chip-blue" onclick="toggleTrMenu('${paneId}')">🌐 翻译</div>
+    <div class="tr-menu" id="trmenu-${paneId}">
+      <div class="tr-menu-hd">翻译为</div>
+      ${TR_LANGS.map(l=>`<div class="tr-item" onclick="translateCard('${paneId}','${source}','${l.c}','${l.n}',this)">${l.f} ${l.n}</div>`).join('')}
+      <div class="tr-item tr-orig" onclick="translateCard('${paneId}','${source}','__orig__','原文',this)">↩ 显示原文</div>
+    </div>
+  </div>`;
+}
+function toggleTrMenu(paneId){
+  const m=document.getElementById('trmenu-'+paneId); if(!m) return;
+  const open=m.classList.contains('show');
+  document.querySelectorAll('.tr-menu.show').forEach(x=>x.classList.remove('show'));
+  if(!open) m.classList.add('show');
+}
+if(!window.__trClickBound){
+  window.__trClickBound=true;
+  document.addEventListener('click',e=>{ if(!e.target.closest('.tr-dd')) document.querySelectorAll('.tr-menu.show').forEach(x=>x.classList.remove('show')); });
+}
+async function mmTranslate(text, source, target){
+  const url='https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+encodeURIComponent(source+'|'+target);
+  const res=await fetch(url);
+  const j=await res.json();
+  const t=j && j.responseData && j.responseData.translatedText;
+  if(!t || /MYMEMORY WARNING|INVALID (SOURCE|TARGET)|QUERY LENGTH/i.test(t)) throw new Error('tr-fail');
+  return t;
+}
+function _trCollectNodes(root){
+  const nodes=[];
+  const walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode(n){
+    if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+    const p=n.parentElement; if(!p) return NodeFilter.FILTER_REJECT;
+    if(p.closest('.lf-copy-btn,.lf-edit-btn,.lf-edit-actions,.lf-rescore-btn,button')) return NodeFilter.FILTER_REJECT;
+    return NodeFilter.FILTER_ACCEPT;
+  }});
+  let n; while(n=walker.nextNode()) nodes.push(n);
+  return nodes;
+}
+function _preserveWs(orig, translated){
+  const lead=(orig.match(/^\s*/)||[''])[0], trail=(orig.match(/\s*$/)||[''])[0];
+  return lead+translated+trail;
+}
+async function _trLong(text, source, target){
+  const parts=text.split(/(?<=[.!?。！？])\s+/); const chunks=[]; let buf='';
+  parts.forEach(s=>{ if((buf+' '+s).length>440 && buf){ chunks.push(buf); buf=s; } else buf=buf?buf+' '+s:s; });
+  if(buf) chunks.push(buf);
+  const out=[]; for(const c of chunks){ out.push(await mmTranslate(c, source, target)); }
+  return out.join(' ');
+}
+async function translateCard(paneId, source, target, langName, itemEl){
+  document.querySelectorAll('.tr-menu.show').forEach(x=>x.classList.remove('show'));
+  const scope=document.getElementById('trscope-'+paneId); if(!scope) return;
+  const btn=document.querySelector('#'+paneId+' .tr-dd .chip-blue');
+  const nodes=_trCollectNodes(scope);
+  nodes.forEach(n=>{ if(n.__orig===undefined) n.__orig=n.nodeValue; });
+  if(target==='__orig__'){ nodes.forEach(n=>{ if(n.__orig!==undefined) n.nodeValue=n.__orig; }); if(btn) btn.innerHTML='🌐 翻译'; return; }
+  if(btn){ btn.innerHTML='<span class="mini-spin"></span> 翻译中…'; btn.style.pointerEvents='none'; }
+  const items=nodes.map(n=>({n,t:(n.__orig||'').trim()})).filter(x=>x.t);
+  const batches=[]; let cur=[], len=0;
+  for(const it of items){
+    if(it.t.length>=440){ if(cur.length){batches.push(cur);cur=[];len=0;} batches.push([it]); continue; }
+    if(len+it.t.length+1>440 && cur.length){ batches.push(cur); cur=[]; len=0; }
+    cur.push(it); len+=it.t.length+1;
+  }
+  if(cur.length) batches.push(cur);
+  try{
+    for(const batch of batches){
+      if(batch.length===1 && batch[0].t.length>=440){ batch[0].n.nodeValue=_preserveWs(batch[0].n.nodeValue, await _trLong(batch[0].t, source, target)); continue; }
+      const src=batch.map(b=>b.t).join('\n');
+      let out=null; try{ out=await mmTranslate(src, source, target); }catch(e){}
+      const parts=out?out.split('\n'):null;
+      if(parts && parts.length===batch.length){ batch.forEach((b,i)=>{ b.n.nodeValue=_preserveWs(b.n.nodeValue, parts[i].trim()); }); }
+      else { for(const b of batch){ try{ b.n.nodeValue=_preserveWs(b.n.nodeValue, (await mmTranslate(b.t, source, target)).trim()); }catch(e){} } }
+    }
+    if(btn) btn.innerHTML='🌐 '+langName+' ✓';
+  }catch(e){ if(btn) btn.innerHTML='🌐 翻译'; showTrToast('翻译失败，请检查网络后重试'); }
+  finally{ if(btn) btn.style.pointerEvents=''; }
+}
+function showTrToast(msg){
+  let t=document.getElementById('tr-toast');
+  if(!t){ t=document.createElement('div'); t.id='tr-toast'; t.style.cssText='position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--t0);color:var(--bg-card);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:10050;box-shadow:0 8px 24px rgba(0,0,0,0.25)'; document.body.appendChild(t); }
+  t.textContent=msg; t.style.opacity='1';
+  clearTimeout(window.__trToastT); window.__trToastT=setTimeout(()=>{ t.style.opacity='0'; },2600);
+}
+
+// ══════════════════════════════════════════════════════════════
+// Ozon / WB 一键优化：应用 AI 建议 → 补齐关键词/属性/媒体 + 提分 + 重渲染评分
+// ══════════════════════════════════════════════════════════════
+function ruOptimize(paneId){
+  const root=window._rescoreData; const rd=root && root[paneId];
+  if(!rd) return;
+  const btn=document.querySelector('#score-area-'+paneId+' .ai-optimize-btn');
+  if(btn){ btn.disabled=true; btn.innerHTML='<span class="mini-spin"></span> 优化中…'; btn.style.pointerEvents='none'; }
+  setTimeout(()=>{
+    // 1) 提分：把每个细则得分向 max 靠拢（补约 60% 差距，保留少量残差，避免满分不真实）
+    const boosted = rd.mdl.map(d=>({...d, criteria:d.criteria.map(c=>({...c, score: Math.min(c.max, c.score + Math.floor((c.max-c.score)*0.6))}))}));
+    rd.mdl = boosted;
+    // 2) 对 Listing 字段做可见的补充（绿色高亮 ✓AI）
+    _ruOptimizeFields(paneId.replace('-',''));
+    // 3) 重渲染评分面板（分数提高 + 已优化说明）
+    const tips2=['✅ 已应用 AI 优化：补齐关键词/属性/媒体，评分已提升', ...((rd.tips||[]).slice(0,2))];
+    const scoreArea=document.getElementById('score-area-'+paneId);
+    if(scoreArea) scoreArea.innerHTML=buildListingScoreHTML(root.kw, root.market, boosted, paneId.replace('ls-pane',''), tips2);
+    // 4) 更新顶部页签分数
+    _ruUpdateTabScore(paneId, calcTotal(boosted));
+    const btn2=document.querySelector('#score-area-'+paneId+' .ai-optimize-btn');
+    if(btn2){ btn2.innerHTML='<svg viewBox="0 0 24 24" style="stroke:#2d9e5a"><polyline points="20 6 9 17 4 12"/></svg> 已优化'; btn2.style.color='#2d9e5a'; btn2.style.borderColor='rgba(52,199,89,0.4)'; btn2.style.opacity='.85'; btn2.style.pointerEvents='none'; }
+  }, 1300);
+}
+function _ruOptimizeFields(cid){
+  const chip=t=>`<span class="kw-tag" style="background:rgba(52,199,89,0.14);color:#2d9e5a;font-weight:700">＋ ${t} ✓AI</span>`;
+  const tagsEl=document.getElementById(cid+'tags');
+  if(tagsEl){ const box=tagsEl.querySelector('.kw-tags')||tagsEl; if(box) box.insertAdjacentHTML('beforeend', chip('#наушникидляспорта')+chip('наушники с микрофоном')); }
+  const attrEl=document.getElementById(cid+'attr');
+  if(attrEl){ const box=attrEl.querySelector('.kw-tags')||attrEl; if(box) box.insertAdjacentHTML('beforeend', chip('Сертификат: CE')); }
+  const imgEl=document.getElementById(cid+'img');
+  if(imgEl){ imgEl.insertAdjacentHTML('beforeend', '<div style="margin-top:6px;padding:7px 10px;border-radius:8px;background:rgba(52,199,89,0.1);color:#2d9e5a;font-size:11px;font-weight:700">＋ AI: добавить 1 вертикальное видео 9:16 для роста конверсии ✓</div>'); }
+}
+function _ruUpdateTabScore(paneId, score){
+  const tab=document.querySelector('.dual-tab[data-pane="'+paneId+'"]');
+  if(!tab) return;
+  const grade=score>=90?'S':score>=80?'A':score>=70?'B':'C';
+  const sc=tab.querySelector('.dt-score'); if(sc) sc.textContent=score+'分';
+  const gr=tab.querySelector('.dt-grade'); if(gr) gr.textContent='Grade '+grade;
+}
+
+// ══════════════════════════════════════════════════════════════
+// 俄罗斯平台（Ozon / Wildberries）俄文 Listing 生成
+// 按「一键listing优化」流程：竞对分析 → 产品卖点抓取 → 标题 → 埋词 → 图片文案，并像亚马逊那样打分
+// ══════════════════════════════════════════════════════════════
+function generateRuListing(kw, market){
+  const isOzon = /Ozon/i.test(market);
+  const platform = isOzon ? 'Ozon' : 'Wildberries';
+  // 隐藏「生成」按钮容器，避免其中的 loading 一直转圈；加载反馈由结果区自身的 spinner 呈现
+  const btn=document.getElementById('gen-btn-wrap');
+  if(btn){ btn.style.display='none'; }
+  const area=document.getElementById('listing-result');
+  const urlN = (typeof genCompetitorUrls!=='undefined') ? genCompetitorUrls.length : 0;
+  const src = urlN>0 ? `已解析 ${urlN} 个竞品链接` : '基于产品关键词';
+  area.innerHTML=`<div class="result-panel fade-in"><div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">AI 正在按「竞对分析→卖点→标题→埋词→图片文案」流程生成俄文 Listing（${src} · ${platform}）</div></div></div>`;
+
+  setTimeout(()=>{
+   try{
+    const modelA = isOzon ? OZ_MODEL_A : WB_MODEL_A;
+    const modelB = isOzon ? OZ_MODEL_B : WB_MODEL_B;
+    const sA=calcTotal(modelA), sB=calcTotal(modelB);
+    // S≥90 · A 80-89 · B 70-79 · C<70（与评分面板 & prompt md 一致）
+    const _grade=v=>v>=90?'S':v>=80?'A':v>=70?'B':'C';
+    const gA=_grade(sA), gB=_grade(sB);
+    const kwShort = kw.slice(0,20);
+    const ctx = window._genContext;   // 「提取信息」参考上下文（可能为空）
+
+    const tipsA = isOzon
+      ? ['特性(Характеристики)完整度 96%，Ozon 内容评分(Контент-рейтинг)信号极佳','15-20 个主题标签已全覆盖，主推词+长尾词自然埋入简介与详情图文字','建议再补 1 条竖版视频，Rich-контент 转化预计再提升约 8%']
+      : ['SEO 关键词全域覆盖（标题/描述/特性/标签一致），WB 搜索排名信号强','已筛选 18 个主题标签，"наушники для бега не выпадают" 等高价值长尾词已布局','建议主图 CTR 优化 + 补充信息图，卡片转化预计提升约 10%'];
+    const tipsB = isOzon
+      ? ['场景化简介覆盖「地铁通勤/健身/居家办公」三大场景，转化导向清晰','每条卖点均含可验证参数（35дБ/48ч/IPX5），可信度高','建议将「隐秘包装」信任点在 7-8 图强化，降低犹豫']
+      : ['场景化卖点主动回应竞品三大差评（降噪/掉落/续航），差异化明确','俄语表达地道无机翻痕迹，核心卖点 4 个突出','建议特性(Характеристики)再补 3-4 项，卡片完整度更高'];
+
+    // ── 全局暴露：编辑 / 重新打分 / 保存所需数据（与亚马逊流程同结构，复用 saveListingAll）──
+    window._rescoreData = {
+      kw:kw, market:market, scoreA:sA, scoreB:sB, gradeA:gA, gradeB:gB,
+      'ls-pane-a':{ mdl:modelA, sfx:'-a', tips:tipsA },
+      'ls-pane-b':{ mdl:modelB, sfx:'-b', tips:tipsB }
+    };
+    window.toggleEdit = function(fieldId){
+      const el=document.getElementById(fieldId); if(!el) return;
+      const actions=document.getElementById('act-'+fieldId); const b=document.getElementById('ebtn-'+fieldId);
+      if(el.getAttribute('contenteditable')==='true'){
+        el.setAttribute('contenteditable','false'); if(actions)actions.classList.remove('show');
+        if(b) b.innerHTML='<svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑';
+      } else {
+        el.setAttribute('contenteditable','true'); el.focus(); if(actions)actions.classList.add('show');
+        if(b) b.innerHTML='取消编辑';
+      }
+    };
+    window.saveEdit = function(fieldId){ window.toggleEdit(fieldId); };
+    window.cancelEdit = function(fieldId){
+      const el=document.getElementById(fieldId); if(!el)return;
+      el.setAttribute('contenteditable','false');
+      const a=document.getElementById('act-'+fieldId); if(a)a.classList.remove('show');
+      const b=document.getElementById('ebtn-'+fieldId);
+      if(b) b.innerHTML='<svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑';
+    };
+    window.rescoreCard = function(paneId){
+      const rd=window._rescoreData; if(!rd||!rd[paneId])return;
+      const { mdl,sfx,tips }=rd[paneId];
+      const scoreArea=document.getElementById('score-area-'+paneId);
+      const b=document.getElementById('rescore-btn-'+paneId);
+      if(b){ b.disabled=true; b.innerHTML='<div class="loading-spinner" style="width:14px;height:14px;border-width:2px;margin:0"></div> 正在重新打分...'; b.style.cursor='wait'; }
+      if(scoreArea) scoreArea.innerHTML='<div class="result-panel fade-in"><div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">重新分析已编辑的 Listing...</div></div></div>';
+      setTimeout(()=>{
+        if(scoreArea) scoreArea.innerHTML=buildListingScoreHTML(rd.kw,rd.market,mdl,sfx,tips);
+        if(b){ b.innerHTML='<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#34c759;stroke-width:2.5;fill:none"><polyline points="20 6 9 17 4 12"/></svg> 打分已完成 · 评分报告已更新'; b.style.color='#34c759'; b.style.borderColor='rgba(52,199,89,0.3)'; b.style.background='rgba(52,199,89,0.04)'; b.style.cursor='default';
+          setTimeout(()=>{ b.disabled=false; b.innerHTML='<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> 重新对编辑后的 Listing 发起打分'; b.style.color=''; b.style.borderColor=''; b.style.background=''; b.style.cursor=''; },4000);
+        }
+      },1500);
+    };
+
+    // 可编辑字段（复用全局 copyFieldContent / toggleEdit）
+    function mkField(id,label,contentHTML,extra){
+      return `<div class="listing-field-editable">
+        <div class="lf-label" style="margin-bottom:6px">${label}</div>
+        <button class="lf-copy-btn" onclick="copyFieldContent('${id}',this)" title="复制内容">
+          <svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 复制
+        </button>
+        <button class="lf-edit-btn" id="ebtn-${id}" onclick="toggleEdit('${id}')">
+          <svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑
+        </button>
+        ${extra||''}
+        <div class="lf-editable-content" id="${id}" contenteditable="false">${contentHTML}</div>
+        <div class="lf-edit-actions" id="act-${id}">
+          <button class="lf-cancel-btn" onclick="cancelEdit('${id}')">取消</button>
+          <button class="lf-save-btn" onclick="saveEdit('${id}')">保存修改</button>
+        </div>
+      </div>`;
+    }
+    // 流程步骤分隔标题（前端仅显示俄文）
+    function flowStep(n,zh,ru){
+      return `<div style="display:flex;align-items:center;gap:8px;margin:6px 0 2px">
+        <span style="width:20px;height:20px;border-radius:6px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${n}</span>
+        <span style="font-size:12px;font-weight:800;color:var(--t0)">${ru}</span>
+      </div>`;
+    }
+
+    // ── 内容（俄文 · 以无线耳机为示例，标题嵌入关键词）──
+    const S = {
+      a:{
+        strat:'SEO · 关键词导向', stratCls:'sp-seo', badge:'A', badgeCls:'dt-badge-a', label:'最大化关键词/标签覆盖与搜索权重',
+        titles:[
+          {t:`Беспроводные наушники ${kwShort} с шумоподавлением 35 дБ, Bluetooth 5.3, 48 ч, IPX5 — для спорта, бега и города`, why:'Категория и основной запрос впереди, объединяет частотные слова конкурентов и длинный хвост — рекомендуем как основной заголовок'},
+          {t:`TWS наушники ${kwShort} ANC 35дБ, Bluetooth 5.3, автономность 48 часов, влагозащита IPX5, для тренировок`, why:'Акцент на аббревиатуры TWS / ANC — охватывает сокращённые поисковые запросы'},
+          {t:`Наушники беспроводные ${kwShort}, активное шумоподавление, быстрая зарядка, спорт и город, чёрные`, why:'Содержит цвет — подходит для поиска с фильтром по цвету'}
+        ],
+        bullets:[
+          '<strong>Активное шумоподавление 35 дБ</strong> — гибридное ANC + прозрачный режим одним касанием, CVC 8.0 для чистых звонков.',
+          '<strong>Автономность до 48 часов</strong> — 12 ч на одном заряде + кейс; быстрая зарядка USB-C: 10 мин = 90 мин музыки; беспроводная зарядка Qi.',
+          '<strong>Влагозащита IPX5 и надёжная посадка</strong> — 3 регулируемые заушины + 6 амбушюр (S/M/L), вес 9 г; тест 5К бега — 0% выпадений.',
+          '<strong>Bluetooth 5.3, два устройства сразу</strong> — авто-переключение на входящий звонок, игровой режим 40 мс.',
+          '<strong>Полный комплект и гарантия 18 мес</strong> — наушники ×2, кейс, кабель USB-C, заушины, амбушюры, чехол; возврат 30 дней.'
+        ],
+        desc:'Профессиональные беспроводные наушники для активного ритма города. Утром в шумном метро одно касание включает активное шумоподавление 35 дБ — вокруг только ваша музыка. На тренировке наушники держатся надёжно благодаря 3 регулируемым заушинам и 6 амбушюрам S/M/L, а влагозащита IPX5 не боится пота и дождя. Автономность до 48 часов с кейсом и быстрая зарядка USB-C (10 минут = 90 минут воспроизведения) снимают тревогу за заряд. Bluetooth 5.3 подключает телефон и ноутбук одновременно, а игровой режим 40 мс синхронизирует звук и картинку. В комплекте: наушники, зарядный кейс, кабель USB-C, сменные амбушюры и заушины, чехол. Гарантия 18 месяцев, возврат 30 дней.',
+        tags:['беспроводные наушники','tws наушники','наушники с шумоподавлением','bluetooth наушники','наушники для спорта','наушники для бега','влагозащищённые наушники','наушники 48 часов','anc наушники','наушники для телефона','игровые наушники','наушники с микрофоном','наушники для тренировок','наушники для метро','наушники ipx5','наушники bluetooth 5.3','tws с кейсом','наушники быстрая зарядка'],
+        primary:'беспроводные наушники',
+        longtail:['наушники для бега не выпадают','наушники с шумоподавлением для метро','tws наушники 48 часов автономность'],
+        clusters:[
+          {head:'наушники беспроводные', syn:['tws наушники','bluetooth наушники','наушники без проводов'], forms:['наушников беспроводных','наушниками беспроводными'], typos:['наушники безпроводные','tws наушнкики']},
+          {head:'наушники с шумоподавлением', syn:['anc наушники','наушники анс','шумоподавляющие наушники'], forms:['наушников с шумоподавлением'], typos:['наушники с шумоподавление','анс наушникики']},
+          {head:'наушники для спорта', syn:['спортивные наушники','наушники для бега','наушники для зала'], forms:['наушников для спорта'], typos:['наушники для спарта']}
+        ]
+      },
+      b:{
+        strat:'场景 · 转化导向', stratCls:'sp-cvr', badge:'B', badgeCls:'dt-badge-b', label:'最大化场景代入与购买转化',
+        titles:[
+          {t:`Наушники для бега и метро — шумоподавление 35 дБ, не выпадают, 48 ч без подзарядки, IPX5, Bluetooth 5.3`, why:'Боль и сценарий впереди (бег/метро/не выпадают), под конверсию — рекомендуем как основной заголовок'},
+          {t:`Беспроводные наушники ${kwShort}: тихое метро утром, надёжная посадка в зале, заряд на всю неделю`, why:'Повествование через 3 сценария — сильное погружение'},
+          {t:`TWS наушники ${kwShort} для тренировок — влагозащита IPX5, глубокий бас, 2 устройства сразу`, why:'Таргет на аудиторию фитнеса'}
+        ],
+        bullets:[
+          '<strong>Тишина в метро одним касанием</strong> — 35 дБ ANC превращают шумный вагон (85 дБ) в фон около 50 дБ.',
+          '<strong>Не выпадают на пробежке</strong> — 3-позиционные заушины отработаны на 100 бегунах, выпадение менее 0,3%.',
+          '<strong>Заряд на всю неделю</strong> — ответ на главную жалобу к конкурентам: 12 ч + 48 ч с кейсом, USB-C 10 мин = 90 мин.',
+          '<strong>Телефон и ноутбук одновременно</strong> — Bluetooth 5.3, авто-переключение, задержка 40 мс для игр.',
+          '<strong>Покупка без риска</strong> — полный комплект, гарантия 18 мес, возврат 30 дней, ответ поддержки за 24 ч.'
+        ],
+        desc:'Представьте: утро понедельника, битком набитый вагон метро. Одно касание — и 35 дБ шумоподавления гасят хаос, остаётся только ваш подкаст. Среда, зал, пятый подход HIIT, футболка мокрая от пота — но наушники держатся, потому что 3-позиционные заушины доработаны по отзывам 100 бегунов. Выходные, вы работаете из кофейни — входящий звонок не нужно снимать наушники: Bluetooth 5.3 сам переключит устройство. Это наши ответы на три частые жалобы к конкурентам: слабое шумоподавление, выпадают при спорте и не хватает заряда на день. Автономность 12 ч на заряде и 48 ч с кейсом закрывают всю неделю, а быстрая зарядка USB-C даёт 90 минут музыки за 10 минут. Гарантия 18 месяцев, возврат 30 дней.',
+        tags:['наушники для бега','наушники для метро','наушники не выпадают','наушники с шумоподавлением','беспроводные наушники для спорта','tws наушники','влагозащищённые наушники ipx5','наушники 48 часов','наушники для тренировок','anc наушники','игровые наушники','наушники два устройства','наушники быстрая зарядка','bluetooth 5.3 наушники','наушники для зала','наушники для телефона','tws с кейсом','наушники для города'],
+        primary:'наушники для бега',
+        longtail:['наушники которые не выпадают при беге','наушники с шумоподавлением для метро','беспроводные наушники на 48 часов'],
+        clusters:[
+          {head:'наушники для бега', syn:['наушники не выпадают','беговые наушники','наушники для спорта'], forms:['наушников для бега'], typos:['наушники для бего','наушники для бега не выпадают']},
+          {head:'наушники для метро', syn:['наушники с шумоподавлением','anc наушники','наушники для города'], forms:['наушников для метро'], typos:['наушники для метра']},
+          {head:'беспроводные наушники', syn:['tws наушники','bluetooth наушники'], forms:['беспроводных наушников'], typos:['безпроводные наушники']}
+        ]
+      }
+    };
+    // 特性(Характеристики)：优先用「提取信息」的属性 + 认证；否则用示例数据
+    let attrs;
+    const RU_ATTR={'材质':'Материал','颜色':'Цвет','尺寸':'Размер','重量':'Вес','容量':'Объём','产地':'Страна','保修期':'Гарантия','适用人群':'Аудитория','风格':'Стиль','类型':'Тип','蓝牙':'Bluetooth','降噪':'Шумоподавление','续航':'Время работы','防护':'Защита','材料':'Материал','品牌':'Бренд'};
+    if(ctx && ctx.own && (ctx.own.attrs||[]).length){
+      attrs = ctx.own.attrs.map(a=>`<span class="kw-tag">${(RU_ATTR[a.k]||a.k)}: ${a.v}</span>`).join('')
+            + (ctx.own.certs||[]).map(c=>`<span class="kw-tag" style="background:rgba(52,199,89,0.1)">Сертификат: ${c}</span>`).join('');
+    } else {
+      attrs = '<span class="kw-tag">Тип: TWS (внутриканальные)</span><span class="kw-tag">Bluetooth: 5.3</span><span class="kw-tag">Шумоподавление: активное 35 дБ</span><span class="kw-tag">Время работы: 12 ч (48 ч с кейсом)</span><span class="kw-tag">Влагозащита: IPX5</span><span class="kw-tag">Вес: 9 г / наушник</span><span class="kw-tag">Зарядка: USB-C + Qi</span><span class="kw-tag">Быстрая зарядка: 10 мин = 90 мин</span><span class="kw-tag">Задержка: 40 мс (игровой режим)</span><span class="kw-tag">Микрофон: CVC 8.0</span><span class="kw-tag">Драйвер: 10 мм</span><span class="kw-tag">Мультипоинт: 2 устройства</span><span class="kw-tag">Цвет: чёрный / белый</span><span class="kw-tag">Материал: ABS + силикон</span><span class="kw-tag">Гарантия: 18 месяцев</span><span class="kw-tag">Комплект: наушники+кейс+кабель+амбушюры S/M/L+чехол</span>';
+    }
+    const imgCopy = [
+      {n:1, rutag:'Функциональные фото', ru:'Активное шумоподавление 35 дБ — тишина в метро, зале и офисе'},
+      {n:2, rutag:'Функциональные фото', ru:'До 48 часов работы + быстрая зарядка USB-C: 10 мин = 90 мин'},
+      {n:3, rutag:'Функциональные фото', ru:'Bluetooth 5.3 — 2 устройства сразу, игровой режим 40 мс'},
+      {n:4, rutag:'Детали преимуществ', ru:'IPX5 — защита от пота и дождя на любой тренировке'},
+      {n:5, rutag:'Детали преимуществ', ru:'Надёжная посадка: 3 заушины + 6 амбушюр S/M/L, всего 9 г'},
+      {n:6, rutag:'Детали преимуществ', ru:'Прозрачный режим — слышно объявления в метро одним касанием'},
+      {n:7, rutag:'Влагозащита / доверие', ru:'Тест влагозащиты IPX5 — брызги и пот не страшны'},
+      {n:8, rutag:'Скрытная упаковка', ru:'Скрытная упаковка — нейтральная коробка без бренда'}
+    ];
+
+    function titleVariantsHTML(cid, list){
+      return list.map((v,i)=>`
+        <div style="display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid ${i===0?'rgba(0,122,255,0.3)':'var(--border)'};border-radius:8px;background:${i===0?'rgba(0,122,255,0.04)':'var(--bg-card2)'};margin-bottom:6px">
+          <span style="flex-shrink:0;font-size:10px;font-weight:800;color:${i===0?'#fff':'var(--t3)'};background:${i===0?'var(--accent)':'var(--bg-input)'};border-radius:5px;padding:2px 7px;margin-top:1px">V${i+1}${i===0?' ★':''}</span>
+          <div style="flex:1">
+            <div style="font-size:12.5px;font-weight:600;color:var(--t0);line-height:1.4">${v.t} <span style="color:var(--t3);font-weight:500">(${v.t.length})</span></div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:3px"><span style="font-weight:700;color:${i===0?'var(--accent2)':'var(--t3)'}">${i===0?'★ Рекомендуется':'Почему'}:</span> ${v.why}</div>
+          </div>
+        </div>`).join('');
+    }
+
+    function ruCard(o, paneId){
+      const cid = paneId.replace('-','');
+      const model = paneId==='ls-pane-a' ? modelA : modelB;
+      const tips  = paneId==='ls-pane-a' ? tipsA : tipsB;
+      const scoreHTML = buildListingScoreHTML(kw, market, model, paneId.replace('ls-pane',''), tips);
+      const mainTitle = o.titles[0].t;
+      // 埋词平台差异化：Ozon → 可点击 hashtags；WB → 搜索簇（同义/词形/错拼）
+      const hashHTML = o.tags.slice(0,12).map(t=>`<span class="kw-tag" style="background:rgba(0,91,255,0.09);color:#005bff;font-weight:600">#${t.replace(/\s+/g,'')}</span>`).join('');
+      const clusterHTML = (o.clusters||[]).map(cl=>`
+        <div style="padding:9px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card2);margin-bottom:6px">
+          <div style="font-size:12px;font-weight:700;color:var(--t0);margin-bottom:5px">🔑 ${cl.head}</div>
+          <div style="font-size:11px;line-height:1.75">
+            <div><span style="color:var(--t3);font-weight:600">Синонимы:</span> ${cl.syn.map(s=>`<span class="kw-tag" style="padding:1px 8px">${s}</span>`).join('')}</div>
+            <div><span style="color:var(--t3);font-weight:600">Словоформы:</span> ${cl.forms.map(s=>`<span class="kw-tag" style="padding:1px 8px">${s}</span>`).join('')}</div>
+            <div><span style="color:var(--t3);font-weight:600">Опечатки:</span> ${cl.typos.map(s=>`<span class="kw-tag" style="padding:1px 8px;opacity:.85">${s}</span>`).join('')}</div>
+          </div>
+        </div>`).join('');
+      const kwHTML = `<div style="margin-bottom:8px"><span style="font-size:11px;font-weight:700;color:var(--accent2)">Основной запрос:</span> <span class="kw-tag" style="background:rgba(0,122,255,0.1)">${o.primary}</span></div>`
+        + `<div><span style="font-size:11px;font-weight:700;color:var(--t2)">Длинный хвост:</span> ${o.longtail.map(t=>`<span class="kw-tag">${t}</span>`).join('')}</div>`;
+      const imgHTML = imgCopy.map(im=>`
+        <div style="display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:var(--bg-card2);border:1px solid var(--border);margin-bottom:6px">
+          <span style="flex-shrink:0;font-size:10px;font-weight:800;color:var(--accent);background:rgba(0,122,255,0.08);border-radius:5px;padding:2px 7px">Фото ${im.n}</span>
+          <div style="flex:1">
+            <div style="font-size:9.5px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px">${im.rutag||''}</div>
+            <div style="font-size:12px;color:var(--t0);line-height:1.4">${im.ru}</div>
+          </div>
+        </div>`).join('');
+
+      return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+        <div>
+          <div class="result-panel">
+            <div class="rp-header">
+              <div style="flex:1">
+                <div class="rp-title" style="display:flex;align-items:center;gap:8px">
+                  <span class="strategy-pill ${o.stratCls}">${o.badge} ${o.strat}</span>
+                  Listing 生成结果 · ${platform} · 俄文
+                </div>
+                <div style="font-size:11px;color:var(--t3);margin-top:2px">关键词: ${kw} · 策略: ${o.label}</div>
+              </div>
+              <div style="display:flex;gap:8px">
+                ${trMenuHTML(paneId,'ru')}
+                <div class="chip chip-green" onclick="regenerateListing()">↻ 重新生成</div>
+                <div class="chip chip-orange">⬇ 下载</div>
+              </div>
+            </div>
+            <div id="trscope-${paneId}" style="padding:20px;display:grid;grid-template-columns:1fr;gap:12px">
+              ${flowStep(3,'','Заголовок · 3 варианта')}
+              <div class="listing-field-editable">
+                <div class="lf-label" style="margin-bottom:6px">Заголовок</div>
+                ${titleVariantsHTML(cid, o.titles)}
+                <div style="font-size:10px;color:var(--t3);margin-top:2px">${mainTitle.length} символов${isOzon?'':' / 60 (WB)'}</div>
+              </div>
+              ${flowStep(2,'','Продающие свойства')}
+              ${mkField(cid+'bullets','Ключевые преимущества','<ul class="bullet-list">'+o.bullets.map(b=>'<li><div class="bullet-dot"></div>'+b+'</li>').join('')+'</ul>')}
+              ${flowStep(4,'',isOzon?'Хэштеги / Ключевые слова':'Поисковые кластеры / Ключевые слова')}
+              ${isOzon
+                ? mkField(cid+'tags','Хэштеги · <span style="color:var(--accent2)">'+Math.min(o.tags.length,12)+' (кликабельные, для поиска)</span>','<div class="kw-tags">'+hashHTML+'</div>')
+                : mkField(cid+'tags','Поисковые кластеры · <span style="color:var(--accent2)">'+(o.clusters||[]).length+' кластера</span>','<div style="font-size:10px;color:var(--t3);margin-bottom:6px">Синонимы/словоформы/опечатки — вниз в описание и характеристики (seller tags ≠ поиск)</div>'+clusterHTML)
+              }
+              ${mkField(cid+'kw','Ключевые слова',kwHTML)}
+              ${flowStep(5,'','Описание')}
+              ${mkField(cid+'desc','Описание · <span style="color:var(--accent2)">'+o.desc.length+' символов</span>','<div class="lf-value">'+o.desc+'</div>')}
+              ${flowStep(2,'','Характеристики')}
+              ${mkField(cid+'attr','Характеристики','<div class="kw-tags">'+attrs+'</div>')}
+              ${flowStep(5,'','Инфографика')}
+              ${mkField(cid+'img','Тексты для инфографики',imgHTML)}
+            </div>
+            <div style="padding:0 20px 16px">
+              <button class="lf-rescore-btn" id="rescore-btn-${paneId}" onclick="rescoreCard('${paneId}')">
+                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                重新对编辑后的 Listing 发起打分
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="score-area-${paneId}" style="position:sticky;top:16px;align-self:start">${scoreHTML}</div>
+      </div>`;
+    }
+
+    const cardA = ruCard(S.a, 'ls-pane-a');
+    const cardB = ruCard(S.b, 'ls-pane-b');
+
+    // ── 竞对分析（3 个竞品：头部 / 腰部 / 起量新链接）──
+    const RU_COMP = [
+      {rank:1, tier:'Лидер категории', tierCls:'top3',
+       title:'HONOR Choice Earbuds X5 Pro — TWS, ANC, Bluetooth 5.3, автономность 42 ч',
+       tags:['беспроводные наушники','tws','anc наушники','наушники bluetooth','наушники honor'],
+       desc:'Лидер категории с большим числом отзывов и стабильными продажами. Сильный бренд, агрессивная цена.',
+       photos:'9 фото + видео · инфографика ANC и автономности · lifestyle-сцены',
+       style:'Минимализм, синие акценты, крупные цифры характеристик',
+       page:'Сильная инфографика автономности; слабое место — жалобы на посадку при беге (шанс для дифференциации).'},
+      {rank:2, tier:'Средний сегмент', tierCls:'',
+       title:'TWS наушники ANC, Bluetooth 5.3, влагозащита, 30 ч, с микрофоном',
+       tags:['tws наушники','наушники с шумоподавлением','наушники для спорта','влагозащищённые наушники'],
+       desc:'Средний сегмент, много характеристик, но простое оформление и слабая эмоциональная подача.',
+       photos:'6 фото · 1 инфографика · без видео',
+       style:'Нейтральный белый фон, мелкий текст характеристик',
+       page:'Характеристики полные, но нет сценариев использования — низкая вовлечённость.'},
+      {rank:3, tier:'Быстрорастущая новинка', tierCls:'',
+       title:'Наушники беспроводные для бега, не выпадают, IPX5, 48 ч, спорт',
+       tags:['наушники для бега','наушники не выпадают','наушники для спорта','наушники ipx5'],
+       desc:'Новый листинг с быстрым ростом: точный заход на спортивную нишу и «не выпадают».',
+       photos:'8 фото · динамичные спорт-сцены · видео бега',
+       style:'Яркие спортивные акценты, крупные УТП на первом экране',
+       page:'Отличный сторителлинг под спорт; мало характеристик в бэкенде — можно обойти по полноте.'}
+    ];
+    // 竞对数据：优先用「提取信息」的竞品链接；否则用示例三档竞品
+    const compData = (ctx && ctx.competitors && ctx.competitors.length)
+      ? ctx.competitors.map((c,i)=>({
+          rank:i+1,
+          tier:(i===0?'Лидер категории':i===1?'Средний сегмент':'Новинка')+' · '+c.platform.split(' · ')[0],
+          tierCls:i===0?'top3':'',
+          title:c.name,
+          tags:(c.attrs||[]).slice(0,5).map(a=>String(a.v)),
+          desc:`Цена ${c.price} · рейтинг ${c.rating} · BSR ${c.bsr}. `+((c.sellingPoints&&c.sellingPoints[0])?c.sellingPoints[0].replace(/^【.*?】/,''):'Конкурент из указанной ссылки.'),
+          photos:(c.images&&c.images.length)?(c.images.length+' фото (из ссылки)'):'фото из карточки конкурента',
+          style:'Оформление конкурента (для сравнения)',
+          page:'Ссылка: '+(c.url||'')+' — использовать для дифференциации, не копировать.'
+        }))
+      : RU_COMP;
+    const compItems = compData.map(c=>`
+      <div class="comp-card fade-in">
+        <div class="comp-card-header">
+          <div class="comp-rank${c.tierCls?' top3':''}">#${c.rank}</div>
+          <div class="comp-title-wrap">
+            <div class="comp-prod-title">${c.title}</div>
+            <div class="comp-prod-meta"><span style="font-weight:700;color:var(--accent2)">${c.tier}</span></div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-field"><div class="comp-field-lbl">Заголовок</div><div class="comp-field-val">${c.title}</div></div>
+          <div class="comp-field"><div class="comp-field-lbl">Теги</div><div class="comp-field-val"><div class="comp-kw-tags">${c.tags.map(t=>`<span class="comp-kw-tag">${t}</span>`).join('')}</div></div></div>
+          <div class="comp-field"><div class="comp-field-lbl">Описание</div><div class="comp-field-val">${c.desc}</div></div>
+          <div class="comp-field"><div class="comp-field-lbl">Комплект фото</div><div class="comp-field-val">${c.photos}</div></div>
+          <div class="comp-field"><div class="comp-field-lbl">Стиль оформления</div><div class="comp-field-val">${c.style}</div></div>
+          <div class="comp-field"><div class="comp-field-lbl">Анализ карточки</div><div class="comp-field-val">${c.page}</div></div>
+        </div>
+      </div>`).join('');
+
+    area.innerHTML=`
+    <div class="dual-hint fade-in" style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <button id="listing-save-all-btn" onclick="saveListingAll()" style="flex-shrink:0;padding:7px 18px;border:none;border-radius:var(--radius-sm);background:var(--accent);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,122,255,0.3)">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        保存报告
+      </button>
+    </div>
+    <div class="dual-tabs fade-in">
+      <div class="dual-tab active" data-pane="ls-pane-a" onclick="switchDualPane(this)">
+        <span class="dt-badge dt-badge-a">A</span><span>方案 A · SEO</span><span class="dt-score">${sA}分</span><span class="dt-grade">Grade ${gA}</span>
+      </div>
+      <div class="dual-tab" data-pane="ls-pane-b" onclick="switchDualPane(this)">
+        <span class="dt-badge dt-badge-b">B</span><span>方案 B · 转化</span><span class="dt-score">${sB}分</span><span class="dt-grade">Grade ${gB}</span>
+      </div>
+    </div>
+    <div class="dual-pane active fade-in" id="ls-pane-a">${cardA}</div>
+    <div class="dual-pane" id="ls-pane-b">${cardB}</div>`;
+    // 参考上下文（喂给大模型的提示词）不在前端展示，仅用于生成 & 记录在 prompt md
+    addHist('listing',`${kw} · ${platform} · 俄文 A/B双方案`,sA);
+   }catch(err){
+    console.error('generateRuListing error:', err);
+    if(area) area.innerHTML=`<div class="result-panel fade-in" style="padding:24px;text-align:center">
+      <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:6px">生成失败</div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:12px">俄文 Listing 生成时出错：${(err&&err.message)||err}</div>
+      <button class="btn-secondary" onclick="generateListing()" style="padding:8px 18px;font-size:12px">重试</button>
+    </div>`;
+   }
+  },1100);
 }
 
 
@@ -9158,6 +9876,554 @@ function toggleSwBar(){
 function toggleUrlBar(){
   const bar = document.getElementById('gen-url-bar');
   if(bar){ bar.classList.toggle('show'); if(bar.classList.contains('show')) bar.querySelector('input').focus(); }
+}
+// ══ 多竞品链接管理 ══
+const genCompetitorUrls = [];
+function addCompetitorUrl(){
+  const inp = document.getElementById('gen-url-input');
+  if(!inp) return;
+  const raw = inp.value.trim();
+  if(!raw) return;
+  // 支持一次粘贴多个（换行/空格/逗号分隔）
+  raw.split(/[\s,，]+/).map(u=>u.trim()).filter(Boolean).forEach(u=>{
+    if(!genCompetitorUrls.includes(u)) genCompetitorUrls.push(u);
+  });
+  inp.value = '';
+  renderCompetitorUrls();
+  inp.focus();
+}
+function removeCompetitorUrl(idx){
+  if(document.getElementById('pd-drawer')) closeProductDrawer(true);
+  const url=genCompetitorUrls[idx];
+  genCompetitorUrls.splice(idx,1);
+  const ci=(_extractCards||[]).findIndex(d=>d.url===url);
+  if(ci>=0){ _extractCards.splice(ci,1); }
+  renderCompetitorUrls();
+}
+function renderCompetitorUrls(){
+  const wrap = document.getElementById('gen-url-chips');
+  if(!wrap) return;
+  if(!genCompetitorUrls.length){ wrap.style.display='none'; wrap.innerHTML=''; return; }
+  wrap.style.display='flex';
+  wrap.innerHTML = genCompetitorUrls.map((u,i)=>{
+    const short = u.length>40 ? u.slice(0,38)+'…' : u;
+    const ci=(_extractCards||[]).findIndex(d=>d.url===u);
+    const label = ci>=0 ? ('链接'+(ci+1)) : ('链接'+(i+1));
+    return `<div class="gen-url-chip clickable" title="点击查看商品信息：${u}" onclick="openProductDrawerByUrl('${u.replace(/'/g,"\\'")}')">
+      <span>🔗 ${label} · ${short}</span>
+      <button class="gen-url-chip-remove" onclick="event.stopPropagation();removeCompetitorUrl(${i})">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>`;
+  }).join('');
+}
+// 市场切换：Ozon/Wildberries 时提示可用竞品链接生成俄文 Listing
+function onMarketChange(){
+  const sel = document.getElementById('market-sel');
+  if(!sel) return;
+  const isRu = /Ozon|Wildberries/i.test(sel.value);
+  const urlInp = document.getElementById('gen-url-input');
+  if(urlInp){
+    urlInp.placeholder = isRu
+      ? '粘贴 Ozon / Wildberries 竞品链接后回车添加（可添加多个），如 https://www.ozon.ru/product/... 或 https://www.wildberries.ru/catalog/...'
+      : '粘贴竞品链接后回车添加（可添加多个），如 https://www.amazon.com/dp/...';
+  }
+  const kwInp = document.getElementById('kw-input');
+  if(kwInp && isRu){
+    kwInp.placeholder = '输入产品关键词 + 卖点属性（中/俄文均可），如：беспроводные наушники | 降噪35dB、蓝牙5.3、续航48H、IPX5防水 | 目标人群：通勤、运动';
+  } else if(kwInp){
+    kwInp.placeholder = '输入产品关键词 + 卖点属性，如：无线蓝牙耳机 | 降噪35dB、蓝牙5.3、续航48H、IPX5防水 | 目标人群：通勤、运动';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// 链接提取：输入多个 URL → 点击「提取信息」→ 按截图形式展示可编辑产品信息卡片
+// ══════════════════════════════════════════════════════════════
+let _extractCards = [];
+const _EXT_IMG_GRAD = ['linear-gradient(135deg,#ff9ecb,#ff6fae)','linear-gradient(135deg,#c7a3ff,#8f6fff)','linear-gradient(135deg,#8fd3ff,#5ea8ff)','linear-gradient(135deg,#ffd18f,#ff9f5e)','linear-gradient(135deg,#9fe6c0,#4fc98a)','linear-gradient(135deg,#b0b7c9,#7d879c)','linear-gradient(135deg,#ff8f8f,#ff5e5e)','linear-gradient(135deg,#d6c3ff,#a98fff)'];
+
+function _extractDataset(kw){
+  const k=(kw||'').toLowerCase();
+  if(/наушник|earbud|耳机|headphone|蓝牙|bluetooth|tws/.test(k)){
+    return {
+      type:'earbuds', name:'TWS Wireless Earbuds ANC 35dB Bluetooth 5.3 48H IPX5', cat1:'电子产品', cat2:'耳机',
+      price:'$25.99', rating:'★ 4.4 (1,240 评论)', bsr:'#12', country:'US', productId:'B08XYZ1234',
+      catPath:'Electronics > Headphones > Earbud Headphones',
+      attrs:[{k:'类型',v:'TWS 真无线'},{k:'蓝牙',v:'5.3'},{k:'降噪',v:'ANC 35dB'},{k:'续航',v:'48 小时(含盒)'},{k:'防护',v:'IPX5'},{k:'重量',v:'9 g/只'},{k:'产地',v:'China'},{k:'适用人群',v:'运动/通勤'}],
+      sellingPoints:['【Active Noise Cancellation】Hybrid ANC 35dB + transparency mode, CVC 8.0 clear calls.','【48H Battery】12h per charge + case, USB-C fast charge 10min=90min, Qi wireless.','【IPX5 Secure Fit】3 ear hooks + 6 tips (S/M/L), 9g, 0% drop in 5K run test.','【Bluetooth 5.3 Dual Connect】Phone + laptop, 40ms gaming mode.','【Full Kit & 18-Month Warranty】Earbuds×2 + case + USB-C + tips + pouch.'],
+      certs:['CE','FCC','RoHS'], audience:'运动/健身及通勤人群',
+      imgs:['主图·白底','ANC信息图','续航信息图','佩戴场景','防水演示','多角度','充电盒特写','包装清单']
+    };
+  }
+  // 默认：假发（对齐截图）
+  return {
+    type:'wig', name:'AGO Pink Wigs Short Wavy Hair Pastel Bob Wig with Bangs Shoulder Length', cat1:'服装、鞋履和珠宝', cat2:'服装和配饰',
+    price:'$15.99', rating:'★ 4.3 (580 评论)', bsr:'#4', country:'US', productId:'B0F4XTHFVS',
+    catPath:'Clothing, Shoes & Jewelry > Costumes & Accessories > Women > Wigs',
+    attrs:[{k:'材质',v:'Synthetic Fiber (Heat Resistant)'},{k:'颜色',v:'Pastel Pink'},{k:'尺寸',v:'Shoulder Length ~35cm/14"'},{k:'重量',v:'220 g'},{k:'产地',v:'China'},{k:'适用人群',v:'Women'},{k:'风格',v:'Wavy Bob with Bangs'}],
+    sellingPoints:['【Affordable & Widely Used】Daily use, cosplay, shows, Halloween, concerts, costume parties, weddings.','【Pastel Pink Bob with Bangs】Short wavy shoulder-length wig, natural hairline, trendy pastel color.','【Heat-Resistant Synthetic Fiber】Soft, tangle-free, holds curls; comb gently with fingers or wide-tooth comb.','【Adjustable Breathable Cap】Rose net cap with adjustable straps fits most head sizes.','【Easy Care】Spray diluted conditioner to restore softness; beginner-friendly.'],
+    certs:[], audience:'Cosplay及派对装扮爱好者',
+    imgs:['主图·佩戴','产品信息图','多角度展示','卖点信息图','色差说明','模特实拍','细节特写','帽网结构']
+  };
+}
+
+function _buildExtractData(url,i,kw,market){
+  let host=url;
+  try{ host=new URL(url.match(/^https?:\/\//)?url:'https://'+url).hostname.replace(/^www\./,''); }catch(e){}
+  let platform='亚马逊 · amazon.com', pf='amazon';
+  if(/ozon\.ru/i.test(host)){ platform='Ozon · ozon.ru'; pf='ozon'; }
+  else if(/wildberries|wb\.ru/i.test(host)){ platform='Wildberries · wildberries.ru'; pf='wildberries'; }
+  else if(/amazon/i.test(host)){ platform='亚马逊 · '+host; pf='amazon'; }
+  else if(/Ozon/i.test(market)){ platform='Ozon · ozon.ru'; pf='ozon'; }
+  else if(/Wildberries/i.test(market)){ platform='Wildberries · wildberries.ru'; pf='wildberries'; }
+  const d=_extractDataset(kw);
+  d.url=url; d.host=host; d.platform=platform; d.pf=pf; d.idx=i; d.own=(i===0);
+  if(pf!=='amazon') d.country = (pf==='ozon'||pf==='wildberries') ? 'RU' : d.country;
+  if(d.own && kw) d.name = kw.split('|')[0].trim().slice(0,90) || d.name;
+  // 竞品做轻微数值差异
+  if(!d.own){
+    const pv=['$13.49','$17.99','$12.99','$19.99'], rv=['★ 4.1 (312 评论)','★ 4.5 (1,024 评论)','★ 4.0 (188 评论)'], bv=['#9','#17','#26','#33'];
+    d.price=pv[i%pv.length]; d.rating=rv[i%rv.length]; d.bsr=bv[i%bv.length];
+  }
+  d.imgs = d.imgs.map((label,j)=>({label, grad:_EXT_IMG_GRAD[j%_EXT_IMG_GRAD.length], picked:d.own}));
+  return d;
+}
+
+// 确认后仅用 URL chip 表示；该区域不再渲染大卡（改为点击 chip 打开右侧抽屉）
+function _renderExtractCards(){
+  const box=document.getElementById('gen-extract-result');
+  if(box) box.innerHTML='';
+}
+
+// 「添加并提取」：抓取输入框里的链接 → 弹窗让用户确认 → 确认后加入对话框
+let _pendingExtract=[];
+function extractAndConfirm(){
+  const inp=document.getElementById('gen-url-input');
+  const raw=(inp?inp.value:'').trim();
+  let urls = raw ? raw.split(/[\s,，]+/).map(u=>u.trim()).filter(Boolean) : [];
+  // 去掉已添加过的
+  urls = urls.filter(u=>!genCompetitorUrls.includes(u));
+  if(!urls.length){
+    if(inp){ inp.focus(); inp.placeholder='请先粘贴至少 1 个产品/竞品链接…'; }
+    return;
+  }
+  const kw=(document.getElementById('kw-input')||{}).value||'';
+  const market=(document.getElementById('market-sel')||{}).value||'';
+  const startIdx=_extractCards.length;
+  // 抓取中提示（按钮态）
+  const btn=document.querySelector('.gen-url-bar-extract');
+  if(btn){ btn.dataset.txt=btn.innerHTML; btn.innerHTML='抓取中…'; btn.disabled=true; }
+  setTimeout(()=>{
+    _pendingExtract = urls.map((u,j)=>_buildExtractData(u, startIdx+j, kw, market));
+    if(btn){ btn.innerHTML=btn.dataset.txt||'⚡ 添加并提取'; btn.disabled=false; }
+    showExtractConfirmModal(_pendingExtract);
+  }, 700);
+}
+
+function _extConfirmCardHTML(d,k){
+  const imgs=(d.imgs||[]).slice(0,6).map(im=>`<div class="ext-cc-img" style="background:${im.grad}">${im.label}</div>`).join('');
+  return `<div class="ext-confirm-card" id="ext-pending-${k}">
+    ${_pendingExtract.length>1?`<button class="ext-cc-drop" onclick="extDropPending(${k})" title="不添加这个">×</button>`:''}
+    <div class="ext-cc-top">
+      <span class="ext-card-badge link">链接${(d.idx||0)+1}</span>
+      <span class="ext-card-host">${d.platform}</span>
+    </div>
+    <div class="ext-cc-name">${(d.name||'').slice(0,90)}</div>
+    <div class="ext-sum-meta">
+      <span>🛒 ${d.platform.split(' · ')[0]}</span><span>💰 ${d.price}</span><span>⭐ ${d.rating}</span><span>🧩 ${(d.attrs||[]).length} 属性</span><span>🏷 ${(d.certs||[]).length} 认证</span><span>🖼 ${(d.imgs||[]).length} 图</span>
+    </div>
+    <div class="ext-cc-imgs">${imgs}</div>
+  </div>`;
+}
+
+function showExtractConfirmModal(items){
+  if(!items||!items.length) return;
+  document.getElementById('ext-confirm-overlay')?.remove();
+  const overlay=document.createElement('div');
+  overlay.id='ext-confirm-overlay'; overlay.className='ext-modal-overlay';
+  overlay.innerHTML=`<div class="ext-modal" onclick="event.stopPropagation()">
+    <div class="ext-modal-hd">
+      <div class="ext-modal-hd-ico">⚡</div>
+      <div style="flex:1">
+        <div class="ext-modal-title">确认加入提取到的产品</div>
+        <div class="ext-modal-sub">AI 已从链接抓取以下 <strong id="ext-modal-cnt">${items.length}</strong> 个产品，确认后加入对话框作为生成参考</div>
+      </div>
+      <button class="ext-modal-x" onclick="closeExtractConfirm(false)">✕</button>
+    </div>
+    <div class="ext-modal-body" id="ext-modal-body">${items.map((d,k)=>_extConfirmCardHTML(d,k)).join('')}</div>
+    <div class="ext-modal-ft">
+      <span class="ext-modal-ft-hint">加入后可在下方「预览」里逐项编辑</span>
+      <div style="display:flex;gap:10px">
+        <button class="ext-modal-cancel" onclick="closeExtractConfirm(false)">取消</button>
+        <button class="ext-modal-ok" id="ext-modal-ok" onclick="closeExtractConfirm(true)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 确认加入 (${items.length})</button>
+      </div>
+    </div>
+  </div>`;
+  overlay.onclick=()=>closeExtractConfirm(false);
+  document.body.appendChild(overlay);
+  document.body.style.overflow='hidden';
+}
+
+function extDropPending(k){
+  _pendingExtract[k]=null;
+  const el=document.getElementById('ext-pending-'+k); if(el) el.remove();
+  const left=_pendingExtract.filter(Boolean).length;
+  const cnt=document.getElementById('ext-modal-cnt'); if(cnt) cnt.textContent=left;
+  const ok=document.getElementById('ext-modal-ok'); if(ok) ok.innerHTML='<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 确认加入 ('+left+')';
+  if(left===0) closeExtractConfirm(false);
+}
+
+function closeExtractConfirm(ok){
+  const ov=document.getElementById('ext-confirm-overlay');
+  if(ok){
+    _pendingExtract.filter(Boolean).forEach(d=>{
+      if(!genCompetitorUrls.includes(d.url)) genCompetitorUrls.push(d.url);
+      _extractCards.push(d);
+    });
+    renderCompetitorUrls();   // 仅显示 URL chip；点击 chip 打开右侧抽屉预览
+    _renderExtractCards();     // 清空内联大卡区域
+    const inp=document.getElementById('gen-url-input'); if(inp) inp.value='';
+  }
+  _pendingExtract=[];
+  if(ov) ov.remove();
+  document.body.style.overflow='';
+}
+
+// 产品信息表单区块（供右侧抽屉使用）
+function _extBodySections(d,idx){
+  const flag=c=>({US:'🇺🇸 US',RU:'🇷🇺 RU',UK:'🇬🇧 UK',DE:'🇩🇪 DE'}[c]||('🌐 '+c));
+  const attrsHTML=`<div class="ext-attr-list" id="ext-attrlist-${idx}">${d.attrs.map((a,ai)=>`
+    <div class="ext-attr-item"><span class="ak">${a.k}</span><span class="av">${a.v}</span>
+      <button class="ext-attr-del" onclick="extDelAttr(${idx},${ai})" title="删除">×</button></div>`).join('')}</div>`;
+  const quicks=['材质','颜色','尺寸','重量','容量','产地','保修期','适用人群'];
+  const certsHTML=`<div class="ext-chips" id="ext-certlist-${idx}">${d.certs.map((c,ci)=>`<span class="ext-chip">${c}<span class="ext-chip-x" onclick="extDelCert(${idx},${ci})">×</span></span>`).join('')||'<span style="font-size:11px;color:var(--t4)">暂无认证</span>'}</div>`;
+  const imgsHTML=d.imgs.map((im,ii)=>`
+    <div class="ext-img-tile${im.picked?' picked':''}" style="background:${im.grad}" onclick="extToggleImg(${idx},${ii})" title="${im.label}">
+      <span>${im.label}</span>
+      <span class="ext-img-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+    </div>`).join('');
+  return `
+      <!-- 基础信息 -->
+      <div>
+        <div class="ext-sec-title">基础信息</div>
+        <label class="ext-lbl">产品名称（同步项目名）<span class="req">*</span></label>
+        <input class="ext-inp" id="ext-name-${idx}" value="${(d.name||'').replace(/"/g,'&quot;')}">
+        <div class="ext-row2" style="margin-top:12px">
+          <div><label class="ext-lbl">目标国家/地区（可多选）</label>
+            <div class="ext-chips"><span class="ext-chip">${flag(d.country)}<span class="ext-chip-x" onclick="this.parentElement.remove()">×</span></span><button class="ext-chip-add" onclick="extAddChip(this,'国家')">+ 选择或自定义</button></div></div>
+          <div><label class="ext-lbl">电商平台（可多选）</label>
+            <div class="ext-chips"><span class="ext-chip">${d.platform.split(' · ')[0]}<span class="ext-chip-x" onclick="this.parentElement.remove()">×</span></span><button class="ext-chip-add" onclick="extAddChip(this,'平台')">+ 选择或自定义</button></div></div>
+        </div>
+        <div class="ext-row2" style="margin-top:12px">
+          <div><label class="ext-lbl">一级类目</label><input class="ext-inp" id="ext-cat1-${idx}" value="${d.cat1}"></div>
+          <div><label class="ext-lbl">二级类目</label><input class="ext-inp" id="ext-cat2-${idx}" value="${d.cat2}"></div>
+        </div>
+      </div>
+      <!-- 商业数据 -->
+      <div>
+        <div class="ext-sec-title">商业数据 <span class="ext-sec-tag">2 项 · 来自抓取</span></div>
+        <div class="ext-biz">
+          <div class="ext-biz-tile"><div class="k">售价</div><div class="v">${d.price}</div></div>
+          <div class="ext-biz-tile"><div class="k">评分</div><div class="v" style="font-size:14px">${d.rating}</div></div>
+        </div>
+      </div>
+      <!-- 商品属性 -->
+      <div>
+        <div class="ext-sec-title">商品属性 <span class="ext-sec-tag">结构化键值 · 可手添</span></div>
+        <div class="ext-quickadd">${quicks.map(q=>`<button class="ext-quick-chip" onclick="extQuickAddAttr(${idx},'${q}')">+ ${q}</button>`).join('')}</div>
+        ${attrsHTML}
+        <div class="ext-attr-row">
+          <input class="ext-inp" id="ext-nak-${idx}" placeholder="新属性">
+          <input class="ext-inp" id="ext-nav-${idx}" placeholder="值" onkeydown="if(event.key==='Enter'){event.preventDefault();extAddAttr(${idx})}">
+          <button class="ext-chip-add" style="width:100%;text-align:center" onclick="extAddAttr(${idx})">+</button>
+        </div>
+      </div>
+      <!-- 抓取来源 -->
+      <div>
+        <div class="ext-sec-title">抓取来源 <span class="ext-sec-tag">溯源</span></div>
+        <div class="ext-src-grid">
+          <span class="sk">平台</span><span class="sv">${d.platform}</span>
+          <span class="sk">商品 ID</span><span class="sv">${d.productId}</span>
+          <span class="sk">原链接</span><span class="sv"><a href="${d.url}" target="_blank" rel="noopener">${d.url.length>52?d.url.slice(0,50)+'…':d.url}</a></span>
+          <span class="sk">类目路径</span><span class="sv">${d.catPath}</span>
+          <span class="sk">抓取时间</span><span class="sv">${new Date().toLocaleString()}</span>
+        </div>
+      </div>
+      <!-- 抓取图片 -->
+      <div>
+        <div class="ext-imgs-hdr">
+          <div class="ext-sec-title" style="margin:0">抓取图片 <span class="ext-sec-tag">${d.imgs.length} 张候选</span></div>
+          <button class="ext-push-btn" onclick="extPushAllImgs(${idx},this)">+ 全部塞入产品图</button>
+        </div>
+        <div class="ext-imgs-grid" id="ext-imgs-${idx}">${imgsHTML}</div>
+      </div>
+      <!-- 卖点 & 认证 -->
+      <div>
+        <div class="ext-sec-title">卖点 &amp; 认证</div>
+        <label class="ext-lbl">核心卖点 <span style="font-weight:500;color:var(--t3)">每行一条卖点</span></label>
+        <textarea class="ext-ta" id="ext-sp-${idx}">${d.sellingPoints.join('\n')}</textarea>
+        <label class="ext-lbl" style="margin-top:12px">认证标识 <span style="font-weight:500;color:var(--t3)">如 CE/FCC/RoHS/无添加/进口/FDA 等 · 最多 10 个</span></label>
+        ${certsHTML}
+        <input class="ext-inp" style="margin-top:6px" id="ext-cert-${idx}" placeholder="添加认证 · 回车" onkeydown="if(event.key==='Enter'){event.preventDefault();extAddCert(${idx})}">
+      </div>
+      <!-- 目标受众 -->
+      <div>
+        <div class="ext-sec-title">目标受众</div>
+        <label class="ext-lbl">受众画像</label>
+        <input class="ext-inp" id="ext-aud-${idx}" value="${(d.audience||'').replace(/"/g,'&quot;')}">
+        <div class="ext-row2" style="margin-top:12px">
+          <div><label class="ext-lbl">年龄段</label>
+            <select class="ext-inp" id="ext-age-${idx}"><option>— 不指定 —</option><option>18-24</option><option>25-34</option><option>35-44</option><option>45+</option></select></div>
+          <div><label class="ext-lbl">消费层级</label>
+            <select class="ext-inp" id="ext-tier-${idx}"><option>— 不指定 —</option><option>入门/性价比</option><option>中端</option><option>高端</option></select></div>
+        </div>
+      </div>
+      <!-- 补充 -->
+      <div>
+        <div class="ext-sec-title">补充</div>
+        <label class="ext-lbl">产品描述</label>
+        <textarea class="ext-ta" id="ext-desc-${idx}" placeholder="工艺、其他需要补充的信息"></textarea>
+      </div>`;
+}
+
+// ── 右侧抽屉：点击链接 chip 打开，预览/编辑该商品信息 ──
+function openProductDrawer(idx){
+  const d=_extractCards[idx]; if(!d) return;
+  closeProductDrawer(true);
+  const ov=document.createElement('div'); ov.className='pd-overlay'; ov.id='pd-overlay'; ov.onclick=()=>closeProductDrawer();
+  const dr=document.createElement('div'); dr.className='pd-drawer'; dr.id='pd-drawer';
+  dr.innerHTML=`
+    <div class="pd-hd">
+      <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
+        <span class="ext-card-badge link">链接${idx+1}</span>
+        <span class="ext-card-host">${d.platform}</span>
+      </div>
+      <button class="pd-close" onclick="closeProductDrawer()">✕</button>
+    </div>
+    <div class="pd-body">${_extBodySections(d, idx)}</div>
+    <div class="pd-ft">
+      <button class="ext-modal-cancel" onclick="closeProductDrawer()">关闭</button>
+      <button class="ext-use-btn" style="flex:1" onclick="pdGenerate(${idx})">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        用此链接生成 Listing
+      </button>
+    </div>`;
+  document.body.appendChild(ov); document.body.appendChild(dr);
+  document.body.style.overflow='hidden';
+  window._pdOpenIdx=idx;
+  // 强制 reflow 提交初始态，再加 show 触发滑入（不依赖 rAF，后台标签页也可靠）
+  void dr.offsetWidth;
+  ov.classList.add('show'); dr.classList.add('show');
+}
+function openProductDrawerByUrl(u){
+  const idx=(_extractCards||[]).findIndex(d=>d.url===u);
+  if(idx>=0) openProductDrawer(idx);
+}
+function _saveDrawerToModel(idx){
+  const d=_extractCards[idx]; if(!d) return;
+  const rv=id=>{const el=document.getElementById(id);return el?el.value:undefined;};
+  const set=(k,id)=>{const v=rv(id); if(v!==undefined && v!=='') d[k]=v;};
+  set('name','ext-name-'+idx); set('cat1','ext-cat1-'+idx); set('cat2','ext-cat2-'+idx); set('audience','ext-aud-'+idx);
+  const sp=rv('ext-sp-'+idx); if(sp!==undefined) d.sellingPoints=sp.split('\n').map(s=>s.trim()).filter(Boolean);
+}
+function closeProductDrawer(instant){
+  const ov=document.getElementById('pd-overlay'), dr=document.getElementById('pd-drawer');
+  if(typeof window._pdOpenIdx==='number'){ _saveDrawerToModel(window._pdOpenIdx); renderCompetitorUrls(); window._pdOpenIdx=undefined; }
+  if(instant){ if(ov)ov.remove(); if(dr)dr.remove(); document.body.style.overflow=''; return; }
+  if(ov) ov.classList.remove('show');
+  if(dr){ dr.classList.remove('show'); setTimeout(()=>{ if(dr)dr.remove(); if(ov)ov.remove(); document.body.style.overflow=''; },240); }
+  else { if(ov)ov.remove(); document.body.style.overflow=''; }
+}
+function pdGenerate(idx){
+  _saveDrawerToModel(idx);
+  window._pdOpenIdx=undefined;
+  extUseForGen(idx);   // 读取抽屉字段并生成（此时 DOM 尚在）
+  closeProductDrawer(true);
+}
+
+function extToggleCard(idx){
+  const body=document.getElementById('ext-body-'+idx);
+  const btn=document.getElementById('ext-prev-'+idx);
+  if(!body) return;
+  const show=body.style.display==='none';
+  body.style.display=show?'flex':'none';
+  if(btn) btn.innerHTML = show
+    ? '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> 收起'
+    : '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 预览';
+}
+function extToggleImg(idx,ii){
+  const d=_extractCards[idx]; if(!d)return;
+  d.imgs[ii].picked=!d.imgs[ii].picked;
+  const tiles=document.querySelectorAll('#ext-imgs-'+idx+' .ext-img-tile');
+  if(tiles[ii]) tiles[ii].classList.toggle('picked',d.imgs[ii].picked);
+}
+function extPushAllImgs(idx,btn){
+  const d=_extractCards[idx]; if(!d)return;
+  d.imgs.forEach((im,ii)=>{ im.picked=true; });
+  document.querySelectorAll('#ext-imgs-'+idx+' .ext-img-tile').forEach(t=>t.classList.add('picked'));
+  if(btn){ btn.textContent='✓ 已全部加入'; btn.style.background='var(--accent)'; btn.style.color='#fff'; setTimeout(()=>{btn.textContent='+ 全部塞入产品图';btn.style.background='';btn.style.color='';},1600); }
+}
+function _extRenderAttrs(idx){
+  const d=_extractCards[idx]; const box=document.getElementById('ext-attrlist-'+idx);
+  if(!d||!box)return;
+  box.innerHTML=d.attrs.map((a,ai)=>`<div class="ext-attr-item"><span class="ak">${a.k}</span><span class="av">${a.v}</span><button class="ext-attr-del" onclick="extDelAttr(${idx},${ai})" title="删除">×</button></div>`).join('');
+}
+function extAddAttr(idx){
+  const d=_extractCards[idx]; if(!d)return;
+  const k=(document.getElementById('ext-nak-'+idx).value||'').trim();
+  const v=(document.getElementById('ext-nav-'+idx).value||'').trim();
+  if(!k)return;
+  d.attrs.push({k,v:v||'—'});
+  document.getElementById('ext-nak-'+idx).value=''; document.getElementById('ext-nav-'+idx).value='';
+  _extRenderAttrs(idx);
+}
+function extQuickAddAttr(idx,key){
+  const d=_extractCards[idx]; if(!d)return;
+  if(d.attrs.find(a=>a.k===key)) return;
+  d.attrs.push({k:key,v:'—'}); _extRenderAttrs(idx);
+}
+function extDelAttr(idx,ai){ const d=_extractCards[idx]; if(!d)return; d.attrs.splice(ai,1); _extRenderAttrs(idx); }
+function extAddCert(idx){
+  const d=_extractCards[idx]; if(!d)return;
+  const el=document.getElementById('ext-cert-'+idx); const v=(el.value||'').trim();
+  if(!v||d.certs.length>=10||d.certs.includes(v)){ el.value=''; return; }
+  d.certs.push(v); el.value='';
+  const box=document.getElementById('ext-certlist-'+idx);
+  box.innerHTML=d.certs.map((c,ci)=>`<span class="ext-chip">${c}<span class="ext-chip-x" onclick="extDelCert(${idx},${ci})">×</span></span>`).join('');
+}
+function extDelCert(idx,ci){
+  const d=_extractCards[idx]; if(!d)return; d.certs.splice(ci,1);
+  const box=document.getElementById('ext-certlist-'+idx);
+  box.innerHTML=d.certs.map((c,i2)=>`<span class="ext-chip">${c}<span class="ext-chip-x" onclick="extDelCert(${idx},${i2})">×</span></span>`).join('')||'<span style="font-size:11px;color:var(--t4)">暂无认证</span>';
+}
+function extAddChip(btn,kind){
+  const val=(window.prompt('添加'+kind+'（输入名称）：')||'').trim();
+  if(!val)return;
+  const chip=document.createElement('span'); chip.className='ext-chip';
+  chip.innerHTML=val+'<span class="ext-chip-x" onclick="this.parentElement.remove()">×</span>';
+  btn.parentElement.insertBefore(chip,btn);
+}
+function extUseForGen(idx){
+  const d=_extractCards[idx]; if(!d)return;
+  // 抽屉未打开时字段不在 DOM，回退到数据模型
+  const rv=id=>{const el=document.getElementById(id); return el?(el.value||''):'';};
+  const name=(rv('ext-name-'+idx)||d.name||'').trim();
+  const sp=(rv('ext-sp-'+idx)||(d.sellingPoints||[]).join('\n')).trim();
+  const aud=(rv('ext-aud-'+idx)||d.audience||'').trim();
+  const attrStr=d.attrs.map(a=>a.k+':'+a.v).filter(x=>!/:—$/.test(x)).slice(0,6).join('、');
+  const spStr=sp.split('\n').map(s=>s.replace(/^【.*?】/,'').trim()).filter(Boolean).slice(0,3).join('；');
+  const parts=[name, attrStr, spStr, aud?('目标人群：'+aud):''].filter(Boolean);
+  const kwEl=document.getElementById('kw-input');
+  if(kwEl){ kwEl.value=parts.join(' | '); }
+  if(typeof updateGenSend==='function') updateGenSend();
+  // 以被点击的链接为主产品，其余为竞品，组装参考上下文（提示词）喂给生成
+  window._genOwnIdx = idx;
+  window._genContext = buildGenContext(idx);
+  // 直接生成（Amazon/Walmart/Ozon/WB 由 generateListing 自动路由）
+  generateListing();
+  const gr=document.getElementById('listing-result'); if(gr) gr.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── 把「提取信息」卡片（含用户编辑）组装成结构化参考上下文，作为喂给大模型的提示词 ──
+function buildGenContext(ownIdx){
+  if(!Array.isArray(_extractCards)||!_extractCards.length) return null;
+  ownIdx = (typeof ownIdx==='number' && ownIdx>=0 && ownIdx<_extractCards.length) ? ownIdx : 0;
+  const rv=(id)=>{const el=document.getElementById(id);return el?(el.value||'').trim():'';};
+  const cards=_extractCards.map((d,i)=>({
+    own:i===ownIdx,
+    name: rv('ext-name-'+i)||d.name,
+    cat1: rv('ext-cat1-'+i)||d.cat1, cat2: rv('ext-cat2-'+i)||d.cat2,
+    platform:d.platform, price:d.price, rating:d.rating, bsr:d.bsr, country:d.country,
+    url:d.url, productId:d.productId, catPath:d.catPath,
+    attrs:(d.attrs||[]).slice(),
+    sellingPoints:(rv('ext-sp-'+i)||(d.sellingPoints||[]).join('\n')).split('\n').map(s=>s.trim()).filter(Boolean),
+    certs:(d.certs||[]).slice(),
+    audience: rv('ext-aud-'+i)||d.audience,
+    ageRange: rv('ext-age-'+i), tier: rv('ext-tier-'+i),
+    desc: rv('ext-desc-'+i),
+    images:(d.imgs||[]).filter(im=>im.picked).map(im=>im.label)
+  }));
+  return { own: cards[ownIdx], competitors: cards.filter((c,i)=>i!==ownIdx), all:cards };
+}
+
+// 组装「喂给大模型」的完整提示词文本（对齐 prompt-ozon-wb-listing 生成打分.md 输入契约）
+function _genContextPromptText(ctx, market){
+  const o=ctx.own; const comps=ctx.competitors||[];
+  const isRu=/Ozon|Wildberries/i.test(market);
+  const plat=/Ozon/i.test(market)?'Ozon':/Wildberries/i.test(market)?'Wildberries':(market||'').trim();
+  const L=[];
+  L.push('# 任务：基于以下【抓取的参考信息】，生成 '+plat+' 平台 Listing'+(isRu?'（俄文）':'')+' 并按 7 维 100 分制打分');
+  L.push('# 流程：竞对分析 → 产品卖点抓取 → 标题(3版本+推荐理由) → 埋词 → 图片文案');
+  L.push('');
+  L.push('## 主产品（我方 · 来自抓取 · 已人工确认/编辑）');
+  L.push('产品名称: '+o.name);
+  L.push('类目: '+o.cat1+' > '+o.cat2+(o.catPath?'  ('+o.catPath+')':''));
+  L.push('平台/国家: '+o.platform.split(' · ')[0]+' / '+o.country);
+  L.push('商业数据: 售价 '+o.price+' · 评分 '+o.rating+' · BSR '+o.bsr);
+  L.push('属性: '+(o.attrs||[]).map(a=>a.k+'='+a.v).join('; '));
+  L.push('核心卖点（参考，需改写为地道'+(isRu?'俄语':'目标语')+'）:');
+  (o.sellingPoints||[]).forEach((s,i)=>L.push('  '+(i+1)+'. '+s));
+  L.push('认证: '+((o.certs||[]).join(', ')||'无'));
+  const age=(o.ageRange&&o.ageRange.indexOf('不指定')<0)?' · '+o.ageRange:'';
+  const tier=(o.tier&&o.tier.indexOf('不指定')<0)?' · '+o.tier:'';
+  L.push('目标受众: '+(o.audience||'')+age+tier);
+  if(o.desc) L.push('补充描述: '+o.desc);
+  if(o.images&&o.images.length) L.push('已选参考图: '+o.images.join('、'));
+  L.push('原链接: '+o.url);
+  L.push('');
+  if(comps.length){
+    L.push('## 竞品参考（'+comps.length+' 个 · 用于差异化，严禁照抄）');
+    comps.forEach((c,i)=>{
+      L.push('- 竞品'+(i+1)+': '+c.name);
+      L.push('  平台 '+c.platform.split(' · ')[0]+' · 售价 '+c.price+' · 评分 '+c.rating+' · BSR '+c.bsr);
+      if((c.attrs||[]).length) L.push('  属性 '+(c.attrs||[]).map(a=>a.k+'='+a.v).join('; '));
+      L.push('  链接 '+c.url);
+    });
+    L.push('');
+  }
+  L.push('## 生成要求');
+  L.push('- 标题实体优先、不堆词，输出 3 个版本 + 推荐理由；'+(/Ozon/i.test(market)?'Ozon：hashtags(可搜索)、Rich Content、最多 8 图 + 1 视频、必填特征 100%':/Wildberries/i.test(market)?'WB：标题≤60、描述≥1000、sizes 必填、同义/词形/错拼下沉到搜索簇':'覆盖高权重关键词并进入可筛选属性'));
+  L.push('- 结合竞品做功能差异化；每条卖点含可验证数据点；'+(isRu?'俄语地道、无机翻痕迹、无中英俄混排。':'语义连贯、无堆砌。'));
+  return L.join('\n');
+}
+
+// 生成结果顶部的「参考上下文（已喂给大模型）」预览卡
+function renderGenContextBanner(ctx, market){
+  if(!ctx||!ctx.own) return '';
+  const o=ctx.own; const comps=ctx.competitors||[];
+  const attrTags=(o.attrs||[]).map(a=>`<span class="kw-tag">${a.k}: ${a.v}</span>`).join('');
+  const spList=(o.sellingPoints||[]).slice(0,6).map(s=>`<li>${s}</li>`).join('');
+  const certTags=(o.certs||[]).map(c=>`<span class="kw-tag" style="background:rgba(52,199,89,0.1)">${c}</span>`).join('')||'<span style="color:var(--t4);font-size:11px">无</span>';
+  const compList=comps.map((c,i)=>`<li><strong>竞品${i+1}</strong> · ${c.platform.split(' · ')[0]} · ${c.price} · ${c.rating} · BSR ${c.bsr} — ${c.name.slice(0,52)}</li>`).join('')||'<li style="color:var(--t4)">无竞品链接</li>';
+  const promptText=_genContextPromptText(ctx, market).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  return `<div class="result-panel fade-in" style="margin-bottom:14px;border:1px solid rgba(94,92,230,0.28)">
+    <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-size:15px">🧠</span>
+        <span style="font-size:13px;font-weight:800;color:var(--t0)">参考上下文 · 已作为提示词喂给大模型</span>
+        <span style="font-size:10px;font-weight:700;color:#5e5ce6;background:rgba(94,92,230,0.1);padding:2px 8px;border-radius:20px">${1+comps.length} 个链接 · ${(o.attrs||[]).length} 属性 · ${(o.sellingPoints||[]).length} 卖点 · ${comps.length} 竞品</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px">
+        <div>
+          <div style="font-weight:700;color:var(--t2);margin-bottom:4px">主产品（抓取）</div>
+          <div style="color:var(--t0);line-height:1.5">${o.name}</div>
+          <div style="color:var(--t3);margin-top:3px">${o.platform.split(' · ')[0]} · ${o.price} · ${o.rating} · BSR ${o.bsr}${o.audience?' · 受众：'+o.audience:''}</div>
+          <div style="margin-top:6px" class="kw-tags">${attrTags}</div>
+          <div style="margin-top:6px;font-size:11px">认证：${certTags}${o.images&&o.images.length?' · 已选图 '+o.images.length+' 张':''}</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--t2);margin-bottom:4px">参考卖点（供改写）</div>
+          <ul style="margin:0;padding-left:16px;color:var(--t1);line-height:1.5">${spList}</ul>
+          <div style="font-weight:700;color:var(--t2);margin:8px 0 4px">竞品参考</div>
+          <ul style="margin:0;padding-left:16px;color:var(--t1);line-height:1.5;font-size:11px">${compList}</ul>
+        </div>
+      </div>
+      <details style="border-top:1px solid var(--border);padding-top:8px">
+        <summary style="cursor:pointer;font-size:11px;font-weight:700;color:var(--accent2)">查看喂给大模型的完整提示词 ▾</summary>
+        <pre style="white-space:pre-wrap;font-size:11px;color:var(--t2);background:var(--bg-card2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;max-height:300px;overflow:auto;font-family:ui-monospace,Menlo,monospace">${promptText}</pre>
+      </details>
+    </div>
+  </div>`;
 }
 function handleGenFileSelect(e){
   Array.from(e.target.files).forEach(f=>{
@@ -13004,9 +14270,11 @@ function confirmSaveListingAll(){
   const titleInput = document.getElementById('save-all-title');
   const title = (titleInput ? titleInput.value : '').trim() || ('Listing 生成 · ' + rd.kw + ' · ' + rd.market);
 
-  // Build snapshot of score report for both plans
-  const reportA = buildListingScoreHTML(rd.kw, rd.market, LS_MODEL_A, '-a', rd['ls-pane-a'].tips);
-  const reportB = buildListingScoreHTML(rd.kw, rd.market, LS_MODEL_B, '-b', rd['ls-pane-b'].tips);
+  // Build snapshot of score report for both plans (model-aware: Amazon/Walmart/Ozon/WB)
+  const mA = (rd['ls-pane-a'] && rd['ls-pane-a'].mdl) || LS_MODEL_A;
+  const mB = (rd['ls-pane-b'] && rd['ls-pane-b'].mdl) || LS_MODEL_B;
+  const reportA = buildListingScoreHTML(rd.kw, rd.market, mA, '-a', rd['ls-pane-a'].tips);
+  const reportB = buildListingScoreHTML(rd.kw, rd.market, mB, '-b', rd['ls-pane-b'].tips);
 
   // Capture listing content from rendered panes, strip interactive buttons
   const paneA = document.getElementById('ls-pane-a');
@@ -17694,8 +18962,8 @@ function _rcNow2(){ const d=new Date(),p=n=>String(n).padStart(2,'0'); return d.
 function _rcGenNo(pre){ const d=new Date(),p=n=>String(n).padStart(2,'0'); return (pre||'SR')+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds())+Math.floor(Math.random()*900+100); }
 function _rcCurMember(){
   const lv=_rcState.currentLv, w=RC_WALLET[lv]||{};
-  const nameEl=document.getElementById('rc-wallet-name');
-  const name=nameEl?nameEl.textContent.trim():'会员';
+  const nameEl=document.querySelector('#page-recharge .rc-wallet-name');
+  const name=(nameEl&&nameEl.textContent.trim())||'张明';
   const level=(w.badge?String(w.badge).replace(/^[^A-Za-z0-9]+/, '').trim():'Lv.'+lv);
   return {lv, name, level, account:(name==='张明'?'zhangming@seller.com':'member@seller.com')};
 }
@@ -17744,20 +19012,20 @@ function _rcBuildOrder(source){
     if(amt<=0) return null;
     const base=amt*10, rate=_rcCustomRate(amt), bonus=Math.round(base*rate), get=base+bonus;
     return {kind:'custom', typeLabel:'自定义充值', histType:'pack', expiring:false, amount:amt, credits:get,
-      items:[{name:'自定义充值 ¥'+amt+'（¥1 = 10 积分'+(bonus>0?'，赠 '+Math.round(rate*100)+'%':'')+'）', qty:1, amount:amt, credits:get}]};
+      items:[{name:'自定义充值 ¥'+amt+'（¥1 = 10 积分'+(bonus>0?'，赠 '+Math.round(rate*100)+'%':'')+'）', qty:1, amount:amt, credits:get, expiring:false}]};
   }
   const items=[]; let amount=0, credits=0, kind=usageMode?'balance':'pack', typeLabel=usageMode?'余额充值':'充值包', histType='pack', expiring=false;
   if(_rcState.selectedTier!==null){
     const t=RC_TIERS.find(x=>x.lv===_rcState.selectedTier);
     if(t && t.mode==='plan'){
       const get=RC_PLAN_CREDITS[t.lv]||0;
-      items.push({name:'Lv.'+t.lv+' '+t.name+' 月度套餐（含赠送积分）', qty:1, amount:t.price, credits:get});
+      items.push({name:'Lv.'+t.lv+' '+t.name+' 月度套餐（含赠送积分）', qty:1, amount:t.price, credits:get, expiring:true});
       amount+=t.price; credits+=get; kind='plan'; typeLabel='套餐订阅'; histType='plan'; expiring=true;
     }
   }
   if(_rcState.selectedPack!==null){
     const p=RC_PACKS[_rcState.selectedPack];
-    items.push({name:(usageMode?'余额充值包':'充值包')+' ¥'+p.price+'（'+p.base+(p.bonus>0?' + 赠 '+p.bonus:'')+' 积分）', qty:1, amount:p.price, credits:p.get});
+    items.push({name:(usageMode?'余额充值包':'充值包')+' ¥'+p.price+'（'+p.base+(p.bonus>0?' + 赠 '+p.bonus:'')+' 积分）', qty:1, amount:p.price, credits:p.get, expiring:false});
     amount+=p.price; credits+=p.get;
     if(kind!=='plan'){ kind=usageMode?'balance':'pack'; typeLabel=usageMode?'余额充值':'充值包'; histType='pack'; }
   }
@@ -17830,8 +19098,11 @@ function rcConfirmPay(){
 function _rcCommit(order, receipt){
   const w=RC_WALLET[_rcState.currentLv];
   if(w){
-    if(order.expiring && w.expN!==null){ w.expN=(w.expN||0)+order.credits; }
-    else { w.keepN=(w.keepN||0)+order.credits; }
+    // 逐项入账：套餐赠送积分进「周期内清零」桶，充值/余额积分进「不清零」桶
+    order.items.forEach(it=>{
+      if(it.expiring && w.expN!==null){ w.expN=(w.expN||0)+it.credits; }
+      else { w.keepN=(w.keepN||0)+it.credits; }
+    });
   }
   const hist=_rcActiveHistory();
   hist.unshift({_rid:'r'+(_rcRidSeq++), time:receipt.datetime, type:order.histType, typeLabel:order.typeLabel,
@@ -18185,22 +19456,6 @@ function caRun(){
       </div>
     </div>
 
-    <!-- 板块 ④：市场大盘 -->
-    <div class="ca-block">
-      <div class="ca-block-head">
-        <div class="ca-block-no">4</div>
-        <div style="flex:1">
-          <div class="ca-block-tt">市场大盘</div>
-          <div class="ca-block-sb">核心词搜索量趋势、竞争密度、建议竞价 / CPA / ACOS、关联机会词</div>
-        </div>
-        <div class="ca-block-cost" id="ca-cost4">— 点</div>
-      </div>
-      <div class="ca-block-body">
-        <div class="ca-proc collapsed" id="ca-proc4"><div class="ca-proc-cap toggle" onclick="caToggleProc(4)"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>API 调用过程<span class="ca-cap-status" id="ca-capst4">—</span><svg class="ca-cap-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ca-proc-apis"><div id="ca-apis4"></div></div></div>
-        <div id="ca-market"></div>
-      </div>
-    </div>
-
     <div class="ca-foot" id="ca-next1" style="display:none">
       <button class="btn-primary" style="width:auto;padding:11px 22px" onclick="caOpenReport()">
         <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:2.2;fill:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -18211,10 +19466,8 @@ function caRun(){
   caTrace(1,()=>{ caRenderCards();
    caTrace(2,()=>{ caRenderTraffic();
     caTrace(3,()=>{ caRenderPrice();
-     caTrace(4,()=>{ caRenderMarket();
           caEl('ca-next1').style.display='flex';
           caEl('ca-tip').textContent='分析完成 · 点击「生成分析报告」查看攻防建议';
-     });
     });
    });
   });
@@ -18533,11 +19786,14 @@ function caMergedTimeline(c){
     const acts=actMap[CA_WK[wk]]||[];
     if(!keepa.length && !acts.length) continue;
     if(!keepa.length) keepa.push({t:'flat',txt:'指标平稳'});
-    const j=Math.min(11,wk+2), dr=rank[wk]-rank[j];
-    let effect,effCls;
-    if(dr>rank[wk]*0.06){ effect='BSR 改善 '+caFmt(Math.round(Math.abs(rank[j]-rank[wk])))+' 名'; effCls='up'; }
-    else if(dr<-rank[wk]*0.06){ effect='BSR 回落 '+caFmt(Math.round(Math.abs(rank[j]-rank[wk])))+' 名'; effCls='down'; }
-    else { effect='排名平稳'; effCls=''; }
+    // 效果 = 该「SIF 动作」之后约 2 周的 BSR 变化；无动作则不归因效果，显示 —
+    let effect='—',effCls='';
+    if(acts.length){
+      const j=Math.min(11,wk+2), dr=rank[wk]-rank[j];
+      if(dr>rank[wk]*0.06){ effect='BSR 改善 '+caFmt(Math.round(Math.abs(rank[j]-rank[wk])))+' 名'; effCls='up'; }
+      else if(dr<-rank[wk]*0.06){ effect='BSR 回落 '+caFmt(Math.round(Math.abs(rank[j]-rank[wk])))+' 名'; effCls='down'; }
+      else { effect='排名平稳'; effCls=''; }
+    }
     rows.push({date:CA_WK[wk],keepa,acts,effect,effCls});
   }
   return rows;
@@ -18731,7 +19987,6 @@ function caRenderPrice(){
               <div class="ca-pr-left">
                 <div class="ca-ks-ct s" style="margin-bottom:8px">信号 → 动作 → 效果（按时间点 · 左 Keepa 信号，中 SIF 动作，右 效果）</div>
                 ${caRenderMergedTimeline(c)}
-                <div class="ca-ks-row" style="border-bottom:none;margin-top:10px;padding-top:9px;border-top:1px dashed var(--border)"><span class="ca-ks-k">${caHint('主投词','asinKeywords 广告词中得分最高的词。')}</span><span style="text-align:right;font-size:11px">${(c.topAdKw||[]).slice(0,2).map(k=>`<span class="ca-tg neutral">${k}</span>`).join(' ')||'—'}</span></div>
               </div>
               <div class="ca-pr-right">
                 <div class="ca-ks-ct k" style="margin-bottom:8px">◐ Keepa 价格历史（近 12 周 · 悬停看数值 · 点击放大）</div>
@@ -18743,6 +19998,7 @@ function caRenderPrice(){
                   <span>${caHint('30天评论','Keepa reviewCount 增量。')}：${rev}</span>
                 </div>
                 <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px">${exTags}</div>
+                <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px"><span style="color:var(--t2)">${caHint('主投词','asinKeywords 广告词中得分最高的词。')}</span>${(c.topAdKw||[]).slice(0,3).map(k=>`<span class="ca-tg neutral">${k}</span>`).join(' ')||'—'}</div>
               </div>
             </div>
             <div class="ca-ks-concl"><b>判定动作：</b>Keepa 侧观测到「${keepaSig}」；SIF 侧归因为「<b style="color:var(--t0)">${actTxt}</b>」 → ${eff}。${priTags?'　'+priTags:''}</div>
@@ -18866,181 +20122,118 @@ function caRenderMarket(){
 function caRenderReport(){
   const me=caMe(), rivals=caRivals();
   const top=rivals.reduce((a,b)=>a.totalScoreRatio>b.totalScoreRatio?a:b);
-  const sum=CA_DATA.reduce((s,c)=>s+c.totalScoreRatio,0);
+  const nf=c=>Math.round(c.nfScoreRatio/(c.nfScoreRatio+c.adScoreRatio)*100);
+  const brand=c=>(c.title||'').trim().split(/\s+/)[0];
+  const prices=rivals.map(r=>r.price), pLo=Math.min(...prices), pHi=Math.max(...prices);
+  const meNf=nf(me), meAdw=100-meNf, topAdw=100-nf(top);
+  const dec=rivals.find(r=>(r.pricePriorityTags||[]).some(t=>t==='bsr_declining'||t==='promo_dependent'))||rivals[rivals.length-1];
+  const decTags=(dec.pricePriorityTags||[]).concat(dec.priceExceptionTags||[]).map(t=>{const x=CA_TAG[t]||[t];return x[0];}).slice(0,3).join(' / ')||'排名松动';
+  const nameCell=c=>`<td><span class="ca-cell-name">${c.emoji} ${c.asin}</span>${c.you?'<span class="ca-you-tag">我方</span>':''}</td>`;
+  const leverage = meNf>=50;
+  const kv=(l,v)=>`<div style="display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:2.5px 0;line-height:1.4"><span style="color:var(--t3)">${l}</span><span style="color:var(--t1);font-weight:500;text-align:right">${v}</span></div>`;
+  const sub=t=>`<div style="font-size:10px;font-weight:700;color:var(--accent2);letter-spacing:.3px;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid var(--border)">${t}</div>`;
+  const promoOf=c=>c.dealNow?('<span class="ca-tg bad">'+c.dealNow+'</span>'):(c.couponNow!=null?('<span class="ca-tg warn">'+Math.round(c.couponNow*100)+'% 券</span>'):'<span class="ca-tg neutral">无</span>');
+  const profCard=c=>`
+    <div style="border:1px solid ${c.you?'var(--accent)':'var(--border)'};border-radius:12px;padding:14px 16px;margin-bottom:12px;${c.you?'background:var(--accent-bg2)':''}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap"><span style="font-size:16px">${c.emoji}</span><b style="font-family:monospace;font-size:13px;color:var(--t0)">${c.asin}</b><span style="font-size:12px;color:var(--t2)">${brand(c)}</span>${c.you?'<span class="ca-you-tag">我方</span>':''}<span style="margin-left:auto;font-size:12px;color:var(--t3)">当前价 <b style="color:var(--t0)">${caMoney(c.currentPrice)}</b></span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px 22px">
+        <div>${sub('画像')}${kv('售价',caMoney(c.price))}${kv('评分','★'+c.star+' ('+caFmt(c.ratingNum)+')')}${kv('月销',caFmt(c.boughtInPastMonth))}${kv('主类目BSR','#'+caFmt(c.bsr))}${kv('上架天数',c.listedDays+'d')}${kv('变体数',c.childAsins)}</div>
+        <div>${sub('流量结构')}${kv('总流量得分',c.totalScore.toFixed(0))}${kv('自然 / 广告',nf(c)+'% / '+(100-nf(c))+'%')}${kv('广告词数',caFmt(c.adKeywordNum))}${kv('自然词进/出','↑'+c.nfKwIn+' / ↓'+c.nfKwOut)}${kv('广告词进/出','↑'+c.adKwIn+' / ↓'+c.adKwOut)}</div>
+        <div>${sub('广告投放')}${kv('广告位','SP '+c.spNum+'·SB '+c.sbNum+'·SBV '+c.sbvNum)}${kv('活动数',c.campaignCnt)}${kv('建议竞价',caMoney(c.sugBid))}${kv('ACOS',Math.round(c.acos*100)+'%')}${kv('点击转化',(c.clickConv*100).toFixed(1)+'%')}${kv('主投词',(c.topAdKw||[]).slice(0,2).join('、')||'—')}</div>
+        <div>${sub('价格与促销')}${kv('当前价',caMoney(c.currentPrice))}${kv('90天区间',caMoney(c.priceMin90d)+'~'+caMoney(c.priceMax90d))}${kv('价格波动',c.priceVolatility)}${kv('30天促销',c.couponFreq30d+' 次')}${kv('当前促销',promoOf(c))}<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:3px">${caPriceTags(c)}</div></div>
+      </div>
+    </div>`;
   caEl('ca-report-body').innerHTML=`
     <div class="ca-hero">
-      <div class="ca-hero-eyebrow">竞品分析报告 · Competitor Intelligence</div>
-      <div class="ca-hero-title">「${CA_SEED_KW}」赛道：你排名第 ${me.rank}，份额 ${caPct(me.totalScoreRatio)}</div>
-      <div class="ca-hero-sub">头部竞品 ${top.emoji} ${top.asin} 以 ${caPct(top.totalScoreRatio)} 流量份额领跑，优势来自更高的自然流量与更密集的广告投放。下方为可执行的攻防建议。</div>
+      <div class="ca-hero-eyebrow">我方攻防报告 · Competitor Intelligence</div>
+      <div class="ca-hero-title">${me.emoji} ${me.asin}（我方）· 对比 ${rivals.length} 个竞品的攻防分析</div>
+      <div class="ca-hero-sub">头部竞品 ${top.emoji} ${top.asin} 月销 ${caFmt(top.boughtInPastMonth)}、广告 ${caFmt(top.adKeywordNum)} 词领跑。下方从竞品画像 / 流量 / 广告 / 价格四维给出我方攻防建议。</div>
       <div class="ca-hero-stats">
-        <div><div class="ca-hs-v">${me.rank}<span style="font-size:14px;color:rgba(255,255,255,.5)"> / ${CA_DATA.length}</span></div><div class="ca-hs-l">流量份额排名</div></div>
-        <div><div class="ca-hs-v">${caPct(me.totalScoreRatio)}</div><div class="ca-hs-l">我方份额</div></div>
-        <div><div class="ca-hs-v">${caPct(top.totalScoreRatio-me.totalScoreRatio)}</div><div class="ca-hs-l">与头部差距</div></div>
-        <div><div class="ca-hs-v">${rivals.length}</div><div class="ca-hs-l">核心竞品</div></div>
+        <div><div class="ca-hs-v">${caMoney(me.price)}</div><div class="ca-hs-l">我方售价</div></div>
+        <div><div class="ca-hs-v">★${me.star}</div><div class="ca-hs-l">${caFmt(me.ratingNum)} 评论</div></div>
+        <div><div class="ca-hs-v">${caFmt(me.boughtInPastMonth)}</div><div class="ca-hs-l">月销</div></div>
+        <div><div class="ca-hs-v">${meNf}%</div><div class="ca-hs-l">自然流量占比</div></div>
       </div>
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">1</div><h3>竞争格局总览</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">1</div><h3>竞品画像</h3></div>
       <div class="ca-rcard-body">
-        <div style="display:flex;gap:6px;height:34px;border-radius:9px;overflow:hidden;margin-bottom:14px">
-          ${CA_SORTED.map(c=>{const w=(c.totalScoreRatio/sum*100).toFixed(1);
-            return `<div title="${c.asin} ${caPct(c.totalScoreRatio)}" style="width:${w}%;background:${c.you?'var(--accent)':'var(--orange)'};opacity:${c.you?1:0.55+c.rank*0.07};display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">${w>8?caPct(c.totalScoreRatio):''}</div>`;}).join('')}
-        </div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--t2)">
-          <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:10px;height:10px;border-radius:3px;background:var(--accent);display:inline-block"></i>我方产品</span>
-          <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:10px;height:10px;border-radius:3px;background:var(--orange);display:inline-block"></i>竞品（深浅按排名）</span>
-          <span style="margin-left:auto">前 ${CA_DATA.length} 名合计占该词 ${caPct(sum)} 流量</span>
-        </div>
+        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方 <b>${me.asin}</b> 售价 <b>${caMoney(me.price)}</b>，落在竞品 <b>$${pLo}–$${pHi}</b> 价格带内；月销 <b>${caFmt(me.boughtInPastMonth)}</b>、评论 <b>${caFmt(me.ratingNum)}</b>、评分 <b>★${me.star}</b>、上架 <b>${me.listedDays} 天</b>。对比头部 ${top.emoji} <b>${top.asin}</b>（月销 ${caFmt(top.boughtInPastMonth)}、评论 ${caFmt(top.ratingNum)}），我方在销量与口碑体量上约有 <b>${(top.boughtInPastMonth/me.boughtInPastMonth).toFixed(1)}×</b> 差距。</p>
+        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：处中高价带，销量/口碑落后头部，应靠差异化卖点「<b>${(me.features||[]).join(' / ')}</b>」竞争，不宜正面打价格战。</div>
       </div>
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">2</div><h3>攻防建议</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">2</div><h3>流量结构（自然 vs 广告）</h3></div>
+      <div class="ca-rcard-body">
+        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方总流量得分 <b>${me.totalScore.toFixed(0)}</b>，构成为 <b style="color:var(--accent2)">自然 ${meNf}%</b> / <b style="color:var(--orange)">广告 ${meAdw}%</b>；本期自然词 <b>↑${me.nfKwIn} / ↓${me.nfKwOut}</b>、广告词 <b>↑${me.adKwIn} / ↓${me.adKwOut}</b>。头部 <b>${top.asin}</b> 广告占比高达 <b>${topAdw}%</b>、广告词 <b>${caFmt(top.adKeywordNum)}</b>，主要靠密集广告拉动流量。</p>
+        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：${leverage?`我方自然占比 <b>${meNf}%</b> 偏高、listing 权重扎实但广告保守，<b>有放量空间</b>。`:`我方广告占比 <b>${meAdw}%</b> 偏高、依赖广告，需<b>补自然权重</b>降低流量成本。`}</div>
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">3</div><h3>广告投放</h3></div>
+      <div class="ca-rcard-body">
+        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方在投 <b>${caFmt(me.adKeywordNum)}</b> 个广告词 / <b>${me.campaignCnt}</b> 个活动（SP ${me.spNum} · SB ${me.sbNum} · SBV ${me.sbvNum}），ACOS <b>${Math.round(me.acos*100)}%</b>、点击转化 <b>${(me.clickConv*100).toFixed(1)}%</b>，主投词「<b>${(me.topAdKw||[]).join('、')}</b>」。头部 <b>${top.asin}</b> 广告词 <b>${caFmt(top.adKeywordNum)}</b>，投放强度约 <b>${(top.adKeywordNum/me.adKeywordNum).toFixed(1)}×</b> 于我方。</p>
+        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：头部靠广告词量 + 活动密度压制，建议针对其主投词「${(top.topAdKw||[]).slice(0,2).join('、')}」<b>补位 SP 手动活动</b>防守。</div>
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">4</div><h3>价格与促销</h3></div>
+      <div class="ca-rcard-body">
+        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方当前价 <b>${caMoney(me.currentPrice)}</b>，90 天区间 <b>${caMoney(me.priceMin90d)}~${caMoney(me.priceMax90d)}</b>，价格波动 <b>${me.priceVolatility}</b>、30 天促销 <b>${me.couponFreq30d} 次</b>${me.dealNow?`（当前 <b>${me.dealNow}</b>）`:(me.couponNow!=null?`（当前 <b>${Math.round(me.couponNow*100)}% 券</b>）`:'（当前无促销）')}。竞品 <b>${dec.asin}</b> 带「<b>${decTags}</b>」，促销依赖 / 排名松动明显。</p>
+        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：${me.couponFreq30d<=1?'我方促销克制、利润健康':'我方促销偏频，注意护住利润'}；可趁 <b>${dec.asin}</b> 松动期在其高自然词抢量。</div>
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">5</div><h3>逐个产品明细（画像 · 流量 · 广告 · 价格）</h3></div>
+      <div class="ca-rcard-body">
+        ${CA_SORTED.map(profCard).join('')}
+        <div class="ca-note">每个产品（含我方）的四维完整画像，用于导出对比：画像 = batchAsinDetail / getAsinRelationship；流量结构 = asinSummaryCompareGroupByMonthly；广告投放 = ad/keywords；价格与促销 = batchAsinPrice。</div>
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">6</div><h3>我方攻防建议</h3></div>
       <div class="ca-rcard-body">
         <div class="ca-insight threat">
           <div class="ca-ins-ic"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div style="flex:1"><div class="ca-ins-t">头部竞品广告挤压 <span class="ca-sev high">高</span></div>
-            <div class="ca-ins-d">${top.emoji} ${top.asin} 投放 ${caFmt(top.adKeywordNum)} 个广告词、${top.campaignCnt} 个活动，广告份额 ${caPct(top.adScoreRatio)}，是你（${caPct(me.adScoreRatio)}）的 ${(top.adScoreRatio/me.adScoreRatio).toFixed(1)} 倍。建议针对其主投词补位 SP 投放。</div>
-            <div class="ca-ins-src">来源 ad/campaigns · ad/keywords · asinKeywordsSimpleGroupByWeekly</div></div>
+            <div class="ca-ins-d">${top.emoji} ${top.asin} 投 ${caFmt(top.adKeywordNum)} 广告词 · ${top.campaignCnt} 活动，广告占比 ${topAdw}%（我方 ${meAdw}%）。建议针对其主投词「${(top.topAdKw||[]).slice(0,2).join('、')}」补位 SP 手动活动做防守，避免自然位被广告位挤压。</div>
+            <div class="ca-ins-src">来源 ad/keywords · asinSummaryCompareGroupByMonthly</div></div>
         </div>
         <div class="ca-insight opp">
           <div class="ca-ins-ic"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-          <div style="flex:1"><div class="ca-ins-t">GTRACING 排名下滑 + 依赖促销 = 抢量窗口 <span class="ca-sev win">机会</span></div>
-            <div class="ca-ins-d">B0BG3CSHQ4 带 <b>bsr_declining</b>、<b>promo_dependent</b>、<b>no_amazon_offer</b> 标签，BSR 从 #140 跌至 #198，自然流量正在松动。建议在它的高自然词上加大投放承接外溢流量。</div>
+          <div style="flex:1"><div class="ca-ins-t">${dec.asin} 松动 = 抢量窗口 <span class="ca-sev win">机会</span></div>
+            <div class="ca-ins-d">${dec.emoji} ${dec.asin} 带「${decTags}」，BSR / 自然流量正在松动。建议在它的高自然词上加大投放，承接外溢流量。</div>
             <div class="ca-ins-src">来源 batchAsinPrice.pricePriorityTags · asinOpTrafficTrend</div></div>
         </div>
-        <div class="ca-insight opp">
+        <div class="ca-insight ${leverage?'opp':'mid'}">
           <div class="ca-ins-ic"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-          <div style="flex:1"><div class="ca-ins-t">我方自然占比健康，可加杠杆 <span class="ca-sev win">机会</span></div>
-            <div class="ca-ins-d">你的自然份额（nfScoreRatio ${caPct(me.nfScoreRatio)}）高于广告（${caPct(me.adScoreRatio)}），listing 自然权重扎实但广告投入偏保守。相比头部 ${caPct(top.adScoreRatio)}，有明确放量空间。</div>
-            <div class="ca-ins-src">来源 asinSummaryCompareGroupByWeekly</div></div>
+          <div style="flex:1"><div class="ca-ins-t">${leverage?'我方自然占比健康，可加广告杠杆':'我方广告依赖偏高，需提效'} <span class="ca-sev ${leverage?'win':'mid'}">${leverage?'机会':'中'}</span></div>
+            <div class="ca-ins-d">${leverage
+              ? `自然 ${meNf}% > 广告 ${meAdw}%，listing 权重扎实但广告偏保守（ACOS ${Math.round(me.acos*100)}%）；相比头部 ${topAdw}%，有明确放量空间，可提高预算 + 扩广告词。`
+              : `广告占比 ${meAdw}% 偏高、ACOS ${Math.round(me.acos*100)}%，建议下载搜索词报告否词、把预算集中到高转化词，同时补自然权重降低对广告的依赖。`}</div>
+            <div class="ca-ins-src">来源 asinSummaryCompareGroupByMonthly · ad/keywords</div></div>
         </div>
         <div class="ca-insight mid">
           <div class="ca-ins-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-          <div style="flex:1"><div class="ca-ins-t">价格带错位 <span class="ca-sev mid">中</span></div>
-            <div class="ca-ins-d">你的 ${caMoney(me.price)} 处中高价带，主要竞品集中 $100–160；Razer（$499）走高端。差异点应锁定「4D 扶手 + 利润款定位」，避免与低价款正面比价。</div>
+          <div style="flex:1"><div class="ca-ins-t">价格带与差异化定位 <span class="ca-sev mid">中</span></div>
+            <div class="ca-ins-d">我方 ${caMoney(me.price)} 处 $${pLo}–$${pHi} 竞品价格带${me.currentPrice<me.priceMax90d*0.95?'，且近期有降价':''}。差异化锁定「${(me.features||[]).join(' / ')}」，避免与低价款正面比价；促销依赖度（30天 ${me.couponFreq30d} 次）保持克制以护住利润。</div>
             <div class="ca-ins-src">来源 batchAsinDetail · batchAsinPrice</div></div>
         </div>
       </div>
     </div>
 
-    <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">3</div><h3>关键词攻防图</h3></div>
-      <div class="ca-rcard-body">
-        <div class="ca-kwgrid">
-          <div class="ca-kwbox">
-            <h4><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#1f9c4a;stroke-width:2;fill:none"><polyline points="20 6 9 17 4 12"/></svg> 流量缺口词（竞品有量，你没覆盖）</h4>
-            <div class="ca-kwitem"><span class="ca-kw-word">racing chair with footrest</span><span class="ca-kw-sv">SV 74k</span><span class="ca-kw-badge gap">缺口</span></div>
-            <div class="ca-kwitem"><span class="ca-kw-word">gaming chair with speakers</span><span class="ca-kw-sv">SV 41k</span><span class="ca-kw-badge gap">缺口</span></div>
-            <div class="ca-kwitem"><span class="ca-kw-word">ergonomic chair for adults</span><span class="ca-kw-sv">SV 33k</span><span class="ca-kw-badge gap">缺口</span></div>
-            <div class="ca-kwitem"><span class="ca-kw-word">reclining computer chair</span><span class="ca-kw-sv">SV 28k</span><span class="ca-kw-badge gap">缺口</span></div>
-          </div>
-          <div class="ca-kwbox">
-            <h4><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:var(--red);stroke-width:2;fill:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> 失守词（你曾有自然位，正被竞品抢占）</h4>
-            <div class="ca-kwitem"><span class="ca-kw-word">gaming chair</span><span class="ca-kw-sv">自然 #8 → #15</span><span class="ca-kw-badge lose">下滑</span></div>
-            <div class="ca-kwitem"><span class="ca-kw-word">4d armrest gaming chair</span><span class="ca-kw-sv">自然 #3 → #6</span><span class="ca-kw-badge lose">下滑</span></div>
-            <div class="ca-kwitem"><span class="ca-kw-word">office gaming chair</span><span class="ca-kw-sv">自然 #11 → #19</span><span class="ca-kw-badge lose">下滑</span></div>
-            <div class="ca-kwitem"><span class="ca-kw-word">comfortable gaming chair</span><span class="ca-kw-sv">自然 #5 → #5</span><span class="ca-kw-badge hold">守住</span></div>
-          </div>
-        </div>
-        <div class="ca-note">缺口词 = 竞品流量词 − 我方流量词的差集（asinKeywordsSimpleGroupByWeekly）；失守词由 asinKeywordTypeHistory 的 nfRank 历史趋势识别。建议缺口词加入 SP 手动活动，失守词回补自然权重 + 防御性投放。</div>
-      </div>
-    </div>
-
-    <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">4</div><h3>竞品动作反查时间轴（Keepa × SIF）</h3></div>
-      <div class="ca-rcard-body">
-        <div style="font-size:12px;color:var(--t2);line-height:1.75;margin-bottom:12px">
-          以 <b>Keepa</b> 的价格 / BSR / 评论 / Buybox 波动作为「信号触发器」，回到 <b>SIF</b> 的 <span style="font-family:monospace;font-size:11px;background:var(--bg-card2);padding:1px 5px;border-radius:4px">asinOpTrafficTrend</span> 逐日标记位反查竞品当天做了什么动作。Keepa 看不到的 Listing 改动（改标题 / 主图）由 SIF 的 <span style="font-family:monospace;font-size:11px;background:var(--bg-card2);padding:1px 5px;border-radius:4px">title / img</span> 标记直接捕获，再用 Keepa 结果验证效果。
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:10px">
-          <span style="display:inline-block;padding:2px 7px;border-radius:5px;font-weight:700;background:rgba(255,149,0,.12);color:var(--orange)">广告</span>
-          <span style="display:inline-block;padding:2px 7px;border-radius:5px;font-weight:700;background:rgba(0,122,255,.12);color:var(--accent)">促销</span>
-          <span style="display:inline-block;padding:2px 7px;border-radius:5px;font-weight:700;background:rgba(175,82,222,.12);color:#af52de">Listing</span>
-          <span style="display:inline-block;padding:2px 7px;border-radius:5px;font-weight:700;background:rgba(255,59,48,.12);color:var(--red)">催评</span>
-          <span style="display:inline-block;padding:2px 7px;border-radius:5px;font-weight:700;background:rgba(142,142,147,.16);color:var(--t2)">停投</span>
-        </div>
-        <div style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:11.5px;min-width:640px">
-            <thead>
-              <tr style="text-align:left;color:var(--t3);border-bottom:1px solid var(--border)">
-                <th style="padding:7px 8px;font-weight:600">日期</th>
-                <th style="padding:7px 8px;font-weight:600">竞品</th>
-                <th style="padding:7px 8px;font-weight:600">Keepa 异常信号</th>
-                <th style="padding:7px 8px;font-weight:600">SIF 归因（字段证据）</th>
-                <th style="padding:7px 8px;font-weight:600">判定动作</th>
-                <th style="padding:7px 8px;font-weight:600">效果</th>
-              </tr>
-            </thead>
-            <tbody style="color:var(--t1)">
-              <tr style="border-bottom:1px solid var(--border)">
-                <td style="padding:7px 8px;white-space:nowrap;color:var(--t2)">06-03</td>
-                <td style="padding:7px 8px;white-space:nowrap">${top.emoji} <span style="font-family:monospace">${top.asin}</span></td>
-                <td style="padding:7px 8px">BSR #62 → #38</td>
-                <td style="padding:7px 8px"><span style="font-family:monospace;font-size:10.5px">campaign=2 · ad=6 · adScore↑</span></td>
-                <td style="padding:7px 8px"><span style="display:inline-block;padding:1px 6px;border-radius:5px;font-weight:700;font-size:10px;background:rgba(255,149,0,.12);color:var(--orange)">广告</span> 新开 2 活动 / 6 小组</td>
-                <td style="padding:7px 8px;color:var(--t2)">份额 +3.1pt，自然位未动</td>
-              </tr>
-              <tr style="border-bottom:1px solid var(--border)">
-                <td style="padding:7px 8px;white-space:nowrap;color:var(--t2)">06-08</td>
-                <td style="padding:7px 8px;white-space:nowrap">${top.emoji} <span style="font-family:monospace">${top.asin}</span></td>
-                <td style="padding:7px 8px">价格 $159 → $139</td>
-                <td style="padding:7px 8px"><span style="font-family:monospace;font-size:10.5px">buyboxPrice↓ · couponInfo −10%</span></td>
-                <td style="padding:7px 8px"><span style="display:inline-block;padding:1px 6px;border-radius:5px;font-weight:700;font-size:10px;background:rgba(0,122,255,.12);color:var(--accent)">促销</span> 降价 + 10% 券</td>
-                <td style="padding:7px 8px;color:var(--t2)">转化↑，BSR 续升 #38 → #29</td>
-              </tr>
-              <tr style="border-bottom:1px solid var(--border)">
-                <td style="padding:7px 8px;white-space:nowrap;color:var(--t2)">06-12</td>
-                <td style="padding:7px 8px;white-space:nowrap">🪑 <span style="font-family:monospace">B0BG3CSHQ4</span></td>
-                <td style="padding:7px 8px">reviewCount +90（周）</td>
-                <td style="padding:7px 8px"><span style="font-family:monospace;font-size:10.5px">同期 campaign=0 · 无 coupon</span></td>
-                <td style="padding:7px 8px"><span style="display:inline-block;padding:1px 6px;border-radius:5px;font-weight:700;font-size:10px;background:rgba(255,59,48,.12);color:var(--red)">催评</span> 疑似站外 / 测评</td>
-                <td style="padding:7px 8px;color:var(--t2)">评分持稳 4.4，量未起</td>
-              </tr>
-              <tr style="border-bottom:1px solid var(--border)">
-                <td style="padding:7px 8px;white-space:nowrap;color:var(--t2)">06-16</td>
-                <td style="padding:7px 8px;white-space:nowrap">🪑 <span style="font-family:monospace">B0BG3CSHQ4</span></td>
-                <td style="padding:7px 8px">BSR #140 → #198</td>
-                <td style="padding:7px 8px"><span style="font-family:monospace;font-size:10.5px">adScore↓ · title=1</span></td>
-                <td style="padding:7px 8px"><span style="display:inline-block;padding:1px 6px;border-radius:5px;font-weight:700;font-size:10px;background:rgba(142,142,147,.16);color:var(--t2)">停投</span><span style="display:inline-block;margin-left:4px;padding:1px 6px;border-radius:5px;font-weight:700;font-size:10px;background:rgba(175,82,222,.12);color:#af52de">Listing</span> 停广告 + 改标题</td>
-                <td style="padding:7px 8px;color:var(--t2)">自然流量松动 → 抢量窗口</td>
-              </tr>
-              <tr>
-                <td style="padding:7px 8px;white-space:nowrap;color:var(--t2)">06-19</td>
-                <td style="padding:7px 8px;white-space:nowrap">🪑 <span style="font-family:monospace">B0BDHWDR12</span></td>
-                <td style="padding:7px 8px">CTR 代理指标回升</td>
-                <td style="padding:7px 8px"><span style="font-family:monospace;font-size:10.5px">img=1 · nfScore↑</span></td>
-                <td style="padding:7px 8px"><span style="display:inline-block;padding:1px 6px;border-radius:5px;font-weight:700;font-size:10px;background:rgba(175,82,222,.12);color:#af52de">Listing</span> 换主图 A / B 测试</td>
-                <td style="padding:7px 8px;color:var(--t2)">点击率回升，自然位 +2</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="ca-note">时间轴由「Keepa 变点检测 → SIF ±3 天窗口归因」自动生成：Keepa 提供 salesRank / price / reviewCount / buyBoxSellerId 波动，SIF 的 asinOpTrafficTrend 提供 campaign / ad / title / img / couponInfo / nfScore / adScore 逐日标记位。多动作同日发生时，按 adScore / nfScore 变化方向拆解主因。</div>
-      </div>
-    </div>
-
-    <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">5</div><h3>数据口径与时效</h3></div>
-      <div class="ca-rcard-body">
-        <div style="font-size:12px;color:var(--t1);line-height:1.9">
-          · 数据粒度：按周（weekly），周期 2026-06-15 ~ 06-21，遵循 ABA 周日为第一天<br>
-          · 数据时效：SIF 跑 T+1 数据，调用前已通过 <span style="font-family:monospace;font-size:11px;background:var(--bg-card2);padding:1px 5px;border-radius:4px">getSifLastDataTime</span> 确认 dataReady = true<br>
-          · 流量份额（totalScoreRatio）为该 ASIN 在关键词总流量得分中的占比，非真实销量；销量以前台 bought in past month 为准<br>
-          · 父体竞品已先经 getAsinRelationship 拆解为子体后累加流量分
-        </div>
-      </div>
-    </div>
-
-    <div class="ca-disclaimer">本页为产品原型演示，数据为模拟示例，字段命名对照 Sif 文档 v2。实际接入时所有指标由对应 API 实时返回；流量得分为相对竞争指标，运营决策请结合自有后台真实销量与广告数据综合判断。</div>
+    <div class="ca-disclaimer">本页为产品原型演示，数据为模拟示例，字段命名对照 Sif 文档 v2。竞品画像 = batchAsinDetail / getAsinRelationship；流量 = asinSummaryCompareGroupByMonthly；广告 = ad/keywords；价格促销 = batchAsinPrice。实际接入时所有指标由对应 API 实时返回，运营决策请结合自有后台真实销量与广告数据。</div>
 
     <div class="ca-foot">
       <button class="ca-btn-ghost" onclick="caCloseReport()">关闭</button>
       <button class="btn-primary" style="width:auto;padding:11px 22px" onclick="alert('原型演示：导出 PDF / 存入「产品分析报告」')">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>导出报告</button>
-      <button class="ca-btn-ghost" onclick="alert('原型演示：把缺口词 / 失守词一键推送给「广告优化师」')">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>推送给广告优化师</button>
     </div>`;
 }
 
