@@ -3002,8 +3002,8 @@ table.ca-cmp .ca-you-tag{font-size:9px;font-weight:700;color:#fff;background:var
             <div class="gen-attached-files" id="gen-attached-files" style="display:none"></div>
             <!-- URL输入条 (支持多个竞品链接) -->
             <div class="gen-url-bar" id="gen-url-bar">
-              <input type="text" id="gen-url-input" placeholder="粘贴竞品/产品链接后回车即「添加并提取」（可多个），如 https://www.ozon.ru/product/... 或 https://www.wildberries.ru/catalog/..." onkeydown="if(event.key==='Enter'){event.preventDefault();extractAndConfirm()}">
-              <button class="gen-url-bar-extract" onclick="extractAndConfirm()" title="添加链接并自动提取产品信息，确认后加入">⚡ 添加并提取</button>
+              <input type="text" id="gen-url-input" placeholder="粘贴一条商品链接，回车即可提取信息" onkeydown="if(event.key==='Enter'){event.preventDefault();extractAndConfirm()}">
+              <button class="gen-url-bar-extract" onclick="extractAndConfirm()" title="提取该商品链接的信息，确认后加入">⚡ 提取商品</button>
               <button class="gen-url-bar-close" onclick="toggleUrlBar()">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
@@ -7762,10 +7762,6 @@ function buildLsCriteriaPanel(dim, anchorId){
     const rc=LS_SOURCE_COLOR[c.ref]||'#636366';
     const isFull = c.score >= c.max;
     const gap = c.max - c.score;
-    // C (克制版): 满分 → 小绿对勾；未满分 → 小灰"可 +N"，不抢眼
-    const statusBadge = isFull
-      ? `<span class="ls-crit-status full"><svg viewBox="0 0 24 24" width="9" height="9" stroke="currentColor" stroke-width="3.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>`
-      : `<span class="ls-crit-status gap">可 +${gap}</span>`;
     // 扣分点：按 max-score 差值动态生成等级描述；满分项显示绿色"无扣分"
     let deductHTML;
     if(isFull){
@@ -7791,7 +7787,7 @@ function buildLsCriteriaPanel(dim, anchorId){
     return `<div class="ls-crit-row">
       <div class="ls-crit-num">${i+1}</div>
       <div class="ls-crit-body">
-        <div class="ls-crit-name">${c.name} ${statusBadge}</div>
+        <div class="ls-crit-name">${c.name}</div>
         <div class="ls-crit-rule">${c.rule}</div>
         <div class="ls-crit-detail">${deductHTML}</div>
         <div class="ls-crit-ref">
@@ -7813,7 +7809,7 @@ function buildLsCriteriaPanel(dim, anchorId){
       <div class="ls-cp-dot" style="background:${dim.color}"></div>
       <div class="ls-cp-title">${dim.name}</div>
       <span class="ls-cp-weight" style="background:${dim.bg};color:${dim.color}">权重 ${dim.weight}%</span>
-      <div class="ls-cp-ref">${dim.ref || dim.desc || ''}</div>
+      <div class="ls-cp-ref"></div>
       <div class="ls-cp-scorewrap">
         <div class="ls-cp-score" style="color:${lsScoreColor(pct)}">${pct}<span class="ls-cp-score-max">/100</span></div>
         <div class="ls-cp-contrib">贡献 ${contrib}/${dim.weight} 分</div>
@@ -9924,9 +9920,7 @@ function onMarketChange(){
   const isRu = /Ozon|Wildberries/i.test(sel.value);
   const urlInp = document.getElementById('gen-url-input');
   if(urlInp){
-    urlInp.placeholder = isRu
-      ? '粘贴 Ozon / Wildberries 竞品链接后回车添加（可添加多个），如 https://www.ozon.ru/product/... 或 https://www.wildberries.ru/catalog/...'
-      : '粘贴竞品链接后回车添加（可添加多个），如 https://www.amazon.com/dp/...';
+    urlInp.placeholder = '粘贴一条商品链接，回车即可提取信息';
   }
   const kwInp = document.getElementById('kw-input');
   if(kwInp && isRu){
@@ -10000,22 +9994,25 @@ let _pendingExtract=[];
 function extractAndConfirm(){
   const inp=document.getElementById('gen-url-input');
   const raw=(inp?inp.value:'').trim();
-  let urls = raw ? raw.split(/[\s,，]+/).map(u=>u.trim()).filter(Boolean) : [];
-  // 去掉已添加过的
-  urls = urls.filter(u=>!genCompetitorUrls.includes(u));
+  // 仅支持单条商品链接：只取第一个
+  let urls = raw ? raw.split(/[\s,，]+/).map(u=>u.trim()).filter(Boolean).slice(0,1) : [];
   if(!urls.length){
-    if(inp){ inp.focus(); inp.placeholder='请先粘贴至少 1 个产品/竞品链接…'; }
+    if(inp){ inp.focus(); inp.placeholder='请先粘贴 1 条商品链接…'; }
     return;
+  }
+  // 已有商品则替换（单条模式）
+  if(genCompetitorUrls.length){
+    if(document.getElementById('pd-drawer')) closeProductDrawer(true);
+    genCompetitorUrls.length=0; _extractCards.length=0; renderCompetitorUrls();
   }
   const kw=(document.getElementById('kw-input')||{}).value||'';
   const market=(document.getElementById('market-sel')||{}).value||'';
-  const startIdx=_extractCards.length;
   // 抓取中提示（按钮态）
   const btn=document.querySelector('.gen-url-bar-extract');
   if(btn){ btn.dataset.txt=btn.innerHTML; btn.innerHTML='抓取中…'; btn.disabled=true; }
   setTimeout(()=>{
-    _pendingExtract = urls.map((u,j)=>_buildExtractData(u, startIdx+j, kw, market));
-    if(btn){ btn.innerHTML=btn.dataset.txt||'⚡ 添加并提取'; btn.disabled=false; }
+    _pendingExtract = urls.map((u,j)=>_buildExtractData(u, j, kw, market));
+    if(btn){ btn.innerHTML=btn.dataset.txt||'⚡ 提取商品'; btn.disabled=false; }
     showExtractConfirmModal(_pendingExtract);
   }, 700);
 }
