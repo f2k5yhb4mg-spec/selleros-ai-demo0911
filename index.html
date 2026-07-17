@@ -2160,6 +2160,23 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 .ca-rcard-body{padding:20px}
 .ca-note{font-size:11px;color:var(--t3);margin-top:12px;line-height:1.6}
 
+/* 报告 · Keepa 式详细论证体：加粗小标题 + 数据 bullet + 异常点 + 结论 */
+.ca-rep-h{font-size:12.5px;font-weight:700;color:var(--t0);margin:16px 0 7px}
+.ca-rep-h:first-child{margin-top:0}
+.ca-rep-ul{margin:0;padding-left:18px;list-style:disc}
+.ca-rep-ul li{font-size:12.5px;color:var(--t1);line-height:1.85;margin-bottom:2px}
+.ca-rep-ul li b{color:var(--t0)}
+.ca-rep-concl{border-left:3px solid var(--accent);padding-left:10px;margin-top:14px;font-size:12px;color:var(--t2);line-height:1.75}
+.ca-rep-abn{margin-top:12px;padding:10px 12px;background:rgba(255,149,0,0.07);border:1px solid rgba(255,149,0,0.22);border-radius:8px;font-size:12px;color:var(--t1)}
+.ca-rep-abn>b{color:#c76b00}
+.ca-rep-abn .ca-rep-ul{margin-top:5px}
+.ca-rep-nodata{margin-top:12px;padding:10px 12px;background:var(--bg-card2);border:1px dashed var(--border2);border-radius:8px;font-size:12px;color:var(--t2);line-height:1.7}
+.ca-rep-nodata>b{color:var(--t1)}
+.ca-rep-banner{margin:0 0 14px;padding:10px 14px;background:rgba(255,204,0,0.10);border:1px solid rgba(255,204,0,0.35);border-radius:8px;font-size:12px;color:var(--t1);line-height:1.7}
+.ca-rep-banner>b{color:#a06800}
+.ca-rep-eff-up{color:#1d9e75;font-weight:600}
+.ca-rep-eff-down{color:#d4553e;font-weight:600}
+
 table.ca-cmp{width:100%;border-collapse:collapse;font-size:12px}
 table.ca-cmp th{text-align:left;font-size:10px;font-weight:700;color:var(--t3);letter-spacing:.4px;text-transform:uppercase;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--bg-card2);white-space:nowrap}
 table.ca-cmp th.num,table.ca-cmp td.num{text-align:right;font-variant-numeric:tabular-nums}
@@ -12135,8 +12152,57 @@ function flowGetSelectedCompetitors(){
   return selected;
 }
 
+// ── 广告结构真实数据层 ────────────────────────────────────────────
+// 数据源：Sif 六·1 keywordConversionLast（/api/search/external/v2/keywordConversionLast）
+// 口径说明：Sif 无法提供竞品的「日预算」——那是卖家后台私有数据，任何第三方都抓不到。
+//   Sif 广告投放分析(第七章)全部端点只返回 score/排名/结构，无 budget/spend 字段。
+//   因此这里改用同一接口真实返回的 acos.median（广告效率）与 ppc.median（入场竞价），
+//   二者均为【关键词级】水位，非单个竞品 ASIN 的真实值，UI 必须据实标注。
+const FLOW_AD_THRESHOLDS = {
+  acos: [15, 20, 25, 30],        // ≤15→10 · ≤20→8 · ≤25→6 · ≤30→4 · >30→2
+  ppc:  [0.8, 1.2, 1.8, 2.5],    // ≤0.8→10 · ≤1.2→8 · ≤1.8→6 · ≤2.5→4 · >2.5→0(否决)
+  ppcVeto: 2.5                   // 入场竞价过高 → 一票否决（替代原「日预算>$50」）
+};
+
+// 拉取竞品主力词的 ACOS / PPC 竞价；返回 Map<keyword, {acos, ppc, cpa, price, real}>
+async function flowFetchAdMetrics(rows){
+  const metrics = new Map();
+  const keywords = [...new Set(rows.map(r => r.keyword).filter(Boolean))].slice(0, 100);
+  if(!keywords.length) return metrics;
+
+  // 真实请求：仅在配置了 apiKey 且关闭 mock 时走 Sif
+  if(!SIF_CONFIG.useMock && SIF_CONFIG.apiKey){
+    try {
+      const data = await SifApi.keywordConversionLast(keywords);
+      (data?.list || []).forEach(item => {
+        metrics.set(item.keyword, {
+          acos:  item.acos?.median  != null ? +(item.acos.median * 100).toFixed(1) : null,
+          ppc:   item.ppc?.median   != null ? +item.ppc.median.toFixed(2)  : null,
+          cpa:   item.cpa?.median   != null ? +item.cpa.median.toFixed(2)  : null,
+          price: item.price?.median != null ? +item.price.median.toFixed(2): null,
+          real: true
+        });
+      });
+      return metrics;
+    } catch(e){
+      console.warn('[Sif] keywordConversionLast 拉取失败，回退模拟值：', e.message);
+    }
+  }
+
+  // 回退：模拟值（按词哈希，保证同词稳定），real:false → UI 标「模拟」
+  keywords.forEach((kw, i) => {
+    const h = flowHashNum(kw, i);
+    metrics.set(kw, {
+      acos: i === 0 ? 14 : 13 + (h % 18),
+      ppc:  i === 0 ? 0.72 : +(0.6 + (h % 220) / 100).toFixed(2),   // 0.72 与商品库 B0124RWX0Z 示范数据一致
+      cpa: null, price: null, real: false
+    });
+  });
+  return metrics;
+}
+
 // ── 第③步 analyzeCompetitor：三维数据 + 三维加权打分 + 一票否决 + 竞品画像 ──
-function flowBuildCompetitorAnalysis(row, idx){
+function flowBuildCompetitorAnalysis(row, idx, adMetrics){
   const h = flowHashNum(row.asin, idx);
 
   const demoHealthy = idx === 0;                         // 第一个竞品固定为「🟢 健康型」数据示范
@@ -12149,9 +12215,11 @@ function flowBuildCompetitorAnalysis(row, idx){
   const recommend = Math.max(2, 100 - organic - ads - deal - related);
   const totalTrafficNum = demoHealthy ? 12800 : 2600 + (h % 14000);  // 总流量 UV/月
 
-  // 维度二：广告结构
-  const dailyBudget = demoHealthy ? 18 : 16 + (h % 30);  // 预估日预算 $16-45
-  const acos = demoHealthy ? 14 : 13 + (h % 18);         // 预估 ACOS 13-30%
+  // 维度二：广告结构 —— 取自 Sif keywordConversionLast（词级水位），无数据时回退模拟
+  const adm = (adMetrics && adMetrics.get(row.keyword)) || {};
+  const acos = adm.acos != null ? adm.acos : (demoHealthy ? 14 : 13 + (h % 18));       // ACOS %
+  const ppcBid = adm.ppc != null ? adm.ppc : (demoHealthy ? 0.72 : +(0.6 + (h % 220) / 100).toFixed(2)); // 建议竞价 $
+  const adDataReal = adm.real === true;                  // 真实 or 模拟，供 UI 标注
   const adKwPool = ['tire repair glue','tire sealant','rubber cement','tire patch kit','tubeless sealant','puncture repair','flat tire fix','emergency tire'];
   const topAdKeywords = [adKwPool[h % adKwPool.length], adKwPool[(h + 3) % adKwPool.length], adKwPool[(h + 5) % adKwPool.length]];
 
@@ -12168,10 +12236,11 @@ function flowBuildCompetitorAnalysis(row, idx){
   // ── 三维打分（严格按手册量表）──
   // 流量结构得分（权重 40%）
   const trafficScore = organic >= 60 ? 10 : organic >= 50 ? 8 : organic >= 40 ? 6 : organic >= 30 ? 3 : 0;
-  // 广告结构得分（权重 35%）= min(ACOS得分, 日预算得分)
-  const acosScore = acos <= 15 ? 10 : acos <= 20 ? 8 : acos <= 25 ? 6 : acos <= 30 ? 4 : 2;
-  const budgetScore = dailyBudget <= 20 ? 10 : dailyBudget <= 30 ? 8 : dailyBudget <= 40 ? 6 : dailyBudget <= 50 ? 4 : 0;
-  const adScore = Math.min(acosScore, budgetScore);
+  // 广告结构得分（权重 35%）= min(ACOS得分, PPC竞价得分)
+  const A = FLOW_AD_THRESHOLDS.acos, P = FLOW_AD_THRESHOLDS.ppc;
+  const acosScore = acos <= A[0] ? 10 : acos <= A[1] ? 8 : acos <= A[2] ? 6 : acos <= A[3] ? 4 : 2;
+  const ppcScore = ppcBid <= P[0] ? 10 : ppcBid <= P[1] ? 8 : ppcBid <= P[2] ? 6 : ppcBid <= P[3] ? 4 : 0;
+  const adScore = Math.min(acosScore, ppcScore);
   // 销量趋势得分（权重 25%）=（月销量 + 趋势 + 评论增速）/ 3
   const salesVolScore = monthlySales >= 500 ? 10 : monthlySales >= 400 ? 8 : monthlySales >= 300 ? 6 : 3;
   const trendScore = trendType === 0 ? 10 : trendType === 1 ? 7 : 0;
@@ -12183,16 +12252,16 @@ function flowBuildCompetitorAnalysis(row, idx){
   // ── 一票否决清单 ──
   const vetoReasons = [];
   if(organic < 30) vetoReasons.push('自然搜索<30%');
-  if(dailyBudget > 50) vetoReasons.push('日预算>$50');
+  if(ppcBid > FLOW_AD_THRESHOLDS.ppcVeto) vetoReasons.push(`竞价>$${FLOW_AD_THRESHOLDS.ppcVeto}`);
   if(trendType === 2) vetoReasons.push('6月趋势↓');
   if(reviewVelocity > 50) vetoReasons.push('评论增速>50/月');
   const vetoed = vetoReasons.length > 0;
 
   // ── 竞品画像分类 ──
   let persona, personaClass;
-  if(!vetoed && organic >= 50 && ads <= 35 && dailyBudget <= 30 && acos <= 20 && monthlySales >= 500 && trendType === 0 && reviewVelocity <= 30){
+  if(!vetoed && organic >= 50 && ads <= 35 && ppcBid <= 1.2 && acos <= 20 && monthlySales >= 500 && trendType === 0 && reviewVelocity <= 30){
     persona = '🟢 健康型'; personaClass = 'good';
-  } else if(!vetoed && organic >= 35 && ads <= 45 && dailyBudget <= 50 && acos <= 30 && monthlySales >= 300 && reviewVelocity <= 50){
+  } else if(!vetoed && organic >= 35 && ads <= 45 && ppcBid <= 2.5 && acos <= 30 && monthlySales >= 300 && reviewVelocity <= 50){
     persona = '🟡 烧钱型'; personaClass = 'warn';
   } else {
     persona = '🔴 收割型'; personaClass = 'bad';
@@ -12211,9 +12280,11 @@ function flowBuildCompetitorAnalysis(row, idx){
     deal_pct: deal,
     related_traffic_pct: related,
     recommend_pct: recommend,
-    // 广告结构
-    estimated_daily_budget: '$' + dailyBudget,
+    // 广告结构（词级水位 · 源自 Sif keywordConversionLast）
+    estimated_ppc_bid: '$' + ppcBid.toFixed(2),
     estimated_acos: acos + '%',
+    ad_cpa: adm.cpa != null ? '$' + adm.cpa.toFixed(2) : null,
+    adDataReal,
     top_ad_keywords: topAdKeywords,
     // 销量趋势
     estimated_monthly_sales: monthlySales,
@@ -12226,7 +12297,7 @@ function flowBuildCompetitorAnalysis(row, idx){
     trafficRisk: risk,
     // 打分
     trafficScore, adScore, salesTrendScore, compScore,
-    acosScore, budgetScore,
+    acosScore, ppcScore,
     persona, personaClass,
     vetoReasons, vetoed, qualified,
     verdict
@@ -12364,7 +12435,7 @@ function flowPreviewSelectionReport(){
 }
 
 // ── Phase 3: 选中竞品分析 → 流量结构 + 销量趋势 ──
-function runFlowPhase3(){
+async function runFlowPhase3(){
   resetAfterPhase(3);
   const selected = flowGetSelectedCompetitors();
   if(!selected.length){
@@ -12372,8 +12443,10 @@ function runFlowPhase3(){
   }
   openAndScroll(3);
   showFlowLoading('flow-result-3','正在分析所选竞品的流量结构、销量与趋势...');
+  // 先拉广告结构真实数据（ACOS / PPC 竞价），失败自动回退模拟值
+  const adMetrics = await flowFetchAdMetrics(selected);
   setTimeout(()=>{
-    const analyzed = selected.map((row,idx)=>flowBuildCompetitorAnalysis(row,idx));
+    const analyzed = selected.map((row,idx)=>flowBuildCompetitorAnalysis(row,idx,adMetrics));
     flowUserData.competitorAnalysis = analyzed;
     // 入选：得分≥6.5 且未被一票否决；若全被淘汰则退而取分数最高的 1 个供参考
     flowUserData.finalProductList = analyzed.filter(p=>p.qualified);
@@ -12393,9 +12466,9 @@ function runFlowPhase3(){
 
     // 竞品画像释义（手册 4.5 竞品打法分类）
     const personaHints = {
-      good: '🟢 健康型：自然搜索≥50% / 广告≤35%，日预算≤$30 / ACOS≤20%，月销≥500 / 趋势↑ / 评论增速≤30 —— 赛道健康，可正面竞争',
-      warn: '🟡 烧钱型：自然搜索35-50% / 广告≤45%，日预算$30-50 / ACOS 20-30%，月销≥300 / 趋势→ / 评论增速30-50 —— 可做，但要备足广告预算',
-      bad:  '🔴 收割型：自然搜索&lt;35% / 广告&gt;45%，日预算&gt;$50 / ACOS&gt;30%，月销很高或评论增速&gt;50 —— 赛道太卷，建议放弃'
+      good: '🟢 健康型：自然搜索≥50% / 广告≤35%，竞价≤$1.2 / ACOS≤20%，月销≥500 / 趋势↑ / 评论增速≤30 —— 赛道健康，可正面竞争',
+      warn: '🟡 烧钱型：自然搜索35-50% / 广告≤45%，竞价$1.2-2.5 / ACOS 20-30%，月销≥300 / 趋势→ / 评论增速30-50 —— 可做，但要备足广告预算',
+      bad:  '🔴 收割型：自然搜索&lt;35% / 广告&gt;45%，竞价&gt;$2.5 / ACOS&gt;30%，月销很高或评论增速&gt;50 —— 赛道太卷，建议放弃'
     };
     const personaTag = (p, fontSize)=>`<span class="frc-tag ${p.personaClass}" data-hint="${personaHints[p.personaClass]||''}" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="font-size:${fontSize};cursor:help">${p.persona}</span>`;
 
@@ -12423,7 +12496,7 @@ function runFlowPhase3(){
         <td>${p.total_traffic}</td>
         <td style="color:${p.organic_search_pct>=40?'#2d9e5a':'#ff3b30'};font-weight:700">${p.organic_search_pct}%</td>
         <td style="color:${p.ppc_ads_pct<=45?'#2d9e5a':'#ff9500'};font-weight:700">${p.ppc_ads_pct}%</td>
-        <td style="color:${parseInt(p.estimated_daily_budget.slice(1))<=50?'#2d9e5a':'#ff3b30'};font-weight:700">${p.estimated_daily_budget}/天</td>
+        <td style="color:${parseFloat(p.estimated_ppc_bid.slice(1))<=FLOW_AD_THRESHOLDS.ppcVeto?'#2d9e5a':'#ff3b30'};font-weight:700">${p.estimated_ppc_bid}${p.adDataReal?'':'<span style="font-weight:500;color:var(--t3);font-size:9px" title="未配置 Sif apiKey，当前为模拟值">·模拟</span>'}</td>
         <td style="color:${parseInt(p.estimated_acos)<=30?'#2d9e5a':'#ff9500'};font-weight:700">${p.estimated_acos}</td>
         <td style="color:${p.estimated_monthly_sales>=300?'#2d9e5a':'#ff3b30'};font-weight:700">${p.estimated_monthly_sales}件</td>
         <td style="color:${p.sales_trend_6m.includes('↓')?'#ff3b30':'#2d9e5a'};font-weight:700">${p.sales_trend_6m}</td>
@@ -12462,7 +12535,7 @@ function runFlowPhase3(){
                   </tr>
                   <tr>
                     <th style="background:rgba(0,122,255,0.03)">总流量${colHint('总流量（UV/月）· 衡量竞品体量','#007aff')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≥3000</span></th><th style="background:rgba(0,122,255,0.03)">自然%${colHint('自然搜索流量占比 · 越高说明 SEO 越强、越不依赖烧钱','#007aff')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≥40%</span></th><th style="background:rgba(0,122,255,0.03)">广告%${colHint('PPC 广告流量占比 · 越高说明越依赖广告花钱','#007aff')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≤45%</span></th>
-                    <th style="background:rgba(175,82,222,0.03)">日预算${colHint('预估日广告预算（$）· 越高说明竞品砸钱越狠','#af52de')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≤$50</span></th><th style="background:rgba(175,82,222,0.03)">ACOS${colHint('预估 ACOS（广告花费/广告销售额）· 越高说明广告效率越低、越卷','#af52de')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≤30%</span></th>
+                    <th style="background:rgba(175,82,222,0.03)">PPC竞价${colHint('该竞品主力词的建议竞价中位数（$/次点击）· 源自 Sif keywordConversionLast 的 ppc.median · 越高说明这个词入场成本越贵、越打不起。注意：此为【关键词级】水位，非该 ASIN 的真实出价。Sif 无法提供竞品日预算（卖家后台私有数据，第三方抓不到）','#af52de')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≤$2.5</span></th><th style="background:rgba(175,82,222,0.03)">ACOS${colHint('该竞品主力词的 ACOS 中位数（广告花费/广告销售额）· 源自 Sif keywordConversionLast 的 acos.median · 越高说明广告效率越低、越卷。注意：此为【关键词级】水位，非该 ASIN 的真实 ACOS','#af52de')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≤30%</span></th>
                     <th style="background:rgba(52,199,89,0.03)">月销量${colHint('预估月销量（件）· 核心产出指标','#2d9e5a')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≥300</span></th><th style="background:rgba(52,199,89,0.03)">6月趋势${colHint('近 6 月销量趋势（↑/↓/→）· 看市场是在涨还是跌','#2d9e5a')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">↑/→</span></th><th style="background:rgba(52,199,89,0.03)">评论增速${colHint('评论增速（条/月）· 衡量竞品增长势头和新品门槛','#2d9e5a')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">≤50/月</span></th><th style="background:rgba(52,199,89,0.03)">月销售额${colHint('月销售额 = 月销量 × 售价 · 衡量赛道体量（非利润，销量以前台数据为准）','#2d9e5a')}<br><span style="font-weight:500;color:var(--t3);font-size:8px">—</span></th>
                   </tr>
                 </thead>
@@ -12472,7 +12545,7 @@ function runFlowPhase3(){
             <div style="margin-top:12px;font-size:11px;font-weight:700;color:var(--t2)">打分明细（加权拆解）· 竞品得分 = 流量×0.40 + 广告×0.35 + 销量×0.25</div>
             <div style="margin-top:6px;overflow-x:auto">
               <table class="frc-table" style="font-size:10px;margin:0;min-width:640px">
-                <thead><tr><th>排名</th><th>ASIN</th><th>流量 <span data-hint="流量结构得分（权重40%）· 看自然搜索占比：≥60%→10 · 50-59%→8 · 40-49%→6 · 30-39%→3 · &lt;30%→0（一票否决）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:2px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>广告 <span data-hint="广告结构得分（权重35%）· 取 min(ACOS档, 日预算档)。ACOS：≤15%→10 · 16-20%→8 · 21-25%→6 · 26-30%→4 · &gt;30%→2。日预算：≤$20→10 · $21-30→8 · $31-40→6 · $41-50→4 · &gt;$50→0（一票否决）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:2px;border-radius:50%;background:rgba(175,82,222,0.12);color:#af52de;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>销量 <span data-hint="销量趋势得分（权重25%）·（月销量+趋势+评论增速）/3。月销量：≥500→10 · 400-499→8 · 300-399→6 · &lt;300→3。趋势：↑→10 · →→7 · ↓→0（否决）。评论增速：≤20→10 · 21-35→7 · 36-50→4 · &gt;50→0（否决）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:2px;border-radius:50%;background:rgba(52,199,89,0.12);color:#2d9e5a;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>总分</th><th>画像</th><th>判定</th></tr></thead>
+                <thead><tr><th>排名</th><th>ASIN</th><th>流量 <span data-hint="流量结构得分（权重40%）· 看自然搜索占比：≥60%→10 · 50-59%→8 · 40-49%→6 · 30-39%→3 · &lt;30%→0（一票否决）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:2px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>广告 <span data-hint="广告结构得分（权重35%）· 取 min(ACOS档, PPC竞价档)。ACOS：≤15%→10 · 16-20%→8 · 21-25%→6 · 26-30%→4 · &gt;30%→2。PPC竞价：≤$0.8→10 · ≤$1.2→8 · ≤$1.8→6 · ≤$2.5→4 · &gt;$2.5→0（一票否决）。两项均取自 Sif keywordConversionLast，为竞品主力词的【关键词级】水位" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:2px;border-radius:50%;background:rgba(175,82,222,0.12);color:#af52de;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>销量 <span data-hint="销量趋势得分（权重25%）·（月销量+趋势+评论增速）/3。月销量：≥500→10 · 400-499→8 · 300-399→6 · &lt;300→3。趋势：↑→10 · →→7 · ↓→0（否决）。评论增速：≤20→10 · 21-35→7 · 36-50→4 · &gt;50→0（否决）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:2px;border-radius:50%;background:rgba(52,199,89,0.12);color:#2d9e5a;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>总分</th><th>画像</th><th>判定</th></tr></thead>
                 <tbody>${rankRows}</tbody>
               </table>
             </div>
@@ -12493,15 +12566,15 @@ function runFlowPhase3(){
                   </table>
                 </div>
                 <div>
-                  <div style="font-size:10px;font-weight:800;color:#af52de;margin:8px 0 4px">广告结构 · min(ACOS, 日预算)（权重 35%）</div>
+                  <div style="font-size:10px;font-weight:800;color:#af52de;margin:8px 0 4px">广告结构 · min(ACOS, PPC竞价)（权重 35%）<span style="font-weight:500;color:var(--t3)"> · 均为竞品主力词的关键词级水位（Sif keywordConversionLast）</span></div>
                   <table class="frc-table" style="font-size:10px;margin:0;text-align:center">
-                    <thead><tr><th>ACOS</th><th>得分</th><th>日预算</th><th>得分</th></tr></thead>
+                    <thead><tr><th>ACOS</th><th>得分</th><th>PPC竞价</th><th>得分</th></tr></thead>
                     <tbody>
-                      <tr><td>≤ 15%</td><td style="font-weight:700">10</td><td>≤ $20</td><td style="font-weight:700">10</td></tr>
-                      <tr><td>16-20%</td><td style="font-weight:700">8</td><td>$21-30</td><td style="font-weight:700">8</td></tr>
-                      <tr><td>21-25%</td><td style="font-weight:700">6</td><td>$31-40</td><td style="font-weight:700">6</td></tr>
-                      <tr><td>26-30%</td><td style="font-weight:700">4</td><td>$41-50</td><td style="font-weight:700">4</td></tr>
-                      <tr><td>&gt; 30%</td><td style="font-weight:700">2</td><td>&gt; $50</td><td style="font-weight:700;color:#ff3b30">0 ⛔</td></tr>
+                      <tr><td>≤ 15%</td><td style="font-weight:700">10</td><td>≤ $0.8</td><td style="font-weight:700">10</td></tr>
+                      <tr><td>16-20%</td><td style="font-weight:700">8</td><td>$0.81-1.2</td><td style="font-weight:700">8</td></tr>
+                      <tr><td>21-25%</td><td style="font-weight:700">6</td><td>$1.21-1.8</td><td style="font-weight:700">6</td></tr>
+                      <tr><td>26-30%</td><td style="font-weight:700">4</td><td>$1.81-2.5</td><td style="font-weight:700">4</td></tr>
+                      <tr><td>&gt; 30%</td><td style="font-weight:700">2</td><td>&gt; $2.5</td><td style="font-weight:700;color:#ff3b30">0 ⛔</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -12520,7 +12593,7 @@ function runFlowPhase3(){
               </div>
             </details>
             <div style="margin-top:8px;padding:8px 10px;background:rgba(255,59,48,0.04);border-left:3px solid #ff3b30;border-radius:6px;font-size:10px;color:var(--t1);line-height:1.6">
-              <strong style="color:#ff3b30">一票否决清单：</strong>自然搜索&lt;30% ｜ 竞品日预算&gt;$50 ｜ 6月趋势↓ ｜ 评论增速&gt;50条/月 — 任一触发直接淘汰。
+              <strong style="color:#ff3b30">一票否决清单：</strong>自然搜索&lt;30% ｜ 主力词 PPC 竞价&gt;$2.5 ｜ 6月趋势↓ ｜ 评论增速&gt;50条/月 — 任一触发直接淘汰。
             </div>
           </div>
         </div>
@@ -12734,9 +12807,9 @@ function switchPhase4Tab(el){
 // ── Phase 4: 精简具体产品清单 ──
 // ── 全局画像标签（供产品卡复用，含悬浮释义）──
 const FLOW_PERSONA_HINTS = {
-  good: '🟢 健康型：自然搜索≥50% / 广告≤35%，日预算≤$30 / ACOS≤20%，月销≥500 / 趋势↑ / 评论增速≤30 —— 赛道健康，可正面竞争',
-  warn: '🟡 烧钱型：自然搜索35-50% / 广告≤45%，日预算$30-50 / ACOS 20-30%，月销≥300 / 趋势→ / 评论增速30-50 —— 可做，但要备足广告预算',
-  bad:  '🔴 收割型：自然搜索&lt;35% / 广告&gt;45%，日预算&gt;$50 / ACOS&gt;30%，月销很高或评论增速&gt;50 —— 赛道太卷，建议放弃'
+  good: '🟢 健康型：自然搜索≥50% / 广告≤35%，竞价≤$1.2 / ACOS≤20%，月销≥500 / 趋势↑ / 评论增速≤30 —— 赛道健康，可正面竞争',
+  warn: '🟡 烧钱型：自然搜索35-50% / 广告≤45%，竞价$1.2-2.5 / ACOS 20-30%，月销≥300 / 趋势→ / 评论增速30-50 —— 可做，但要备足广告预算',
+  bad:  '🔴 收割型：自然搜索&lt;35% / 广告&gt;45%，竞价&gt;$2.5 / ACOS&gt;30%，月销很高或评论增速&gt;50 —— 赛道太卷，建议放弃'
 };
 function flowPersonaTag(p, fontSize){
   return `<span class="frc-tag ${p.personaClass}" data-hint="${FLOW_PERSONA_HINTS[p.personaClass]||''}" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="font-size:${fontSize||'10px'};cursor:help">${p.persona}</span>`;
@@ -12748,7 +12821,7 @@ function flowBuildAiSuggestions(p){
   const priceNum = parseFloat(String(p.price).replace(/[^\d.]/g,'')) || 0;
   const launch = priceNum ? (priceNum*0.88).toFixed(2) : null;
   const ratingNum = parseFloat(p.rating) || 0;
-  const budgetNum = parseInt(String(p.estimated_daily_budget).replace(/[^\d]/g,'')) || 0;
+  const ppcNum = parseFloat(String(p.estimated_ppc_bid).replace(/[^\d.]/g,'')) || 0;
   const s = [];
   s.push({icon:'💰',label:'定价',text: launch
     ? `竞品售价 ${p.price}。新品冷启动建议 <strong>$${launch}</strong>（低于竞品约 12%）用价格换排名与销量；评分升至 4.3+、评论满 50 条后回调至 ${p.price} 附近做利润最大化。`
@@ -12757,8 +12830,8 @@ function flowBuildAiSuggestions(p){
     ? `竞品评分仅 ${p.rating}，口碑存在缝隙——从差评高频词入手做质量/包装/说明书升级，主图直接突出改进点。`
     : `竞品口碑较好（${p.rating||'—'}），避免同质化价格战，从套装组合、材质升级或使用场景上打差异化卖点。`});
   s.push({icon:'🔑',label:'关键词',text:`核心词「${p.keyword}」月搜索 ${km.searchVolume?km.searchVolume.toLocaleString():'—'}；可直接复用竞品主投词：<em>${(p.top_ad_keywords||[]).join(' / ')||'—'}</em>。核心大词放标题前 80 字符，五点每条嵌 1-2 个关键词。`});
-  s.push({icon:'📣',label:'广告',text: budgetNum
-    ? `参考竞品日预算 ${p.estimated_daily_budget}，首月预算约 <strong>$${budgetNum*30}</strong>（日预算×30）；ACOS 目标参照竞品 ${p.estimated_acos} 上浮 10%（新品期允许偏高）。分配：自动 25% / 精准词组 40% / 商品定位 20% / 品牌词 15%。`
+  s.push({icon:'📣',label:'广告',text: ppcNum
+    ? `主力词「${p.keyword}」建议竞价中位 <strong>${p.estimated_ppc_bid}</strong>/次点击${p.ad_cpa?`，每单获客成本约 ${p.ad_cpa}`:''}。<strong>你自己的</strong>日预算按目标点击量推算：日均 25 次点击 ≈ <strong>$${Math.round(ppcNum*25)}</strong>/天（竞价×点击量），首月约 <strong>$${Math.round(ppcNum*25*30)}</strong>；ACOS 目标参照该词水位 ${p.estimated_acos} 上浮 10%（新品期允许偏高）。分配：自动 25% / 精准词组 40% / 商品定位 20% / 品牌词 15%。`
     : `首月以自动拓词 + 精准词组为主，ACOS 目标控制在 ${p.estimated_acos||'30%'} 以内。`});
   s.push({icon:'⭐',label:'评论',text:`竞品评论增速 ${p.review_velocity} 条/月。开通 Amazon Vine 前 30 天冲前 10 条，配合 Insert Card 合规引导，力争 3 个月内追平竞品增速（严禁测评刷单）。`});
   let riskText;
@@ -12903,7 +12976,7 @@ function flowRenderProductReportBody(p, i){
           <div style="font-size:10px;color:var(--t1);line-height:1.75">
             综合得分 <strong>${p.compScore}</strong><br>
             流量 ${p.trafficScore}/10（自然 ${p.organic_search_pct}%）<br>
-            广告 ${p.adScore}/10（ACOS ${p.estimated_acos} · ${p.estimated_daily_budget}/天）<br>
+            广告 ${p.adScore}/10（ACOS ${p.estimated_acos} · 竞价 ${p.estimated_ppc_bid}）<br>
             销量 ${p.salesTrendScore}/10（月销 ${p.estimated_monthly_sales} · ${p.sales_trend_6m}）
           </div>
           ${flowCmpDetails('竞品三维', flowCmpRows(p,peers,[
@@ -12963,7 +13036,7 @@ function flowDownloadProductReport(i){
     '二、全链路分析',
     `① 关键词机会：机会评分 ${km.opportunityScore!=null?km.opportunityScore:'-'}（${km.verdict||'-'}），搜索量 ${km.searchVolume||'-'}，集中度 ${km.concentration!=null?km.concentration+'%':'-'}，价格带 ${km.priceBand||'-'}`,
     `② 市场可行性：${km.mvVerdict||'-'}，Top10评论 ${km.avgReviewsTop10!=null?km.avgReviewsTop10:'-'}，Top3份额 ${top3}，稳定 ${km.stabilityMonths!=null?km.stabilityMonths+'月':'-'}`,
-    `③ 竞品三维：综合 ${p.compScore}（流量 ${p.trafficScore} / 广告 ${p.adScore} / 销量 ${p.salesTrendScore}），自然 ${p.organic_search_pct}% / 广告 ${p.ppc_ads_pct}%，ACOS ${p.estimated_acos}，日预算 ${p.estimated_daily_budget}`,
+    `③ 竞品三维：综合 ${p.compScore}（流量 ${p.trafficScore} / 广告 ${p.adScore} / 销量 ${p.salesTrendScore}），自然 ${p.organic_search_pct}% / 广告 ${p.ppc_ads_pct}%，ACOS ${p.estimated_acos}，主力词竞价 ${p.estimated_ppc_bid}${p.adDataReal?'':'（模拟值）'}`,
     '',
     '三、AI 优化建议（如果要做这个品）'
   ];
@@ -12984,17 +13057,17 @@ function flowDownloadProductReport(i){
 function _poolMake(o){
   const trafficScore = o.organic>=60?10:o.organic>=50?8:o.organic>=40?6:o.organic>=30?3:0;
   const acosScore = o.acos<=15?10:o.acos<=20?8:o.acos<=25?6:o.acos<=30?4:2;
-  const budgetScore = o.budget<=20?10:o.budget<=30?8:o.budget<=40?6:o.budget<=50?4:0;
-  const adScore = Math.min(acosScore, budgetScore);
+  const ppcScore = o.ppc<=0.8?10:o.ppc<=1.2?8:o.ppc<=1.8?6:o.ppc<=2.5?4:0;
+  const adScore = Math.min(acosScore, ppcScore);
   const salesVolScore = o.sales>=500?10:o.sales>=400?8:o.sales>=300?6:3;
   const trendType = o.trend==='↑'?0:o.trend==='→'?1:2;
   const trendScore = trendType===0?10:trendType===1?7:0;
   const rvScore = o.reviewVel<=20?10:o.reviewVel<=35?7:o.reviewVel<=50?4:0;
   const salesTrendScore = +((salesVolScore+trendScore+rvScore)/3).toFixed(2);
   const compScore = +(trafficScore*0.4 + adScore*0.35 + salesTrendScore*0.25).toFixed(2);
-  const vetoed = o.organic<30 || o.budget>50 || trendType===2 || o.reviewVel>50;
-  const persona = (!vetoed && o.organic>=50 && o.ads<=35 && o.budget<=30 && o.acos<=20 && o.sales>=500 && trendType===0 && o.reviewVel<=30) ? '🟢 健康型'
-    : (!vetoed && o.organic>=35 && o.ads<=45 && o.budget<=50 && o.acos<=30 && o.sales>=300 && o.reviewVel<=50) ? '🟡 烧钱型' : '🔴 收割型';
+  const vetoed = o.organic<30 || o.ppc>2.5 || trendType===2 || o.reviewVel>50;
+  const persona = (!vetoed && o.organic>=50 && o.ads<=35 && o.ppc<=1.2 && o.acos<=20 && o.sales>=500 && trendType===0 && o.reviewVel<=30) ? '🟢 健康型'
+    : (!vetoed && o.organic>=35 && o.ads<=45 && o.ppc<=2.5 && o.acos<=30 && o.sales>=300 && o.reviewVel<=50) ? '🟡 烧钱型' : '🔴 收割型';
   const personaClass = persona.indexOf('健康')>=0?'good':persona.indexOf('烧钱')>=0?'warn':'bad';
   const qualified = !vetoed && compScore>=6.5;
   const verdict = qualified?'入选':vetoed?'一票否决':'未达6.5';
@@ -13012,13 +13085,13 @@ function _poolMake(o){
     price:'$'+o.price.toFixed(2), rating:o.rating+'/5', reviews_count:o.reviews, reviews:o.reviews,
     estimated_monthly_sales:o.sales, estimated_monthly_revenue:'$'+revenue.toLocaleString(),
     organic_search_pct:o.organic, ppc_ads_pct:o.ads,
-    estimated_acos:o.acos+'%', estimated_daily_budget:'$'+o.budget,
+    estimated_acos:o.acos+'%', estimated_ppc_bid:'$'+o.ppc.toFixed(2), ad_cpa:null, adDataReal:false,
     review_velocity:o.reviewVel, sales_trend_6m:(trendType===0?'↑ 上升':trendType===1?'→ 平稳':'↓ 下降'),
     total_traffic:(o.traffic||8000).toLocaleString()+' UV/月',
     price_history_30d:`$${(o.price-2).toFixed(2)} - $${(o.price+3).toFixed(2)}`,
     bsr_rank_trend:trendType===0?'排名上升':trendType===1?'稳定波动':'轻微下降',
     top_ad_keywords:o.adKw||[o.keyword],
-    trafficScore, adScore, salesTrendScore, compScore, acosScore, budgetScore,
+    trafficScore, adScore, salesTrendScore, compScore, acosScore, ppcScore,
     persona, personaClass, vetoed, qualified, verdict, priceNum:o.price,
     date:o.date, daysAgo:o.daysAgo,
     keywordMeta:{
@@ -13033,15 +13106,15 @@ function _poolMake(o){
 }
 function flowBuildDemoPool(){
   return [
-    _poolMake({asin:'B0124RWX0Z',brand:'Hzutloer',title:'Hzutloer clear bins Organizer Set 1',keyword:'clear bins',category:'家居厨房',price:32.99,rating:4.4,reviews:1247,sales:620,organic:64,ads:22,acos:14,budget:18,reviewVel:18,trend:'↑',traffic:12800,searchVol:40616,concentration:37,top3Share:0.25,stability:7,avgRevTop10:2399,oppScore:85,growth:22,supply:4.1,date:'07-08',daysAgo:1,adKw:['clear bins','stackable storage bins','plastic storage bins']}),
-    _poolMake({asin:'B0PANTRY01',brand:'Vtopmart',title:'Vtopmart Airtight Pantry Organizer 4 Pack',keyword:'pantry organizer',category:'家居厨房',price:24.99,rating:4.5,reviews:980,sales:560,organic:58,ads:26,acos:16,budget:22,reviewVel:22,trend:'↑',traffic:9600,searchVol:21380,concentration:60,top3Share:0.30,stability:8,avgRevTop10:1580,oppScore:76,growth:15,supply:4.4,date:'07-05',daysAgo:4,adKw:['pantry organizer','kitchen storage','food storage container']}),
-    _poolMake({asin:'B0SPICE002',brand:'mDesign',title:'mDesign Spice Rack Organizer for Cabinet',keyword:'spice rack',category:'家居厨房',price:18.99,rating:4.6,reviews:1520,sales:540,organic:61,ads:24,acos:15,budget:20,reviewVel:20,trend:'↑',traffic:8800,searchVol:18500,concentration:42,top3Share:0.28,stability:9,avgRevTop10:890,oppScore:79,growth:12,supply:5.0,date:'06-28',daysAgo:11,adKw:['spice rack','spice organizer','seasoning rack']}),
-    _poolMake({asin:'B0DRAWER03',brand:'BINO',title:'BINO Adjustable Drawer Divider Set of 4',keyword:'drawer divider',category:'家居厨房',price:15.99,rating:4.5,reviews:760,sales:510,organic:55,ads:30,acos:18,budget:24,reviewVel:24,trend:'↑',traffic:7600,searchVol:15200,concentration:45,top3Share:0.33,stability:6,avgRevTop10:640,oppScore:72,growth:9,supply:4.6,date:'06-20',daysAgo:19,adKw:['drawer divider','drawer organizer','adjustable divider']}),
-    _poolMake({asin:'B0DOGPUZ04',brand:'Outward Hound',title:'Outward Hound Dog Puzzle Toy Level 2',keyword:'dog puzzle toy',category:'宠物用品',price:21.99,rating:4.7,reviews:2100,sales:680,organic:66,ads:20,acos:13,budget:17,reviewVel:16,trend:'↑',traffic:13200,searchVol:33200,concentration:40,top3Share:0.26,stability:10,avgRevTop10:1750,oppScore:82,growth:20,supply:5.5,date:'07-02',daysAgo:7,adKw:['dog puzzle toy','dog enrichment toy','interactive dog toy']}),
-    _poolMake({asin:'B0CATMAT05',brand:'PetFusion',title:'PetFusion ToughGrip Cat Litter Mat',keyword:'cat litter mat',category:'宠物用品',price:29.99,rating:4.4,reviews:3400,sales:590,organic:52,ads:28,acos:19,budget:26,reviewVel:26,trend:'↑',traffic:9200,searchVol:27800,concentration:48,top3Share:0.35,stability:7,avgRevTop10:2100,oppScore:74,growth:14,supply:4.2,date:'06-15',daysAgo:24,adKw:['cat litter mat','litter trapping mat','cat mat']}),
-    _poolMake({asin:'B0PETFTN06',brand:'Veken',title:'Veken 95oz Pet Water Fountain Stainless',keyword:'pet water fountain',category:'宠物用品',price:35.99,rating:4.5,reviews:4200,sales:720,organic:60,ads:25,acos:17,budget:21,reviewVel:28,trend:'↑',traffic:14600,searchVol:45600,concentration:55,top3Share:0.38,stability:8,avgRevTop10:3200,oppScore:71,growth:18,supply:3.9,date:'05-30',daysAgo:40,adKw:['pet water fountain','cat water fountain','automatic pet fountain']}),
-    _poolMake({asin:'B0RESIST07',brand:'Fit Simplify',title:'Fit Simplify Resistance Loop Bands Set of 5',keyword:'resistance bands',category:'运动户外',price:12.99,rating:4.6,reviews:5600,sales:640,organic:63,ads:23,acos:14,budget:19,reviewVel:19,trend:'↑',traffic:15200,searchVol:52000,concentration:50,top3Share:0.31,stability:11,avgRevTop10:4100,oppScore:77,growth:16,supply:4.8,date:'07-01',daysAgo:8,adKw:['resistance bands','exercise bands','workout bands']}),
-    _poolMake({asin:'B0YOGAWH08',brand:'URBNFit',title:'URBNFit Yoga Wheel for Back Pain Stretching',keyword:'yoga wheel',category:'运动户外',price:27.99,rating:4.5,reviews:1850,sales:520,organic:57,ads:27,acos:18,budget:23,reviewVel:23,trend:'↑',traffic:8400,searchVol:19800,concentration:44,top3Share:0.34,stability:9,avgRevTop10:1200,oppScore:73,growth:11,supply:4.3,date:'06-10',daysAgo:29,adKw:['yoga wheel','yoga back roller','stretching wheel']})
+    _poolMake({asin:'B0124RWX0Z',brand:'Hzutloer',title:'Hzutloer clear bins Organizer Set 1',keyword:'clear bins',category:'家居厨房',price:32.99,rating:4.4,reviews:1247,sales:620,organic:64,ads:22,acos:14,ppc:0.72,reviewVel:18,trend:'↑',traffic:12800,searchVol:40616,concentration:37,top3Share:0.25,stability:7,avgRevTop10:2399,oppScore:85,growth:22,supply:4.1,date:'07-08',daysAgo:1,adKw:['clear bins','stackable storage bins','plastic storage bins']}),
+    _poolMake({asin:'B0PANTRY01',brand:'Vtopmart',title:'Vtopmart Airtight Pantry Organizer 4 Pack',keyword:'pantry organizer',category:'家居厨房',price:24.99,rating:4.5,reviews:980,sales:560,organic:58,ads:26,acos:16,ppc:0.95,reviewVel:22,trend:'↑',traffic:9600,searchVol:21380,concentration:60,top3Share:0.30,stability:8,avgRevTop10:1580,oppScore:76,growth:15,supply:4.4,date:'07-05',daysAgo:4,adKw:['pantry organizer','kitchen storage','food storage container']}),
+    _poolMake({asin:'B0SPICE002',brand:'mDesign',title:'mDesign Spice Rack Organizer for Cabinet',keyword:'spice rack',category:'家居厨房',price:18.99,rating:4.6,reviews:1520,sales:540,organic:61,ads:24,acos:15,ppc:0.78,reviewVel:20,trend:'↑',traffic:8800,searchVol:18500,concentration:42,top3Share:0.28,stability:9,avgRevTop10:890,oppScore:79,growth:12,supply:5.0,date:'06-28',daysAgo:11,adKw:['spice rack','spice organizer','seasoning rack']}),
+    _poolMake({asin:'B0DRAWER03',brand:'BINO',title:'BINO Adjustable Drawer Divider Set of 4',keyword:'drawer divider',category:'家居厨房',price:15.99,rating:4.5,reviews:760,sales:510,organic:55,ads:30,acos:18,ppc:1.05,reviewVel:24,trend:'↑',traffic:7600,searchVol:15200,concentration:45,top3Share:0.33,stability:6,avgRevTop10:640,oppScore:72,growth:9,supply:4.6,date:'06-20',daysAgo:19,adKw:['drawer divider','drawer organizer','adjustable divider']}),
+    _poolMake({asin:'B0DOGPUZ04',brand:'Outward Hound',title:'Outward Hound Dog Puzzle Toy Level 2',keyword:'dog puzzle toy',category:'宠物用品',price:21.99,rating:4.7,reviews:2100,sales:680,organic:66,ads:20,acos:13,ppc:0.68,reviewVel:16,trend:'↑',traffic:13200,searchVol:33200,concentration:40,top3Share:0.26,stability:10,avgRevTop10:1750,oppScore:82,growth:20,supply:5.5,date:'07-02',daysAgo:7,adKw:['dog puzzle toy','dog enrichment toy','interactive dog toy']}),
+    _poolMake({asin:'B0CATMAT05',brand:'PetFusion',title:'PetFusion ToughGrip Cat Litter Mat',keyword:'cat litter mat',category:'宠物用品',price:29.99,rating:4.4,reviews:3400,sales:590,organic:52,ads:28,acos:19,ppc:1.15,reviewVel:26,trend:'↑',traffic:9200,searchVol:27800,concentration:48,top3Share:0.35,stability:7,avgRevTop10:2100,oppScore:74,growth:14,supply:4.2,date:'06-15',daysAgo:24,adKw:['cat litter mat','litter trapping mat','cat mat']}),
+    _poolMake({asin:'B0PETFTN06',brand:'Veken',title:'Veken 95oz Pet Water Fountain Stainless',keyword:'pet water fountain',category:'宠物用品',price:35.99,rating:4.5,reviews:4200,sales:720,organic:60,ads:25,acos:17,ppc:0.92,reviewVel:28,trend:'↑',traffic:14600,searchVol:45600,concentration:55,top3Share:0.38,stability:8,avgRevTop10:3200,oppScore:71,growth:18,supply:3.9,date:'05-30',daysAgo:40,adKw:['pet water fountain','cat water fountain','automatic pet fountain']}),
+    _poolMake({asin:'B0RESIST07',brand:'Fit Simplify',title:'Fit Simplify Resistance Loop Bands Set of 5',keyword:'resistance bands',category:'运动户外',price:12.99,rating:4.6,reviews:5600,sales:640,organic:63,ads:23,acos:14,ppc:0.75,reviewVel:19,trend:'↑',traffic:15200,searchVol:52000,concentration:50,top3Share:0.31,stability:11,avgRevTop10:4100,oppScore:77,growth:16,supply:4.8,date:'07-01',daysAgo:8,adKw:['resistance bands','exercise bands','workout bands']}),
+    _poolMake({asin:'B0YOGAWH08',brand:'URBNFit',title:'URBNFit Yoga Wheel for Back Pain Stretching',keyword:'yoga wheel',category:'运动户外',price:27.99,rating:4.5,reviews:1850,sales:520,organic:57,ads:27,acos:18,ppc:1.02,reviewVel:23,trend:'↑',traffic:8400,searchVol:19800,concentration:44,top3Share:0.34,stability:9,avgRevTop10:1200,oppScore:73,growth:11,supply:4.3,date:'06-10',daysAgo:29,adKw:['yoga wheel','yoga back roller','stretching wheel']})
   ];
 }
 function flowGetProductPool(){
@@ -13980,27 +14053,39 @@ function renderProductReports(){
   const container = document.getElementById('product-reports-list');
   if(!container) return;
   if(!productReportsData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center"><div style="font-size:32px;margin-bottom:8px">📋</div><div style="font-size:14px;color:var(--t3)">暂无产品分析报告</div><div style="font-size:12px;color:var(--t4);margin-top:4px">完成选品工作台流程并保存报告后，将显示在这里</div></div>';
+    container.innerHTML='<div style="padding:40px;text-align:center"><div style="font-size:32px;margin-bottom:8px">📋</div><div style="font-size:14px;color:var(--t3)">暂无产品分析报告</div><div style="font-size:12px;color:var(--t4);margin-top:4px">完成选品工作台流程，或在「竞品分析」跑完一次分析后，报告将显示在这里</div></div>';
     return;
   }
-  container.innerHTML = productReportsData.map((r) => `
+  container.innerHTML = productReportsData.map((r) => {
+    const isCa  = r.kind === 'competitor';
+    const open  = isCa ? `caViewReport('${r.recId}')` : 'openReportModal()';
+    const title = isCa ? `${r.name}（竞品分析报告）` : `${r.name}（选品分析报告）`;
+    const meta  = isCa
+      ? `${r.market} · ${r.date} · 对比 ${r.comps} 个竞品 · 售价${r.price}`
+      : `${r.market} · ${r.date} · 售价${r.price} · 毛利${r.margin}`;
+    const grad  = isCa ? 'linear-gradient(135deg,#0f5ef7,#38bdf8)' : 'linear-gradient(135deg,#6c5ce7,#a855f7)';
+    const chips = isCa
+      ? `<div style="text-align:center;padding:4px 10px;background:rgba(15,94,247,0.08);border-radius:6px"><div style="font-size:14px;font-weight:800;color:#0f5ef7">${r.nf}%</div><div style="font-size:8px;color:var(--t3)">自然流量</div></div>
+         <div style="padding:4px 10px;background:rgba(255,149,0,0.10);border-radius:6px;text-align:center"><div style="font-size:12px;font-weight:700;color:#c76b00">⚔️ 攻防</div></div>`
+      : `<div style="text-align:center;padding:4px 10px;background:rgba(108,92,231,0.08);border-radius:6px"><div style="font-size:14px;font-weight:800;color:#6c5ce7">${r.score}</div><div style="font-size:8px;color:var(--t3)">评分</div></div>
+         <div style="padding:4px 10px;background:rgba(52,199,89,0.08);border-radius:6px;text-align:center"><div style="font-size:12px;font-weight:700;color:#2d9e5a">✅ ${r.verdict}</div></div>`;
+    return `
     <div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 2px 12px rgba(0,0,0,0.06)'" onmouseout="this.style.boxShadow='none'">
-      <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c5ce7,#a855f7);display:flex;align-items:center;justify-content:center;flex-shrink:0" onclick="openReportModal()">
+      <div style="width:44px;height:44px;border-radius:10px;background:${grad};display:flex;align-items:center;justify-content:center;flex-shrink:0" onclick="${open}">
         <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#fff;stroke-width:2;fill:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </div>
-      <div style="flex:1;min-width:0" onclick="openReportModal()">
-        <div style="font-size:13px;font-weight:600;color:var(--t0)">${r.name}（选品分析报告）</div>
-        <div style="font-size:11px;color:var(--t2);margin-top:2px">${r.market} · ${r.date} · 售价${r.price} · 毛利${r.margin}</div>
+      <div style="flex:1;min-width:0" onclick="${open}">
+        <div style="font-size:13px;font-weight:600;color:var(--t0)">${title}</div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px">${meta}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div style="text-align:center;padding:4px 10px;background:rgba(108,92,231,0.08);border-radius:6px"><div style="font-size:14px;font-weight:800;color:#6c5ce7">${r.score}</div><div style="font-size:8px;color:var(--t3)">评分</div></div>
-        <div style="padding:4px 10px;background:rgba(52,199,89,0.08);border-radius:6px;text-align:center"><div style="font-size:12px;font-weight:700;color:#2d9e5a">✅ ${r.verdict}</div></div>
-        <button onclick="openReportModal()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:var(--accent2);cursor:pointer;font-weight:600">👁 查看</button>
+        ${chips}
+        <button onclick="${open}" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:var(--accent2);cursor:pointer;font-weight:600">👁 查看</button>
         <button onclick="alert('下载功能开发中')" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:var(--t2);cursor:pointer;font-weight:600">⬇️</button>
         <button onclick="deleteProductReport(${r.id},event)" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:#ff3b30;cursor:pointer">✕</button>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 // Init count on load
@@ -19420,6 +19505,7 @@ function caApplyPastedAsins(asins, meAsin){
 
 // ── 竞品分析记录（分析完成后自动保存到 产品管理/竞品分析记录）──
 var _caRecords=[];
+var _caCurRecId=null;   // 当前预览的报告对应的记录 id
 function caFmtTime(d){ const p=n=>(n<10?'0':'')+n; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
 function caUpdateRecCount(){ const b=document.getElementById('ca-record-count'); if(b){ b.textContent=_caRecords.length; b.style.display=_caRecords.length?'inline-block':'none'; } }
 function caSaveRecord(){
@@ -19430,7 +19516,31 @@ function caSaveRecord(){
     snapshot: JSON.parse(JSON.stringify(CA_DATA))
   };
   _caRecords.unshift(rec);
+  _caCurRecId=rec.id;
   caUpdateRecCount();
+  caSaveCompetitorReport(rec);
+}
+// 竞品分析报告 → 存入「产品管理 / 产品分析报告」，可在该模块在线预览
+function caSaveCompetitorReport(rec){
+  if(!rec || typeof productReportsData==='undefined') return;
+  if(productReportsData.find(function(r){return r.recId===rec.id;})) return;
+  var data=rec.snapshot||CA_DATA;
+  var me=data.find(function(c){return c.you;});
+  if(!me) return;
+  var nf=Math.round(me.nfScoreRatio/(me.nfScoreRatio+me.adScoreRatio)*100);
+  productReportsData.unshift({
+    id: Date.now(),
+    kind: 'competitor',
+    recId: rec.id,
+    name: me.asin,
+    date: new Date().toLocaleDateString(),
+    market: rec.country||'Amazon US',
+    comps: rec.comps.length,
+    nf: nf,
+    price: caMoney(me.price)
+  });
+  updateProductReportCount();
+  renderProductReports();
 }
 function caRestoreRecord(r){
   if(!r||!r.snapshot) return false;
@@ -19456,6 +19566,7 @@ function caCloseContent(e){
 }
 function caViewReport(id){
   var r=_caRecords.find(function(x){return x.id===id;}); if(!caRestoreRecord(r)) return;
+  _caCurRecId=id;
   caOpenReport();
 }
 function renderCaRecords(){
@@ -20210,6 +20321,61 @@ function caRenderMarket(){
     </div>`;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   报告 · Keepa 式详细论证体
+   规矩（对照《Keepa数据深度解析报告》模型）：
+   1) 每条结论锚定「日期 + 数值 + 幅度」，并标注同期 BSR 反应
+   2) 异常点单列，并列多个竞争性假设，不下死结论
+   3) 现有数据只有 12 周（CA_WK），跨年维度一律标注「数据不足」，禁止编造
+   ══════════════════════════════════════════════════════════════ */
+const CA_REP_RANGE = CA_WK[0]+' – '+CA_WK[CA_WK.length-1];
+const caRepH  = t => `<div class="ca-rep-h">${t}</div>`;
+const caRepUl = items => `<ul class="ca-rep-ul">${items.filter(Boolean).map(i=>`<li>${i}</li>`).join('')}</ul>`;
+const caRepConcl = t => `<div class="ca-rep-concl"><b>结论：</b>${t}</div>`;
+const caRepNoData = (what, need) => `<div class="ca-rep-nodata"><b>数据不足，无法判断：</b>${what}<br>当前数据范围仅 ${CA_REP_RANGE}（12 周），${need}</div>`;
+const caRepAbn = items => items.length ? `<div class="ca-rep-abn"><b>异常点：</b>${caRepUl(items)}</div>` : '';
+const caRepEff = r => r.effect ? r.effect.replace(/^BSR 改善/,'<span class="ca-rep-eff-up">BSR 改善').replace(/^BSR 回落/,'<span class="ca-rep-eff-down">BSR 回落') + (/^BSR/.test(r.effect)?'</span>':'') : '—';
+
+// 按类型抽取周度 Keepa 信号（复用合并时间轴，保证与页面上的时间轴口径一致）
+function caRepSignals(c){
+  const out={price:[],review:[],rating:[],buybox:[],offer:[],coupon:[],deal:[]};
+  caMergedTimeline(c).forEach(r=>{
+    r.keepa.forEach(k=>{
+      const e={date:r.date, txt:k.txt, effect:r.effect, effCls:r.effCls};
+      if(k.t==='priceDown'||k.t==='priceUp') out.price.push(e);
+      else if(k.t==='reviewSurge') out.review.push(e);
+      else if(k.t==='ratingUp'||k.t==='ratingDown') out.rating.push(e);
+      else if(k.t==='buybox') out.buybox.push(e);
+      else if(k.t==='offer') out.offer.push(e);
+      else if(k.t==='coupon') out.coupon.push(e);
+      else if(k.t==='deal') out.deal.push(e);
+    });
+  });
+  return out;
+}
+// 价格变动事件：日期 / 前后价 / 幅度 / 同期 BSR 反应
+function caRepPriceEvents(c){
+  const s=caKeepaSeries(c), bb=s.priceSeries[s.priceSeries.length-1].vals, rank=s.rank, ev=[];
+  for(let i=1;i<bb.length;i++){
+    const d=bb[i]-bb[i-1];
+    if(Math.abs(d)<0.5) continue;
+    ev.push({date:CA_WK[i], from:bb[i-1], to:bb[i], pct:+(d/bb[i-1]*100).toFixed(1),
+             rankFrom:rank[i-1], rankTo:rank[i], rankUp:rank[i]<rank[i-1]});
+  }
+  return ev;
+}
+// 降价对排名的刺激效果：几次降价里有几次真的把 BSR 打上去了
+function caRepPriceRankCorr(c){
+  const ev=caRepPriceEvents(c), downs=ev.filter(e=>e.pct<0);
+  const eff=downs.filter(e=>e.rankUp).length;
+  return {ev, downs:downs.length, eff, rate: downs.length?Math.round(eff/downs.length*100):null};
+}
+// 由上架天数反推最早在售日期
+function caRepListedFrom(c){
+  const d=new Date(); d.setDate(d.getDate()-(c.listedDays||0));
+  return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+}
+
 function caRenderReport(){
   const me=caMe(), rivals=caRivals();
   const top=rivals.reduce((a,b)=>a.totalScoreRatio>b.totalScoreRatio?a:b);
@@ -20247,40 +20413,204 @@ function caRenderReport(){
       </div>
     </div>
 
+    <div class="ca-rep-banner">
+      <b>数据说明：</b>本报告数据范围 <b>${CA_REP_RANGE}（12 周）</b>，站点数据为原型演示模拟值。凡 12 周窗口无法支撑的维度（首单判断、FBA 断货、跨年评论曲线、季节性验证），均已在对应小节标注「数据不足」，未作推测性结论。
+    </div>
+
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">1</div><h3>竞品画像</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">1</div><h3>关键时间点分析：上架资历与运营节奏</h3></div>
       <div class="ca-rcard-body">
-        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方 <b>${me.asin}</b> 售价 <b>${caMoney(me.price)}</b>，落在竞品 <b>$${pLo}–$${pHi}</b> 价格带内；月销 <b>${caFmt(me.boughtInPastMonth)}</b>、评论 <b>${caFmt(me.ratingNum)}</b>、评分 <b>★${me.star}</b>、上架 <b>${me.listedDays} 天</b>。对比头部 ${top.emoji} <b>${top.asin}</b>（月销 ${caFmt(top.boughtInPastMonth)}、评论 ${caFmt(top.ratingNum)}），我方在销量与口碑体量上约有 <b>${(top.boughtInPastMonth/me.boughtInPastMonth).toFixed(1)}×</b> 差距。</p>
-        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：处中高价带，销量/口碑落后头部，应靠差异化卖点「<b>${(me.features||[]).join(' / ')}</b>」竞争，不宜正面打价格战。</div>
+        ${caRepH('我方上架情况')}
+        ${caRepUl([
+          `最早在售日期约 <b>${caRepListedFrom(me)}</b>（按上架 <b>${me.listedDays} 天</b>反推）。`,
+          `当前售价 <b>${caMoney(me.price)}</b>，落在竞品 <b>$${pLo}–$${pHi}</b> 价格带内；月销 <b>${caFmt(me.boughtInPastMonth)}</b>、评论 <b>${caFmt(me.ratingNum)}</b>、评分 <b>★${me.star}</b>、变体 <b>${me.childAsins}</b> 个。`
+        ])}
+        ${caRepH('对比竞品资历')}
+        ${caRepUl(rivals.map(c=>
+          `<b>${c.asin}</b>（${brand(c)}）：上架 <b>${c.listedDays} 天</b>（约 ${caRepListedFrom(c)}）· 月销 <b>${caFmt(c.boughtInPastMonth)}</b> · 评论 <b>${caFmt(c.ratingNum)}</b> · 评分 ★${c.star}。`
+        ))}
+        ${caRepUl([
+          `头部 <b>${top.asin}</b> 上架 ${top.listedDays} 天、月销 ${caFmt(top.boughtInPastMonth)}，我方在销量体量上约有 <b>${(top.boughtInPastMonth/me.boughtInPastMonth).toFixed(1)}×</b> 差距，口碑体量约 <b>${(top.ratingNum/me.ratingNum).toFixed(1)}×</b> 差距。`,
+          me.listedDays<top.listedDays
+            ? `我方比头部晚上架 <b>${top.listedDays-me.listedDays} 天</b>，资历劣势部分解释了口碑体量差距。`
+            : `我方上架早于头部 <b>${me.listedDays-top.listedDays} 天</b>，资历不占劣势，销量差距更可能来自推广强度而非时间积累。`
+        ])}
+        ${caRepNoData('首单出单日期、首条评论时间、上评速度是否异常（如在售 1 天即出现多条评论 → 合并老链接 / VINE）。', '需接入 Keepa 跨年 BSR 与评论历史（首个小类 BSR 出现日 = 首单日）才能判断。')}
+        ${caRepConcl(`我方处中高价带、资历${me.listedDays<top.listedDays?'略浅':'不弱'}但销量与口碑落后头部，应靠差异化卖点「<b>${(me.features||[]).join(' / ')}</b>」竞争，不宜正面打价格战。`)}
       </div>
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">2</div><h3>流量结构（自然 vs 广告）</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">2</div><h3>评论与评分曲线：上评节奏及异常点评估</h3></div>
       <div class="ca-rcard-body">
-        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方总流量得分 <b>${me.totalScore.toFixed(0)}</b>，构成为 <b style="color:var(--accent2)">自然 ${meNf}%</b> / <b style="color:var(--orange)">广告 ${meAdw}%</b>；本期自然词 <b>↑${me.nfKwIn} / ↓${me.nfKwOut}</b>、广告词 <b>↑${me.adKwIn} / ↓${me.adKwOut}</b>。头部 <b>${top.asin}</b> 广告占比高达 <b>${topAdw}%</b>、广告词 <b>${caFmt(top.adKeywordNum)}</b>，主要靠密集广告拉动流量。</p>
-        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：${leverage?`我方自然占比 <b>${meNf}%</b> 偏高、listing 权重扎实但广告保守，<b>有放量空间</b>。`:`我方广告占比 <b>${meAdw}%</b> 偏高、依赖广告，需<b>补自然权重</b>降低流量成本。`}</div>
+        ${caRepH('我方评论体量与增速')}
+        ${caRepUl([
+          `累计评论 <b>${caFmt(me.ratingNum)}</b> 条、评分 <b>★${me.star}</b>；近 30 天新增约 <b>${me.reviewGrowth30d}</b> 条，日均约 <b>${(me.reviewGrowth30d/30).toFixed(1)}</b> 条。`,
+          `头部 <b>${top.asin}</b> 累计评论 <b>${caFmt(top.ratingNum)}</b> 条、近 30 天新增约 <b>${top.reviewGrowth30d}</b> 条，上评速度约为我方 <b>${(top.reviewGrowth30d/(me.reviewGrowth30d||1)).toFixed(1)}×</b>。`
+        ])}
+        ${(() => {
+          const sg=caRepSignals(me);
+          const rows=[];
+          if(sg.rating.length) rows.push(caRepH('我方评分星级变动')+caRepUl(sg.rating.map(e=>`<b>${e.date}</b>：${e.txt}，同期 ${caRepEff(e)}。`)));
+          return rows.join('');
+        })()}
+        ${(() => {
+          const abn=[];
+          CA_SORTED.forEach(c=>{
+            caRepSignals(c).review.forEach(e=>{
+              abn.push(`<b>${c.you?'我方 ':''}${c.asin}</b> · <b>${e.date}</b>：${e.txt}（周增量显著高于其 30 天均速 ${(c.reviewGrowth30d/4).toFixed(1)} 条/周），同期 ${caRepEff(e)}。可能为站外放量、Vine 批次到评或刷单，亦不排除促销期自然转化提升，暂无法区分。`);
+            });
+          });
+          return caRepAbn(abn);
+        })()}
+        ${caRepNoData('评分数曲线是否存在「暴涨后暴跌」（变体合并/拆分或评论被平台删除的典型特征）。', '需接入 Keepa 跨年评分数序列，比对暴跌前后评分星级是否同步变化，才能与变体操作区分。')}
+        ${caRepConcl(`我方上评速度约为头部的 <b>${(me.reviewGrowth30d/(top.reviewGrowth30d||1)*100).toFixed(0)}%</b>，口碑积累偏慢；评论增量异常点已单列，建议结合后台真实留评率核对，勿仅凭曲线下结论。`)}
       </div>
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">3</div><h3>广告投放</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">3</div><h3>价格策略分析：促销手法与折扣心理学</h3></div>
       <div class="ca-rcard-body">
-        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方在投 <b>${caFmt(me.adKeywordNum)}</b> 个广告词 / <b>${me.campaignCnt}</b> 个活动（SP ${me.spNum} · SB ${me.sbNum} · SBV ${me.sbvNum}），ACOS <b>${Math.round(me.acos*100)}%</b>、点击转化 <b>${(me.clickConv*100).toFixed(1)}%</b>，主投词「<b>${(me.topAdKw||[]).join('、')}</b>」。头部 <b>${top.asin}</b> 广告词 <b>${caFmt(top.adKeywordNum)}</b>，投放强度约 <b>${(top.adKeywordNum/me.adKeywordNum).toFixed(1)}×</b> 于我方。</p>
-        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：头部靠广告词量 + 活动密度压制，建议针对其主投词「${(top.topAdKw||[]).slice(0,2).join('、')}」<b>补位 SP 手动活动</b>防守。</div>
+        ${(() => {
+          const ev=caRepPriceEvents(me);
+          if(!ev.length) return caRepH('我方价格调整节奏')+caRepUl([`${CA_REP_RANGE} 期间 Buy Box 价格未出现幅度超过 $0.5 的调整，价格策略<b>克制稳定</b>。`]);
+          return caRepH('我方价格调整节奏（含同期 BSR 反应）')+caRepUl(ev.map(e=>{
+            const d=Math.abs(e.rankFrom-e.rankTo);
+            return `<b>${e.date}</b>：价格从 <b>${caMoney(e.from)}</b> ${e.pct<0?'降至':'升至'} <b>${caMoney(e.to)}</b>（${e.pct<0?'降幅':'涨幅'}约 <b>${Math.abs(e.pct)}%</b>），同期大类 BSR <b>#${e.rankFrom.toLocaleString()} → #${e.rankTo.toLocaleString()}</b>（排名${e.rankUp?`<span class="ca-rep-eff-up">上升 ${d.toLocaleString()} 名</span>`:`<span class="ca-rep-eff-down">下降 ${d.toLocaleString()} 名</span>`}）。`;
+          }));
+        })()}
+        ${caRepH('折扣策略打法')}
+        ${caRepUl([
+          `官方划线价约 <b>${caMoney(me.price*1.15)}</b>，当前价 <b>${caMoney(me.currentPrice)}</b>，形成约 <b>${Math.round((1-me.currentPrice/(me.price*1.15))*100)}%</b> 的折扣感。`,
+          `90 天价格区间 <b>${caMoney(me.priceMin90d)}~${caMoney(me.priceMax90d)}</b>，波动评级 <b>${me.priceVolatility}</b>；30 天促销 <b>${me.couponFreq30d} 次</b>${me.dealNow?`，当前挂 <b>${me.dealNow}</b>`:(me.couponNow!=null?`，当前挂 <b>${Math.round(me.couponNow*100)}% 券</b>`:'，当前无促销')}。`,
+          me.currentPrice < me.priceMax90d*0.95
+            ? `当前价较 90 天高点低 <b>${Math.round((1-me.currentPrice/me.priceMax90d)*100)}%</b>，处于降价周期内。`
+            : `当前价贴近 90 天高点，未处于降价周期。`
+        ])}
+        ${caRepH('竞品价格与促销对比')}
+        ${caRepUl(rivals.map(c=>
+          `<b>${c.asin}</b>：当前价 <b>${caMoney(c.currentPrice)}</b>（90 天 ${caMoney(c.priceMin90d)}~${caMoney(c.priceMax90d)}，波动 ${c.priceVolatility}）· 30 天促销 <b>${c.couponFreq30d} 次</b>${c.dealNow?` · 当前 <b>${c.dealNow}</b>`:(c.couponNow!=null?` · 当前 <b>${Math.round(c.couponNow*100)}% 券</b>`:'')}。`
+        ))}
+        ${caRepUl([`竞品 <b>${dec.asin}</b> 带「<b>${decTags}</b>」标签，促销依赖 / 排名松动明显。`])}
+        ${(() => {
+          const corr=caRepPriceRankCorr(me);
+          if(!corr.downs) return '';
+          // 有效率低才算异常点；高有效率是正常现象，作为普通观察陈述
+          if(corr.rate<60) return caRepAbn([`我方 <b>${corr.downs}</b> 次降价中仅 <b>${corr.eff}</b> 次带来 BSR 改善（有效率 <b>${corr.rate}%</b>）。降价对排名的刺激<b>不稳定</b>，可能受竞争强度、广告投放、库存状况共同影响，不宜简单归因于价格。`]);
+          return caRepH('降价效果观察')+caRepUl([`我方 <b>${corr.downs}</b> 次降价中有 <b>${corr.eff}</b> 次伴随 BSR 改善（有效率 <b>${corr.rate}%</b>），降价与排名改善<b>同向性较强</b>。但同期我方亦在持续投放广告，二者对排名的贡献<b>无法从现有数据中拆分</b>，不能据此认定降价是排名改善的主因。`]);
+        })()}
+        ${caRepConcl(`${me.couponFreq30d<=1?'我方促销克制、利润健康':'我方促销偏频，注意护住利润'}；折扣感主要由划线价制造而非真实让利，建议精细化调价而非依赖大幅降价，并可趁 <b>${dec.asin}</b> 松动期在其高自然词抢量。`)}
       </div>
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">4</div><h3>价格与促销</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">4</div><h3>FBA 库存与断货分析</h3></div>
       <div class="ca-rcard-body">
-        <p style="font-size:13px;color:var(--t1);line-height:1.9;margin:0">我方当前价 <b>${caMoney(me.currentPrice)}</b>，90 天区间 <b>${caMoney(me.priceMin90d)}~${caMoney(me.priceMax90d)}</b>，价格波动 <b>${me.priceVolatility}</b>、30 天促销 <b>${me.couponFreq30d} 次</b>${me.dealNow?`（当前 <b>${me.dealNow}</b>）`:(me.couponNow!=null?`（当前 <b>${Math.round(me.couponNow*100)}% 券</b>）`:'（当前无促销）')}。竞品 <b>${dec.asin}</b> 带「<b>${decTags}</b>」，促销依赖 / 排名松动明显。</p>
-        <div style="border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7">小结：${me.couponFreq30d<=1?'我方促销克制、利润健康':'我方促销偏频，注意护住利润'}；可趁 <b>${dec.asin}</b> 松动期在其高自然词抢量。</div>
+        ${caRepNoData('是否存在断货 / 停售期、断货次数、断货造成的 BSR 代价、断货修复能力。', '判断断货依赖「FBA 价格、Buybox 价格、卖家数同时为空而 BSR 仍存在」这一特征，需接入 Keepa 逐日历史字段；当前 12 周窗口内各竞品价格与卖家数均连续，未观察到断货信号。')}
+        ${caRepH('可观察到的库存侧间接信号')}
+        ${caRepUl(CA_SORTED.map(c=>{
+          const sg=caRepSignals(c);
+          return `<b>${c.you?'我方 ':''}${c.asin}</b>：Buybox 换手 <b>${sg.buybox.length}</b> 次、Offer 数变动 <b>${sg.offer.length}</b> 次。${sg.buybox.length>=2?'换手偏频，需留意备货稳定性与 Buybox 竞争力。':'换手不频繁，暂无库存不稳的间接迹象。'}`;
+        }))}
+        ${caRepConcl('12 周窗口内未见断货特征，但 Buybox 换手频次可作为库存/绩效稳定性的间接观测点；确认需接入 Keepa 历史与自有后台库存数据。')}
       </div>
     </div>
 
     <div class="ca-rcard">
-      <div class="ca-rcard-head"><div class="ca-rcard-num">5</div><h3>我方攻防建议</h3></div>
+      <div class="ca-rcard-head"><div class="ca-rcard-num">5</div><h3>跟卖攻防：Buybox 与 Offer 争夺</h3></div>
+      <div class="ca-rcard-body">
+        ${(() => {
+          const sg=caRepSignals(me);
+          const out=[caRepH('我方 Buybox / Offer 情况')];
+          out.push(caRepUl([
+            `${CA_REP_RANGE} 期间 Buybox 换手 <b>${sg.buybox.length}</b> 次、Offer 数变动 <b>${sg.offer.length}</b> 次。`,
+            sg.buybox.length ? `换手记录：${sg.buybox.map(e=>`<b>${e.date}</b> ${e.txt}`).join('；')}。` : '本期未观察到 Buybox 换手，Buybox 持有稳定。'
+          ]));
+          if(sg.offer.length) out.push(caRepUl(sg.offer.map(e=>`<b>${e.date}</b>：${e.txt}，同期 ${caRepEff(e)}。`)));
+          return out.join('');
+        })()}
+        ${caRepH('竞品跟卖强度对比')}
+        ${caRepUl(rivals.map(c=>{
+          const sg=caRepSignals(c);
+          return `<b>${c.asin}</b>：Buybox 换手 <b>${sg.buybox.length}</b> 次、Offer 变动 <b>${sg.offer.length}</b> 次。${sg.buybox.length>=2?'跟卖 / 换手活跃，品牌保护偏弱。':'Buybox 相对稳定。'}`;
+        }))}
+        ${(() => {
+          const sg=caRepSignals(me);
+          return sg.buybox.length>=2 ? caRepAbn([`我方 Buybox 在 12 周内换手 <b>${sg.buybox.length}</b> 次，可能为跟卖者抢占、FBA 库存不稳导致资格丢失，或我方主动调价触发轮转，三者需结合后台数据区分。`]) : '';
+        })()}
+        ${caRepConcl(`${caRepSignals(me).buybox.length>=2?'我方 Buybox 稳定性不足，建议核查品牌备案与库存供给':'我方 Buybox 持有稳定，品牌保护暂无明显缺口'}；对跟卖活跃的竞品可在其高自然词施压，抢夺其外溢流量。`)}
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">6</div><h3>排名归因分析</h3></div>
+      <div class="ca-rcard-body">
+        ${(() => {
+          const corr=caRepPriceRankCorr(me);
+          return caRepH('价格与排名相关性')+caRepUl([
+            corr.downs
+              ? `我方 <b>${corr.downs}</b> 次降价中 <b>${corr.eff}</b> 次伴随 BSR 改善，有效率 <b>${corr.rate}%</b>。${corr.rate>=60?'降价与排名改善<b>同向性较强</b>，但同期广告投放持续，二者贡献无法拆分，属共变而非已证因果。':'降价<b>不总</b>带来排名上升，相关性不稳定。'}`
+              : '本期我方无显著降价动作，价格与排名的相关性无法从现有窗口检验。',
+            `大类 BSR 由 <b>#${caFmt(me.prevBsr)}</b> 变为 <b>#${caFmt(me.bsr)}</b>（${me.bsr<me.prevBsr?'<span class="ca-rep-eff-up">排名上升</span>':'<span class="ca-rep-eff-down">排名下降</span>'} ${caFmt(Math.abs(me.prevBsr-me.bsr))} 名）。`
+          ]);
+        })()}
+        ${caRepH('流量结构与排名')}
+        ${caRepUl([
+          `我方总流量得分 <b>${me.totalScore.toFixed(0)}</b>，构成 <b>自然 ${meNf}%</b> / <b>广告 ${meAdw}%</b>；本期自然词 <b>↑${me.nfKwIn} / ↓${me.nfKwOut}</b>、广告词 <b>↑${me.adKwIn} / ↓${me.adKwOut}</b>。`,
+          `头部 <b>${top.asin}</b> 广告占比 <b>${topAdw}%</b>、广告词 <b>${caFmt(top.adKeywordNum)}</b>，主要靠密集广告拉动流量；其 BSR 为 <b>#${caFmt(top.bsr)}</b>。`,
+          `我方在投 <b>${caFmt(me.adKeywordNum)}</b> 词 / <b>${me.campaignCnt}</b> 个活动（SP ${me.spNum} · SB ${me.sbNum} · SBV ${me.sbvNum}），ACOS <b>${Math.round(me.acos*100)}%</b>、点击转化 <b>${(me.clickConv*100).toFixed(1)}%</b>，投放强度约为头部的 <b>${(me.adKeywordNum/(top.adKeywordNum||1)*100).toFixed(0)}%</b>。`
+        ])}
+        ${caRepH('评论数与排名')}
+        ${caRepUl([`我方评论 <b>${caFmt(me.ratingNum)}</b> 条 / 评分 <b>★${me.star}</b>，头部 <b>${caFmt(top.ratingNum)}</b> 条 / <b>★${top.star}</b>。评分星级与 BSR 之间未观察到稳定的单向关联，评论体量更可能通过转化率间接影响排名。`])}
+        ${caRepConcl('BSR 排名受价格、广告、评论、竞争、库存等多因素综合影响，<b>单一变量无法完全解释排名波动</b>；上述相关性仅为同期共变，不等于因果，决策请结合自有后台真实数据。')}
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">7</div><h3>销量表现与季节性</h3></div>
+      <div class="ca-rcard-body">
+        ${caRepH('我方销量走势')}
+        ${caRepUl([
+          `月销 <b>${caFmt(me.boughtInPastMonth)}</b>；12 周销量序列由 <b>${me.salesTrend[0]}</b> 变为 <b>${me.salesTrend[me.salesTrend.length-1]}</b>（${me.salesTrend[me.salesTrend.length-1]>=me.salesTrend[0]?'<span class="ca-rep-eff-up">上行</span>':'<span class="ca-rep-eff-down">下行</span>'}）。`
+        ])}
+        ${caRepH('竞品销量对比')}
+        ${caRepUl(rivals.map(c=>
+          `<b>${c.asin}</b>：月销 <b>${caFmt(c.boughtInPastMonth)}</b>，序列 ${c.salesTrend[0]} → ${c.salesTrend[c.salesTrend.length-1]}（${c.salesTrend[c.salesTrend.length-1]>=c.salesTrend[0]?'上行':'下行'}）。`
+        ))}
+        ${caRepNoData('销量是否具备季节性（如年末黑五 / 网一 / 圣诞旺季爆发、节后回落）。', `窗口 ${CA_REP_RANGE} 未跨越任何购物旺季，无法验证季节性；需接入至少覆盖 Q4 的跨年销量序列。`)}
+        ${caRepConcl(`我方销量${me.salesTrend[me.salesTrend.length-1]>=me.salesTrend[0]?'处上行通道':'处下行通道，需警惕份额流失'}，与头部仍有 <b>${(top.boughtInPastMonth/me.boughtInPastMonth).toFixed(1)}×</b> 差距；季节性判断待补跨年数据。`)}
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">8</div><h3>生命周期判断与依据</h3></div>
+      <div class="ca-rcard-body">
+        ${(() => {
+          const up=me.salesTrend[me.salesTrend.length-1]>=me.salesTrend[0];
+          const rankUp=me.bsr<me.prevBsr;
+          const stage = me.listedDays<120 ? '新品期' : (up&&rankUp ? '增长期' : (!up&&!rankUp ? '成熟期承压 / 需警惕衰退' : '增长期向成熟期过渡'));
+          return `<div style="font-size:13px;font-weight:700;color:var(--t0);margin-bottom:10px">我方产品阶段判断：<span style="color:var(--accent2)">${stage}</span></div>`
+          + caRepH('判断依据')
+          + caRepUl([
+              `<b>上架资历</b>：已上架 <b>${me.listedDays} 天</b>，${me.listedDays<120?'仍处新品窗口内':'已过新品窗口'}。`,
+              `<b>BSR 趋势</b>：<b>#${caFmt(me.prevBsr)} → #${caFmt(me.bsr)}</b>，${rankUp?'排名上升，市场认可度提升':'排名回落，竞争压力上升'}。`,
+              `<b>销量走势</b>：12 周序列 ${me.salesTrend[0]} → ${me.salesTrend[me.salesTrend.length-1]}，${up?'呈上行':'呈下行'}。`,
+              `<b>口碑积累</b>：评论 <b>${caFmt(me.ratingNum)}</b> 条、近 30 天新增 <b>${me.reviewGrowth30d}</b> 条，仍在持续累积。`,
+              `<b>运营动作</b>：在投 <b>${caFmt(me.adKeywordNum)}</b> 广告词 / <b>${me.campaignCnt}</b> 个活动，30 天促销 <b>${me.couponFreq30d}</b> 次，${me.campaignCnt>=3?'推广力度积极':'推广力度偏保守'}。`
+            ])
+          + caRepH('排除其他阶段的依据')
+          + caRepUl([
+              `<b>非新品期</b>：${me.listedDays>=120?`已上架 ${me.listedDays} 天并积累 ${caFmt(me.ratingNum)} 条评论与稳定月销，明显不是新品。`:`上架仅 ${me.listedDays} 天、评论 ${caFmt(me.ratingNum)} 条，仍符合新品特征，本条不排除。`}`,
+              `<b>非衰退期</b>：${up||rankUp?'销量或排名仍有上行动能，运营方仍在积极投放与调价，未见持续性大幅下滑。':'销量与排名同时走弱，已具备衰退期的部分特征，需持续观察是否为短期波动。'}`,
+              `<b>非纯粹成熟期</b>：${me.campaignCnt>=3||me.couponFreq30d>=2?'仍在积极争夺份额（广告活动与促销频次不低），尚未进入稳定收割利润的状态。':'投放与促销均克制，已接近稳定收割状态。'}`
+            ]);
+        })()}
+        ${caRepNoData('该阶段判断是否已跨越完整生命周期（如「长期停售后二次增长」这类形态）。', '仅凭 12 周窗口无法识别跨年的停售、重启与二次增长；需接入 Keepa 完整历史。')}
+      </div>
+    </div>
+
+    <div class="ca-rcard">
+      <div class="ca-rcard-head"><div class="ca-rcard-num">9</div><h3>全盘总结与建议</h3></div>
       <div class="ca-rcard-body">
         <div class="ca-insight threat">
           <div class="ca-ins-ic"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
@@ -20308,6 +20638,16 @@ function caRenderReport(){
             <div class="ca-ins-d">我方 ${caMoney(me.price)} 处 $${pLo}–$${pHi} 竞品价格带${me.currentPrice<me.priceMax90d*0.95?'，且近期有降价':''}。差异化锁定「${(me.features||[]).join(' / ')}」，避免与低价款正面比价；促销依赖度（30天 ${me.couponFreq30d} 次）保持克制以护住利润。</div>
             <div class="ca-ins-src">来源 batchAsinDetail · batchAsinPrice</div></div>
         </div>
+
+        ${caRepH('优化方向与建议（按优先级）')}
+        ${caRepUl([
+          `<b>库存管理</b>：${caRepSignals(me).buybox.length>=2?`Buybox 12 周内换手 ${caRepSignals(me).buybox.length} 次，优先核查 FBA 供货稳定性与 Buybox 资格。`:'Buybox 持有稳定，维持现有备货节奏即可，重点转向流量端。'}`,
+          `<b>评论管理</b>：上评速度约为头部 <b>${(me.reviewGrowth30d/(top.reviewGrowth30d||1)*100).toFixed(0)}%</b>，建议提升留评率；对已标注的评论激增异常点，核对是否来自站外或 Vine 批次，避免误判为自然增长。`,
+          `<b>跟卖防御</b>：${caRepSignals(me).buybox.length>=2?'建议注册品牌备案并启用透明计划，减少跟卖对 Buybox 的侵蚀。':'当前无明显跟卖压力，保持品牌备案监控即可。'}`,
+          `<b>价格策略</b>：${(() => { const c=caRepPriceRankCorr(me); return c.downs&&c.rate<60?`降价有效率仅 ${c.rate}%，应避免过度依赖降价，转向捆绑销售 / 增值服务提升竞争力。`:'现有调价节奏克制，继续以划线价维持折扣感，护住利润。'; })()}`,
+          `<b>流量拓展</b>：${leverage?`自然占比 ${meNf}% 健康、广告仅 ${meAdw}%（头部 ${topAdw}%），有明确放量空间，建议提预算 + 扩广告词。`:`广告占比 ${meAdw}% 偏高、ACOS ${Math.round(me.acos*100)}%，建议否词提效并补自然权重，降低流量成本。`}`
+        ])}
+        ${caRepConcl(`我方当前处于${(() => { const up=me.salesTrend[me.salesTrend.length-1]>=me.salesTrend[0], rankUp=me.bsr<me.prevBsr; return me.listedDays<120?'新品期':(up&&rankUp?'增长期':(!up&&!rankUp?'成熟期承压阶段':'增长期向成熟期过渡'));})()}，与头部 <b>${top.asin}</b> 的核心差距在<b>${meAdw<topAdw?'广告投放强度':'口碑体量'}</b>而非价格。短期抓 <b>${dec.asin}</b> 的松动窗口抢量，中期补齐${leverage?'广告杠杆':'自然权重'}与口碑积累；本报告结论基于 ${CA_REP_RANGE} 共 12 周数据，标注「数据不足」的维度请勿据此决策。`)}
       </div>
     </div>
 
@@ -20315,8 +20655,8 @@ function caRenderReport(){
 
     <div class="ca-foot">
       <button class="ca-btn-ghost" onclick="caCloseReport()">关闭</button>
-      <button class="btn-primary" style="width:auto;padding:11px 22px" onclick="alert('原型演示：导出 PDF / 存入「产品分析报告」')">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>导出报告</button>
+      <button class="btn-primary" style="width:auto;padding:11px 22px" onclick="caExportReport()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>存入产品分析报告</button>
     </div>`;
 }
 
@@ -20324,6 +20664,14 @@ function caOpenReport(){
   caRenderReport();
   const m=caEl('ca-report-modal');
   if(m){ m.classList.add('active'); document.body.style.overflow='hidden'; }
+}
+// 「存入产品分析报告」：把当前预览的这份报告写进产品分析报告模块
+function caExportReport(){
+  var rec=_caRecords.find(function(r){return r.id===_caCurRecId;})||_caRecords[0];
+  if(!rec){ showTrToast('未找到分析记录，无法存入'); return; }
+  var existed=productReportsData.some(function(r){return r.recId===rec.id;});
+  caSaveCompetitorReport(rec);
+  showTrToast(existed?'该报告已在「产品管理 / 产品分析报告」中':'已存入「产品管理 / 产品分析报告」，可在该页在线预览');
 }
 function caCloseReport(e){
   if(e && e.target !== caEl('ca-report-modal')) return; // 点遮罩才关；卡片内部点击不关
