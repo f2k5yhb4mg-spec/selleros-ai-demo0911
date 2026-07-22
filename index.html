@@ -2946,6 +2946,59 @@ table.ca-sop-srct td.na{color:var(--orange);font-weight:600}
 .ql-lstab .ql-lsdot{width:6px;height:6px;border-radius:50%;background:var(--t4);flex-shrink:0}
 .ql-lstab.filled .ql-lsdot{background:#2d9e5a}
 .ql-lshint{font-size:11.5px;color:var(--t3);margin-bottom:14px;padding-left:2px}
+/* 页头右上：新建上架 / 打开草稿 */
+#page-quick_launch .gen-hero-top{position:relative}
+.ql-hero-acts{position:absolute;right:0;top:22px;display:flex;gap:8px;z-index:2}
+.ql-hero-acts .ql-btn{padding:7px 14px;font-size:12.5px}
+/* 一键上架通用弹窗（项目选择 / 草稿列表） */
+.ql-mo-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)}
+.ql-mo-ov.active{display:flex}
+.ql-mo{background:var(--bg-card);border-radius:var(--radius-lg);box-shadow:0 20px 60px rgba(0,0,0,0.3);width:100%;max-width:560px;max-height:78vh;display:flex;flex-direction:column;overflow:hidden}
+.ql-mo-hd{display:flex;align-items:center;gap:8px;padding:16px 20px;border-bottom:1px solid var(--border);font-size:15px;font-weight:800;color:var(--t0)}
+.ql-mo-hd svg{width:16px;height:16px;stroke:var(--accent);stroke-width:2;fill:none;flex-shrink:0}
+.ql-mo-x{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--t3);font-size:17px;line-height:1;padding:3px 7px;border-radius:6px;font-family:var(--f)}
+.ql-mo-x:hover{background:var(--bg-card2);color:var(--t1)}
+.ql-mo-bd{padding:16px 20px;overflow-y:auto}
+.ql-mo-sub{font-size:12px;color:var(--t3);margin-bottom:12px;line-height:1.6}
+.ql-mo-ft{display:flex;gap:8px;justify-content:flex-end;padding:12px 20px;border-top:1px solid var(--border)}
+/* 项目管理弹窗 */
+.ql-pm{max-width:720px}
+.ql-pm-hd{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.ql-pm-ic{width:17px;height:17px;stroke:var(--accent);stroke-width:2;fill:none;flex-shrink:0}
+.ql-pm-t{font-size:15px;font-weight:800;color:var(--t0);white-space:nowrap}
+.ql-pm-n{font-size:11.5px;color:var(--t3);white-space:nowrap}
+.ql-pm-sbox{flex:1;min-width:110px;display:flex;align-items:center;gap:6px;padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);transition:border-color .15s}
+.ql-pm-sbox:focus-within{border-color:var(--accent);background:var(--bg-card)}
+.ql-pm-sbox svg{width:13px;height:13px;stroke:var(--t3);stroke-width:2;fill:none;flex-shrink:0}
+.ql-pm-sbox input{flex:1;min-width:0;border:none;background:none;outline:none;font-size:12.5px;color:var(--t0);font-family:var(--f)}
+.ql-pm-hd .ql-btn{padding:7px 13px;font-size:12.5px;flex-shrink:0}
+.ql-pm-card{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;cursor:pointer;background:var(--bg-card);transition:all .15s}
+.ql-pm-card:hover{border-color:var(--accent)}
+.ql-pm-card.cur{border-color:var(--accent);background:var(--accent-bg)}
+.ql-pm-thumb{width:46px;height:40px;border-radius:8px;background:var(--bg-input);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ql-pm-thumb svg{width:17px;height:17px;stroke:var(--t4);stroke-width:1.8;fill:none}
+.ql-pm-main{min-width:0;flex:1}
+.ql-pm-nm{font-size:13.5px;font-weight:700;color:var(--t0);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ql-pm-card.cur .ql-pm-nm{color:var(--accent2)}
+.ql-pm-cur{font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:9px;background:var(--accent-bg);color:var(--accent2);border:1px solid rgba(0,122,255,0.25);flex-shrink:0}
+.ql-pm-meta{display:flex;align-items:center;gap:14px;margin-top:5px;font-size:11px;color:var(--t3);flex-wrap:wrap}
+.ql-pm-meta span{display:flex;align-items:center;gap:4px}
+.ql-pm-meta svg{width:11px;height:11px;stroke:currentColor;stroke-width:2;fill:none}
+.ql-pm-del{background:none;border:none;cursor:pointer;color:var(--t4);padding:6px;border-radius:6px;display:flex;flex-shrink:0;transition:all .15s}
+.ql-pm-del:hover{background:rgba(255,59,48,0.1);color:#ff3b30}
+.ql-pm-del svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
+.ql-pm-total{text-align:center;font-size:11.5px;color:var(--t3);padding:12px 0 2px}
+.ql-pm-hint{display:flex;align-items:center;gap:6px;padding:10px 18px;border-top:1px solid var(--border);font-size:11px;color:var(--t3);background:var(--bg-card2)}
+.ql-pm-hint svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none;flex-shrink:0}
+.ql-pm-new{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px dashed var(--accent);border-radius:var(--radius);margin-bottom:10px;background:var(--accent-bg)}
+.ql-pm-new input{flex:1;min-width:0;padding:8px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);font-size:12.5px;color:var(--t0);font-family:var(--f)}
+.ql-pm-new input:focus{outline:none;border-color:var(--accent)}
+.ql-mo-empty{padding:34px 12px;text-align:center;font-size:12.5px;color:var(--t3);line-height:1.7}
+.ql-dft-item{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;cursor:pointer;transition:all .15s}
+.ql-dft-item:hover{border-color:var(--accent);background:var(--accent-bg)}
+.ql-dft-nm{font-size:13px;font-weight:700;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ql-dft-meta{font-size:11px;color:var(--t3);margin-top:3px}
+.ql-dft-pct{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--accent2);background:var(--accent-bg);padding:3px 9px;border-radius:20px;flex-shrink:0}
 /* ══ 电商创作：生成图多选 ══ */
 .ec-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px}
 .ec-bar-l{font-size:12.5px;color:var(--t2);display:flex;align-items:center;gap:10px}
@@ -3045,6 +3098,11 @@ table.ca-sop-srct td.na{color:var(--orange);font-weight:600}
 .ql-imgdrag:hover{background:var(--bg-input);color:var(--t2)}
 .ql-imgdrag:active{cursor:grabbing}
 .ql-imgdrag svg{width:13px;height:13px;fill:currentColor;stroke:none;pointer-events:none}
+.ql-imgmv{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+.ql-imgmv button{width:20px;height:13px;display:flex;align-items:center;justify-content:center;padding:0;border:1px solid var(--border);background:var(--bg-card);border-radius:4px;cursor:pointer;color:var(--t3);transition:all .12s}
+.ql-imgmv button:hover:not(:disabled){border-color:var(--accent);color:var(--accent2);background:var(--accent-bg)}
+.ql-imgmv button:disabled{opacity:.3;cursor:not-allowed}
+.ql-imgmv svg{width:9px;height:9px;stroke:currentColor;stroke-width:3;fill:none}
 .ql-imgrow.dragging{opacity:.4}
 .ql-imgrow.dragover{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg)}
 .ql-imgcol{font-size:9px;font-family:monospace;color:var(--t3);background:var(--bg-input);padding:2px 6px;border-radius:4px;flex-shrink:0;width:106px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -3472,6 +3530,10 @@ select.ql-f-in{cursor:pointer}
         <div class="gen-hero"><div class="gen-hero-top">
           <div class="gen-hero-title">一键上架 · 商品上架工作流</div>
           <div class="gen-hero-sub">运营提供资料 → 确认信息与变体 → Listing 创作 → 电商创作出图 &amp; 洗链接，逐步把上架 Excel 表格填完。</div>
+          <div class="ql-hero-acts">
+            <button class="ql-btn ghost" onclick="qlNewDraft()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>新建上架</button>
+            <button class="ql-btn ghost" onclick="qlOpenDrafts()"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>打开草稿<span id="ql-draft-n" style="display:none;font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px;background:var(--accent-bg);color:var(--accent2)">0</span></button>
+          </div>
         </div></div>
         <div class="ql-wrap">
           <div class="ql-main">
@@ -3492,9 +3554,61 @@ select.ql-f-in{cursor:pointer}
                     <button class="ql-btn grad" id="ql-skill-btn" onclick="qlRunSkill()" title="读取商品链接 / 上传文档 / 文本资料，自动补全字段"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI 技能填充</button>
                   </div>
                 </div>
-                <div class="ql-card-sub">粘贴商品链接可自动识别并回填字段；若资料与采购信息冲突，以运营补充信息为准。</div>
+                <div class="ql-card-sub">先确认类目、店铺与变体配置，再补充商品资料（链接 / 文档 / 文本）；品牌、商品状态、可售数量等字段在右侧「表格字段」面板中填写。若资料与采购信息冲突，以运营补充信息为准。</div>
                 <div class="ql-field">
-                  <div class="ql-label">商品链接<span class="ql-map">识别后可查看原链接并回填字段</span></div>
+                  <div class="ql-gridauto">
+                    <div>
+                      <div class="ql-label">一级类目<span class="req">*</span><span class="ql-map"><code>Product Type</code></span></div>
+                      <select class="ql-select" id="ql-category" onchange="qlSetCategory(this.value)">
+                        <option value="">选择一级类目…</option>
+                        <option value="LAPTOP">laptop · 笔记本电脑</option>
+                        <option value="TABLET_COMPUTER">Tablet Computer · 平板电脑</option>
+                        <option value="ELECTRONIC_DEVICE_DOCKING_STATION">Electronic Device Docking Station · 拓展坞</option>
+                        <option value="WEARABLE_COMPUTER">Wearable Computer · 智能穿戴</option>
+                        <option value="SPEAKER">Speaker · 音箱</option>
+                        <option value="KEYBOARD_AND_MOUSE_SET">Keyboard &amp; Mouse Set · 键鼠套装</option>
+                        <option value="KEYBOARD">Keyboard · 键盘</option>
+                        <option value="DESKTOP">Desktop · 台式机</option>
+                        <option value="MULTIPORT_HUB">Multiport Hub · 多口扩展坞</option>
+                        <option value="CAMCORDER">Camcorder · 摄像机</option>
+                        <option value="HEADPHONES">Headphones · 耳机</option>
+                        <option value="CONSOLE_VIDEO_GAMES">CONSOLE_VIDEO_GAMES · 游戏主机</option>
+                      </select>
+                    </div>
+                    <div>
+                      <div class="ql-label">二级类目<span class="req">*</span><span class="ql-map"><code>Item Type Keyword</code></span></div>
+                      <select class="ql-select" id="ql-itk" onchange="qlSetItk(this.value)" disabled>
+                        <option value="">请先选择一级类目…</option>
+                      </select>
+                    </div>
+                    <div>
+                      <div class="ql-label">店铺<span class="req">*</span><span class="ql-map"><code>Store</code></span></div>
+                      <select class="ql-select" id="ql-store" onchange="qlSet('store',this.value)">
+                        <option value="">请选择店铺…</option>
+                        <option value="A店">A店</option>
+                        <option value="B店">B店</option>
+                        <option value="F店">F店</option>
+                        <option value="E店">E店</option>
+                        <option value="G店">G店</option>
+                        <option value="N店">N店</option>
+                        <option value="T店">T店</option>
+                        <option value="W店">W店</option>
+                        <option value="Y店">Y店</option>
+                        <option value="Z店">Z店</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="ql-field">
+                  <div class="ql-label">是否为多变体<span class="ql-map"><code>Variation Theme Name</code></span></div>
+                  <div class="ql-choice" style="max-width:420px">
+                    <div class="ql-choice-btn" id="ql-mv-yes" onclick="qlSetMultiVariant(true)">是 · 多变体</div>
+                    <div class="ql-choice-btn" id="ql-mv-no" onclick="qlSetMultiVariant(false)">否 · 单品</div>
+                  </div>
+                  <div id="ql-variant-body" style="margin-top:14px"></div>
+                </div>
+                <div class="ql-field" style="margin-bottom:0">
+                  <div class="ql-label">商品资料<span class="ql-map">链接 / 文档 / 文本，供「AI 技能填充」读取</span></div>
                   <div class="ql-linkbar">
                     <input class="ql-input" id="ql-srclink" placeholder="粘贴商品链接后点击识别…" onkeydown="if(event.key==='Enter'){event.preventDefault();qlParseLink()}">
                     <button class="ql-btn primary" onclick="qlParseLink()"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>识别</button>
@@ -3516,75 +3630,6 @@ select.ql-f-in{cursor:pointer}
                     </div>
                   </div>
                   <div class="ql-skill-sb" id="ql-skill-sb">读取上方商品链接 / 上传文档 / 文本资料，点右上角「AI 技能填充」自动补全类目、品牌、商品属性与尺寸包装等字段</div>
-                </div>
-                <div class="ql-field">
-                  <div class="ql-gridauto">
-                    <div>
-                      <div class="ql-label">一级类目<span class="req">*</span><span class="ql-map"><code>Product Type</code></span></div>
-                      <select class="ql-select" id="ql-category" onchange="qlSetCategory(this.value)">
-                        <option value="">选择一级类目…</option>
-                        <option value="LAPTOP">laptop · 笔记本电脑</option>
-                        <option value="TABLET_COMPUTER">Tablet Computer · 平板电脑</option>
-                        <option value="ELECTRONIC_DEVICE_DOCKING_STATION">Electronic Device Docking Station · 拓展坞</option>
-                        <option value="WEARABLE_COMPUTER">Wearable Computer · 智能穿戴</option>
-                        <option value="SPEAKER">Speaker · 音箱</option>
-                        <option value="KEYBOARD_AND_MOUSE_SET">Keyboard &amp; Mouse Set · 键鼠套装</option>
-                        <option value="KEYBOARD">Keyboard · 键盘</option>
-                        <option value="DESKTOP">Desktop · 台式机</option>
-                        <option value="MULTIPORT_HUB">Multiport Hub · 多口扩展坞</option>
-                        <option value="CAMCORDER">Camcorder · 摄像机</option>
-                        <option value="HEADPHONES">Headphones · 耳机</option>
-                        <option value="CONSOLE_VIDEO_GAMES">CONSOLE_VIDEO_GAMES · 游戏主机</option>
-                      </select>                    </div>
-                    <div>
-                      <div class="ql-label">二级类目<span class="req">*</span><span class="ql-map"><code>Item Type Keyword</code></span></div>
-                      <select class="ql-select" id="ql-itk" onchange="qlSetItk(this.value)" disabled>
-                        <option value="">请先选择一级类目…</option>
-                      </select>
-                    </div>
-                    <div>
-                      <div class="ql-label">品牌<span class="ql-map"><code>Brand Name</code></span></div>
-                      <input class="ql-input" id="ql-brand" placeholder="如：ASUS / HP / Lenovo" oninput="qlSet('brand',this.value)">
-                    </div>
-                    <div>
-                      <div class="ql-label">店铺<span class="ql-map"><code>Store</code></span></div>
-                      <select class="ql-select" id="ql-store" onchange="qlSet('store',this.value)">
-                        <option value="">请选择店铺…</option>
-                        <option value="A店">A店</option>
-                        <option value="B店">B店</option>
-                        <option value="F店">F店</option>
-                        <option value="E店">E店</option>
-                        <option value="G店">G店</option>
-                        <option value="N店">N店</option>
-                        <option value="T店">T店</option>
-                        <option value="W店">W店</option>
-                        <option value="Y店">Y店</option>
-                        <option value="Z店">Z店</option>
-                      </select>
-                    </div>
-                    <div>
-                      <div class="ql-label">商品状态<span class="ql-dft">默认项</span><span class="ql-map"><code>Item Condition</code></span></div>
-                      <select class="ql-select" id="ql-condition" onchange="qlSet('condition',this.value)">
-                        <option value="New" selected>New（默认）</option>
-                        <option value="Refurbished">Refurbished</option>
-                        <option value="Used - Like New">Used - Like New</option>
-                        <option value="Used - Very Good">Used - Very Good</option>
-                        <option value="Used - Good">Used - Good</option>
-                        <option value="Used - Acceptable">Used - Acceptable</option>
-                      </select>
-                    </div>
-                    <div>
-                      <div class="ql-label">可售数量<span class="ql-dft">默认项</span><span class="ql-map"><code>Quantity (US)</code></span></div>
-                      <input type="number" class="ql-input" id="ql-quantity" value="10" min="0" step="1" oninput="qlSet('quantity',this.value)">
-                    </div>
-                  </div>                </div>
-                <div class="ql-field" style="margin-bottom:0">
-                  <div class="ql-label">是否为多变体<span class="ql-map"><code>Variation Theme Name</code></span></div>
-                  <div class="ql-choice" style="max-width:420px">
-                    <div class="ql-choice-btn" id="ql-mv-yes" onclick="qlSetMultiVariant(true)">是 · 多变体</div>
-                    <div class="ql-choice-btn" id="ql-mv-no" onclick="qlSetMultiVariant(false)">否 · 单品</div>
-                  </div>
-                  <div id="ql-variant-body" style="margin-top:14px"></div>
                 </div>
                 <div class="ql-upc-warn" id="ql-upc-warn"></div>
               </div>
@@ -3619,10 +3664,10 @@ select.ql-f-in{cursor:pointer}
                   商品图片 &amp; 洗链接 <span class="ql-badge" id="ql-img-count">0 / 7</span>
                   <div class="ql-hd-acts">
                     <button class="ql-btn ghost" onclick="qlMockImages()">载入示例图</button>
-                    <button class="ql-btn primary" onclick="setPage('img_ecommerce')"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>前往电商创作</button>
+                    <button class="ql-btn primary" onclick="qlOpenProjects()"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>前往电商创作</button>
                   </div>
                 </div>
-                <div class="ql-card-sub">共需 7 张图：第 1 张为主图（Main Image URL），其余为附图。可直接粘贴图片链接，拖拽行首手柄调整顺序；确认后经三方洗链接处理再填入表格。</div>
+                <div class="ql-card-sub">共需 7 张图：第 1 张为主图（Main Image URL），其余为附图。可直接粘贴图片链接；拖拽行首手柄或点右侧 ↑↓ 调整顺序，主图与附图可互换；确认后经三方洗链接处理再填入表格。</div>
                 <div id="ql-img-list"></div>
                 <div id="ql-wash-row" style="margin-top:10px">
                   <button class="ql-btn primary" id="ql-wash-btn" onclick="qlWashLinks()"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>三方洗链接</button>
@@ -15139,8 +15184,10 @@ const qlFields=[
   {group:'产品信息',items:[
     {key:'productType',name:'一级类目',col:'Product Type',type:'ro',dom:'ql-category'},
     {key:'itemTypeKeyword',name:'二级类目',col:'Item Type Keyword',type:'ro',dom:'ql-itk'},
-    {key:'brand',name:'品牌',col:'Brand Name',type:'text',dom:'ql-brand'},    {key:'condition',name:'商品状态',col:'Item Condition',type:'enum',opts:['New','Refurbished','Used - Like New','Used - Very Good','Used - Good','Used - Acceptable'],def:'New',tone:'red',dom:'ql-condition'},
-    {key:'quantity',name:'可售数量',col:'Quantity (US)',type:'text',def:'10',tone:'red',dom:'ql-quantity'},
+    {key:'store',name:'店铺',col:'Store',type:'ro',dom:'ql-store'},
+    {key:'brand',name:'品牌',col:'Brand Name',type:'text'},
+    {key:'condition',name:'商品状态',col:'Item Condition',type:'enum',opts:['New','Refurbished','Used - Like New','Used - Very Good','Used - Good','Used - Acceptable'],def:'New',tone:'red'},
+    {key:'quantity',name:'可售数量',col:'Quantity (US)',type:'text',def:'10',tone:'red'},
     {key:'modelYear',name:'Model Year',col:'Model Year',type:'text',def:'2026',tone:'red'},
     {key:'targetRegion',name:'Target Region',col:'Target Region',type:'enum',opts:['Global'],def:'Global',tone:'red'},
     {key:'skipOffer',name:'Skip Offer',col:'Skip Offer',type:'enum',opts:['No','Yes'],def:'No',tone:'red'},
@@ -15242,7 +15289,12 @@ const QL_CAT={
 };
 const qlState={step:1,multiVariant:null,category:'',itk:'',listings:{},lsTab:'',theme:'',variantCols:[],variants:[{}],images:[],filled:{condition:true,quantity:true},progTab:0,fv:{},openSub:{},openField:{},editingId:null,attrFv:{},attrTab:''};
 
-function qlInit(){ qlRenderSteps(); qlRenderVariant(); qlRenderLsTabs(); qlLsLoad(); qlRenderImages(); qlImgRecalc(); qlRenderProgress(); }
+function qlInit(){
+  if(!qlSeeded){ qlSeeded=true; try{ qlSeedDrafts(); }catch(_){} }
+  qlRenderSteps(); qlRenderVariant(); qlRenderLsTabs(); qlLsLoad(); qlRenderImages(); qlImgRecalc(); qlRenderProgress();
+  qlUpdateRecBadge();
+  if(typeof renderLaunchRecords==='function') renderLaunchRecords();
+}
 
 function qlGoStep(n){
   if(qlState.step===2) qlLsSave();
@@ -15292,7 +15344,6 @@ function qlParseLink(){
       +'<div class="ql-linkmeta"><div class="ql-linkname">已识别：'+qlEsc(p.title)+'</div>'
       +'<div class="ql-linksrc">来源 '+qlEsc(host)+' · 参考价 '+p.price+' · 图片 '+p.imgs+' 张 · 规格 '+p.specs+' 项</div></div>'
       +'<button class="ql-btn ghost" onclick="qlViewLink()"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>查看</button>'
-      +'<button class="ql-btn primary" onclick="qlApplyLink()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>填入表单</button>'
       +'</div>';
   },700);
 }
@@ -15358,6 +15409,8 @@ function qlRandPart(n){
 /* SKU：3 组字母数字（每组 ≤4）用「-」串联，如 W4-7PKY-IHIX */
 function qlGenSku(){ return qlRandPart(2)+'-'+qlRandPart(4)+'-'+qlRandPart(4); }
 function qlUpcPrefix(brand){ return QL_UPC_PREFIX[String(brand||'').trim().toUpperCase()]||null; }
+/* 品牌已移到右侧「表格字段」面板，统一从状态里取 */
+function qlBrand(){ return String(qlState.fv.brand||'').trim(); }
 /* UPC：12 位数字，前 6 位品牌固定前缀 + 后 6 位随机 */
 function qlGenUpc(brand){
   const p=qlUpcPrefix(brand); if(!p) return '';
@@ -15366,7 +15419,7 @@ function qlGenUpc(brand){
 }
 function qlUpcWarn(){
   const el=document.getElementById('ql-upc-warn'); if(!el) return;
-  const b=((document.getElementById('ql-brand')||{}).value||'').trim();
+  const b=qlBrand();
   if(b&&!qlUpcPrefix(b)){
     el.style.display='flex';
     el.innerHTML='<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
@@ -15408,8 +15461,7 @@ function qlRunSkill(){
     if(cat&&!cat.value){ cat.value='LAPTOP'; qlSetCategory('LAPTOP'); }
     const itk=document.getElementById('ql-itk');
     if(itk&&!itk.value){ itk.value='gaming laptop computer'; qlSetItk('gaming laptop computer'); }
-    const br=document.getElementById('ql-brand');
-    if(br&&!br.value){ br.value='ASUS'; qlSet('brand','ASUS'); }
+    if(!qlState.fv.brand) qlState.fv.brand='ASUS';
     // 商品属性
     const attrs={attrColor:'Eclipse Gray',attrSize:'16 inch',attrMaterial:'Aluminum Alloy',attrStyle:'Gaming',
       attrModelName:'ROG Strix G16',attrModelNumber:'G614JIR-XS96',attrManufacturer:'ASUSTeK Computer Inc.',
@@ -15432,13 +15484,6 @@ function qlRunSkill(){
     if(btn){ btn.classList.remove('ql-skill-btn-run'); btn.innerHTML='<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI 技能重填'; }
     if(typeof showSaveToast==='function') showSaveToast('AI 技能填充完成，已补全 '+n+' 个字段');
   },900);
-}
-function qlApplyLink(){
-  const p=qlState.srcParsed; if(!p) return;
-  const b=document.getElementById('ql-brand'); if(b){ b.value=p.brand; qlSet('brand',p.brand); }
-  const c=document.getElementById('ql-category'); if(c){ c.value=p.cat; qlSetCategory(p.cat); }
-  const k=document.getElementById('ql-itk'); if(k&&p.itk){ k.value=p.itk; qlSetItk(p.itk); }
-  if(typeof showSaveToast==='function') showSaveToast('已将识别结果填入品牌、类目与 Item Type Keyword');
 }
 function qlSetCategory(v){
   qlState.category=v; const m=QL_CAT[v];
@@ -15528,7 +15573,7 @@ function qlRenderVariant(){
     return;
   }
   if(qlState.multiVariant!==true){
-    body.innerHTML='<div style="font-size:13px;color:var(--t3);padding:8px 0">请先在上一步选择「是否为多变体」。</div>';
+    body.innerHTML='<div style="font-size:13px;color:var(--t3);padding:8px 0">请先在上方选择「是否为多变体」。</div>';
     return;
   }
   const opts=qlThemeOptions();
@@ -15627,7 +15672,20 @@ function qlRenderImages(){
     +'<input class="ql-imgin'+(im.washed?' washed':'')+'" value="'+qlEsc(im.url)+'" placeholder="粘贴图片链接…" oninput="qlImgUrl('+i+',this.value)">'
     +'<div class="ql-imgcol">'+qlImgCol(i)+'</div>'
     +'<div class="ql-imgtag '+(im.washed?'ok':'raw')+'">'+(im.washed?'已洗':'待处理')+'</div>'
+    +'<div class="ql-imgmv">'
+      +'<button onclick="qlImgMove('+i+',-1)"'+(i===0?' disabled':'')+' title="上移一位"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>'
+      +'<button onclick="qlImgMove('+i+',1)"'+(i===QL_IMG_N-1?' disabled':'')+' title="下移一位"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>'
+    +'</div>'
     +'</div>').join('');
+}
+/* 上移 / 下移一位：主图与附图可互换，第 1 张始终为主图 */
+function qlImgMove(i,d){
+  qlEnsureImages();
+  const j=i+d;
+  if(j<0||j>=QL_IMG_N) return;
+  const arr=qlState.images, t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+  qlRenderImages(); qlImgRecalc();
+  if(j===0&&typeof showSaveToast==='function') showSaveToast('已设为主图（Main Image URL）');
 }
 /* 行首手柄拖拽排序 */
 let qlDragIdx=null;
@@ -15740,7 +15798,9 @@ function qlFvEdit(k,v){
   }
   qlRenderProgress();
 }
-function qlToggleSub(id){ qlState.openSub[id]=!qlState.openSub[id]; qlRenderProgress(); }
+/* 「基本信息」（_base）默认展开，其余子分组默认收起 */
+function qlSubOpen(id){ return qlState.openSub[id]!==undefined ? !!qlState.openSub[id] : /_base$/.test(id); }
+function qlToggleSub(id){ qlState.openSub[id]=!qlSubOpen(id); qlRenderProgress(); }
 function qlToggleField(k){ qlState.openField[k]=!qlState.openField[k]; qlRenderProgress(); }
 function qlFieldHtml(f){
   const on=qlFilled(f), v=qlGetVal(f);
@@ -15790,9 +15850,19 @@ function qlRenderProgress(){
     const ts=qlLsTargets(), cur=ts.find(t=>t.id===qlLsCur());
     html+='<div style="font-size:10.5px;color:var(--t3);margin-bottom:6px">当前：<b style="color:var(--accent2)">'+qlEsc(cur?cur.name:'')+'</b>（共 '+ts.length+' 条 Listing）</div>';
   }
-  html+='<div>'+g.items.filter(qlShow).map(qlFieldHtml).join('')+'</div>';
+  const top=g.items.filter(qlShow);
+  if((g.sub||[]).length && top.length){
+    // 有子分组的（产品信息）：顶层字段收进「基本信息」，默认展开
+    const bid=ti+'_base', bopen=qlSubOpen(bid);
+    html+='<div class="ql-sub'+(bopen?' open':'')+'">'
+      +'<div class="ql-sub-hd" onclick="qlToggleSub(\''+bid+'\')"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>基本信息'
+      +'<span class="ql-sub-n">'+top.filter(qlFilled).length+'/'+top.length+'</span></div>'
+      +'<div class="ql-sub-bd">'+top.map(qlFieldHtml).join('')+'</div></div>';
+  } else {
+    html+='<div>'+top.map(qlFieldHtml).join('')+'</div>';
+  }
   (g.sub||[]).forEach((s,si)=>{
-    const id=ti+'_'+si, open=!!qlState.openSub[id];
+    const id=ti+'_'+si, open=qlSubOpen(id);
     const items=s.items.filter(qlShow);
     let d=0,total=0,chips='';
     if(s.perTarget){
@@ -15834,7 +15904,7 @@ function qlBuildSnapshot(){
     if(v&&String(v).trim()) fv[f.key]={name:f.name||f.col,col:f.col,val:String(v)};
   }));
   // 系统字段：SKU / UPC 按规则生成，同一记录内保持稳定
-  const _brand=(document.getElementById('ql-brand')||{}).value||'';
+  const _brand=qlBrand();
   qlState.skus=qlState.skus||{};
   if(qlState.upcBrand!==_brand){ qlState.upcs={}; qlState.upcBrand=_brand; }
   qlState.upcs=qlState.upcs||{};
@@ -15846,11 +15916,11 @@ function qlBuildSnapshot(){
   const listings={};
   ts.forEach(t=>{ listings[t.id]=Object.assign({},qlState.listings[t.id]||{},{__name:t.name}); });
   const first=(qlState.listings[ts[0].id]||{}).title||'';
-  const name=first||((qlState.fv.brand||document.getElementById('ql-brand')?.value||'')+' '+(qlState.category||'')).trim()||'未命名商品';
+  const name=first||(_brand+' '+(qlState.category||'')).trim()||'未命名商品';
   return {
     id:++qlRecSeq, time:qlNowStr(), name:name,
     category:qlState.category||'', itk:qlState.itk||'',
-    brand:(document.getElementById('ql-brand')||{}).value||'',
+    brand:_brand,
     store:(document.getElementById('ql-store')||{}).value||'',
     theme:qlState.theme||'', multiVariant:qlState.multiVariant===true,
     variantCols:(qlState.variantCols||[]).slice(),
@@ -15895,9 +15965,7 @@ function qlNewDraft(){
   qlState.srcLink=''; qlState.srcText=''; qlState.srcFiles=[]; qlState.srcParsed=null;
   qlState.skus={}; qlState.upcs={}; qlState.upcBrand=''; qlState.attrFv={}; qlState.attrTab='';
   qlState.filled={condition:true,quantity:true}; qlState.openField={};
-  ['ql-category','ql-itk','ql-brand','ql-store','ql-srclink'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-  const c=document.getElementById('ql-condition'); if(c) c.value='New';
-  const q=document.getElementById('ql-quantity'); if(q) q.value='10';
+  ['ql-category','ql-itk','ql-store','ql-srclink'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   const lr=document.getElementById('ql-link-result'); if(lr) lr.innerHTML='';
   const st=document.getElementById('ql-srctext'); if(st) st.value='';
   const uf=document.getElementById('ql-upfiles'); if(uf) uf.innerHTML='';
@@ -15930,12 +15998,9 @@ function qlEditRecord(id){
   const setv=(elId,val,fn)=>{ const el=document.getElementById(elId); if(el){ el.value=val||''; if(fn) fn(val||''); } };
   setv('ql-category',r.category,qlSetCategory);
   setv('ql-itk',r.itk,qlSetItk);
-  setv('ql-brand',r.brand,v=>qlSet('brand',v));
   setv('ql-store',r.store,v=>qlSet('store',v));
-  ['condition','quantity'].forEach(k=>{
-    const f=QL_FMAP[k];
-    if(f&&f.dom&&qlState.fv[k]!==undefined){ const el=document.getElementById(f.dom); if(el){ el.value=qlState.fv[k]; qlSet(k,qlState.fv[k]); } }
-  });
+  // 品牌 / 商品状态 / 可售数量在右侧字段面板里，直接还原到状态即可
+  if(r.brand&&!qlState.fv.brand) qlState.fv.brand=r.brand;
   qlSetMultiVariant(r.multiVariant===true);
   if(r.multiVariant===true){ const t=document.getElementById('ql-theme'); if(t) t.value=r.theme||''; qlPickTheme(r.theme||''); }
   qlRenderImages(); qlImgRecalc(); qlRenderLsTabs(); qlLsLoad(); qlLsRecalc();
@@ -15949,6 +16014,191 @@ function qlResetRecFilters(){
 function qlUpdateRecBadge(){
   const el=document.getElementById('launch-record-count');
   if(el){ el.textContent=qlRecords.length; el.style.display=qlRecords.length?'inline':'none'; }
+  const d=document.getElementById('ql-draft-n');
+  if(d){ const n=qlDrafts().length; d.textContent=n; d.style.display=n?'inline':'none'; }
+}
+/* ══ 弹窗：项目选择（前往电商创作）/ 打开草稿 ══ */
+function qlMoClose(){ const el=document.getElementById('ql-mo-ov'); if(el) el.remove(); }
+function qlMoOpen(html,cls){
+  qlMoClose();
+  const ov=document.createElement('div');
+  ov.id='ql-mo-ov'; ov.className='ql-mo-ov active';
+  ov.onclick=e=>{ if(e.target===ov) qlMoClose(); };
+  ov.innerHTML='<div class="ql-mo'+(cls?' '+cls:'')+'">'+html+'</div>';
+  document.body.appendChild(ov);
+}
+/* ── 项目选择：进入电商创作前先确认归属项目 ── */
+const QL_PROJECTS=[
+  {id:'p1',name:'2026 Q3 游戏本上新',imgs:73,tasks:71,date:'2026/7/15'},
+  {id:'p2',name:'耳机热销款补充',imgs:24,tasks:18,date:'2026/7/9'},
+  {id:'p3',name:'键鼠套装清仓',imgs:17,tasks:5,date:'2026/6/29'},
+  {id:'p4',name:'洗图批处理',imgs:91,tasks:65,date:'2026/6/25'},
+  {id:'p5',name:'玩具类目上新',imgs:244,tasks:127,date:'2026/6/4'},
+];
+let qlProjCur='p1', qlProjQ='', qlProjNewOn=false, qlProjName='', qlProjSeq=QL_PROJECTS.length;
+const QL_PM_SVG={
+  img:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
+  task:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>'
+};
+function qlOpenProjects(){
+  qlProjQ=''; qlProjNewOn=false; qlProjName='';
+  qlMoOpen(
+    '<div class="ql-pm-hd">'
+    +'<svg class="ql-pm-ic" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>'
+    +'<span class="ql-pm-t">项目管理</span><span class="ql-pm-n" id="ql-pm-n"></span>'
+    +'<div class="ql-pm-sbox"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
+    +'<input placeholder="搜索项目名" oninput="qlProjQuery(this.value)"></div>'
+    +'<button class="ql-btn primary" onclick="qlProjNewToggle()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>新建项目</button>'
+    +'<button class="ql-mo-x" onclick="qlMoClose()">✕</button></div>'
+    +'<div class="ql-mo-bd"><div id="ql-pm-list"></div></div>'
+    +'<div class="ql-pm-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+    +'点击卡片切换到该项目并进入电商创作；电商创作的出图会归档到该项目下</div>','ql-pm');
+  qlRenderProjects();
+}
+function qlProjList(){
+  const q=(qlProjQ||'').trim().toLowerCase();
+  return q?QL_PROJECTS.filter(p=>p.name.toLowerCase().indexOf(q)>=0):QL_PROJECTS.slice();
+}
+function qlRenderProjects(){
+  const box=document.getElementById('ql-pm-list'); if(!box) return;
+  const n=document.getElementById('ql-pm-n'); if(n) n.textContent='共 '+QL_PROJECTS.length+' 个项目';
+  const list=qlProjList();
+  let html=qlProjNewOn
+    ? '<div class="ql-pm-new"><input id="ql-pm-name" placeholder="输入项目名称…" value="'+qlEsc(qlProjName)+'" '
+      +'oninput="qlSetProjName(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();qlProjCreate()}">'
+      +'<button class="ql-btn ghost" onclick="qlProjNewToggle()">取消</button>'
+      +'<button class="ql-btn grad" onclick="qlProjCreate()">创建</button></div>'
+    : '';
+  html+=list.length
+    ? list.map(p=>'<div class="ql-pm-card'+(p.id===qlProjCur?' cur':'')+'" onclick="qlEnterProject(\''+p.id+'\')">'
+        +'<div class="ql-pm-thumb">'+QL_PM_SVG.img+'</div>'
+        +'<div class="ql-pm-main"><div class="ql-pm-nm">'+qlEsc(p.name)
+          +(p.id===qlProjCur?'<span class="ql-pm-cur">当前</span>':'')+'</div>'
+        +'<div class="ql-pm-meta"><span>'+QL_PM_SVG.img+p.imgs+' 张图</span>'
+          +'<span>'+QL_PM_SVG.task+p.tasks+' 个任务</span><span>'+p.date+'</span></div></div>'
+        +'<button class="ql-pm-del" title="删除项目" onclick="event.stopPropagation();qlDelProject(\''+p.id+'\')">'
+        +'<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>'
+        +'</div>').join('')+'<div class="ql-pm-total">共 '+list.length+' 个项目</div>'
+    : '<div class="ql-mo-empty">没有匹配「'+qlEsc(qlProjQ)+'」的项目。<br>换个关键词，或点右上角「新建项目」。</div>';
+  box.innerHTML=html;
+  if(qlProjNewOn){ const inp=document.getElementById('ql-pm-name'); if(inp) inp.focus(); }
+}
+function qlProjQuery(v){ qlProjQ=v; qlRenderProjects(); }
+function qlSetProjName(v){ qlProjName=v; }
+function qlProjNewToggle(){ qlProjNewOn=!qlProjNewOn; qlProjName=''; qlRenderProjects(); }
+function qlProjToday(){ const d=new Date(); return d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate(); }
+function qlProjCreate(){
+  const nm=(qlProjName||'').trim();
+  if(!nm){ if(typeof showSaveToast==='function') showSaveToast('请先输入项目名称'); const i=document.getElementById('ql-pm-name'); if(i) i.focus(); return; }
+  const p={id:'p'+(++qlProjSeq),name:nm,imgs:0,tasks:0,date:qlProjToday()};
+  QL_PROJECTS.unshift(p); qlProjCur=p.id; qlProjNewOn=false; qlProjName=''; qlProjQ='';
+  qlRenderProjects();
+  if(typeof showSaveToast==='function') showSaveToast('已新建项目「'+nm+'」');
+}
+function qlDelProject(id){
+  const i=QL_PROJECTS.findIndex(p=>p.id===id); if(i<0) return;
+  const nm=QL_PROJECTS[i].name;
+  QL_PROJECTS.splice(i,1);
+  if(qlProjCur===id) qlProjCur=QL_PROJECTS.length?QL_PROJECTS[0].id:'';
+  qlRenderProjects();
+  if(typeof showSaveToast==='function') showSaveToast('已删除项目「'+nm+'」');
+}
+function qlEnterProject(id){
+  const p=QL_PROJECTS.find(x=>x.id===id); if(!p) return;
+  qlProjCur=id; qlMoClose(); setPage('img_ecommerce');
+  if(typeof showSaveToast==='function') showSaveToast('已切换到项目「'+p.name+'」');
+}
+/* ── 打开草稿 ── */
+function qlDrafts(){ return qlRecords.filter(r=>(r.status||'done')==='draft'); }
+function qlOpenDrafts(){
+  const list=qlDrafts();
+  const body=list.length
+    ? list.map(r=>{
+        const pct=r.total?Math.round(r.done/r.total*100):0;
+        return '<div class="ql-dft-item" onclick="qlMoClose();qlEditRecord('+r.id+')">'
+          +'<div style="min-width:0"><div class="ql-dft-nm">'+qlEsc(r.name)+'</div>'
+          +'<div class="ql-dft-meta">'+r.time+' · '+qlEsc(r.category||'未选类目')+' · '+qlEsc(r.brand||'未填品牌')+'</div></div>'
+          +'<div class="ql-dft-pct">'+r.done+'/'+r.total+' · '+pct+'%</div></div>';
+      }).join('')
+    : '<div class="ql-mo-empty">还没有草稿。<br>在工作流里点「暂存」即可保存为草稿，随时回来继续填。</div>';
+  qlMoOpen(
+    '<div class="ql-mo-hd"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>打开草稿'
+    +'<button class="ql-mo-x" onclick="qlMoClose()">✕</button></div>'
+    +'<div class="ql-mo-bd"><div class="ql-mo-sub">选择一份草稿继续编辑，当前未暂存的内容不会自动保留。</div>'+body+'</div>'
+    +'<div class="ql-mo-ft"><button class="ql-btn ghost" onclick="qlMoClose()">关闭</button>'
+    +'<button class="ql-btn ghost" onclick="qlMoClose();setPage(\'launch_records\')">查看全部记录</button></div>');
+}
+/* ── 示例草稿：首次进入时预置两份，便于演示「打开草稿」 ── */
+let qlSeeded=false;
+/* 按字段表把一组扁平值补成快照用的 fv（含系统默认项） */
+function qlSeedFv(vals,isPc){
+  const fv={};
+  qlFields.forEach(g=>qlAllFields(g).forEach(f=>{
+    if(f.pc&&!isPc) return;
+    if(QL_TGT_KEYS[f.key]) return;
+    if(f.hidden&&!f.def) return;
+    const v=f.hidden?f.def:(vals[f.key]!==undefined?vals[f.key]:(f.type==='ro'?'':(f.def||'')));
+    if(v&&String(v).trim()) fv[f.key]={name:f.name||f.col,col:f.col,val:String(v)};
+  }));
+  return fv;
+}
+function qlSeedDrafts(){
+  /* ① 多变体 · 游戏本：信息与 Listing 已填，图片待洗链接 */
+  const aLs={
+    parent:{__name:'主商品',title:'ASUS ROG Strix G16 (2024) Gaming Laptop',
+      highlights:'16" QHD+ 240Hz 电竞屏 · RTX 4070 独显 · DDR5 内存 · 1TB PCIe 4.0 SSD',
+      bullets:'• POWERHOUSE PERFORMANCE — Intel Core i9-14900HX + GeForce RTX 4070\n• STUNNING 16" QHD+ 240Hz 显示，100% DCI-P3\n• DDR5 内存 + 1TB PCIe 4.0 SSD 极速读写\n• ROG Intelligent Cooling 三风扇散热\n• 每一处细节都为长时间高强度游戏而生',
+      desc:'The ASUS ROG Strix G16 delivers desktop-class gaming performance in a portable chassis, engineered for competitive gamers and creators.',
+      st:'gaming laptop rtx 4070 i9 16 inch 240hz qhd asus rog ddr5 1tb ssd'},
+    v0:{__name:'Eclipse Gray / 32GB',title:'ASUS ROG Strix G16 (2024) Gaming Laptop, i9-14900HX, RTX 4070, 32GB DDR5, 1TB SSD - Eclipse Gray / 32GB',
+      highlights:'16" QHD+ 240Hz · RTX 4070 · 32GB DDR5 · 1TB SSD',
+      bullets:'• 32GB DDR5 大内存，多开与剪辑无压力\n• Intel Core i9-14900HX 24 核处理器\n• GeForce RTX 4070 8GB 独显\n• 16" QHD+ 240Hz 电竞屏\n• ROG Intelligent Cooling 三风扇散热',
+      desc:'Top-spec configuration with 32GB DDR5 memory for heavy multitasking and content creation.',
+      st:'gaming laptop 32gb ddr5 rtx 4070 i9 14900hx eclipse gray'},
+    v1:{__name:'Eclipse Gray / 16GB',title:'ASUS ROG Strix G16 (2024) Gaming Laptop, i9-14900HX, RTX 4070, 16GB DDR5, 1TB SSD - Eclipse Gray / 16GB',
+      highlights:'16" QHD+ 240Hz · RTX 4070 · 16GB DDR5 · 1TB SSD',
+      bullets:'• 16GB DDR5 内存，主流游戏流畅运行\n• Intel Core i9-14900HX 24 核处理器\n• GeForce RTX 4070 8GB 独显\n• 16" QHD+ 240Hz 电竞屏\n• ROG Intelligent Cooling 三风扇散热',
+      desc:'Balanced configuration with 16GB DDR5 memory for mainstream gaming.',
+      st:'gaming laptop 16gb ddr5 rtx 4070 i9 14900hx eclipse gray'}
+  };
+  const aVals={brand:'ASUS',store:'A店',ramMax:'32',variationTheme:'COLOR/COMPUTER_MEMORY_SIZE',variants:'2 个变体已填价',
+    productType:'LAPTOP',itemTypeKeyword:'gaming laptop computer',
+    title:aLs.parent.title,highlights:aLs.parent.highlights,bullets:aLs.parent.bullets,desc:aLs.parent.desc,st:aLs.parent.st};
+  const aAttr={
+    parent:{attrColor:'Eclipse Gray',attrMaterial:'Aluminum Alloy',attrStyle:'Gaming',attrModelName:'ROG Strix G16',attrManufacturer:'ASUSTeK Computer Inc.'},
+    v0:{attrColor:'Eclipse Gray',attrSize:'32GB',attrModelNumber:'G614JIR-XS96',attrModelName:'ROG Strix G16'},
+    v1:{attrColor:'Eclipse Gray',attrSize:'16GB',attrModelNumber:'G614JIR-XS76',attrModelName:'ROG Strix G16'}
+  };
+  const a={
+    id:++qlRecSeq,time:'2026-07-22 10:24:11',createdAt:'2026-07-22 10:24:11',status:'draft',
+    name:aLs.parent.title,category:'LAPTOP',itk:'gaming laptop computer',brand:'ASUS',store:'A店',
+    theme:'COLOR/COMPUTER_MEMORY_SIZE',multiVariant:true,
+    variantCols:['COLOR','COMPUTER_MEMORY_SIZE'],
+    variants:[{a0:'Eclipse Gray',a1:'32GB',price:'1699.00'},{a0:'Eclipse Gray',a1:'16GB',price:'1499.00'}],
+    images:['a1b2c3d4','e5f6g7h8','i9j0k1l2','m3n4o5p6','q7r8s9t0'].map(x=>({url:'gen://tmp/'+x+'.png',washed:false}))
+      .concat([{url:'',washed:false},{url:'',washed:false}]),
+    skus:{parent:'W4-7PKY-IHIX',v0:'K2-9QMZ-BTRD',v1:'P7-3XLW-NJHV'},
+    upcs:{v0:'889349104472',v1:'889349770213'},
+    attrFv:aAttr,upcMissing:false,
+    targets:[{id:'parent',name:'主商品'},{id:'v0',name:'Eclipse Gray / 32GB'},{id:'v1',name:'Eclipse Gray / 16GB'}],
+    listings:aLs,fv:qlSeedFv(aVals,true),fvRaw:{brand:'ASUS',ramMax:'32'},
+    done:35,total:42,rows:3
+  };
+  /* ② 单品 · 头戴耳机：刚起步，仅填了基础信息与标题 */
+  const bLs={single:{__name:'单品',title:'Sony WH-1000XM5 Wireless Noise Canceling Headphones',highlights:'',bullets:'',desc:'',st:''}};
+  const bVals={brand:'Sony',store:'B店',productType:'HEADPHONES',itemTypeKeyword:'over ear headphones',title:bLs.single.title};
+  const b={
+    id:++qlRecSeq,time:'2026-07-21 17:05:38',createdAt:'2026-07-21 17:05:38',status:'draft',
+    name:bLs.single.title,category:'HEADPHONES',itk:'over ear headphones',brand:'Sony',store:'B店',
+    theme:'',multiVariant:false,variantCols:[],variants:[{}],
+    images:Array.from({length:7},()=>({url:'',washed:false})),
+    skus:{single:'M8-2FRT-QKXA'},upcs:{single:'027242918365'},
+    attrFv:{single:{attrColor:'Black',attrManufacturer:'Sony Corporation'}},upcMissing:false,
+    targets:[{id:'single',name:'单品'}],
+    listings:bLs,fv:qlSeedFv(bVals,false),fvRaw:{brand:'Sony'},
+    done:13,total:34,rows:1
+  };
+  qlRecords.push(a,b);
 }
 /* ── 生成 CSV（主商品行 + 每个变体一行）── */
 function qlCsvCell(s){
