@@ -652,21 +652,27 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 }
 .help-fab-stack.hidden{opacity:0;transform:translateY(10px);pointer-events:none}
 .help-fab{
-  display:flex;align-items:center;gap:9px;
-  width:132px;height:40px;padding:0 16px 0 15px;border-radius:22px;
+  display:flex;align-items:center;gap:9px;position:relative;overflow:hidden;
+  width:46px;height:46px;padding:0;border-radius:50%;justify-content:center;
   background:var(--bg-card);border:1px solid var(--border);cursor:pointer;
   box-shadow:0 3px 14px rgba(0,0,0,0.10),0 1px 4px rgba(0,0,0,0.05);
-  font-family:var(--f);font-size:13px;font-weight:600;color:var(--t1);
-  transition:all .16s;white-space:nowrap;
+  font-family:var(--f);font-size:13px;font-weight:600;color:var(--t1);white-space:nowrap;
+  transition:width .24s cubic-bezier(.4,0,.2,1),border-radius .24s,padding .24s,box-shadow .16s,color .16s,background .16s,transform .16s;
 }
+.help-fab span{max-width:0;opacity:0;overflow:hidden;transition:max-width .24s cubic-bezier(.4,0,.2,1),opacity .18s}
+/* 默认只显示图标（圆形）；hover 整组 → 展开为带文字的胶囊 */
+.help-fab-stack:hover .help-fab{width:138px;border-radius:23px;padding:0 16px 0 14px;justify-content:flex-start}
+.help-fab-stack:hover .help-fab span{max-width:120px;opacity:1}
 .help-fab:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(0,0,0,0.14);color:var(--t0)}
-.help-fab svg{width:17px;height:17px;stroke-width:1.9;fill:none;flex-shrink:0}
+.help-fab svg{width:19px;height:19px;stroke-width:1.9;fill:none;flex-shrink:0}
 .help-fab.tutorial svg{stroke:var(--accent)}
 .help-fab.consult svg{stroke:#07c160}
 .help-fab.ai{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(0,122,255,0.35),0 2px 6px rgba(0,0,0,0.08)}
 .help-fab.ai:hover{background:var(--accent2);color:#fff;box-shadow:0 7px 22px rgba(0,122,255,0.45)}
 .help-fab.ai svg{stroke:#fff}
-.help-fab .hf-dot{width:7px;height:7px;border-radius:50%;background:#34c759;margin-left:auto;box-shadow:0 0 0 2px var(--accent);flex-shrink:0}
+/* 状态点：收起时浮于右上角；展开时回到行尾 */
+.help-fab .hf-dot{width:9px;height:9px;border-radius:50%;background:#34c759;flex-shrink:0;position:absolute;top:7px;right:7px;box-shadow:0 0 0 2px var(--accent);transition:all .2s}
+.help-fab-stack:hover .help-fab .hf-dot{position:static;margin-left:auto;width:7px;height:7px}
 
 /* ── 帮助弹窗 ── */
 .help-modal-overlay{
@@ -1756,6 +1762,66 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 }
 .lf-qa-btn:hover{border-color:#af52de;color:#af52de;background:rgba(175,82,222,0.06)}
 .lf-qa-btn svg{stroke-width:2;fill:none}
+
+/* ══ eBay Listing 生成（eb-*）══ */
+.eb-title-counter{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:.3px;background:var(--accent-bg);color:var(--accent2)}
+.eb-title-counter.warn{background:rgba(255,149,0,0.12);color:#c26a00}
+.eb-title-counter.over{background:rgba(255,59,48,0.12);color:#d92c20}
+.eb-struct-hints{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.eb-hint-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:8px;font-size:10.5px;font-weight:600;background:var(--bg-page);border:1px solid var(--border2);color:var(--t2)}
+.eb-hint-chip b{color:var(--t0);font-weight:800}
+.eb-hint-chip::before{content:'';width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.eb-hint-chip.c2::before{background:#ff9500}.eb-hint-chip.c3::before{background:#34c759}
+.eb-hint-chip.c4::before{background:#af52de}.eb-hint-chip.c5::before{background:#ff2d55}.eb-hint-chip.c6::before{background:#5ac8fa}
+/* 关键词分层 */
+.eb-kw-group{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);margin-bottom:8px}
+.eb-kw-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.eb-kw-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+.eb-kw-name{font-size:12px;font-weight:800;color:var(--t0)}
+.eb-kw-en{font-size:10px;color:var(--t3);font-weight:600}
+.eb-kw-note{font-size:10px;color:var(--t3);margin-left:auto}
+.eb-kw-tag{padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg-page);border:1px solid var(--border2);color:var(--t1)}
+/* Item Specifics 表 */
+.eb-spec-table{width:100%;border-collapse:collapse;font-size:12px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.eb-spec-table tr{border-bottom:1px solid var(--border)}
+.eb-spec-table tr:last-child{border-bottom:none}
+.eb-spec-table td{padding:8px 12px;vertical-align:top}
+.eb-spec-table td.k{width:42%;color:var(--t2);font-weight:600;background:var(--bg-page)}
+.eb-spec-table td.v{color:var(--t0);font-weight:600}
+.eb-spec-table td.v .req{display:inline-block;margin-left:6px;padding:0 5px;border-radius:4px;font-size:9px;font-weight:800;background:rgba(255,59,48,0.1);color:#d92c20;vertical-align:middle}
+.eb-spec-table td.v .opt{display:inline-block;margin-left:6px;padding:0 5px;border-radius:4px;font-size:9px;font-weight:800;background:var(--bg-page);color:var(--t3);border:1px solid var(--border2);vertical-align:middle}
+/* 车型适配表 APPLICATIONS */
+.eb-fit-toggle{display:inline-flex;background:var(--bg-page);border:1px solid var(--border2);border-radius:8px;padding:2px;gap:2px}
+.eb-fit-toggle button{border:none;background:transparent;font-size:11px;font-weight:700;color:var(--t2);padding:4px 12px;border-radius:6px;cursor:pointer;transition:all .13s}
+.eb-fit-toggle button.on{background:var(--accent);color:#fff}
+.eb-fit-table{width:100%;border-collapse:collapse;font-size:11.5px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.eb-fit-table th{background:var(--bg-page);color:var(--t2);font-weight:800;font-size:10px;letter-spacing:.4px;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.eb-fit-table td{padding:8px 10px;color:var(--t1);border-bottom:1px solid var(--border);white-space:nowrap}
+.eb-fit-table tr:last-child td{border-bottom:none}
+.eb-fit-table tbody tr:hover{background:var(--bg-page)}
+/* 结构化 HTML 描述预览 */
+.eb-desc-preview{border:1px solid var(--border);border-radius:10px;background:#fff;padding:16px;max-height:520px;overflow:auto}
+.eb-desc-block{margin-bottom:18px}
+.eb-desc-block:last-child{margin-bottom:0}
+.eb-desc-h{font-size:14px;font-weight:800;color:#1a1a1a;padding:7px 12px;background:linear-gradient(135deg,#0654ba,#3665c9);color:#fff;border-radius:6px;letter-spacing:.3px;margin-bottom:10px}
+.eb-desc-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.eb-desc-tbl th{background:#f2f4f8;color:#333;font-weight:700;padding:6px 9px;border:1px solid #dfe3ea;text-align:left}
+.eb-desc-tbl td{padding:6px 9px;border:1px solid #dfe3ea;color:#333}
+.eb-desc-feat{list-style:none;padding:0;margin:0}
+.eb-desc-feat li{display:flex;gap:9px;padding:5px 0;font-size:12.5px;color:#333;line-height:1.5;align-items:flex-start}
+.eb-desc-feat li::before{content:'✓';color:#0654ba;font-weight:900;flex-shrink:0}
+.eb-desc-feat b{color:#1a1a1a}
+/* 合规自检 */
+.eb-comp-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);margin-bottom:6px}
+.eb-comp-ic{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.eb-comp-ic svg{width:11px;height:11px;stroke-width:3;fill:none}
+.eb-comp-item.ok .eb-comp-ic{background:rgba(52,199,89,0.12)}.eb-comp-item.ok .eb-comp-ic svg{stroke:#34c759}
+.eb-comp-item.warn .eb-comp-ic{background:rgba(255,149,0,0.14)}.eb-comp-item.warn .eb-comp-ic svg{stroke:#ff9500}
+.eb-comp-txt{flex:1;min-width:0}
+.eb-comp-t{font-size:12px;font-weight:700;color:var(--t0);line-height:1.4}
+.eb-comp-d{font-size:10.5px;color:var(--t3);line-height:1.45;margin-top:2px}
+.eb-sec-label{font-size:10px;font-weight:800;color:var(--t3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eb-sec-label .badge{padding:1px 7px;border-radius:20px;font-size:9px;font-weight:800;background:var(--accent-bg);color:var(--accent2);letter-spacing:.3px}
 
 /* Q&A picker modal — checkboxes + 摘取选中项 footer */
 .qa-picker-spec{
@@ -11330,9 +11396,16 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
   const circ=263.9,off=circ*(1-total/100);
   const isWalmart = market && market.indexOf('Walmart') >= 0;
   const isRu = market && /Ozon|Wildberries/i.test(market);
+  const isEbay = market && /eBay/i.test(market);
   // 评级：沃尔玛旧逻辑；Ozon/WB 用 S/A/B/C（与页签、提示词 md 一致）；Amazon 用「穿透分析」标准
   let stroke, grade, gc, verdict;
-  if(isWalmart){
+  if(isEbay){
+    // eBay Best Match：S≥90 · A 80-89 · B 70-79 · C<70
+    stroke = total>=90?'#34c759':total>=80?'#007aff':total>=70?'#ff9500':'#ff3b30';
+    grade  = total>=90?'S':total>=80?'A':total>=70?'B':'C';
+    gc     = total>=90?'gs':total>=80?'ga':total>=70?'gc':'gd';
+    verdict= total>=90?'Best Match 信号强 · 推荐直接刊登':total>=80?'可刊登 · 建议补齐 Item Specifics':total>=70?'需完善车型适配表与合规项再刊登':'建议按结构重写后再刊登';
+  } else if(isWalmart){
     stroke = total>=85?'#007aff':total>=75?'#007aff':total>=60?'#ff9500':'#ff3b30';
     grade  = total>=90?'S':total>=80?'A':total>=75?'B+':total>=60?'B':'C';
     gc     = total>=90?'gs':total>=80?'ga':total>=75?'gb':total>=60?'gc':'gd';
@@ -11365,6 +11438,8 @@ function buildListingScoreHTML(kw, market, mdl, sfx, tips){
   ]);
   const scoreModelDesc = isWalmart
     ? '基于沃尔玛知识库 PDF 100分制模型 · Polaris/Sparky/Item Spec 5.0 四维评分'
+    : isEbay
+    ? '五维 100 分制 · 标题/关键词分层/Item Specifics/车型适配/描述合规 · 对齐 eBay Best Match 算法'
     : isRu
     ? ('五维 100 分制 · 完整性/合规/检索覆盖/转化/内容与图片 · 对齐 ' + (/Ozon/i.test(market)?'Ozon Контент-рейтинг':'WB 卡片质量评分'))
     : '四维 100 分制 v2.1 · A10 关键词 / COSMO / Rufus 语义 + CDQ 完整性（CDQ 权重对齐）';
@@ -11999,6 +12074,8 @@ function generateListing(){
   try{ window._genContext = (typeof buildGenContext==='function') ? buildGenContext(window._genOwnIdx||0) : null; }catch(e){ window._genContext=null; }
   // 俄罗斯平台（Ozon / Wildberries）走独立的俄文 Listing 生成流程
   if(/Ozon|Wildberries/i.test(market)){ generateRuListing(kw, market); return; }
+  // eBay 走独立生成流程（80字符标题 / 关键词分层 / Item Specifics / 车型适配表 / 结构化HTML描述 / Best Match 评分）
+  if(/eBay/i.test(market)){ generateEbayListing(kw, market); return; }
   // Prevent duplicate submit
   const btn=document.getElementById('gen-btn-wrap');
   if(btn){btn.innerHTML='<div class="loading-wrap" style="padding:16px"><div class="loading-spinner"></div><div class="loading-text">正在生成...</div></div>'; }
@@ -12888,6 +12965,310 @@ function generateRuListing(kw, market){
       <div style="font-size:12px;color:var(--t2);margin-bottom:12px">俄文 Listing 生成时出错：${(err&&err.message)||err}</div>
       <button class="btn-secondary" onclick="generateListing()" style="padding:8px 18px;font-size:12px">重试</button>
     </div>`;
+   }
+  },1100);
+}
+
+/* ═══════════════════ eBay Listing 生成 ═══════════════════
+   依据《eBay Listing 写作知识库》：
+   · 标题 ≤80 字符，结构「品牌+硬性需求+核心词+特性+软性需求」（汽配：品牌+核心零件+MPN/OEM+核心特征）
+   · 关键词六分层：核心 / 营销 / 属性 / 数量 / 品牌(For前缀) / 长尾
+   · Item Specifics 核心属性（Brand/MPN/Placement/Warranty/Country/Fitment Type…）
+   · 车型适配表 APPLICATIONS（Make/Model/Year/Engine/Location/Note）· Direct/Universal Fit
+   · 结构化 HTML 描述三段式：APPLICATIONS → Product Features → Product Specifications
+   · Best Match 五维评分 + 合规自检（IP：Fit for、禁用 OE/Original/Genuine 滥用；图片 800×800）      */
+function makeEbayModel(sc, isAuto){
+  return [
+    {id:'eb-title',name:'标题质量',weight:25,color:'#007aff',bg:'rgba(0,122,255,0.1)',desc:'80字符利用·结构顺序·无违规',ref:'eBay 标题规则',
+     criteria:[
+       {name:'标题写满且 ≤80 字符，核心词落在前 20-55 字符',rule:'主标题最多 80 字符（含空格），尽量写满；核心关键词前置以保障移动端截断前完整展现',deduct:'标题字符利用略有余量、个别核心词可再前移，移动端展现基本完整',ref:'官方',max:10,score:sc[0]},
+       {name:isAuto?'结构：品牌+核心零件类型+MPN/OEM+核心特征（材质/数量/位置）':'结构：品牌+硬性需求+核心词+特性+软性需求',rule:'按标准顺序排列、逻辑清晰，不堆砌无意义修饰词（WOW/Look 等不被搜索的词）',deduct:'结构合规，个别特性词顺序可微调',ref:'知识库',max:9,score:sc[1]},
+       {name:'合规：无全大写 / 特殊符号 / 邮箱网址电话 / 关键词堆砌盗牌',rule:'禁止全字母大写、特殊标点、联系方式、堆砌无关词、盗用品牌、照抄他人标题',deduct:'无违规项',ref:'官方',max:6,score:sc[2]}
+     ]},
+    {id:'eb-kw',name:'关键词分层',weight:15,color:'#5ac8fa',bg:'rgba(90,200,250,0.12)',desc:'核心/营销/属性/数量/品牌/长尾',ref:'关键词六分层',
+     criteria:[
+       {name:'核心关键词（纯名词/词组 ≤3 词）精准描述商品',rule:'去掉词组中任一单词即无法准确描述所售商品，核心词为标题灵魂',deduct:'核心词精准，覆盖到位',ref:'知识库',max:6,score:sc[3]},
+       {name:'营销+属性+数量关键词构成差异化卖点',rule:'营销词体现「你无我有」的功能差异，属性/数量词在有差异时前置并可大写标明',deduct:'差异化卖点已布局，属性/数量词覆盖良好',ref:'知识库',max:5,score:sc[4]},
+       {name:'品牌词用 For 前缀 + 长尾（近义词/场景词）覆盖',rule:'适用品牌须加 For/Fits/Compatible with；覆盖近义词（organiser=organizer）与关联场景词蹭流量',deduct:'长尾近义词可再补 1-2 个季节/场景词扩大召回',ref:'知识库',max:4,score:sc[5]}
+     ]},
+    {id:'eb-spec',name:'Item Specifics 完整度',weight:20,color:'#af52de',bg:'rgba(175,82,222,0.1)',desc:'核心属性全填且真实',ref:'核心参数规范',
+     criteria:[
+       {name:isAuto?'零件编号(MPN/OE)+ 品牌/类型/安装位置/质保/产地 全填':'必填核心属性（Brand/Type/MPN…）全填且正确',rule:'除零件编号外，须完整填写品牌、产品类型、安装位置、质保期限、产地，直接影响搜索匹配与曝光',deduct:'必填核心属性已全填，个别可选属性可补充',ref:'官方',max:10,score:sc[6]},
+       {name:'UPC/EAN 编码合规且与商品匹配，商品状态真实标注',rule:'明确标注全新/翻新/二手，UPC/EAN 合规不错配，改装件说明改装要求',deduct:'编码与状态标注合规',ref:'官方',max:5,score:sc[7]},
+       {name:isAuto?'多款共用 OE 时以不同 MPN 区分，补 Interchange/Superseded':'属性真实无堆砌，避免虚假信息',rule:isAuto?'多款产品对应同一 OE 号需给 MPN 设不同编码，避免被判重复铺货':'属性须真实，禁止虚假信息与照抄',deduct:'建议补充可替换零件号覆盖更多搜索',ref:'官方',max:5,score:sc[8]}
+     ]},
+    {id:'eb-fit',name:isAuto?'车型适配 Fitment':'兼容性 Compatibility',weight:20,color:'#ff9500',bg:'rgba(255,149,0,0.1)',desc:isAuto?'官方适配表·标准格式·适配类型':'适用信息·兼容标注',ref:'Compatibility/Fitment',
+     criteria:[
+       {name:isAuto?'适配信息录入 eBay 官方车型适配表（进入精准搜索）':'适用/兼容信息完整录入商品属性',rule:isAuto?'可明确适配车型的产品必须录入官方适配表，否则无法进入车型精准搜索、损失大部分流量':'完整标注适用设备/型号，进入精准筛选',deduct:'适配信息已录入，可继续扩充适配范围',ref:'官方',max:9,score:sc[9]},
+       {name:isAuto?'标准格式：年份 4 位数 + 下拉菜单标准品牌/车型名':'兼容标注规范、格式统一',rule:'年份用 4 位数，品牌/车型必须用 eBay 下拉菜单标准英文名，自定义名称无法被系统识别',deduct:'格式规范，个别车型可核对下拉标准名',ref:'官方',max:6,score:sc[10]},
+       {name:isAuto?'适配类型标注：Direct Fit / Universal Fit / Custom Fit':'兼容类型标注清晰',rule:'Direct Fit 精准列出年份/品牌/子型号/发动机；Universal Fit 需补充安装限制说明',deduct:'适配类型已标注',ref:'官方',max:5,score:sc[11]}
+     ]},
+    {id:'eb-desc',name:'描述结构与合规',weight:20,color:'#34c759',bg:'rgba(52,199,89,0.1)',desc:'三段式·IP合规·图片规范',ref:'描述结构 & 质量',
+     criteria:[
+       {name:isAuto?'三段式：APPLICATIONS → Product Features → Product Specifications':'结构化：Features → Specifications → Package',rule:'详情分模块展示适配/特征/参数，逻辑清晰，不混入无关品类推广',deduct:'描述已结构化分块',ref:'知识库',max:8,score:sc[12]},
+       {name:'IP 合规：适配用 Fit for，禁滥用 OE/Original/Genuine 与厂标',rule:'未获授权禁用主机厂 Logo/名称及「OE/Original/Genuine」等误导词；适配须前缀 Fit for',deduct:'IP 合规，未见误导性词汇',ref:'官方',max:7,score:sc[13]},
+       {name:'主图 ≥800×800px 纯白背景、支持放大、多角度',rule:'主图背景干净清晰 ≥800×800 支持放大，带附件展示总成图，禁滥用厂车型图/无关水印',deduct:'主图规范待上传核对（≥800×800 白底）',ref:'官方',max:5,score:sc[14]}
+     ]}
+  ];
+}
+
+function generateEbayListing(kw, market){
+  const btn=document.getElementById('gen-btn-wrap'); if(btn){ btn.style.display='none'; }
+  const area=document.getElementById('listing-result');
+  // 汽配判定：命中汽配词 → 走「车型适配/OE」深度结构；否则走通用 eBay 结构
+  const isAuto=/(motor|engine|mount|brake|bumper|fender|mirror|mud\s?flap|wiper|headlight|tail\s?light|grille|radiator|suspension|axle|exhaust|clutch|gasket|manifold|spoiler|strut|control\s?arm|车|汽车|发动机|机脚|支架|刹车|保险杠|后视镜|挡泥板|雨刮|大灯|尾灯|翼子板|悬挂|排气|离合|配件)/i.test(kw);
+  const urlN=(typeof genCompetitorUrls!=='undefined')?genCompetitorUrls.length:0;
+  const src=urlN>0?`已解析 ${urlN} 个竞品链接`:'基于产品关键词';
+  area.innerHTML=`<div class="result-panel fade-in"><div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">AI 正在按「Best Match 算法解析 → 80字符标题 → 关键词分层 → Item Specifics → ${isAuto?'车型适配表':'兼容信息'} → 结构化HTML描述 → 合规自检」生成 eBay Listing（${src} · ${market}）</div></div></div>`;
+
+  setTimeout(()=>{
+   try{
+    const ebClip=(s,n)=>{ s=String(s).trim(); return s.length<=n?s:s.slice(0,n).replace(/\s+\S*$/,''); };
+    const core=(kw.split(/[|｜,，]/)[0]||kw).trim();
+    const coreCap=core.replace(/\b\w/g,c=>c.toUpperCase());
+
+    // ── 内容（汽配 / 通用 两套示例，标题按关键词播种）──
+    let title, kwGroups, specRows, fitRows, descHtml, compItems, tips;
+    if(isAuto){
+      title=ebClip(`Fit for Toyota Camry 2007-2011 ${coreCap} A4211 Rubber Front 2PCS Direct Replacement`, 80);
+      kwGroups=[
+        {n:'核心关键词',en:'Core',c:'',note:'纯名词 ≤3 词·灵魂', tags:[coreCap,'Motor Mount','Engine Mount','Engine Support']},
+        {n:'营销关键词',en:'Marketing',c:'c2',note:'差异化卖点·可大写前置', tags:['Direct Fit','OE Replacement','Anti-Vibration','Heavy Duty']},
+        {n:'属性关键词',en:'Attribute',c:'c3',note:'材质/颜色/位置', tags:['Rubber & Steel','Black','Front']},
+        {n:'数量关键词',en:'Quantity',c:'c4',note:'数量/位置', tags:['2PCS','Set','Front Left & Right']},
+        {n:'品牌关键词',en:'Brand · For 前缀',c:'c5',note:'适用品牌须加 For', tags:['For Toyota','For Camry','For Solara']},
+        {n:'长尾关键词',en:'Long-tail',c:'c6',note:'近义词 + 关联场景', tags:['engine mount for toyota camry 2.4l','motor mount replacement front','camry engine support bracket']}
+      ];
+      specRows=[
+        ['Brand','TRQ / Fit for Toyota (兼容标注)','req'],
+        ['Manufacturer Part Number (MPN)','A4211','req'],
+        ['Placement on Vehicle','Front','req'],
+        ['Warranty','1 Year','req'],
+        ['Country/Region of Manufacture','China','req'],
+        ['Type','Engine Motor Mount','req'],
+        ['Fitment Type','Direct Replacement','req'],
+        ['Interchange Part Number','62311, EM-9284','opt'],
+        ['Superseded Part Number','12361-28180','opt'],
+        ['Material','Rubber & Steel','opt'],
+        ['Color','Black','opt'],
+        ['UPC','Does Not Apply','opt']
+      ];
+      fitRows=[
+        ['Toyota','Camry','2007-2011','2.4L L4','Front','Direct Fit'],
+        ['Toyota','Camry','2007-2011','3.5L V6','Front Right','Direct Fit'],
+        ['Toyota','Solara','2008-2010','2.4L L4','Front','Direct Fit'],
+        ['Lexus','ES350','2007-2012','3.5L V6','Front Right','核对扭矩']
+      ];
+      descHtml=
+        `<div class="eb-desc-block"><div class="eb-desc-h">APPLICATIONS · 适配车型</div>`+
+        `<table class="eb-desc-tbl"><thead><tr><th>Make</th><th>Model</th><th>Year</th><th>Engine</th><th>Location</th><th>Note</th></tr></thead><tbody>`+
+        fitRows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('')+
+        `</tbody></table><p style="font-size:11px;color:#666;margin-top:6px">完整适配请以 eBay 官方车型适配表(Compatibility)为准 · Fit for 标注适配性质，非原厂授权。</p></div>`+
+        `<div class="eb-desc-block"><div class="eb-desc-h">Product Features · 产品特征</div><ul class="eb-desc-feat">`+
+        `<li><b>质量认证：</b>按 OE 标准精密制造，通过 IATF16949 认证，橡胶+钢材总成经耐久测试。</li>`+
+        `<li><b>品质状态：</b>全新高品质 Brand New，直接替换件，安装无需改动原车结构。</li>`+
+        `<li><b>质保政策：</b>提供 1 年质保，售后市场可更换，非人为损坏免费换新。</li>`+
+        `<li><b>服务支持：</b>客服中心及时处理售前售后，支持退换货与安装技术咨询。</li>`+
+        `<li><b>价格优势：</b>工厂直供价，高性价比，替代 4S 店高价原厂件。</li>`+
+        `<li><b>包裹内容：</b>Engine Motor Mount × 2PCS（Front），不含安装工具。</li>`+
+        `</ul></div>`+
+        `<div class="eb-desc-block"><div class="eb-desc-h">Product Specifications · 产品参数</div>`+
+        `<table class="eb-desc-tbl"><tbody>`+
+        `<tr><th>OE / OEM Number</th><td>12361-28180 / A4211</td></tr>`+
+        `<tr><th>Center Length</th><td>约 180 mm</td></tr>`+
+        `<tr><th>Material</th><td>Natural Rubber + Stamped Steel</td></tr>`+
+        `<tr><th>Color</th><td>Black</td></tr>`+
+        `<tr><th>Placement</th><td>Front (Left & Right)</td></tr>`+
+        `<tr><th>Package Includes</th><td>2 × Engine Motor Mount</td></tr>`+
+        `</tbody></table></div>`;
+      compItems=[
+        ['ok',`标题 ${title.length}/80 字符，无全大写/特殊符号/联系方式`,'符合 eBay 标题强制规则'],
+        ['ok','适配统一使用 “Fit for” 前缀，未滥用 OE/Original/Genuine 及厂标','知识产权合规'],
+        ['ok','MPN 已填且唯一（A4211），并补充 Interchange/Superseded 号','避免重复铺货 + 覆盖替换号搜索'],
+        ['ok','车型适配已按标准格式录入官方适配表（4位年份 + 下拉品牌名）','进入车型精准搜索获取流量'],
+        ['warn','主图需 ≥800×800px 纯白背景、支持放大、展示总成图','当前待上传，上传后购物体验分再提升']
+      ];
+      tips=[
+        '标题已按「品牌+核心零件+MPN+核心特征」结构排列，Best Match 相关性信号良好',
+        'Item Specifics 五项必填核心属性全填（Brand/MPN/Placement/Warranty/产地），Interchange/Superseded 已补充',
+        '车型适配表已录入 4 条 Direct Fit，建议补齐发动机排量/安装位置进一步精准化',
+        '主图上传 ≥800×800 纯白背景大图（支持放大），可再提升「购物体验」权重'
+      ];
+    } else {
+      title=ebClip(`${coreCap} Wireless Earbuds Bluetooth 5.3 Headphones 48H Battery IPX5 Waterproof for Sports Gym Running`, 80);
+      kwGroups=[
+        {n:'核心关键词',en:'Core',c:'',note:'纯名词 ≤3 词·灵魂', tags:[coreCap,'Wireless Earbuds','Bluetooth Headphones','Earphones']},
+        {n:'营销关键词',en:'Marketing',c:'c2',note:'差异化卖点·可大写前置', tags:['Active Noise Cancelling','48H Battery','IPX5 Waterproof','Fast Charge']},
+        {n:'属性关键词',en:'Attribute',c:'c3',note:'材质/颜色/规格', tags:['Black','In-Ear','USB-C','Bluetooth 5.3']},
+        {n:'数量关键词',en:'Quantity',c:'c4',note:'套装/数量', tags:['1 Pair','with Charging Case','Set']},
+        {n:'品牌关键词',en:'Brand · For 前缀',c:'c5',note:'适用/兼容须加 For', tags:['For iPhone','For Android','For Samsung']},
+        {n:'长尾关键词',en:'Long-tail',c:'c6',note:'近义词 + 关联场景', tags:['noise cancelling earbuds for running','sweatproof bluetooth earphones gym','wireless earbuds for commute']}
+      ];
+      specRows=[
+        ['Brand','Unbranded / Generic','req'],
+        ['Type','In-Ear True Wireless Earbuds','req'],
+        ['Manufacturer Part Number (MPN)','TW-S53','req'],
+        ['Connectivity','Bluetooth 5.3','req'],
+        ['Model','Pro ANC','req'],
+        ['Country/Region of Manufacture','China','req'],
+        ['Color','Black','opt'],
+        ['Battery Life','48 Hours (with case)','opt'],
+        ['Water Resistance','IPX5','opt'],
+        ['Features','Noise Cancellation, Microphone','opt'],
+        ['Warranty','1 Year','opt'],
+        ['UPC','Does Not Apply','opt']
+      ];
+      fitRows=null;
+      descHtml=
+        `<div class="eb-desc-block"><div class="eb-desc-h">Product Features · 产品特征</div><ul class="eb-desc-feat">`+
+        `<li><b>主动降噪 35dB：</b>第三代降噪芯片，通勤/健身一键静音，通透模式随时切换。</li>`+
+        `<li><b>48 小时续航：</b>单次 12H + 充电盒共 48H，USB-C 快充 10 分钟续 90 分钟。</li>`+
+        `<li><b>IPX5 防水防汗：</b>专为运动设计，跑步瑜伽大汗依旧稳固，单只仅 9g。</li>`+
+        `<li><b>Bluetooth 5.3：</b>40ms 低延迟，双设备连接，兼容 iOS/Android/Windows。</li>`+
+        `<li><b>质保与服务：</b>1 年质保 + 30 天无理由退换，24H 客服响应。</li>`+
+        `<li><b>包裹内容：</b>耳机 ×2 + 充电盒 + USB-C 线 + 3 组耳塞 + 收纳袋。</li>`+
+        `</ul></div>`+
+        `<div class="eb-desc-block"><div class="eb-desc-h">Product Specifications · 产品参数</div>`+
+        `<table class="eb-desc-tbl"><tbody>`+
+        `<tr><th>Bluetooth Version</th><td>5.3</td></tr>`+
+        `<tr><th>Battery Life</th><td>12H single / 48H with case</td></tr>`+
+        `<tr><th>Water Resistance</th><td>IPX5</td></tr>`+
+        `<tr><th>Driver</th><td>10mm Dynamic</td></tr>`+
+        `<tr><th>Weight</th><td>9g per earbud</td></tr>`+
+        `<tr><th>Charging</th><td>USB-C + Qi Wireless</td></tr>`+
+        `</tbody></table></div>`+
+        `<div class="eb-desc-block"><div class="eb-desc-h">Package & Warranty · 包装与质保</div><ul class="eb-desc-feat">`+
+        `<li><b>Condition：</b>Brand New 全新未拆封，非翻新/二手。</li>`+
+        `<li><b>Compatibility：</b>兼容所有支持蓝牙的手机/平板/电脑（For iOS & Android）。</li>`+
+        `<li><b>Warranty：</b>1 Year Warranty · 30-Day Returns · 24H Support。</li>`+
+        `</ul></div>`;
+      compItems=[
+        ['ok',`标题 ${title.length}/80 字符，结构合规、无违规符号`,'符合 eBay 标题强制规则'],
+        ['ok','Item Specifics 必填项（Brand/Type/MPN/Connectivity）已填写','提升搜索匹配与曝光'],
+        ['ok','商品状态明确标注 Brand New，UPC 合规不错配','商品信息真实'],
+        ['ok','描述已结构化（Features / Specifications / Package），无夸大宣传','逻辑清晰便于比对'],
+        ['warn','主图需 ≥800×800px 纯白背景、支持放大、多角度','当前待上传，上传后购物体验分再提升']
+      ];
+      tips=[
+        '标题 80 字符利用充分、核心词前置，移动端展现完整',
+        'Item Specifics 必填项已完善，建议补充更多属性提升相关性权重',
+        '描述已结构化（Features/Specifications/Package），建议补 2-3 个场景长尾词',
+        '主图建议 ≥800×800px 白底、支持放大查看，提升购物体验'
+      ];
+    }
+
+    // 存描述 HTML 源码供复制
+    window._ebDescHtml = descHtml;
+
+    // 评分模型（汽配/通用共用分数分布，标签随 isAuto 变化）
+    const ebModel = makeEbayModel([9,8,5, 6,4,4, 9,5,4, 8,5,4, 7,6,3], isAuto);
+    const ebScore = (typeof calcTotal==='function') ? calcTotal(ebModel) : 87;
+    const scoreHTML = buildListingScoreHTML(kw, market, ebModel, '-eb', tips);
+
+    // 全局编辑/复制处理（与亚马逊/俄文流程同结构，复用全局 copyFieldContent）
+    window.toggleEdit=function(fieldId){ const el=document.getElementById(fieldId); if(!el)return; const a=document.getElementById('act-'+fieldId),b=document.getElementById('ebtn-'+fieldId); if(el.getAttribute('contenteditable')==='true'){ el.setAttribute('contenteditable','false'); if(a)a.classList.remove('show'); if(b)b.innerHTML='<svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑'; } else { el.setAttribute('contenteditable','true'); el.focus(); if(a)a.classList.add('show'); if(b)b.innerHTML='取消编辑'; } };
+    window.saveEdit=function(fieldId){ window.toggleEdit(fieldId); };
+    window.cancelEdit=function(fieldId){ const el=document.getElementById(fieldId); if(!el)return; el.setAttribute('contenteditable','false'); const a=document.getElementById('act-'+fieldId); if(a)a.classList.remove('show'); const b=document.getElementById('ebtn-'+fieldId); if(b)b.innerHTML='<svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑'; };
+    window._ebRegen=function(){ generateEbayListing(kw, market); };
+    window.ebTitleCount=function(el){ const n=(el.textContent||'').length; const c=document.getElementById('eb-tc'); if(!c)return; c.textContent=n+' / 80'; c.className='eb-title-counter'+(n>80?' over':n>72?' warn':''); };
+    window.ebSetFit=function(type,btn){ btn.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); const note=document.getElementById('eb-fit-note'); const ft=document.getElementById('eb-spec-fitment'); if(type==='universal'){ if(note)note.innerHTML='<b>Universal Fit</b> · 需在描述中补充安装限制说明，买家自行核对尺寸与安装位置。'; if(ft)ft.textContent='Universal'; } else { if(note)note.innerHTML='<b>Direct Fit</b> · 精准列出所有适配年份/品牌/子型号/发动机，进入车型精准搜索。'; if(ft)ft.textContent='Direct Replacement'; } };
+    window.ebCopyDesc=function(b){ const html=window._ebDescHtml||''; const done=()=>{ const t=b.innerHTML; b.innerHTML='✓ 已复制 HTML'; setTimeout(()=>b.innerHTML=t,1600); }; if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(html).then(done).catch(done); } else { const ta=document.createElement('textarea'); ta.value=html; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); } };
+
+    // 可编辑字段外壳（复用全局 copyFieldContent / toggleEdit）
+    function mkField(id,label,contentHTML,extra){
+      return `<div class="listing-field-editable">
+        <div class="lf-label" style="margin-bottom:6px">${label}</div>
+        <button class="lf-copy-btn" onclick="copyFieldContent('${id}',this)" title="复制内容"><svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 复制</button>
+        <button class="lf-edit-btn" id="ebtn-${id}" onclick="toggleEdit('${id}')"><svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑</button>
+        ${extra||''}
+        <div class="lf-editable-content" id="${id}" contenteditable="false">${contentHTML}</div>
+        <div class="lf-edit-actions" id="act-${id}"><button class="lf-cancel-btn" onclick="cancelEdit('${id}')">取消</button><button class="lf-save-btn" onclick="saveEdit('${id}')">保存修改</button></div>
+      </div>`;
+    }
+
+    // 标题字段（自带 80 字符计数 + 结构提示）
+    const structHints = isAuto
+      ? [['','品牌','Fit for Toyota'],['c2','核心零件','Engine Motor Mount'],['c3','MPN','A4211'],['c4','核心特征','Rubber / Front / 2PCS']]
+      : [['','品牌','Brand'],['c2','硬性需求','Wireless Bluetooth'],['c3','核心词','Earbuds'],['c4','特性','48H / IPX5'],['c5','软性需求','for Sports Gym']];
+    const titleField=`<div class="listing-field-editable">
+      <div class="lf-label" style="margin-bottom:6px;display:flex;align-items:center;gap:8px">TITLE · 标题 <span id="eb-tc" class="eb-title-counter${title.length>72?' warn':''}">${title.length} / 80</span> <span style="color:var(--t3);font-weight:600">(可直接编辑)</span></div>
+      <button class="lf-copy-btn" onclick="copyFieldContent('ebtitle',this)" title="复制内容"><svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 复制</button>
+      <button class="lf-edit-btn" id="ebtn-ebtitle" onclick="toggleEdit('ebtitle')"><svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 编辑</button>
+      <div class="lf-editable-content lf-title" id="ebtitle" contenteditable="false" oninput="ebTitleCount(this)">${title}</div>
+      <div class="eb-struct-hints">${structHints.map(h=>`<span class="eb-hint-chip ${h[0]}"><b>${h[1]}</b> ${h[2]}</span>`).join('')}</div>
+      <div class="lf-edit-actions" id="act-ebtitle"><button class="lf-cancel-btn" onclick="cancelEdit('ebtitle')">取消</button><button class="lf-save-btn" onclick="saveEdit('ebtitle')">保存修改</button></div>
+    </div>`;
+
+    // 关键词分层
+    const kwHtml=kwGroups.map(g=>`<div class="eb-kw-group">
+      <div class="eb-kw-head"><span class="eb-kw-dot" style="background:${g.c==='c2'?'#ff9500':g.c==='c3'?'#34c759':g.c==='c4'?'#af52de':g.c==='c5'?'#ff2d55':g.c==='c6'?'#5ac8fa':'#007aff'}"></span><span class="eb-kw-name">${g.n}</span><span class="eb-kw-en">${g.en}</span><span class="eb-kw-note">${g.note}</span></div>
+      <div class="kw-tags">${g.tags.map(t=>`<span class="eb-kw-tag">${t}</span>`).join('')}</div>
+    </div>`).join('');
+    const kwField=`<div class="listing-field-editable"><div class="lf-label" style="margin-bottom:10px">KEYWORDS · 关键词分层（六类）</div>${kwHtml}</div>`;
+
+    // Item Specifics 表
+    const specTbl=`<table class="eb-spec-table"><tbody>${specRows.map(r=>`<tr><td class="k">${r[0]}</td><td class="v">${r[0]==='Fitment Type'?`<span id="eb-spec-fitment">${r[1]}</span>`:r[1]}<span class="${r[2]==='req'?'req':'opt'}">${r[2]==='req'?'必填':'可选'}</span></td></tr>`).join('')}</tbody></table>`;
+    const specField=`<div class="listing-field-editable"><div class="lf-label" style="margin-bottom:10px">ITEM SPECIFICS · 核心属性（${specRows.filter(r=>r[2]==='req').length} 必填 + ${specRows.filter(r=>r[2]==='opt').length} 可选）</div>${specTbl}</div>`;
+
+    // 车型适配表（仅汽配）
+    const fitField = isAuto ? `<div class="listing-field-editable">
+      <div class="lf-label" style="margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">COMPATIBILITY · 车型适配表 (APPLICATIONS)
+        <span class="eb-fit-toggle"><button class="on" onclick="ebSetFit('direct',this)">Direct Fit</button><button onclick="ebSetFit('universal',this)">Universal Fit</button></span>
+        <span style="font-weight:600;color:var(--t3)">录入 eBay 官方适配表 →</span>
+      </div>
+      <table class="eb-fit-table"><thead><tr><th>Make</th><th>Model</th><th>Year</th><th>Engine</th><th>Location</th><th>Note</th></tr></thead>
+      <tbody>${fitRows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('')}</tbody></table>
+      <div id="eb-fit-note" style="margin-top:8px;padding:7px 11px;background:rgba(0,122,255,0.05);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.5"><b>Direct Fit</b> · 精准列出所有适配年份/品牌/子型号/发动机，进入车型精准搜索。</div>
+    </div>` : '';
+
+    // 结构化 HTML 描述
+    const descField=`<div class="listing-field-editable">
+      <div class="lf-label" style="margin-bottom:10px">HTML DESCRIPTION · 结构化描述（${isAuto?'APPLICATIONS → Features → Specifications':'Features → Specifications → Package'}）</div>
+      <button class="lf-copy-btn" onclick="ebCopyDesc(this)" title="复制描述 HTML 源码" style="right:14px"><svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" stroke-width="2" fill="none"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> 复制 HTML</button>
+      <div class="eb-desc-preview">${descHtml}</div>
+    </div>`;
+
+    // 合规自检
+    const okSvg='<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+    const warnSvg='<svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+    const okN=compItems.filter(c=>c[0]==='ok').length;
+    const compField=`<div class="listing-field-editable">
+      <div class="eb-sec-label">COMPLIANCE · 合规自检 <span class="badge">${okN}/${compItems.length} 通过</span></div>
+      ${compItems.map(c=>`<div class="eb-comp-item ${c[0]}"><span class="eb-comp-ic">${c[0]==='ok'?okSvg:warnSvg}</span><div class="eb-comp-txt"><div class="eb-comp-t">${c[1]}</div><div class="eb-comp-d">${c[2]}</div></div></div>`).join('')}
+    </div>`;
+
+    // ── 左栏：Listing 本体 ──
+    const gradeTxt = ebScore>=90?'S':ebScore>=80?'A':ebScore>=70?'B':'C';
+    const leftCard=`<div class="result-panel">
+      <div class="rp-header">
+        <div style="flex:1">
+          <div class="rp-title" style="display:flex;align-items:center;gap:8px"><span class="strategy-pill" style="background:rgba(0,113,206,0.12);color:#0654ba">🛒 eBay ${isAuto?'汽配':'通用'}</span>Listing 生成结果 · ${market}</div>
+          <div style="font-size:11px;color:var(--t3);margin-top:2px">关键词: ${kw} · Best Match 评分 ${ebScore} 分 · Grade ${gradeTxt}</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div class="chip chip-green" onclick="_ebRegen()">↻ 重新生成</div>
+          <div class="chip chip-orange" onclick="ebCopyDesc(this)" style="cursor:pointer">📋 复制描述HTML</div>
+        </div>
+      </div>
+      <div style="padding:20px;display:grid;grid-template-columns:1fr;gap:14px">
+        ${titleField}
+        ${kwField}
+        ${specField}
+        ${fitField}
+        ${descField}
+        ${compField}
+      </div>
+    </div>`;
+
+    area.innerHTML=`<div class="fade-in"><div style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:16px;align-items:start">
+      <div>${leftCard}</div>
+      <div style="position:sticky;top:16px;align-self:start">${scoreHTML}</div>
+    </div></div>`;
+
+    if(typeof addHist==='function') addHist('listing',`${kw} · eBay ${isAuto?'汽配':'通用'} · Best Match ${ebScore}分`,ebScore);
+   }catch(err){
+    console.error('generateEbayListing error:', err);
+    if(area) area.innerHTML=`<div class="result-panel fade-in" style="padding:24px;text-align:center"><div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:6px">生成失败</div><div style="font-size:12px;color:var(--t2);margin-bottom:12px">eBay Listing 生成出错：${(err&&err.message)||err}</div><button class="btn-secondary" onclick="generateEbayListing('${(kw||'').replace(/'/g,"\\'")}','${market}')" style="padding:8px 18px;font-size:12px">重试</button></div>`;
    }
   },1100);
 }
@@ -27068,7 +27449,7 @@ function caCloseReport(e){
 </script>
 
 <!-- ══ 落地首页（首次进入全屏展示，点 CTA 进入应用） ══ -->
-<div id="landing"><iframe src="selleros-home-classic.html" title="SellerOS · 首页"></iframe></div>
+<div id="landing"><iframe src="selleros-home-经典版.html" title="SellerOS · 首页"></iframe></div>
 <script>
 function enterApp(){
   var l=document.getElementById('landing'); if(!l) return;
