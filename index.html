@@ -1,4 +1,4 @@
-﻿<!-- deploy-marker: v3-20260804-1 -->
+﻿<!-- deploy-marker: v3-20260811 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1581,6 +1581,9 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 .gen-send-btn.ready{background:var(--accent);cursor:pointer;box-shadow:0 2px 8px rgba(0,122,255,0.25)}
 .gen-send-btn.ready:hover{background:var(--accent2);transform:scale(1.08)}
 .gen-send-btn svg{width:15px;height:15px;stroke:#fff;stroke-width:2.4;fill:none;margin-left:1px}
+.ca-send-hint{font-size:11.5px;color:var(--t3);font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.ca-send-hint b{color:var(--accent2);font-weight:700}
+.ca-send-hint .k{font-size:10px;color:var(--t2);background:var(--bg-card2);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-weight:600;font-family:'SF Mono',ui-monospace,monospace}
 
 /* URL输入弹出条 */
 .gen-url-bar{
@@ -2280,10 +2283,21 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
 .ca-block-body>.ca-rcard .ca-rcard-head{background:transparent}
 .ca-block .ca-cards{margin-top:0}
 .ca-block-cardhint{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px;flex-wrap:wrap;gap:6px}
+/* 合并板块内的子分区（竞品画像 / 流量与广告 并入同一板块） */
+.ca-sub{position:relative}
+.ca-sub+.ca-sub{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.ca-sub-head{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.ca-sub-ic{width:28px;height:28px;border-radius:8px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ca-sub-ic svg{width:15px;height:15px;stroke:var(--accent2);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ca-sub-tag{font-size:9.5px;font-weight:700;color:var(--accent2);background:var(--accent-bg);border:1px solid var(--border);padding:2px 7px;border-radius:7px;flex-shrink:0}
+.ca-sub-tt{font-size:13.5px;font-weight:700;color:var(--t0);letter-spacing:-.2px;line-height:1.2;display:flex;align-items:center;gap:8px}
+.ca-sub-sb{font-size:11px;color:var(--t3);margin-top:2px}
+.ca-sub-cost{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:700;color:var(--accent2);background:var(--accent-bg);padding:4px 11px;border-radius:9px}
 .ca-proc-cap{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:var(--t3);letter-spacing:.4px;text-transform:uppercase;margin-bottom:8px}
 .ca-proc-cap.toggle{cursor:pointer;margin-bottom:0;padding:12px 16px;user-select:none;transition:background .15s;border-radius:var(--radius-lg)}
 .ca-proc-cap.toggle:hover{background:var(--bg-page)}
 .ca-proc-cap .ca-cap-status{margin-left:auto;font-size:10px;font-weight:600;color:var(--t3);text-transform:none;letter-spacing:0}
+.ca-proc-cap .ca-proc-cost{font-size:10px;font-weight:700;color:var(--accent2);background:var(--accent-bg);padding:2px 8px;border-radius:8px;margin-left:8px;text-transform:none;letter-spacing:0}
 .ca-proc-cap .ca-cap-chev{width:13px;height:13px;stroke:var(--t3);stroke-width:2.2;fill:none;transition:transform .2s;flex-shrink:0}
 .ca-proc.collapsed .ca-cap-chev{transform:rotate(-90deg)}
 .ca-proc-apis{overflow:hidden;transition:max-height .25s ease,opacity .2s ease;max-height:600px;opacity:1}
@@ -2402,9 +2416,11 @@ table.ca-mx td.ca-mx-kw{white-space:nowrap}
 .ca-mx-sv{display:block;font-size:10px;color:var(--t3);font-weight:500;margin-top:1px}
 /* 竞品关键词 · 按 ASIN 平铺紧凑表 */
 table.ca-flat{font-size:11.5px}
-table.ca-flat th,table.ca-flat td{padding:6px 10px}
-table.ca-flat td.ca-flat-asin{text-align:left;vertical-align:middle;background:var(--bg-card2);border-right:1px solid var(--border);min-width:310px;max-width:340px;padding:12px 14px}
-table.ca-flat tr.ca-flat-top td{border-top:2px solid var(--t4)}
+table.ca-flat th,table.ca-flat td{padding:8px 10px}
+table.ca-flat td.ca-flat-asin{text-align:left;vertical-align:middle;background:var(--bg-card2);border-right:1px solid var(--border);min-width:310px;max-width:340px;padding:14px}
+table.ca-flat tr.ca-flat-top td{border-top:2px solid var(--border2)}
+table.ca-flat tbody tr:hover td{background:rgba(0,122,255,0.045)}
+table.ca-flat tbody tr:hover td.ca-flat-asin{background:var(--bg-card2)}
 .ca-flat-id{display:flex;align-items:flex-start;gap:13px}
 .ca-flat-emoji{font-size:40px;line-height:1;flex-shrink:0;width:58px;height:58px;display:flex;align-items:center;justify-content:center;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-top:2px}
 .ca-flat-idtext{min-width:0;flex:1}
@@ -2415,6 +2431,52 @@ table.ca-flat tr.ca-flat-top td{border-top:2px solid var(--t4)}
 .ca-flat-kv b{font-weight:600;color:var(--t0)}
 .ca-flat-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
 .ca-flat-sum{font-size:10px;color:var(--accent2);font-weight:700;white-space:nowrap}
+/* 左栏画像可视化：收进一个背景小卡片——总分 + 月销迷你线 + 自然/广告占比条 + 单行 meta */
+.ca-flat-viz{margin-top:9px;padding:10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;gap:9px}
+.ca-flat-viz-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.ca-flat-score{display:flex;flex-direction:column;line-height:1}
+.ca-flat-score b{font-size:18px;font-weight:800;color:var(--t0);letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+.ca-flat-score i{font-size:9px;font-style:normal;font-weight:600;color:var(--t3);letter-spacing:.2px;margin-top:4px}
+.ca-flat-spark{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;color:var(--t3);white-space:nowrap}
+.ca-flat-splitbar{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--border)}
+.ca-flat-splitbar span{display:block;height:100%}
+.ca-flat-splitbar .nf{background:linear-gradient(90deg,var(--accent),#4da3ff)}
+.ca-flat-splitbar .ad{background:linear-gradient(90deg,#ff9f0a,#ffb84d)}
+.ca-flat-meta{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;font-size:10px;color:var(--t2)}
+.ca-flat-meta b{color:var(--t0);font-weight:700}
+.ca-flat-meta i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.ca-flat-meta .d-nf{background:var(--accent)}
+.ca-flat-meta .d-ad{background:#ff9f0a}
+.ca-flat-meta .sep{width:1px;height:10px;background:var(--border);margin:0 2px}
+/* 广告投放明细按钮——移到 ASIN 旁，广告橙实心渐变，醒目 */
+.ca-addetail-btn{font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#ff9f0a,#ff7a00);border:none;border-radius:7px;padding:5px 13px;cursor:pointer;white-space:nowrap;box-shadow:0 2px 8px rgba(255,122,0,.28);transition:all .15s;font-family:inherit}
+.ca-addetail-btn:hover{background:linear-gradient(135deg,#ffb02e,#ff8a1a);box-shadow:0 3px 12px rgba(255,122,0,.4);transform:translateY(-1px)}
+/* 广告投放明细弹窗 · 广告活动→广告组结构 */
+.ca-adg-sec{margin:18px 0 4px}
+.ca-adg-cap{font-size:12.5px;font-weight:700;color:var(--t0);margin-bottom:5px;display:flex;align-items:baseline;gap:8px}
+.ca-camp{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.ca-camp-hd{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 13px;background:var(--bg-card2);border-bottom:1px solid var(--border)}
+table.ca-adg{width:100%;border-collapse:collapse;font-size:11px}
+table.ca-adg th{text-align:left;font-size:9.5px;font-weight:700;color:var(--t3);letter-spacing:.3px;text-transform:uppercase;padding:7px 10px;border-bottom:1px solid var(--border);background:var(--bg-card);white-space:nowrap}
+table.ca-adg th.num,table.ca-adg td.num{text-align:right;font-variant-numeric:tabular-nums}
+table.ca-adg td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--t1)}
+table.ca-adg tr:last-child td{border-bottom:none}
+table.ca-adg tbody tr:hover td{background:rgba(0,122,255,.04)}
+.ca-adtype{font-size:9px;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:.4px;flex-shrink:0}
+.ca-adtype.sp{background:rgba(0,122,255,.1);color:var(--accent2)}
+.ca-adtype.sb{background:rgba(124,58,237,.12);color:#7c3aed}
+.ca-adtype.sbv{background:rgba(229,52,43,.1);color:#e5342b}
+/* 推断匹配模式药丸——视觉锚点：精准蓝 / 词组紫 / 广泛橙 / 自动灰 */
+.ca-mmp{display:inline-block;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.3px}
+.ca-mmp.exact{background:rgba(0,122,255,.1);color:var(--accent2)}
+.ca-mmp.phrase{background:rgba(124,58,237,.11);color:#7c3aed}
+.ca-mmp.broad{background:rgba(255,159,10,.14);color:#c76b00}
+.ca-mmp.auto{background:var(--bg-card2);color:var(--t3);font-weight:600}
+/* 组内占比条 */
+.ca-share-cell{display:flex;align-items:center;gap:8px;min-width:96px}
+.ca-share-bar{flex:1;height:6px;background:var(--border);border-radius:4px;overflow:hidden;min-width:46px}
+.ca-share-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#4da3ff);border-radius:4px}
+.ca-share-pct{font-size:11px;font-weight:700;color:var(--t0);font-variant-numeric:tabular-nums;min-width:30px;text-align:right}
 .ca-sop-inline{margin:0 14px 14px;padding:14px;border:1px solid var(--accent);background:var(--accent-bg2);border-radius:10px}
 .ca-ks{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--bg-card)}
 .ca-ks.you{border:1.5px solid var(--accent)}
@@ -3603,6 +3665,30 @@ select.ql-f-in{cursor:pointer}
 .ado-io-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;color:#fff;font-size:11px;font-weight:700}
 .ado-io-field{width:100%;box-sizing:border-box;border:1px solid var(--border);background:var(--bg-input);border-radius:10px;padding:10px 12px;font-size:12.5px;font-family:var(--f);color:var(--t1);resize:none;line-height:1.55;outline:none;transition:border-color .15s}
 .ado-io-field:focus{border-color:var(--accent);background:var(--bg-card)}
+.pr-lbl{font-size:10px;color:var(--t3);font-weight:700;margin-bottom:4px;white-space:nowrap}
+.pr-inp{width:100%;box-sizing:border-box;padding:7px 9px;border:1px solid var(--border2);border-radius:7px;background:var(--bg-input);color:var(--t0);font-size:14px;font-weight:800;font-family:inherit;outline:none;transition:border-color .15s}
+.pr-inp:focus{border-color:var(--accent)}
+.pr-urlbar{display:flex;gap:8px;margin-top:8px}
+.pr-urlbar input{flex:1;box-sizing:border-box;padding:8px 11px;border:1px solid var(--border2);border-radius:8px;background:var(--bg-input);color:var(--t0);font-size:12px;font-family:inherit;outline:none;transition:border-color .15s}
+.pr-urlbar input:focus{border-color:var(--accent)}
+.pr-extract-btn{padding:8px 14px;border:none;border-radius:8px;background:var(--purple);color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.pr-extract-btn:disabled{opacity:.6;cursor:default}
+.pr-autofill-btn{padding:5px 12px;border:1px solid var(--accent);border-radius:7px;background:var(--accent-bg);color:var(--accent2);font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.pr-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border:1px solid var(--border2);border-radius:999px;background:var(--bg-page);font-size:11px;color:var(--t1)}
+.pr-chip b{color:var(--accent2)}
+.pr-guide{margin-top:10px;padding:9px 12px;border:1px dashed var(--accent);border-radius:8px;background:var(--accent-bg);font-size:11px;color:var(--t1);line-height:1.65}
+.pr-summary{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-top:8px}
+.pr-sum-chip{padding:5px 11px;border:1px solid var(--border2);border-radius:999px;background:var(--bg-page);font-size:11px;color:var(--t2)}
+.pr-sum-chip b{color:var(--t0);font-weight:800;margin-left:2px}
+.pr-edit-btn{margin-left:auto;padding:6px 13px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-bg);color:var(--accent2);font-size:11px;font-weight:800;cursor:pointer}
+.pr-start-btn{margin-left:auto;padding:9px 20px;border:none;border-radius:9px;background:linear-gradient(135deg,#5e5ce6,#007aff);color:#fff;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 2px 10px rgba(94,92,230,.28);transition:opacity .15s}
+.pr-start-btn:hover{opacity:.92}
+.pr-start-hint{padding:18px 16px;text-align:center;color:var(--t3);font-size:12.5px;border:1px dashed var(--border2);border-radius:10px;background:var(--bg-page)}
+.pr-upload-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border:1px solid var(--border2);border-radius:8px;background:var(--bg-card);color:var(--t1);font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:border-color .15s}
+.pr-upload-btn:hover{border-color:var(--accent)}
+.pr-blk-lbl{display:flex;align-items:center;gap:7px;margin-bottom:6px;font-size:12px;color:var(--t1)}
+.pr-blk-lbl b{font-weight:800}
+.pr-blk-lbl .h{font-size:10.5px;color:var(--t3);font-weight:400}
 .ado-rp{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;margin-top:4px}
 .ado-rp-head{display:flex;align-items:center;gap:16px;padding:18px 22px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(124,92,255,.05),rgba(0,122,255,.04))}
 .ado-score-ring{position:relative;flex-shrink:0}
@@ -3834,6 +3920,18 @@ select.ql-f-in{cursor:pointer}
         <div class="nav-item" id="nav-ad_optimize_advice" onclick="setPage('ad_optimize_advice')">
           <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           <span>广告优化建议</span>
+        </div>
+
+        <!-- 商品智能定价 -->
+        <div class="nav-item" id="nav-pricing" onclick="setPage('pricing')">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>商品智能定价</span>
+        </div>
+
+        <!-- 产品专利查询 -->
+        <div class="nav-item" id="nav-patent_screening" onclick="setPage('patent_screening')">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span>产品专利查询</span>
         </div>
 
         <!-- 素材库 -->
@@ -4471,6 +4569,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
                 </select>
               </div>
               <div class="gen-send-wrap">
+                <span class="ca-send-hint" id="ca-send-hint">已识别 <b>3</b> 个竞品 · <span class="k">Ctrl+Enter</span> 开始</span>
                 <button class="gen-send-btn ready" id="ca-send-btn" onclick="caRun()" title="Ctrl+Enter 快速开始">
                   <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 </button>
@@ -4521,7 +4620,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
       <div class="aud-modal" id="ca-chart-modal" onclick="caCloseChart(event)">
         <div class="aud-modal-card wide" onclick="event.stopPropagation()">
           <div class="aud-modal-head">
-            <div class="aud-modal-title">Keepa 价格历史 · 放大查看</div>
+            <div class="aud-modal-title">历史价格走势 · 放大查看</div>
             <button class="aud-modal-close" onclick="caCloseChart()" title="关闭">✕</button>
           </div>
           <div class="aud-modal-body" id="ca-chart-body"></div>
@@ -4611,8 +4710,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               <div class="flow-phase-bar" style="background:#007aff"></div>
               <div class="flow-phase-num" style="background:rgba(0,122,255,0.1);color:#007aff">01</div>
               <div>
-                <div class="flow-phase-name">输入产品 · 参数设置</div>
-                <div class="flow-phase-desc">输入商品名称与关键词，系统将基于此开展选品分析</div>
+                <div class="flow-phase-name">① 找赛道 · 这个市场值不值得进？</div>
+                <div class="flow-phase-desc">输入类目 / 关键词 → SIF marketValidation：容量 · 增长 · 天花板 · 生命周期（趋势 vs 昙花）</div>
               </div>
             </div>
             <div class="flow-phase-right">
@@ -4626,7 +4725,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
             <div class="flow-hero">
               <div class="flow-hero-top">
                 <div class="flow-hero-title">AI 选品工作台</div>
-                <div class="flow-hero-sub">选择入口方式，AI 为你全链路选品分析</div>
+                <div class="flow-hero-sub">按资深分析师五步漏斗 · 结合 SIF：① 找赛道 → ② 验需求 → ③ 看结构 → ④ 算账 → ⑤ 定打法</div>
               </div>
 
               <style>
@@ -4663,19 +4762,12 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
                 @media(max-width:640px){.flow-mode-tabs{flex-direction:column}.flow-rk-grid{grid-template-columns:1fr}}
               </style>
               <div class="flow-mode-tabs" role="tablist">
-                <button type="button" class="flow-mode-tab" data-mode="cat" onclick="flowSetInputMode('cat',this)">
+                <button type="button" class="flow-mode-tab active" data-mode="cat" onclick="flowSetInputMode('cat',this)">
                   <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><span class="fmt-lb">分类目选</span>
                 </button>
-                <button type="button" class="flow-mode-tab active" data-mode="keyword" onclick="flowSetInputMode('keyword',this)">
-                  <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="fmt-lb">关键词选</span>
-                </button>
                 <button type="button" class="flow-mode-tab" data-mode="link" onclick="flowSetInputMode('link',this)">
-                  <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="fmt-lb">产品选</span>
+                  <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="fmt-lb">产品验证</span>
                 </button>
-              </div>
-              <div class="flow-psrc" id="flow-product-source">
-                <button type="button" class="flow-psrc-pill active" data-src="link" onclick="flowSetProductSource('link')">🔗 我已有链接</button>
-                <button type="button" class="flow-psrc-pill" data-src="ranking" onclick="flowSetProductSource('ranking')">📊 从榜单发现</button>
               </div>
 
               <div class="flow-inputbox" id="flow-inputbox">
@@ -4823,7 +4915,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               <div class="flow-phase-bar" style="background:#5ac8fa"></div>
               <div class="flow-phase-num" style="background:rgba(90,200,250,0.12);color:#007aaf">02</div>
               <div>
-                <div class="flow-phase-name">关键词机会与市场可行性评估</div>
+                <div class="flow-phase-name">② 验需求 · 需求是真的还是我以为？</div>
+                <div class="flow-phase-desc">搜索量 · ABA 关键词 · 评论抱怨点 → 甄别真需求 vs 伪需求（关键词机会评估）</div>
               </div>
             </div>
             <div class="flow-phase-right">
@@ -4843,8 +4936,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               <div class="flow-phase-bar" style="background:#af52de"></div>
               <div class="flow-phase-num" style="background:rgba(175,82,222,0.1);color:#af52de">03</div>
               <div>
-                <div class="flow-phase-name">竞品深度分析 · analyzeCompetitor</div>
-                <div class="flow-phase-desc">③ 流量结构 + 广告结构 + 销量趋势 三维加权打分，一票否决，淘出得分 ≥6.5 的产品</div>
+                <div class="flow-phase-name">③ 看结构 · 我能不能挤进去？</div>
+                <div class="flow-phase-desc">竞争集中度 · 头部垄断度 · 评论壁垒 · 新品能否突围（竞品三维 analyzeCompetitor · 一票否决 · 得分≥6.5）</div>
               </div>
             </div>
             <div class="flow-phase-right">
@@ -4864,8 +4957,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               <div class="flow-phase-bar" style="background:#34c759"></div>
               <div class="flow-phase-num" style="background:rgba(52,199,89,0.1);color:#2d9e5a">04</div>
               <div>
-                <div class="flow-phase-name">具体产品 · 链接与成本</div>
-                <div class="flow-phase-desc">输出可直接查看的具体产品、商品 URL、供应商链接与预计采购成本</div>
+                <div class="flow-phase-name">④ 算账 · 进去能赚多少、多久回本？</div>
+                <div class="flow-phase-desc">毛利 · FBA · 头程 · 退货 · 广告 ACOS · 回本周期（具体产品链接 + 利润测算 + 智能定价）</div>
               </div>
             </div>
             <div class="flow-phase-right">
@@ -4885,8 +4978,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               <div class="flow-phase-bar" style="background:#ff9500"></div>
               <div class="flow-phase-num" style="background:rgba(255,149,0,0.1);color:#ff9500">05</div>
               <div>
-                <div class="flow-phase-name">单品深度分析 · 核心环节</div>
-                <div class="flow-phase-desc">关键词/竞品Listing/Review/变体全方位拆解</div>
+                <div class="flow-phase-name">⑤ 定打法 · 我靠什么赢？</div>
+                <div class="flow-phase-desc">从差评找痛点做微创新 · 避开专利 · 找差异化卡位（关键词/Listing/Review/变体拆解）</div>
               </div>
             </div>
             <div class="flow-phase-right">
@@ -4907,7 +5000,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               <div class="flow-phase-num" style="background:rgba(52,199,89,0.1);color:#2d9e5a">06</div>
               <div>
                 <div class="flow-phase-name">最终决策 · 选品报告</div>
-                <div class="flow-phase-desc">汇总所有分析，输出最终选品决策报告</div>
+                <div class="flow-phase-desc">五步漏斗复盘汇总，输出可落地的选品决策与上品建议（越往前越决定成败）</div>
               </div>
             </div>
             <div class="flow-phase-right">
@@ -6298,9 +6391,9 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
       // 首页流程图点击：进行中→跳进向导对应步骤；未开始→打开对应独立工具 / 定位来源
       window.plStageGo=function(i){
         if(i===1){ var el=document.getElementById('pl-srcstart'); if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); el.classList.add('pl-flash'); setTimeout(function(){el.classList.remove('pl-flash');},1200); } return; }
-        var pages={3:'listing',4:'img_ecommerce',5:'video_promo',7:'new_product_promo',8:'listing-score',9:'ad_optimize_advice'};
+        var pages={2:'listing',4:'pricing',5:'new_product_promo',6:'listing-score',7:'ad_optimize_advice'};
         if(pages[i]){ if(typeof setPage==='function') setPage(pages[i]); return; }
-        var soon={2:'专利查询',6:'商品定价'};
+        var soon={3:'专利查询'};
         if(soon[i] && typeof showTrToast==='function') showTrToast('「'+soon[i]+'」功能开发中，敬请期待');
       };
       function scrollUp(){ const c=document.querySelector('.content'); if(c)c.scrollTop=0; var s=document.querySelector('#page-product_listing .pl-stage'); if(s)s.scrollTop=0; }
@@ -6366,11 +6459,9 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
         function plIcon(k){ return '<svg class="pl-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[k]||'')+'</svg>'; }
         var FST=[
           {n:'信息分析',d:'四来源采集',ic:'chart',hue:'#007aff'},
+          {n:'制作商品链接',d:'Listing · 生图 · 生视频',ic:'file',hue:'#5856d6'},
           {n:'专利查询',d:'侵权排查',ic:'shield',hue:'#5ac8fa'},
-          {n:'Listing',d:'生成并打分',ic:'file',hue:'#5856d6'},
-          {n:'生图',d:'主图·卖点·场景',ic:'image',hue:'#af52de'},
-          {n:'生视频',d:'痛点 → 分镜',ic:'video',hue:'#ff2d55'},
-          {n:'商品定价',d:'利润·竞争',ic:'tag',hue:'#34c759'},
+          {n:'商品智能定价',d:'利润·竞争',ic:'tag',hue:'#34c759'},
           {n:'推广 SOP',d:'广告·预算节奏',ic:'send',hue:'#ff9500'}
         ];
         var FOPT=[
@@ -7258,6 +7349,660 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
         </script>
       </div>
 
+      <!-- 产品专利查询 · LC IPR 风险初筛 -->
+      <div class="page" id="page-patent_screening">
+        <div class="gen-hero"><div class="gen-hero-top">
+          <div class="gen-hero-title">产品专利查询</div>
+          <div class="gen-hero-sub">上架 / 采购前的知识产权风险初筛：外观 & 发明专利、Pending、文字 / 图形商标、版权与知名 IP、维权活跃度七大模块，证据驱动、可追溯。</div>
+        </div></div>
+        <style>
+          #page-patent_screening{--ipq:linear-gradient(135deg,#7c5cff,#6b5cf0);--ipqsoft:linear-gradient(135deg,rgba(124,92,255,.12),rgba(107,92,240,.12))}
+          #page-patent_screening .ipq-setup{max-width:840px;margin:0 auto}
+          #page-patent_screening .ipq-ctrls{max-width:840px;margin:12px auto 0;display:flex;flex-direction:column;gap:14px}
+          #page-patent_screening .ipq-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);padding:14px 16px}
+          #page-patent_screening .ipq-block-h{font-size:12px;font-weight:750;color:var(--t1);display:flex;align-items:center;gap:7px;margin-bottom:10px}
+          #page-patent_screening .ipq-block-h .hi{width:20px;height:20px;border-radius:6px;background:var(--ipqsoft);display:grid;place-items:center}
+          #page-patent_screening .ipq-block-h .hi svg{width:12px;height:12px;stroke:#6b5cf0;stroke-width:2;fill:none}
+          #page-patent_screening .ipq-tiers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+          #page-patent_screening .ipq-tier{border:1.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;cursor:pointer;transition:.15s;background:var(--bg-card)}
+          #page-patent_screening .ipq-tier:hover{border-color:var(--accent)}
+          #page-patent_screening .ipq-tier.on{border-color:#6b5cf0;background:var(--ipqsoft)}
+          #page-patent_screening .ipq-tier .tt{font-size:13px;font-weight:750;color:var(--t0);display:flex;align-items:center;gap:7px}
+          #page-patent_screening .ipq-tier .tt .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--t4);flex:none;transition:.15s}
+          #page-patent_screening .ipq-tier.on .tt .dot{border-color:#6b5cf0;background:#6b5cf0;box-shadow:inset 0 0 0 2.5px #fff}
+          #page-patent_screening .ipq-tier .td{font-size:11px;color:var(--t3);line-height:1.5;margin-top:6px;padding-left:21px}
+          #page-patent_screening .ipq-tier .cap{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0 21px}
+          #page-patent_screening .ipq-cap{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--bg-input);color:var(--t2)}
+          #page-patent_screening .ipq-cap.on{background:rgba(124,92,255,.14);color:#6b5cf0}
+          #page-patent_screening .ipq-juris{display:flex;flex-wrap:wrap;gap:8px}
+          #page-patent_screening .ipq-jchip{font-family:var(--f);font-size:12.5px;font-weight:650;color:var(--t2);background:var(--bg-card);border:1.5px solid var(--border);border-radius:20px;padding:6px 13px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px}
+          #page-patent_screening .ipq-jchip:hover{border-color:var(--accent)}
+          #page-patent_screening .ipq-jchip.on{border-color:#6b5cf0;background:var(--ipqsoft);color:#5b49d6}
+          #page-patent_screening .ipq-jchip .ck{width:14px;height:14px;border-radius:50%;background:#6b5cf0;display:none;place-items:center}
+          #page-patent_screening .ipq-jchip.on .ck{display:grid}
+          #page-patent_screening .ipq-jchip .ck svg{width:9px;height:9px;stroke:#fff;stroke-width:3;fill:none}
+          #page-patent_screening .ipq-jnote{font-size:10.5px;color:var(--t4);margin-top:8px}
+          #page-patent_screening .ipq-hint{text-align:center;font-size:11px;color:var(--t4);margin:16px 0 18px}
+          #page-patent_screening .ipq-examples{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+          #page-patent_screening .ipq-ex-label{font-size:12px;color:var(--t3)}
+          #page-patent_screening .ipq-ex{font-family:var(--f);font-size:12.5px;font-weight:600;color:var(--t2);background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:6px 14px;cursor:pointer;transition:.15s}
+          #page-patent_screening .ipq-ex:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg2)}
+          #page-patent_screening .ipq-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:840px;margin:0 auto}
+          #page-patent_screening .ipq-feat{border:1px solid var(--border);border-radius:var(--radius);padding:14px;background:var(--bg-card)}
+          #page-patent_screening .ipq-feat .fi{width:30px;height:30px;border-radius:9px;background:var(--ipqsoft);display:grid;place-items:center;margin-bottom:9px}
+          #page-patent_screening .ipq-feat .fi svg{width:16px;height:16px;stroke:#6b5cf0;stroke-width:2;fill:none}
+          #page-patent_screening .ipq-feat h5{margin:0 0 3px;font-size:13px;font-weight:750;color:var(--t0)}
+          #page-patent_screening .ipq-feat p{margin:0;font-size:11.5px;color:var(--t3);line-height:1.5}
+          /* ---- 扫描加载 ---- */
+          #page-patent_screening .ipq-load{max-width:560px;margin:48px auto;text-align:center}
+          #page-patent_screening .ipq-spin{width:44px;height:44px;margin:0 auto 18px;border-radius:50%;border:3px solid var(--border);border-top-color:#6b5cf0;animation:ipqspin .8s linear infinite}
+          @keyframes ipqspin{to{transform:rotate(360deg)}}
+          #page-patent_screening .ipq-load .t{font-size:15px;font-weight:750;color:var(--t0)}
+          #page-patent_screening .ipq-steps{margin:22px auto 0;max-width:420px;text-align:left}
+          #page-patent_screening .ipq-stp{display:flex;align-items:center;gap:11px;padding:7px 0;font-size:12.5px;color:var(--t3);transition:.2s}
+          #page-patent_screening .ipq-stp .si{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex:none;display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--t4)}
+          #page-patent_screening .ipq-stp.done{color:var(--t1)}
+          #page-patent_screening .ipq-stp.done .si{border-color:#34c759;background:#34c759;color:#fff}
+          #page-patent_screening .ipq-stp.active{color:#5b49d6;font-weight:650}
+          #page-patent_screening .ipq-stp.active .si{border-color:#6b5cf0;border-top-color:transparent;animation:ipqspin .7s linear infinite}
+          /* ---- 结果 ---- */
+          #page-patent_screening .ipq-result{max-width:960px;margin:0 auto}
+          #page-patent_screening .ipq-actbar{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap}
+          #page-patent_screening .ipq-btn{font-family:var(--f);font-weight:650;padding:9px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--t1);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s;font-size:13px}
+          #page-patent_screening .ipq-btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
+          #page-patent_screening .ipq-btn:hover{border-color:var(--accent);color:var(--accent)}
+          #page-patent_screening .ipq-btn.grad{background:var(--ipq);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(107,92,240,.26)}
+          #page-patent_screening .ipq-btn.grad:hover{filter:brightness(1.06);color:#fff}
+          /* decision hero */
+          #page-patent_screening .ipq-decision{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);background:var(--bg-card)}
+          #page-patent_screening .ipq-dhead{display:flex;gap:18px;align-items:center;padding:20px 22px;flex-wrap:wrap}
+          #page-patent_screening .ipq-riskbig{width:110px;flex:none;text-align:center}
+          #page-patent_screening .ipq-riskbig .lvl{font-size:32px;font-weight:850;line-height:1}
+          #page-patent_screening .ipq-riskbig .cap{font-size:11px;color:var(--t3);margin-top:6px;font-weight:600}
+          #page-patent_screening .ipq-riskbig .bar{height:6px;border-radius:4px;background:var(--bg-input);margin-top:9px;overflow:hidden;position:relative}
+          #page-patent_screening .ipq-riskbig .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+          #page-patent_screening .ipq-dmain{flex:1;min-width:260px}
+          #page-patent_screening .ipq-dtag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;padding:4px 11px;border-radius:20px;margin-bottom:8px}
+          #page-patent_screening .ipq-dact{font-size:19px;font-weight:820;color:var(--t0);line-height:1.3}
+          #page-patent_screening .ipq-ddesc{font-size:12.5px;color:var(--t2);line-height:1.6;margin-top:7px}
+          #page-patent_screening .ipq-dconf{display:flex;gap:22px;flex-wrap:wrap;margin-top:12px}
+          #page-patent_screening .ipq-dconf .c .k{font-size:10.5px;color:var(--t3)}
+          #page-patent_screening .ipq-dconf .c .v{font-size:14px;font-weight:800;color:var(--t0);margin-top:2px}
+          #page-patent_screening .ipq-disc{display:flex;gap:9px;padding:11px 16px;background:rgba(255,149,0,.08);border-top:1px solid rgba(255,149,0,.2);font-size:11.5px;color:#a5670a;line-height:1.55}
+          #page-patent_screening .ipq-disc svg{width:15px;height:15px;stroke:#c9891a;stroke-width:2;fill:none;flex:none;margin-top:1px}
+          /* tier disclosure strip */
+          #page-patent_screening .ipq-tierstrip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;padding:11px 14px;border:1px dashed var(--border);border-radius:var(--radius);background:var(--bg-card2);font-size:11.5px;color:var(--t2)}
+          #page-patent_screening .ipq-tierstrip b{color:var(--t0)}
+          #page-patent_screening .ipq-tierstrip .cp{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(124,92,255,.12);color:#6b5cf0}
+          #page-patent_screening .ipq-tierstrip .cp.off{background:var(--bg-input);color:var(--t4);text-decoration:line-through}
+          /* section */
+          #page-patent_screening .ipq-sec{margin-top:22px}
+          #page-patent_screening .ipq-sec-h{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+          #page-patent_screening .ipq-sec-n{width:22px;height:22px;border-radius:7px;background:var(--ipqsoft);color:#6b5cf0;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+          #page-patent_screening .ipq-sec-t{font-size:15px;font-weight:780;color:var(--t0)}
+          #page-patent_screening .ipq-sec-s{font-size:11.5px;color:var(--t3);margin-left:auto}
+          /* actions */
+          #page-patent_screening .ipq-act-list{display:flex;flex-direction:column;gap:9px}
+          #page-patent_screening .ipq-act{display:flex;gap:12px;padding:13px 15px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card)}
+          #page-patent_screening .ipq-act .rank{width:22px;height:22px;border-radius:6px;flex:none;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff}
+          #page-patent_screening .ipq-act .atx{flex:1}
+          #page-patent_screening .ipq-act .atx .at{font-size:13px;font-weight:700;color:var(--t0)}
+          #page-patent_screening .ipq-act .atx .ad{font-size:11.5px;color:var(--t2);line-height:1.55;margin-top:3px}
+          #page-patent_screening .ipq-act .amod{font-size:10px;font-weight:700;color:var(--t3);white-space:nowrap;background:var(--bg-input);padding:3px 8px;border-radius:6px;height:fit-content}
+          /* coverage matrix */
+          #page-patent_screening .ipq-mxwrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-lg)}
+          #page-patent_screening .ipq-mx{border-collapse:collapse;width:100%;min-width:640px;font-size:12px}
+          #page-patent_screening .ipq-mx th{background:var(--bg-card2);padding:9px 11px;font-size:11px;color:var(--t2);font-weight:750;border-bottom:1px solid var(--border);text-align:center;white-space:nowrap}
+          #page-patent_screening .ipq-mx th.mod{text-align:left}
+          #page-patent_screening .ipq-mx td{padding:8px 11px;border-bottom:1px solid var(--border);text-align:center}
+          #page-patent_screening .ipq-mx td.mod{text-align:left;font-weight:650;color:var(--t1);white-space:nowrap}
+          #page-patent_screening .ipq-mx tr:last-child td{border-bottom:none}
+          #page-patent_screening .ipq-st{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px}
+          #page-patent_screening .ipq-st .d{width:6px;height:6px;border-radius:50%}
+          #page-patent_screening .ipq-st.hit{background:rgba(255,59,48,.1);color:#d33}
+          #page-patent_screening .ipq-st.hit .d{background:#ff3b30}
+          #page-patent_screening .ipq-st.clear{background:rgba(52,199,89,.12);color:#1f9d4d}
+          #page-patent_screening .ipq-st.clear .d{background:#34c759}
+          #page-patent_screening .ipq-st.limited{background:var(--bg-input);color:var(--t3)}
+          #page-patent_screening .ipq-st.limited .d{background:var(--t4)}
+          #page-patent_screening .ipq-mxlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--t3);padding:10px 13px}
+          /* product */
+          #page-patent_screening .ipq-prod{display:flex;gap:16px;flex-wrap:wrap;border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;background:var(--bg-card)}
+          #page-patent_screening .ipq-pimg{width:96px;height:96px;flex:none;border-radius:var(--radius);background:var(--ipqsoft);display:grid;place-items:center;color:#6b5cf0;font-size:11px;font-weight:700;text-align:center;line-height:1.4;position:relative;overflow:hidden}
+          #page-patent_screening .ipq-pimg svg{width:34px;height:34px;stroke:#6b5cf0;stroke-width:1.6;fill:none}
+          #page-patent_screening .ipq-pbadge{position:absolute;bottom:0;left:0;right:0;font-size:8.5px;font-weight:700;padding:2px;text-align:center;color:#fff}
+          #page-patent_screening .ipq-pmain{flex:1;min-width:220px}
+          #page-patent_screening .ipq-pname{font-size:15px;font-weight:780;color:var(--t0)}
+          #page-patent_screening .ipq-pcat{font-size:12px;color:var(--accent2);font-weight:650;margin-top:3px}
+          #page-patent_screening .ipq-pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-top:11px}
+          #page-patent_screening .ipq-pf .k{font-size:10.5px;color:var(--t3)}
+          #page-patent_screening .ipq-pf .v{font-size:12px;color:var(--t1);font-weight:600;margin-top:1px}
+          /* module cards */
+          #page-patent_screening .ipq-mods{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+          #page-patent_screening .ipq-mod{border:1px solid var(--border);border-radius:var(--radius-lg);padding:15px;background:var(--bg-card);position:relative;overflow:hidden}
+          #page-patent_screening .ipq-mod .mbar{position:absolute;left:0;top:0;bottom:0;width:4px}
+          #page-patent_screening .ipq-mod-h{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+          #page-patent_screening .ipq-mod-ic{width:26px;height:26px;border-radius:7px;background:var(--bg-input);display:grid;place-items:center;flex:none}
+          #page-patent_screening .ipq-mod-ic svg{width:14px;height:14px;stroke:var(--t2);stroke-width:1.9;fill:none}
+          #page-patent_screening .ipq-mod-nm{font-size:13px;font-weight:750;color:var(--t0)}
+          #page-patent_screening .ipq-mod-badges{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+          #page-patent_screening .ipq-rk{font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:20px}
+          #page-patent_screening .ipq-cf{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--bg-input);color:var(--t2)}
+          #page-patent_screening .ipq-mod-note{font-size:11.5px;color:var(--t2);line-height:1.6}
+          #page-patent_screening .ipq-mod-finds{margin-top:9px;display:flex;flex-direction:column;gap:6px}
+          #page-patent_screening .ipq-find{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:var(--bg-card2);border:1px solid var(--border)}
+          #page-patent_screening .ipq-find .fdot{width:7px;height:7px;border-radius:50%;flex:none}
+          #page-patent_screening .ipq-find .fmain{flex:1;min-width:0}
+          #page-patent_screening .ipq-find .ft{font-size:11.5px;font-weight:650;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+          #page-patent_screening .ipq-find .fm{font-size:10px;color:var(--t3);margin-top:1px}
+          #page-patent_screening .ipq-find .fst{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+          #page-patent_screening .ipq-mod-empty{font-size:11px;color:var(--t4);margin-top:7px;font-style:italic}
+          /* key evidence / official verification */
+          #page-patent_screening .ipq-ev{border:1px solid var(--border);border-radius:var(--radius);padding:13px 15px;background:var(--bg-card);margin-bottom:10px}
+          #page-patent_screening .ipq-ev-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+          #page-patent_screening .ipq-ev-t{font-size:13px;font-weight:750;color:var(--t0)}
+          #page-patent_screening .ipq-ev-num{font-size:11px;font-family:var(--fm,monospace);color:var(--accent2);font-weight:700;background:var(--accent-bg2);padding:2px 8px;border-radius:6px}
+          #page-patent_screening .ipq-ev-ver{margin-left:auto;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px}
+          #page-patent_screening .ipq-ev-ver.ok{background:rgba(52,199,89,.12);color:#1f9d4d}
+          #page-patent_screening .ipq-ev-ver.wait{background:rgba(255,149,0,.12);color:#c9891a}
+          #page-patent_screening .ipq-ev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 16px;margin-top:10px}
+          #page-patent_screening .ipq-ev-f .k{font-size:10px;color:var(--t3)}
+          #page-patent_screening .ipq-ev-f .v{font-size:11.5px;color:var(--t1);font-weight:650;margin-top:1px}
+          /* method steps */
+          #page-patent_screening .ipq-method{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+          #page-patent_screening .ipq-mstep{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--bg-card);display:flex;gap:10px}
+          #page-patent_screening .ipq-mstep .mn{width:22px;height:22px;border-radius:50%;background:var(--ipqsoft);color:#6b5cf0;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+          #page-patent_screening .ipq-mstep .mt{font-size:12px;font-weight:700;color:var(--t0)}
+          #page-patent_screening .ipq-mstep .md{font-size:10.5px;color:var(--t3);line-height:1.5;margin-top:2px}
+          #page-patent_screening .ipq-empty{font-size:12px;color:var(--t4);padding:14px;text-align:center;border:1px dashed var(--border);border-radius:var(--radius);font-style:italic}
+          @media(max-width:820px){#page-patent_screening .ipq-feats{grid-template-columns:1fr 1fr}#page-patent_screening .ipq-tiers{grid-template-columns:1fr}#page-patent_screening .ipq-mods{grid-template-columns:1fr}#page-patent_screening .ipq-method{grid-template-columns:1fr}#page-patent_screening .ipq-ev-grid{grid-template-columns:1fr 1fr}#page-patent_screening .ipq-pgrid{grid-template-columns:1fr}}
+        </style>
+
+        <!-- 输入阶段 -->
+        <div class="ipq-setup" id="ipq-setup">
+          <div class="gen-inputbox" style="margin:0 auto;max-width:840px">
+            <textarea class="gen-inputbox-main" id="ipq-input" rows="3"
+              placeholder="粘贴商品链接 / ASIN，或直接描述产品：品名 + 品牌 + 核心结构与卖点。&#10;如：便携榨汁杯 BlendGo | 无线充电、六叶刀头、350ml、磁吸底座 | 品牌 BlendGo"
+              oninput="ipqSync()"
+              onkeydown="if(event.key==='Enter'&&event.ctrlKey){event.preventDefault();ipqRun()}"></textarea>
+            <div class="gen-url-bar" id="ipq-url-bar">
+              <input type="text" id="ipq-url-input" placeholder="粘贴一条 Amazon 商品链接或 ASIN，回车即可提取商品资料" onkeydown="if(event.key==='Enter'){event.preventDefault();ipqExtract()}">
+              <button class="gen-url-bar-extract" onclick="ipqExtract()" title="识别链接 / ASIN">⚡ 提取商品</button>
+              <button class="gen-url-bar-close" onclick="ipqToggleUrl()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="gen-attached-files" id="ipq-url-chips" style="display:none"></div>
+            <div class="gen-inputbox-footer">
+              <div class="gen-input-left">
+                <button class="gen-url-btn" onclick="ipqToggleUrl()">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  ASIN / 链接
+                </button>
+              </div>
+              <div class="gen-send-wrap">
+                <select class="gen-selector" id="ipq-market">
+                  <option>🇺🇸 Amazon US</option><option>🇬🇧 Amazon UK</option><option>🇩🇪 Amazon DE</option><option>🇯🇵 Amazon JP</option><option>🇨🇦 Amazon CA</option>
+                </select>
+                <select class="gen-selector" id="ipq-cat">
+                  <option>🏠 家居厨房</option><option>📱 消费电子</option><option>🏃 运动户外</option><option>🐾 宠物用品</option><option>💄 美妆个护</option><option>🧸 玩具 &amp; 影视周边</option>
+                </select>
+                <button class="gen-send-btn" id="ipq-send" onclick="ipqRun()" title="Ctrl+Enter 开始初筛">
+                  <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ipq-ctrls">
+            <!-- 检索档位 -->
+            <div class="ipq-block">
+              <div class="ipq-block-h"><span class="hi"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/></svg></span>检索档位（成本与数据源范围，不等于风险等级）</div>
+              <div class="ipq-tiers">
+                <div class="ipq-tier on" id="ipq-tier-low" onclick="ipqSetTier('low_cost')">
+                  <div class="tt"><span class="dot"></span>低成本初筛</div>
+                  <div class="td">仅对冻结主图执行外观设计专利发现，控制单品筛查成本。</div>
+                  <div class="cap"><span class="ipq-cap on">外观专利</span><span class="ipq-cap">全球版权</span><span class="ipq-cap">美国文字商标</span></div>
+                </div>
+                <div class="ipq-tier" id="ipq-tier-high" onclick="ipqSetTier('high_risk')">
+                  <div class="tt"><span class="dot"></span>深度检索</div>
+                  <div class="td">同一主图一次提交，外观专利 + 全球版权发现；目标含 US 再查美国文字商标。</div>
+                  <div class="cap"><span class="ipq-cap on">外观专利</span><span class="ipq-cap on">全球版权</span><span class="ipq-cap on">美国文字商标</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- 目标法域 -->
+            <div class="ipq-block">
+              <div class="ipq-block-h"><span class="hi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></span>目标销售法域（可多选）</div>
+              <div class="ipq-juris" id="ipq-juris"></div>
+              <div class="ipq-jnote">⚠︎ 外观专利图片发现当前仅确认覆盖 US / EU；其他法域记录为「访问受限 · UNSUPPORTED_JURISDICTION」，不以 US/EU 结果推断其安全。</div>
+            </div>
+          </div>
+
+          <div class="ipq-hint">证据驱动的七模块知识产权风险初筛 · 不构成法律意见 · Ctrl+Enter 开始</div>
+          <div class="ipq-examples">
+            <span class="ipq-ex-label">试试示例：</span>
+            <button class="ipq-ex" onclick="ipqFill('blender')">便携榨汁杯</button>
+            <button class="ipq-ex" onclick="ipqFill('earbuds')">无线降噪耳机</button>
+            <button class="ipq-ex" onclick="ipqFill('figure')">动漫手办摆件</button>
+            <button class="ipq-ex" onclick="ipqFill('band')">健身弹力带套装</button>
+          </div>
+          <div class="ipq-feats">
+            <div class="ipq-feat"><div class="fi"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div><h5>七模块覆盖</h5><p>外观 / 发明专利、Pending、文字 & 图形商标、版权 IP、维权活跃度</p></div>
+            <div class="ipq-feat"><div class="fi"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h5>发现 + 官方核验</h5><p>第三方发现候选，重要候选进 USPTO / EUIPO 等官方库核验图样</p></div>
+            <div class="ipq-feat"><div class="fi"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h5>风险 + 置信度</h5><p>严重程度与证据可靠性分开评估，缺证据不等于低风险</p></div>
+            <div class="ipq-feat"><div class="fi"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h5>可追溯卷宗</h5><p>每条结论回溯到查询词、法域、原始证据与官方核验事件</p></div>
+          </div>
+        </div>
+
+        <!-- 扫描阶段 -->
+        <div class="ipq-load" id="ipq-load" style="display:none">
+          <div class="ipq-spin"></div>
+          <div class="t" id="ipq-load-t">正在执行七模块知识产权初筛…</div>
+          <div class="ipq-steps" id="ipq-load-steps"></div>
+        </div>
+
+        <!-- 结果阶段 -->
+        <div class="ipq-result" id="ipq-result" style="display:none"></div>
+
+        <script>
+        (function(){
+          var IPQ={tier:'low_cost',juris:['US'],urls:[],data:null};
+          var RISK=['极低','低','中','高','极高'];
+          var RCOL=['#34c759','#34c759','#ff9500','#ff3b30','#b3001b'];
+          var CONF=['低','中','高'];
+          var JLIST=[['US','🇺🇸 美国'],['EU','🇪🇺 欧盟'],['GB','🇬🇧 英国'],['CA','🇨🇦 加拿大'],['MX','🇲🇽 墨西哥'],['JP','🇯🇵 日本'],['AU','🇦🇺 澳大利亚']];
+          var MODS=[
+            ['appearance_patent','外观设计专利','<path d="M12 2l3 6 6 .9-4.5 4.3 1 6.1L12 17l-5.5 2.3 1-6.1L3 8.9 9 8z"/>'],
+            ['utility_patent','发明 / 实用专利','<circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>'],
+            ['pending_application','公开 / Pending 申请','<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/>'],
+            ['word_mark','文字商标','<path d="M4 7V5h16v2M9 19h6M12 5v14"/>'],
+            ['figurative_trade_dress','图形商标 / Trade Dress','<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/>'],
+            ['copyright_ip','版权 / 知名 IP','<circle cx="12" cy="12" r="9"/><path d="M14.8 9.5a3 3 0 1 0 0 5"/>'],
+            ['enforcement','维权活跃度','<path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16"/>']
+          ];
+          var METHOD=[
+            ['校正真实品类','不轻信平台节点，还原真实用途、结构、材质与搜索词根'],
+            ['专利关键词发现','按功能 / 结构 / 装饰特征检索，区分外观 / 发明 / Pending / 失效'],
+            ['权利人与维权信息','品类领导品牌、受让人、诉讼 / 投诉 / 下架与 dupe 舆情'],
+            ['专利族扩展','从重要候选扩展申请人、同族、分案与延续申请'],
+            ['外观视觉比较','对重要候选归档官方图样，比对轮廓 / 比例 / 装饰面'],
+            ['Pending 识别','Pending 非安全期，形成未来授权与持续监测风险'],
+            ['文字商标比对','品牌 / 标题 / OCR 变体，比法域 / 状态 / Nice 类别'],
+            ['图形商标 & Trade Dress','Logo、产品形状识别、包装布局与稳定配色组合'],
+            ['版权与知名 IP','建立素材清单，溯源作者 / 授权链，未登记不等于无版权']
+          ];
+          // 场景库（按品类给出七模块 & 重要候选）—— finds: [标题, 权利号, 法域, 权利类型, 官方状态, 风险(0-4), 官方核验(ver)]
+          var SCEN={
+            '家居厨房':{cat:'便携榨汁杯 / Personal Blender',adequacy:'adequate',compound:false,
+              mods:{
+                appearance_patent:{r:2,c:1,note:'充电底座与杯体开合结构发现 2 件相似外观候选，US 已授权 1 件需官方图样比对。',f:[['磁吸充电底座外观','USD9##,###','US','外观专利','LIVE · 已授权',2,1]]},
+                utility_patent:{r:1,c:2,note:'刀头与快充结构检索未见高度相关的有效发明专利。',f:[]},
+                pending_application:{r:1,c:1,note:'未发现与本品直接相关的公开 / Pending 申请。',f:[]},
+                word_mark:{r:1,c:2,note:'品牌词在 US 无近似在先注册（文字商标检索 + WIPO）。',f:[]},
+                figurative_trade_dress:{r:1,c:1,note:'未发现受保护的产品形状识别或 Trade Dress。',f:[]},
+                copyright_ip:{r:0,c:2,note:'包装图案与说明书无第三方版权来源命中。',f:[]},
+                enforcement:{r:1,c:1,note:'品类维权活跃度低，近 24 月无显著投诉 / 下架记录。',f:[]}
+              }},
+            '消费电子':{cat:'无线蓝牙耳机 / TWS Earbuds',adequacy:'limited',compound:true,
+              mods:{
+                appearance_patent:{r:2,c:1,note:'充电盒外观发现 2 件相似候选，需官方图样比对轮廓与开合结构。',f:[['充电盒开合结构外观','USD8##,###','US','外观专利','LIVE · 已授权',2,1]]},
+                utility_patent:{r:3,c:2,note:'入耳自动检测 + 触控交互命中头部品牌活跃发明专利族，与本品功能高度重合。',f:[['入耳自动检测发明专利','US10,###,###','US','发明专利','LIVE · 已授权',3,1]]},
+                pending_application:{r:2,c:1,note:'发现 1 件自适应降噪算法申请处于公开 Pending 状态，须持续监测。',f:[['自适应降噪 Pending 申请','US2024/0######A1','US','Pending','Pending · 已公开',2,1]]},
+                word_mark:{r:1,c:2,note:'品牌词无近似在先注册（US 文字商标检索）。',f:[]},
+                figurative_trade_dress:{r:1,c:1,note:'未发现受保护的外观识别或 Trade Dress。',f:[]},
+                copyright_ip:{r:1,c:2,note:'UI 图标与包装无第三方版权来源命中。',f:[]},
+                enforcement:{r:2,c:1,note:'头部品牌近 24 月在 TWS 品类有多起专利维权 / 投诉记录。',f:[]}
+              }},
+            '运动户外':{cat:'健身弹力带套装 / Resistance Bands',adequacy:'adequate',compound:false,
+              mods:{
+                appearance_patent:{r:1,c:2,note:'手柄与门锚外观检索无高度相似的有效外观权利。',f:[]},
+                utility_patent:{r:1,c:2,note:'未发现相关的有效发明 / 实用专利。',f:[]},
+                pending_application:{r:0,c:2,note:'无相关公开 / Pending 申请。',f:[]},
+                word_mark:{r:1,c:2,note:'品牌词无近似在先注册。',f:[]},
+                figurative_trade_dress:{r:0,c:2,note:'无受保护的形状识别或 Trade Dress。',f:[]},
+                copyright_ip:{r:1,c:2,note:'附带训练手册插图须确认自有或已授权，暂无第三方来源命中。',f:[]},
+                enforcement:{r:1,c:2,note:'品类维权活跃度低。',f:[]}
+              }},
+            '宠物用品':{cat:'大型猫爬架 / Cat Tree Tower',adequacy:'adequate',compound:false,
+              mods:{
+                appearance_patent:{r:1,c:1,note:'多层平台结构外观检索无高度相似有效外观权利。',f:[]},
+                utility_patent:{r:1,c:2,note:'防倒固定结构未命中有效发明专利。',f:[]},
+                pending_application:{r:1,c:1,note:'无直接相关的公开 / Pending 申请。',f:[]},
+                word_mark:{r:1,c:2,note:'品牌词无近似在先注册。',f:[]},
+                figurative_trade_dress:{r:0,c:2,note:'无受保护的形状识别或 Trade Dress。',f:[]},
+                copyright_ip:{r:1,c:2,note:'包装摄影图须确认版权归属，暂无第三方来源命中。',f:[]},
+                enforcement:{r:1,c:1,note:'品类维权活跃度低。',f:[]}
+              }},
+            '美妆个护':{cat:'洁面仪 / Facial Cleansing Brush',adequacy:'limited',compound:false,
+              mods:{
+                appearance_patent:{r:2,c:1,note:'刷头与机身外观发现 1 件相似 EU 外观候选，需官方图样比对。',f:[['硅胶刷头造型外观','EM 0## ### ###','EU','外观专利','LIVE · 已注册',2,1]]},
+                utility_patent:{r:1,c:2,note:'声波震动结构未命中高度相关有效发明专利。',f:[]},
+                pending_application:{r:1,c:1,note:'无相关公开 / Pending 申请。',f:[]},
+                word_mark:{r:2,c:1,note:'宣传语中一处措辞与在先注册文字商标近似，须确认 Nice 类别与商品服务重合度。',f:[['近似宣传语文字商标','US 8######','US','文字商标','LIVE · REGISTERED',2,1]]},
+                figurative_trade_dress:{r:1,c:1,note:'未发现受保护的形状识别。',f:[]},
+                copyright_ip:{r:1,c:2,note:'使用前后对比图须确认自有版权。',f:[]},
+                enforcement:{r:1,c:1,note:'品类维权活跃度中等偏低。',f:[]}
+              }},
+            '玩具 & 影视周边':{cat:'动漫手办摆件 / Anime Figure',adequacy:'adequate',compound:true,
+              mods:{
+                appearance_patent:{r:2,c:1,note:'底座与关节结构发现相似外观候选。',f:[['可动关节底座外观','JP 意匠 15#####','JP','外观专利','LIVE · 已注册',2,1]]},
+                utility_patent:{r:1,c:1,note:'无高度相关有效发明专利。',f:[]},
+                pending_application:{r:1,c:1,note:'无相关公开 / Pending 申请。',f:[]},
+                word_mark:{r:3,c:2,note:'商品标题含知名动漫作品与角色注册商标名，US / JP 均有在先注册。',f:[['知名动漫角色文字商标','US 7######','US','文字商标','LIVE · REGISTERED',3,1]]},
+                figurative_trade_dress:{r:2,c:1,note:'角色造型可能涉及形象识别，须保留来源识别证据。',f:[]},
+                copyright_ip:{r:4,c:2,note:'造型高度还原受版权保护的知名动漫角色，疑似未经授权使用；反向图片命中官方作品。',f:[['知名动漫角色美术作品','版权登记 / 官方作品','GLOBAL','版权 / 角色 IP','受保护 · 权利人活跃',4,1]]},
+                enforcement:{r:3,c:2,note:'该 IP 权利人维权极其活跃，近年大量下架与诉讼记录。',f:[]}
+              }}
+          };
+          var EX={
+            blender:{name:'便携榨汁杯 BlendGo',cat:'🏠 家居厨房',feat:'无线充电、六叶刀头、350ml、磁吸底座、USB-C 快充 | 品牌 BlendGo',tier:'low_cost'},
+            earbuds:{name:'无线降噪耳机 SoundPro ANC',cat:'📱 消费电子',feat:'主动降噪 35dB、入耳检测、触控交互、蓝牙5.3、续航48H | 品牌 SoundPro',tier:'high_risk'},
+            figure:{name:'动漫手办摆件 25cm',cat:'🧸 玩具 & 影视周边',feat:'PVC 材质、可动关节、还原角色造型、带底座 | 无授权声明',tier:'high_risk'},
+            band:{name:'健身弹力带套装 FlexBand',cat:'🏃 运动户外',feat:'5 档阻力、天然乳胶、防滑手柄、门锚、附训练手册 | 品牌 FlexBand',tier:'low_cost'}
+          };
+          function el(id){return document.getElementById(id);}
+          function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+          function renderJuris(){
+            el('ipq-juris').innerHTML=JLIST.map(function(j){
+              var on=IPQ.juris.indexOf(j[0])>-1;
+              return '<div class="ipq-jchip'+(on?' on':'')+'" onclick="ipqToggleJuris(\''+j[0]+'\')"><span class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>'+esc(j[1])+'</div>';
+            }).join('');
+          }
+          window.ipqToggleJuris=function(code){
+            var i=IPQ.juris.indexOf(code);
+            if(i>-1){ if(IPQ.juris.length>1) IPQ.juris.splice(i,1); }
+            else IPQ.juris.push(code);
+            renderJuris();
+          };
+          window.ipqSetTier=function(t){
+            IPQ.tier=t;
+            el('ipq-tier-low').classList.toggle('on',t==='low_cost');
+            el('ipq-tier-high').classList.toggle('on',t==='high_risk');
+          };
+          window.ipqSync=function(){
+            var has=(el('ipq-input').value||'').trim().length>0 || IPQ.urls.length>0;
+            el('ipq-send').classList.toggle('ready',has);
+          };
+          window.ipqFill=function(k){
+            var e=EX[k]; if(!e) return;
+            el('ipq-input').value=e.name+' | '+e.feat;
+            var sel=el('ipq-cat'); for(var i=0;i<sel.options.length;i++){ if(sel.options[i].text===e.cat){ sel.selectedIndex=i; break; } }
+            ipqSetTier(e.tier||'low_cost');
+            IPQ.urls=[]; renderChips(); ipqSync();
+          };
+          window.ipqToggleUrl=function(){
+            var b=el('ipq-url-bar'); var on=b.classList.toggle('show');
+            if(on){ setTimeout(function(){ el('ipq-url-input').focus(); },30); }
+          };
+          window.ipqExtract=function(){
+            var u=(el('ipq-url-input').value||'').trim(); if(!u) return;
+            var cat=catKey(el('ipq-cat').value);
+            var host=''; try{ host=u.replace(/^https?:\/\//,'').split('/')[0]||'商品链接'; }catch(e){ host='商品链接'; }
+            var asin=(u.match(/([A-Z0-9]{10})/)||[])[1]||'';
+            var name=(SCEN[cat]||SCEN['家居厨房']).cat.split(' / ')[0];
+            IPQ.urls=[{url:u,name:name,host:host,asin:asin}];
+            el('ipq-input').value=name+' | 已从 '+(asin?('ASIN '+asin):host)+' 提取：主图×7、五点描述、品牌与类目字段';
+            el('ipq-url-input').value=''; el('ipq-url-bar').classList.remove('show');
+            renderChips(); ipqSync(); toast('已提取 1 条商品资料');
+          };
+          function renderChips(){
+            var box=el('ipq-url-chips');
+            if(!IPQ.urls.length){ box.style.display='none'; box.innerHTML=''; return; }
+            box.style.display='flex';
+            box.innerHTML=IPQ.urls.map(function(u,i){
+              return '<div class="gen-url-chip clickable"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg><span>'+esc(u.asin?('ASIN '+u.asin):u.host)+' · '+esc(u.name)+'</span><button class="gen-url-chip-remove" onclick="ipqDropUrl('+i+')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>';
+            }).join('');
+          }
+          window.ipqDropUrl=function(i){ IPQ.urls.splice(i,1); renderChips(); ipqSync(); };
+
+          function catKey(label){ label=label||''; for(var k in SCEN){ if(label.indexOf(k)>-1) return k; } if(label.indexOf('玩具')>-1||label.indexOf('周边')>-1) return '玩具 & 影视周边'; return '家居厨房'; }
+
+          // ---------- 运行 ----------
+          window.ipqRun=function(){
+            var txt=(el('ipq-input').value||'').trim();
+            if(!txt && !IPQ.urls.length){ toast('请先输入商品链接 / ASIN 或产品描述'); return; }
+            el('ipq-setup').style.display='none';
+            el('ipq-result').style.display='none';
+            el('ipq-load').style.display='block';
+            var stepsBox=el('ipq-load-steps');
+            stepsBox.innerHTML=METHOD.map(function(m,i){ return '<div class="ipq-stp" id="ipq-stp-'+i+'"><span class="si">'+(i+1)+'</span>'+esc(m[0])+'</div>'; }).join('');
+            var i=0;
+            (function tick(){
+              if(i>0){ var p=el('ipq-stp-'+(i-1)); if(p){ p.classList.remove('active'); p.classList.add('done'); p.querySelector('.si').innerHTML='<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none"><polyline points="20 6 9 17 4 12"/></svg>'; } }
+              if(i<METHOD.length){ var c=el('ipq-stp-'+i); if(c) c.classList.add('active'); el('ipq-load-t').textContent='正在执行：'+METHOD[i][0]+' …'; i++; setTimeout(tick,i>=METHOD.length?520:340); }
+              else { setTimeout(function(){ el('ipq-load').style.display='none'; ipqBuild(); el('ipq-result').style.display='block'; el('ipq-result').scrollIntoView({behavior:'smooth',block:'start'}); },260); }
+            })();
+          };
+
+          function parseProduct(){
+            var txt=(el('ipq-input').value||'').trim();
+            var name=IPQ.urls.length?IPQ.urls[0].name:'';
+            if(!name){ name=(txt.split(/[|｜\n]/)[0]||'').trim(); }
+            if(!name||name.length>46) name='待查产品';
+            var brand=''; var bm=txt.match(/品牌\s*([A-Za-z0-9一-龥]+)/); if(bm) brand=bm[1];
+            var noBrand=/无授权|无品牌|未标注/.test(txt);
+            return {name:name,brand:brand,noBrand:noBrand,asin:(IPQ.urls[0]||{}).asin||''};
+          }
+
+          function ipqBuild(){
+            var ck=catKey(el('ipq-cat').value);
+            var scen=SCEN[ck]||SCEN['家居厨房'];
+            var prod=parseProduct();
+            var tier=IPQ.tier, juris=IPQ.juris.slice();
+            // 深度检索 + 玩具/版权：补充 GLOBAL 版权列语义已含于场景
+            var modResults=MODS.map(function(m){
+              var d=scen.mods[m[0]]||{r:0,c:2,note:'—',f:[]};
+              var r=d.r, c=d.c;
+              // 低成本档：全球版权 / 美国文字商标为 Trohub 深度能力，低成本下置信度受限披露
+              return {key:m[0],name:m[1],icon:m[2],risk:r,conf:c,note:d.note,finds:(d.f||[])};
+            });
+            var rbase=Math.max.apply(null,modResults.map(function(x){return x.risk;}));
+            var midCount=modResults.filter(function(x){return x.risk>=2;}).length;
+            var compound=scen.compound && midCount>=2 && rbase<4;
+            var roverall=compound?Math.min(rbase+1,4):rbase;
+            var cbase=Math.min.apply(null,modResults.map(function(x){return x.conf;}));
+            // 深度检索提升整体置信度上限；低成本封顶为「中」
+            var ccap=(tier==='high_risk')?2:1;
+            var coverall=Math.min(cbase,ccap);
+            IPQ.data={ck:ck,scen:scen,prod:prod,tier:tier,juris:juris,mods:modResults,roverall:roverall,coverall:coverall,compound:compound};
+            el('ipq-result').innerHTML=renderReport(IPQ.data);
+          }
+
+          // ---------- 报告渲染 ----------
+          function actionFor(r){
+            if(r<=1) return {tag:'可继续推进',verb:'继续研究 · 正常推进',tone:'#1f9d4d',bg:'rgba(52,199,89,.12)',
+              desc:'未发现与本品直接对应的有效权利冲突。建议保留本次证据卷宗，正常推进采购 / 上架，并在改动包装、品牌词或外观时复筛。'};
+            if(r===2) return {tag:'需处理后推进',verb:'改款 / 补授权 / 持续监测',tone:'#c9891a',bg:'rgba(255,149,0,.14)',
+              desc:'存在相关候选、Pending 权利或授权链缺口。建议改款规避、补齐授权 / 许可文件，或对 Pending 权利持续监测，处理到位后再推进。'};
+            if(r===3) return {tag:'高风险 · 建议暂停',verb:'暂停采购 · 转法务复核',tone:'#d33',bg:'rgba(255,59,48,.1)',
+              desc:'发现高度相关的有效权利或活跃重合商标。建议暂停采购 / 上架，将重要候选与官方核验事件整理后转法务做正式分析。'};
+            return {tag:'极高风险 · 立即停止',verb:'立即停止 · 立即转法务',tone:'#b3001b',bg:'rgba(179,0,27,.1)',
+              desc:'疑似直接使用未经授权的知名受保护内容，或有效权利与商品强对应。建议立即停止相关计划并第一时间转法务 / 外部律师。'};
+          }
+          function statusColor(txt){ if(/授权|REGISTER|注册|受保护/i.test(txt)) return ['rgba(255,59,48,.1)','#d33']; if(/Pending|公开/i.test(txt)) return ['rgba(255,149,0,.14)','#c9891a']; return ['var(--bg-input)','var(--t2)']; }
+
+          function renderReport(D){
+            var act=actionFor(D.roverall);
+            var jlabel=D.juris.join(' / ');
+            var tierLabel=D.tier==='high_risk'?'深度检索':'低成本初筛';
+            var capOn={appearance:true,copyright:D.tier==='high_risk',trademark:D.tier==='high_risk'&&D.juris.indexOf('US')>-1};
+            // 汇总所有 material 候选
+            var mats=[]; D.mods.forEach(function(m){ (m.finds||[]).forEach(function(f){ if(f[5]>=2) mats.push({mod:m.name,f:f}); }); });
+            // findings 平铺
+            var allFinds=[]; D.mods.forEach(function(m){ (m.finds||[]).forEach(function(f){ allFinds.push({mod:m,f:f}); }); });
+
+            var H='';
+            H+='<div class="ipq-actbar">'
+              +'<button class="ipq-btn grad" onclick="ipqReset()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>新建初筛</button>'
+              +'<button class="ipq-btn" onclick="ipqToast_download()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>导出报告 (HTML/PDF)</button>'
+              +'<button class="ipq-btn" onclick="ipqToast_feishu()"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H5.2L4 17.2z"/></svg>写回飞书</button>'
+              +'</div>';
+
+            // 1 decision
+            var pct=(D.roverall/4)*100;
+            H+='<div class="ipq-decision"><div class="ipq-dhead">'
+              +'<div class="ipq-riskbig"><div class="lvl" style="color:'+RCOL[D.roverall]+'">'+RISK[D.roverall]+'</div><div class="cap">综合风险等级</div>'
+              +'<div class="bar"><i style="width:'+pct+'%;background:'+RCOL[D.roverall]+'"></i></div></div>'
+              +'<div class="ipq-dmain">'
+              +'<span class="ipq-dtag" style="background:'+act.bg+';color:'+act.tone+'">'+esc(act.tag)+'</span>'
+              +'<div class="ipq-dact">建议行动：'+esc(act.verb)+'</div>'
+              +'<div class="ipq-ddesc">'+esc(act.desc)+(D.compound?' <b style="color:'+act.tone+'">（多模块复合风险，已按规则上调一级）</b>':'')+'</div>'
+              +'<div class="ipq-dconf">'
+              +'<div class="c"><div class="k">综合置信度</div><div class="v">'+CONF[D.coverall]+'</div></div>'
+              +'<div class="c"><div class="k">重要候选</div><div class="v">'+mats.length+' 项</div></div>'
+              +'<div class="c"><div class="k">检索档位</div><div class="v">'+tierLabel+'</div></div>'
+              +'<div class="c"><div class="k">目标法域</div><div class="v">'+esc(jlabel)+'</div></div>'
+              +'</div></div></div>'
+              +'<div class="ipq-disc"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+              +'本报告仅提供证据驱动的业务风险初筛，<b>不构成法律意见、正式 FTO 或「不侵权证明」</b>；检索层级只表示数据源与成本范围，不等于综合风险等级。重要候选须由律师做正式分析。</div></div>';
+
+            // tier disclosure strip
+            H+='<div class="ipq-tierstrip"><b>检索档位披露：</b>'+tierLabel
+              +' · Trohub 能力 <span class="cp'+(capOn.appearance?'':' off')+'">外观专利</span>'
+              +'<span class="cp'+(capOn.copyright?'':' off')+'">全球版权</span>'
+              +'<span class="cp'+(capOn.trademark?'':' off')+'">美国文字商标</span>'
+              +' · 冻结主图 1 张 · 图片充分性 '+({adequate:'充分',limited:'有限',unknown:'未知'}[D.scen.adequacy]||'—')+'</div>';
+
+            // 2 actions
+            H+=sec('02','建议行动','按优先级处理');
+            H+='<div class="ipq-act-list">';
+            var actions=buildActions(D,act);
+            actions.forEach(function(a,i){ H+='<div class="ipq-act"><div class="rank" style="background:'+a.col+'">'+(i+1)+'</div><div class="atx"><div class="at">'+esc(a.t)+'</div><div class="ad">'+esc(a.d)+'</div></div><div class="amod">'+esc(a.mod)+'</div></div>'; });
+            H+='</div>';
+
+            // 3 coverage matrix
+            H+=sec('03','覆盖矩阵','七模块 × 目标法域 · 实际查询状态');
+            H+='<div class="ipq-mxwrap"><table class="ipq-mx"><thead><tr><th class="mod">模块 \\ 法域</th>';
+            D.juris.forEach(function(j){ H+='<th>'+esc(j)+'</th>'; });
+            if(D.tier==='high_risk') H+='<th>GLOBAL</th>';
+            H+='</tr></thead><tbody>';
+            D.mods.forEach(function(m){
+              H+='<tr><td class="mod">'+esc(m.name)+'</td>';
+              D.juris.forEach(function(j){ H+='<td>'+cell(m,j,D)+'</td>'; });
+              if(D.tier==='high_risk') H+='<td>'+globalCell(m,D)+'</td>';
+              H+='</tr>';
+            });
+            H+='</tbody></table>'
+              +'<div class="ipq-mxlegend"><span><span class="ipq-st hit"><span class="d"></span>命中候选</span></span><span><span class="ipq-st clear"><span class="d"></span>无命中</span></span><span><span class="ipq-st limited"><span class="d"></span>受限 / 不适用</span></span></div></div>';
+
+            // 4 product
+            H+=sec('04','商品','冻结商品资料与主图');
+            H+='<div class="ipq-prod"><div class="ipq-pimg"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div class="ipq-pbadge" style="background:'+({adequate:'#34c759',limited:'#ff9500',unknown:'#8e8e93'}[D.scen.adequacy])+'">'+({adequate:'充分',limited:'视角有限',unknown:'未知'}[D.scen.adequacy])+'</div></div>'
+              +'<div class="ipq-pmain"><div class="ipq-pname">'+esc(D.prod.name)+'</div><div class="ipq-pcat">真实品类：'+esc(D.scen.cat)+'</div>'
+              +'<div class="ipq-pgrid">'
+              +pf('品牌',D.prod.brand||(D.prod.noBrand?'未标注 / 无授权声明':'—（缺失，已披露对文字商标影响）'))
+              +pf('ASIN',D.prod.asin||'（人工资料 · manual_detail）')
+              +pf('目标市场',esc(el('ipq-market').value))
+              +pf('图片充分性',({adequate:'充分（allows）',limited:'有限（限制外观置信度）',unknown:'未知'}[D.scen.adequacy]))
+              +'</div></div></div>';
+
+            // 5 modules
+            H+=sec('05','风险模块','七个知识产权模块 · 风险与置信度分离');
+            H+='<div class="ipq-mods">';
+            D.mods.forEach(function(m){ H+=modCard(m); });
+            H+='</div>';
+
+            // 6 findings
+            H+=sec('06','发现明细','material 候选 · finding 清单');
+            if(!allFinds.length){ H+='<div class="ipq-empty">本次未发现须定级的 material 候选（各模块均为无命中 / 低相关）。空结果不等于安全，请在改动产品要素后复筛。</div>'; }
+            else {
+              H+='<div class="ipq-mxwrap"><table class="ipq-mx"><thead><tr><th class="mod">Finding</th><th>模块</th><th>权利号</th><th>法域</th><th>官方状态</th><th>风险</th></tr></thead><tbody>';
+              allFinds.forEach(function(x,i){ var f=x.f; H+='<tr><td class="mod">F'+String(i+1).padStart(2,'0')+' · '+esc(f[0])+'</td><td>'+esc(x.mod.name)+'</td><td style="font-family:monospace;font-size:11px">'+esc(f[1])+'</td><td>'+esc(f[2])+'</td><td>'+esc(f[4])+'</td><td><span class="ipq-rk" style="background:'+RCOL[f[5]]+'22;color:'+RCOL[f[5]]+'">'+RISK[f[5]]+'</span></td></tr>'; });
+              H+='</tbody></table></div>';
+            }
+
+            // 7 key evidence
+            H+=sec('07','关键证据 · 官方核验','重要候选须进目标法域官方库核验');
+            if(!mats.length){ H+='<div class="ipq-empty">无须官方核验的重要候选。</div>'; }
+            else {
+              mats.forEach(function(x){ var f=x.f; H+='<div class="ipq-ev"><div class="ipq-ev-h"><span class="ipq-ev-t">'+esc(f[0])+'</span><span class="ipq-ev-num">'+esc(f[1])+'</span>'
+                +'<span class="ipq-ev-ver '+(f[6]?'ok':'wait')+'">'+(f[6]?'<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;stroke-width:3;fill:none"><polyline points="20 6 9 17 4 12"/></svg>官方已核验':'待官方核验')+'</span></div>'
+                +'<div class="ipq-ev-grid">'+evf('模块',x.mod)+evf('法域',f[2])+evf('权利类型',f[3])+evf('官方状态',f[4])+'</div></div>'; });
+            }
+
+            // 8 method
+            H+=sec('08','排查方法','九步知识产权排查方法（本次已执行）');
+            H+='<div class="ipq-method">';
+            METHOD.forEach(function(m,i){ H+='<div class="ipq-mstep"><div class="mn">'+(i+1)+'</div><div><div class="mt">'+esc(m[0])+'</div><div class="md">'+esc(m[1])+'</div></div></div>'; });
+            H+='</div>';
+
+            return H;
+          }
+          function sec(n,t,s){ return '<div class="ipq-sec"><div class="ipq-sec-h"><span class="ipq-sec-n">'+n+'</span><span class="ipq-sec-t">'+esc(t)+'</span><span class="ipq-sec-s">'+esc(s||'')+'</span></div></div>'; }
+          function pf(k,v){ return '<div class="ipq-pf"><div class="k">'+esc(k)+'</div><div class="v">'+v+'</div></div>'; }
+          function evf(k,v){ return '<div class="ipq-ev-f"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div></div>'; }
+
+          function cell(m,j,D){
+            // 外观专利仅 US/EU 支持
+            if(m.key==='appearance_patent' && j!=='US' && j!=='EU') return '<span class="ipq-st limited"><span class="d"></span>受限</span>';
+            // 美国文字商标 Trohub 附加行只在 high_risk+US；此处基础文字商标仍适用各法域
+            var hit=false; (m.finds||[]).forEach(function(f){ if(f[2]===j || f[2]==='GLOBAL') hit=true; });
+            if(m.risk>=2 && hit) return '<span class="ipq-st hit"><span class="d"></span>命中</span>';
+            return '<span class="ipq-st clear"><span class="d"></span>无命中</span>';
+          }
+          function globalCell(m,D){
+            if(m.key!=='copyright_ip') return '<span class="ipq-st limited"><span class="d"></span>—</span>';
+            var hit=(m.finds||[]).some(function(f){ return f[2]==='GLOBAL'; });
+            return hit?'<span class="ipq-st hit"><span class="d"></span>命中</span>':'<span class="ipq-st clear"><span class="d"></span>无命中</span>';
+          }
+          function modCard(m){
+            var rc=RCOL[m.risk];
+            var badges='<span class="ipq-rk" style="background:'+rc+'22;color:'+rc+'">风险 '+RISK[m.risk]+'</span><span class="ipq-cf">置信 '+CONF[m.conf]+'</span>';
+            var finds='';
+            if(m.finds && m.finds.length){
+              finds='<div class="ipq-mod-finds">'+m.finds.map(function(f){ var sc=statusColor(f[4]); return '<div class="ipq-find"><span class="fdot" style="background:'+RCOL[f[5]]+'"></span><div class="fmain"><div class="ft">'+esc(f[0])+'</div><div class="fm">'+esc(f[1])+' · '+esc(f[2])+' · '+esc(f[3])+'</div></div><span class="fst" style="background:'+sc[0]+';color:'+sc[1]+'">'+esc(f[4])+'</span></div>'; }).join('')+'</div>';
+            } else {
+              finds='<div class="ipq-mod-empty">无候选命中 · 空结果不等于安全</div>';
+            }
+            return '<div class="ipq-mod"><div class="mbar" style="background:'+rc+'"></div>'
+              +'<div class="ipq-mod-h"><span class="ipq-mod-ic"><svg viewBox="0 0 24 24">'+m.icon+'</svg></span><span class="ipq-mod-nm">'+esc(m.name)+'</span><span class="ipq-mod-badges">'+badges+'</span></div>'
+              +'<div class="ipq-mod-note">'+esc(m.note)+'</div>'+finds+'</div>';
+          }
+          function buildActions(D,act){
+            var out=[];
+            // 首要：整体行动
+            out.push({t:act.verb,d:act.desc,mod:'综合',col:RCOL[D.roverall]});
+            // 按模块风险从高到低补充具体动作
+            var sorted=D.mods.slice().filter(function(m){return m.risk>=2;}).sort(function(a,b){return b.risk-a.risk;});
+            sorted.slice(0,4).forEach(function(m){
+              var d='';
+              if(m.key==='appearance_patent') d='对命中的外观候选归档官方图样，比对整体轮廓 / 比例 / 装饰面，必要时调整外观规避。';
+              else if(m.key==='utility_patent') d='将高度相关的有效发明专利转法务做 FTO / 规避设计分析，评估权利要求覆盖。';
+              else if(m.key==='pending_application') d='对 Pending 权利建立持续监测，跟踪授权进度，暂按至少中风险对待。';
+              else if(m.key==='word_mark') d='核验在先商标的 Nice 类别与商品服务重合度；如冲突则更换品牌词 / 宣传语。';
+              else if(m.key==='figurative_trade_dress') d='保留来源识别 / 市场认知证据，评估是否构成受保护 Trade Dress。';
+              else if(m.key==='copyright_ip') d='立即停止疑似侵权素材使用，补齐授权 / 许可链，或替换为自有 / 已授权素材。';
+              else if(m.key==='enforcement') d='评估权利人维权活跃度对下架 / 诉讼风险的影响，提前准备申诉证据。';
+              out.push({t:m.name+'：'+RISK[m.risk]+'风险处理',d:d,mod:m.name,col:RCOL[m.risk]});
+            });
+            if(out.length===1){ out.push({t:'保留证据卷宗并定期复筛',d:'当前无须定级的重要候选，改动包装 / 品牌词 / 外观或跟卖前建议复筛。',mod:'综合',col:'#34c759'}); }
+            return out;
+          }
+
+          window.ipqReset=function(){
+            el('ipq-result').style.display='none';
+            el('ipq-result').innerHTML='';
+            el('ipq-setup').style.display='block';
+            el('ipq-input').value=''; IPQ.urls=[]; renderChips(); ipqSync();
+            el('ipq-setup').scrollIntoView({behavior:'smooth',block:'start'});
+          };
+          window.ipqToast_download=function(){ toast('已生成 report.html / report.pdf 与 findings.csv（演示）'); };
+          window.ipqToast_feishu=function(){ toast('发布校验通过后可写回飞书（演示）'); };
+
+          var _tt;
+          function toast(msg){
+            var t=el('ipq-toast');
+            if(!t){ t=document.createElement('div'); t.id='ipq-toast'; t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#232326;color:#fff;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.25);transition:.25s;opacity:0'; document.body.appendChild(t); }
+            t.textContent='✓ '+msg; t.style.opacity='1'; t.style.bottom='92px';
+            clearTimeout(_tt); _tt=setTimeout(function(){ t.style.opacity='0'; t.style.bottom='80px'; },2200);
+          }
+
+          // init
+          renderJuris();
+        })();
+        </script>
+      </div>
+
       <!-- 广告优化建议 -->
       <div class="page" id="page-ad_optimize_advice">
         <div class="gen-hero">
@@ -7313,6 +8058,68 @@ SD-商品定位 | 展示型 | $480 | $760 | 63.2% | 210,000 | 1,540 | 34</textar
 
         <!-- 报告挂载区 -->
         <div id="ado-result" style="display:none"></div>
+      </div>
+
+      <!-- 智能定价 -->
+      <div class="page" id="page-pricing">
+        <div class="gen-hero">
+          <div class="gen-hero-top">
+            <div class="gen-hero-title">智能定价</div>
+            <div class="gen-hero-sub">输入落地成本与竞品价格带，按「定价五步法」算出 地板价 / 建议价 / 天花板价 三档定价，附利润瀑布、生命周期策略与定价四维评分。</div>
+          </div>
+
+          <div class="gen-inputbox" style="margin:0 auto 12px;max-width:920px">
+            <!-- ① 我方产品：采购链接 / 商品信息（文本或上传资料）-->
+            <div style="padding:12px 16px 6px">
+              <div class="pr-blk-lbl"><span class="ado-io-badge" style="background:var(--accent)">我</span><b>我方产品</b><span class="h">采购链接 / 商品信息，或上传资料</span></div>
+              <div style="position:relative">
+                <textarea class="ado-io-field" id="pr-own" rows="1" style="min-height:40px;padding-right:120px" oninput="pricingRun()" placeholder="粘贴 1688 采购链接，或填「品名·材质·规格·采购价」"></textarea>
+                <label class="pr-upload-btn" style="position:absolute;right:8px;top:7px;padding:5px 10px">📎 上传资料<input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg" multiple onchange="pricingOwnFiles(event)" style="display:none"></label>
+              </div>
+              <div id="pr-own-files" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"></div>
+            </div>
+            <!-- ② 竞品链接 / ASIN（价格带来源）-->
+            <div style="padding:6px 16px 8px;border-top:1px solid var(--border)">
+              <div class="pr-blk-lbl"><span class="ado-io-badge" style="background:var(--purple)">竞</span><b>竞品链接 / ASIN</b><span class="h">回车提取售价，可加多个</span></div>
+              <div class="pr-urlbar">
+                <input id="pr-url-input" placeholder="粘贴竞品链接或 ASIN，如 amazon.com/dp/B08XYZ1234" onkeydown="if(event.key==='Enter'){event.preventDefault();pricingExtractPeer()}">
+                <button id="pr-extract-btn" class="pr-extract-btn" onclick="pricingExtractPeer()">⚡ 提取</button>
+              </div>
+              <div id="pr-url-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:7px"></div>
+            </div>
+            <!-- ③ 站点 + 类目 下拉 + 开始 -->
+            <div class="gen-inputbox-footer" style="border-top:1px solid var(--border)">
+              <div class="gen-input-left">
+                <select class="gen-selector" id="pr-market" onchange="pricingOnMarketSel()">
+                  <option>🇺🇸 Amazon US</option>
+                  <option>🇬🇧 Amazon UK</option>
+                  <option>🇩🇪 Amazon DE</option>
+                  <option>🛒 Walmart US</option>
+                </select>
+                <select class="gen-selector" id="pr-cat" onchange="pricingOnCatSel()">
+                  <option>🏠 家居厨房</option>
+                  <option>📱 消费电子</option>
+                  <option>🏃 运动户外</option>
+                  <option>🐾 宠物用品</option>
+                  <option>💄 美妆个护</option>
+                  <option>👕 服装配饰</option>
+                  <option>🧸 玩具游戏</option>
+                </select>
+              </div>
+              <button class="pr-start-btn" id="pr-start-btn" onclick="pricingStart()">🎯 开始智能定价</button>
+            </div>
+            <!-- 引擎隐藏字段：由问卷/选择器写入，供 pricingCore 读取 -->
+            <div style="display:none">
+              <input id="pr-cost" value="5.40"><input id="pr-freight" value="2.70"><input id="pr-fba" value="5.70">
+              <input id="pr-comm" value="15"><input id="pr-acos" value="18"><input id="pr-return" value="5">
+              <input id="pr-vat" value="0"><input id="pr-target" value="30">
+            </div>
+          </div>
+          <!-- QA 问答区（图2位置：输入卡下方，报告之上）-->
+          <div id="pr-quiz-wrap" style="max-width:920px;margin:0 auto 12px"><div id="pr-quiz"></div></div>
+          <div style="text-align:center;padding:0 0 6px;font-size:11px;color:var(--t4)">我方产品资料 → 竞品价格带 → 逐题问答 → 三档定价 · 建议价 = clamp(目标利润价, 保本价, 天花板价)</div>
+        </div>
+        <div id="pr-result" style="display:none;padding:0 20px 30px"></div>
       </div>
 
       <!-- 素材库 · 素材池 -->
@@ -7810,6 +8617,9 @@ function setPage(p, sub){
   } else if(p==='product_listing'){
     document.getElementById('page-product_listing').classList.add('active');
     if(window.plInit) plInit();
+  } else if(p==='pricing'){
+    document.getElementById('page-pricing').classList.add('active');
+    pricingInit();
   } else {
     const el=document.getElementById('page-'+p);
     if(el) el.classList.add('active');
@@ -7827,7 +8637,7 @@ function setPage(p, sub){
   }
   // Update topbar title
   const titleText = document.getElementById('topbar-title-text');
-  const titleMap={home:'首页',quick_launch:'一键上架',launch_records:'上架记录',listing:'lisiting生成',listing_optimize:'lisiting优化',product_listing:'AI 商品工厂','listing-score':'ASIN 审计',competitor_analysis:'竞品分析',score:'选品打分',flow:'选品工具',consumer_lab:'AI消费者实验室',inspiration_radar:'灵感雷达',market_research:'市场前调',product_dev_advice:'产品开发建议',img_general:'生图 · 通用创作',img_ecommerce:'生图 · 电商创作',img_batch:'批量改图',img_process:'图像处理',video_general:'生视频 · 通用创作',video_promo:'带货工作流',video_batch:'批量工作流',video_tools:'工具站',new_product_promo:'新品推广计划',ad_optimize_advice:'广告优化建议',material_pool:'素材池',image_template:'图片模板库',selection_records:'选品分析记录',builtin_prompts:'内置提示词（生图）',product_pool:'优选商品库',aiask:'AI 问一问',history:'历史记录',agent:'Agents',org:'组织架构',product_reports:'产品分析报告',listing_records:'lisiting生成/优化记录',competitor_records:'竞品分析记录',user_mgmt:'用户管理',invite:'邀请 / 分销',perm_config:'角色管理',user_recharge:'用户充值',user_profile:'个人信息',change_pwd:'修改密码',usage_dashboard:'用量统计',recharge:'会员充值',sensitive_words:'敏感词库'};
+  const titleMap={home:'首页',quick_launch:'一键上架',launch_records:'上架记录',listing:'lisiting生成',listing_optimize:'lisiting优化',product_listing:'AI 商品工厂','listing-score':'ASIN 审计',competitor_analysis:'竞品分析',score:'选品打分',flow:'选品工具',consumer_lab:'AI消费者实验室',inspiration_radar:'灵感雷达',market_research:'市场前调',product_dev_advice:'产品开发建议',img_general:'生图 · 通用创作',img_ecommerce:'生图 · 电商创作',img_batch:'批量改图',img_process:'图像处理',video_general:'生视频 · 通用创作',video_promo:'带货工作流',video_batch:'批量工作流',video_tools:'工具站',new_product_promo:'新品推广计划',ad_optimize_advice:'广告优化建议',pricing:'智能定价',patent_screening:'产品专利查询',material_pool:'素材池',image_template:'图片模板库',selection_records:'选品分析记录',builtin_prompts:'内置提示词（生图）',product_pool:'优选商品库',aiask:'AI 问一问',history:'历史记录',agent:'Agents',org:'组织架构',product_reports:'产品分析报告',listing_records:'lisiting生成/优化记录',competitor_records:'竞品分析记录',user_mgmt:'用户管理',invite:'邀请 / 分销',perm_config:'角色管理',user_recharge:'用户充值',user_profile:'个人信息',change_pwd:'修改密码',usage_dashboard:'用量统计',recharge:'会员充值',sensitive_words:'敏感词库'};
   titleText.textContent=titleMap[p]||p;
   // Show/hide nav flow sub-steps
   const nfs = document.getElementById('nav-flow-steps');
@@ -14845,6 +15655,8 @@ function initCatCascade(){
     </div>`;
   });
   col1.innerHTML = '<div class="cat-col-header">一级类目</div>' + html;
+  // 进入选品工作台默认落到「分类目选」，并同步输入区（关键词入口已下线）
+  if(typeof flowSetInputMode==='function') flowSetInputMode(flowInputMode||'cat');
 }
 
 function selectCatL1(idx){
@@ -15157,7 +15969,7 @@ function parseFlowProductInput(raw){
 
 // ── Phase 1: 输入产品 ──
 // ── 三种选品入口模式切换（关键词 / 类目 / 链接）──
-var flowInputMode = 'keyword';
+var flowInputMode = 'cat';
 var FLOW_MODE_CFG = {
   keyword:{ ph:"请输入商品名称、关键词，例如：\n商品名称：Stackable Storage Bins\n关键词：stackable storage bins, pantry organizer, clear bins",
             hint:"💡 心里有想法了？输入几个产品关键词，帮你看清哪些词能做、对应哪些产品值得上架。" },
@@ -16390,12 +17202,40 @@ function flowRenderKeywordAnalysis(analysis){
   </div>`;
 }
 
+// 类目 → 种子关键词（ABA 赛道盘子用）；demo 映射，未覆盖则原样保留
+const CAT_SEED_KW = {
+  '厨房收纳':['stackable storage bins','pantry organizer bins','under sink organizer','spice rack organizer','fridge organizer bins'],
+  '烘焙工具':['silicone baking mat','cookie cutters set','measuring cups spoons','baking sheet pan set','piping bags tips'],
+  '厨房小家电':['countertop ice maker','electric gooseneck kettle','mini food chopper','immersion blender','rapid egg cooker']
+};
+function flowLeafCatName(s){ const p=String(s).split(/[>›]/); return p[p.length-1].trim(); }
+function flowExpandCatsToKeywords(list){
+  const out=[];
+  (list||[]).forEach(item=>{
+    const leaf=flowLeafCatName(item);
+    if(CAT_SEED_KW[leaf]) CAT_SEED_KW[leaf].forEach(k=>out.push(k));
+    else out.push(item);
+  });
+  return [...new Set(out)];
+}
+// ABA 赛道盘子 · 每个词一句解读
+function flowKwInterpret(item){
+  const sd=item.supplyDemand, g=item.growthPct, sv=item.searchVolume;
+  if(sv>=40000 && sd<2) return '大词·垄断勿硬刚';
+  if(sd>=6 && g>=15) return '增长主词·主战场';
+  if(sd>=6)          return '供需健康·可切';
+  if(sd<0.5)         return '严重过剩·避';
+  if(sd<4)           return '偏挤·需差异化';
+  if(sv<1000)        return '极小众·独特场景';
+  return '常规·可观察';
+}
 function runFlowPhase2(){
   resetAfterPhase(2);
-  const keywords = (flowUserData.keywords || []).map(k=>String(k).trim()).filter(Boolean);
+  let keywords = (flowUserData.keywords || []).map(k=>String(k).trim()).filter(Boolean);
+  if(typeof flowInputMode!=='undefined' && flowInputMode==='cat') keywords = flowExpandCatsToKeywords(keywords);   // 分类目选：类目→真实关键词
   if(!keywords.length){alert('请先输入关键词');return;}
   openAndScroll(2);
-  showFlowLoading('flow-result-2','正在按关键词查询竞品并推荐 ASIN...');
+  showFlowLoading('flow-result-2','正在拉取 ABA 关键词赛道盘子（近 7 天）...');
   setTimeout(()=>{
     const cfg = flowUserData.opportunityConfig || {minSearchVolume:1000,maxConcentration:0.6,priceRange:[15,100]};
     const analysis = keywords.map((kw,i)=>flowBuildKeywordAsinRows(kw,i,cfg));
@@ -16410,17 +17250,20 @@ function runFlowPhase2(){
 
     const summaryRows = analysis.map((item,idx)=>{
       const selected = flowUserData.selectedKeywordIndexes.includes(idx);
+      const listings = item.supplyDemand>0 ? Math.round(item.searchVolume/item.supplyDemand) : 0;   // 在售数 = 月搜 ÷ 供需比
+      const abaRank  = Math.max(1, Math.round(3000000/(item.searchVolume+1)));                        // ABA 排名（越搜越靠前）
+      const interp   = flowKwInterpret(item);
+      const sdColor  = item.supplyDemand>=6?'#2d9e5a':item.supplyDemand>=4?'#ff9500':(item.supplyDemand<1?'#ff3b30':'var(--t1)');
       return `
       <tr>
         <td style="width:36px;text-align:center"><input class="flow-kw-check" data-kw-idx="${idx}" type="checkbox" ${selected?'checked':''} onchange="flowToggleKeywordOpportunity(${idx},this.checked)" style="width:14px;height:14px;accent-color:#007aff;cursor:pointer"></td>
         <td><strong>${item.keyword}</strong></td>
         <td style="font-weight:700;color:var(--accent2)">${item.searchVolume.toLocaleString()}</td>
-        <td>${item.concentration}%</td>
-        <td>${item.priceBand}</td>
+        <td>${abaRank.toLocaleString()}</td>
+        <td>${listings.toLocaleString()}</td>
+        <td style="font-weight:800;color:${sdColor}">${item.supplyDemand}</td>
         <td style="font-weight:700;color:${item.growthPct>=6?'#2d9e5a':item.growthPct<=-1?'#ff3b30':'var(--t1)'}">${item.searchTrend} ${item.growthPct>=0?'+':''}${item.growthPct}%</td>
-        <td style="font-weight:700;color:${item.supplyDemand>=8?'#2d9e5a':item.supplyDemand>=4?'#ff9500':'var(--t1)'}">${item.supplyDemand}</td>
-        <td><span data-hint="综合评分 ${item.opportunityScore} = 集中度 ${item.concScore}×0.4 + 搜索量 ${item.volScore}×0.35 + 价格带 ${item.priceScore}×0.25（满分100）${item.opportunityVeto?'；⛔ 搜索量<1000，一票否决':''}" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="font-size:15px;font-weight:800;cursor:pointer;color:${item.opportunityScore>=70?'#2d9e5a':item.opportunityScore>=60?'#ff9500':'#ff3b30'}">${item.opportunityScore}</span></td>
-        <td><span class="frc-tag ${item.verdictClass}">${item.verdict}</span></td>
+        <td style="font-size:11px;color:var(--t2)">${interp}</td>
       </tr>`}).join('');
 
     document.getElementById('flow-result-2').innerHTML = `
@@ -16429,13 +17272,13 @@ function runFlowPhase2(){
           <div class="frc-header">
             <div class="frc-icon" style="background:rgba(90,200,250,0.1)">📊</div>
             <div>
-              <div class="frc-title">关键词机会评估</div>
-              <div class="frc-sub">系统默认选择 1-3 个最优关键词，支持用户手动调整</div>
+              <div class="frc-title">ABA 关键词赛道盘子 · 近 7 天</div>
+              <div class="frc-sub">按关键词的 ABA 概览（月搜 / ABA 排名 / 在售数 / 供需比 / 趋势 / 解读）· 系统默认勾选 1-3 个最优词，可手动调整</div>
             </div>
           </div>
           <div class="frc-body">
             <table class="frc-table">
-              <tr><th style="width:36px">选</th><th>关键词</th><th>搜索量 <span data-hint="每月预估搜索次数（门槛：最小搜索量 ≥ 1000）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>流量集中度 <span data-hint="Top3 卖家流量占比，越低越易切入（门槛：集中度占比 ≤ 60%）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>价格带（USD） <span data-hint="竞品主流售价区间，关注 [15,100]" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>搜索趋势 <span data-hint="该关键词近90天搜索量走势（对应 SIF market_growth_rate）。上升代表需求在增长，是加分项；下降需警惕品类衰退。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>供需比 <span data-hint="供需比 = 月搜索量 ÷ 在线商品数。数值越高说明需求旺、竞品供给少，越是蓝海机会。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>机会评分 <span data-hint="综合评分 = 集中度得分×0.4 + 搜索量得分×0.35 + 价格带得分×0.25（满分100）。各维度满分10分：集中度=(1−集中度)×10、搜索量=min(量/1000,1)×10、价格带命中[15,100]=10。鼠标悬停每行分数可看该词的拆解。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>机会判断 <span data-hint="按机会评分判定：≥70 好机会（进入②市场验证）；60-69 保留观察；<60 放弃。另设一票否决：搜索量<1000 直接放弃。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th></tr>
+              <tr><th style="width:36px">选</th><th>关键词</th><th>月搜索量 <span data-hint="该关键词近 7 天 ABA 折算的月搜索量（门槛：≥ 1000）" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>ABA 排名 <span data-hint="亚马逊品牌分析（ABA）搜索词频排名，数字越小=搜得越多、越是大词。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>在售数 <span data-hint="该词下在线在售商品数 = 月搜索量 ÷ 供需比。越少说明供给越稀缺。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>供需比（搜/售） <span data-hint="供需比 = 月搜索量 ÷ 在售数。越高说明需求旺、供给少，越蓝海；<1 为严重过剩。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>搜索趋势（近7天/环比） <span data-hint="该关键词近 7 天搜索量环比走势。上升=需求在增长，是加分项；下降=需警惕衰退。" onmouseenter="flowHintOver(event)" onmouseleave="flowHintOut()" onclick="flowShowHint(event)" style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:4px;border-radius:50%;background:rgba(0,122,255,0.12);color:#007aff;font-size:9px;font-weight:800;vertical-align:middle;cursor:pointer">?</span></th><th>解读</th></tr>
               ${summaryRows}
             </table>
             ${flowRenderKeywordAnalysis(analysis)}
@@ -18092,7 +18935,8 @@ function flowRenderProfitCalc(){
     <div class="frc-header" style="align-items:center">
       <div class="frc-icon" style="background:rgba(255,149,0,0.1)">💰</div>
       <div style="flex:1"><div class="frc-title" style="font-size:13px">利润测算器 · 可交互</div><div class="frc-sub">头程/退货/采购手动（🟠 默认 1688 估算）· FBA/ACOS/佣金工具值（🔵）· 实时算毛利率</div></div>
-      <select id="pc-pick" onchange="flowLoadCalcProduct(this.value)" style="padding:6px 10px;border:1px solid var(--border2);border-radius:7px;background:var(--bg-input);color:var(--t0);font-size:11px;font-weight:700;font-family:inherit;max-width:200px">${opts}</select>
+      <button onclick="flowPreviewPricingReport()" title="按当前成本 + 竞品价格带，输出地板/建议/天花板三档定价" style="padding:6px 12px;border:none;background:linear-gradient(135deg,#5e5ce6,#007aff);color:#fff;border-radius:7px;font-size:11px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap">🎯 智能定价方案</button>
+      <select id="pc-pick" onchange="flowLoadCalcProduct(this.value)" style="padding:6px 10px;border:1px solid var(--border2);border-radius:7px;background:var(--bg-input);color:var(--t0);font-size:11px;font-weight:700;font-family:inherit;max-width:180px">${opts}</select>
     </div>
     <div class="frc-body" style="padding:12px 14px 14px">
       <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:14px" class="pc-grid">
@@ -18141,6 +18985,658 @@ function flowRenderProfitCalc(){
       <div style="margin-top:10px;font-size:9.5px;color:var(--t4);line-height:1.5">口径：头程/退货/采购为手动询价值（默认 1688 估算，请以实际报价校正）；ACOS 为关键词级中位数水位（非竞品真实出价）；净利为规划复算值。</div>
     </div>
   </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// 智能定价 · 定价五步法
+//   成本保本线 → 竞争价格带 → 价值溢价 → 生命周期基准 → 动态调价
+//   复用利润测算器成本输入(pc-*) + 竞品分析价格带；输出 地板/建议/天花板 三档价
+// ══════════════════════════════════════════════════════════════
+let flowPricingTargetM = 30;   // 目标净利率(%)，报告内可切换
+function flowSetPricingTarget(m){ flowPricingTargetM = m; flowPreviewPricingReport(); }
+function flowPriceRound(v){       // 心理价位：取到 .99 结尾且不低于原值
+  if(!isFinite(v)||v<=0) return v;
+  let hi = Math.ceil(v) - 0.01;
+  if(hi < v - 0.001) hi = Math.floor(v) + 1.99;
+  return +hi.toFixed(2);
+}
+function flowPriceRoundCap(v, cap, floorV){  // 心理价位，但不越过天花板 cap
+  const up = flowPriceRound(v);
+  if(up <= cap + 0.001) return up;
+  let cand = Math.floor(cap) + 0.99;                 // 天花板下最大的 X.99
+  if(cand > cap + 0.001) cand = Math.floor(cap) - 0.01;
+  cand = +cand.toFixed(2);
+  return (floorV!=null && cand < floorV) ? up : cand;  // 若跌破地板价则退回上取整
+}
+// ── 纯计算内核：由显式参数算出全部定价指标（模态与独立页共用）──
+function pricingCore(P){
+  const cost=+P.cost||0, freight=+P.freight||0, fba=+P.fba||0;
+  const commR=+P.commR||0, acosR=+P.acosR||0, retR=+P.retR||0, vatR=+P.vatR||0;
+  const targetM=+P.targetM||0;
+  const factors = P.factors || [['FBA 配送时效',0.04],['主图/详情质量',0.03],['套装/赠品心智',0.03],['差异化卖点',0.03]];
+
+  // ① 成本核算：固定单位成本 + 费率 → 保本价 / 目标利润价
+  const Cfix = cost + freight + fba;
+  const rateSum = commR + acosR + retR + vatR;
+  const P_floor  = rateSum<1           ? Cfix/(1-rateSum)         : Infinity;   // 净利=0
+  const P_target = (rateSum+targetM)<1 ? Cfix/(1-rateSum-targetM) : Infinity;   // 锁定目标净利率
+
+  // ② 竞争定位：竞品价格带
+  const prices = (P.prices||[]).filter(v=>v>0).sort((a,b)=>a-b);
+  let pMin,pMid,pMax,hasBand=false;
+  if(prices.length>=2){ hasBand=true; pMin=prices[0]; pMax=prices[prices.length-1]; pMid=prices[Math.floor(prices.length/2)]; }
+  else { pMid=(prices[0]||P.curPrice||P_target); pMin=pMid*0.85; pMax=pMid*1.2; }
+
+  // ③ 价值评估：差异化溢价率(0~25%)
+  const premium = Math.min(0.25, factors.reduce((s,f)=>s+f[1],0));
+  const P_ceiling = pMid*(1+premium);
+
+  // 建议价 = clamp(目标利润价, 地板价, 天花板价) → 心理价位
+  const infeasible = P_ceiling < P_floor;   // 市场价撑不起目标成本
+  const recRaw = Math.min(Math.max(P_target, P_floor), Math.max(P_ceiling, P_floor));
+  const rec = flowPriceRoundCap(recRaw, Math.max(P_ceiling, P_floor), P_floor);
+
+  const recNet = rec*(1-rateSum) - Cfix;
+  const recMargin = rec>0 ? recNet/rec*100 : 0;
+
+  // 定价四维评分（0~100）
+  const sHealth = Math.round(Math.max(0,Math.min(100, recMargin*2.4+16)));
+  let sCompete = rec<=pMid ? 82 + (pMid-rec)/Math.max(pMid-pMin,0.01)*18
+                           : 82 - (rec-pMid)/Math.max(pMax-pMid,0.01)*46;
+  sCompete = Math.round(Math.max(0,Math.min(100,sCompete)));
+  const endsNine  = Math.abs(rec-Math.floor(rec)-0.99)<0.02;
+  const withinBand= rec>=pMin && rec<=pMax;
+  const sConv = Math.round(Math.max(0,Math.min(100, 52 + (endsNine?16:0) + (withinBand?16:0) + (rec<=pMid?12:0))));
+  const cushionPct = rec>0 ? (rec-P_floor)/rec*100 : 0;
+  const sRisk = Math.round(Math.max(0,Math.min(100, cushionPct*2.0+22 - (infeasible?40:0))));
+  const composite = Math.round(sHealth*0.35 + sCompete*0.25 + sConv*0.20 + sRisk*0.20);
+  const verdict = (rec<=P_floor||infeasible) ? {t:'🚫 市场价撑不起目标成本 · 需降本',c:'#ff3b30'} :
+                  composite>=70 ? {t:'✅ 可上架定价',c:'#34c759'} :
+                  composite>=55 ? {t:'⚠️ 利润偏薄 · 需放量或降本',c:'#ff9500'} :
+                                  {t:'🚫 定价空间不足 · 重新评估',c:'#ff3b30'};
+
+  // ④ 生命周期定价
+  const stages = [
+    ['新品期','冲排名 / 攒评论','渗透定价：贴地板价 +5%',            flowPriceRound(P_floor*1.05)],
+    ['成长期','稳利润 / 爬坑位','竞争定价：主流带中位偏下',          flowPriceRound(pMid*0.97)],
+    ['成熟期','利润最大化','价值定价：主流带上沿 + 溢价',            flowPriceRound(Math.max(rec, Math.min(P_ceiling,pMax*1.02)))],
+    ['清仓期','回笼现金','清仓定价：保本 +2% + 大额 Coupon',        flowPriceRound(P_floor*1.02)]
+  ];
+
+  // 利润瀑布 @建议价
+  const waterfall = [
+    ['平台佣金',        rec*commR, '#ff9500'],
+    ['广告摊销 (ACOS)', rec*acosR, '#5ac8fa'],
+    ['采购+头程+FBA',   Cfix,      '#af52de'],
+    ['退货损耗',        rec*retR,  '#ff3b30'],
+  ];
+  if(vatR>0) waterfall.push(['站点税 VAT', rec*vatR, '#8e8e93']);
+
+  return {name:P.name||'',cost,freight,fba,Cfix,commR,acosR,retR,vatR,targetM,rateSum,
+    P_floor,P_target,P_ceiling,rec,recNet,recMargin,infeasible,
+    pMin,pMid,pMax,hasBand,premium,factors,
+    sHealth,sCompete,sConv,sRisk,composite,verdict,stages,waterfall,
+    peerCount:prices.length,curPrice:P.curPrice};
+}
+// ── 适配器：从利润测算器(pc-*) + 竞品分析取参 → 内核 ──
+function flowBuildPricingData(){
+  const g = (id,dflt)=>{ const el=document.getElementById(id); const v=el?parseFloat(el.value):NaN; return isFinite(v)?v:dflt; };
+  const list = flowUserData.productReportList || flowUserData.finalProductList || [];
+  const p0 = list[(document.getElementById('pc-pick')||{}).value|0] || list[0] || {};
+  const d = (typeof flowProfitDefaults==='function') ? flowProfitDefaults(p0)
+            : {price:29.99,cost:5.4,freight:2.7,fba:5.7,acos:18,comm:15,ret:5};
+  const peers = flowUserData.competitorAnalysis || flowUserData.reportPeers || [];
+  return pricingCore({
+    name: p0.title||'',
+    cost:   g('pc-cost',   d.cost),
+    freight:g('pc-freight',d.freight),
+    fba:    g('pc-fba',    d.fba),
+    commR:  g('pc-comm',   d.comm)/100,
+    acosR:  g('pc-acos',   d.acos)/100,
+    retR:   g('pc-return', d.ret)/100 * 0.5,   // 退货损耗 = 退货率×不可复售50%
+    vatR:   0,
+    targetM:(flowPricingTargetM||30)/100,
+    prices: peers.map(x=> x.priceNum || _flowNum(x.price)),
+    curPrice: g('pc-price', d.price)
+  });
+}
+function flowDownloadPricingReport(){
+  const R = window._pricingR || flowBuildPricingData();
+  const m = v => (v<0?'-$':'$')+Math.abs(v).toFixed(2);
+  const market = R._market || flowUserData.market || 'Amazon US';
+  const L = [
+    '智能定价方案 · 定价五步法',
+    '生成时间：'+new Date().toLocaleString()+'　|　市场：'+market,
+    '',
+    `【结论先行】${R.verdict.t}　综合评分 ${R.composite}/100`,
+    `建议零售价 ${m(R.rec)}　净利率 ${R.recMargin.toFixed(1)}%　净利/件 ${m(R.recNet)}`,
+    `三档价格：地板价 ${m(R.P_floor)}  →  建议价 ${m(R.rec)}  →  天花板价 ${m(R.P_ceiling)}`,
+    `四维评分：利润健康 ${R.sHealth} / 市场竞争 ${R.sCompete} / 转化预期 ${R.sConv} / 风险抗性 ${R.sRisk}`,
+    '',
+    '① 成本核算（保本线）',
+    `   采购 ${m(R.cost)} + 头程 ${m(R.freight)} + FBA ${m(R.fba)} = 固定成本 ${m(R.Cfix)}/件`,
+    `   费率合计 ${(R.rateSum*100).toFixed(1)}%（佣金 ${(R.commR*100).toFixed(0)}% + 广告 ${(R.acosR*100).toFixed(0)}% + 退货损耗 ${(R.retR*100).toFixed(1)}%${R.vatR>0?' + VAT '+(R.vatR*100).toFixed(0)+'%':''}）`,
+    `   保本价 = 固定成本 / (1 − 费率) = ${m(R.P_floor)}　|　目标利润价(净利率${(R.targetM*100).toFixed(0)}%) = ${m(R.P_target)}`,
+    '',
+    '② 竞争定位（竞品价格带）',
+    `   竞品 ${R.peerCount} 个｜最低 ${m(R.pMin)}｜中位 ${m(R.pMid)}｜最高 ${m(R.pMax)}`,
+    '',
+    '③ 价值评估（差异化溢价）',
+    `   溢价因子：${R.factors.map(f=>f[0]+' +'+(f[1]*100).toFixed(0)+'%').join('，')} = 溢价率 ${(R.premium*100).toFixed(0)}%`,
+    `   天花板价 = 中位价 × (1 + 溢价率) = ${m(R.P_ceiling)}`,
+    '',
+    '④ 生命周期定价策略',
+    ...R.stages.map(s=>`   · ${s[0]}｜${s[1]}｜${s[2]}｜${m(s[3])}`),
+    '',
+    '⑤ 利润瀑布 @建议价',
+    ...R.waterfall.map(w=>`   − ${w[0]}：${m(w[1])}（${(w[1]/R.rec*100).toFixed(1)}%）`),
+    `   = 净利/件：${m(R.recNet)}（${R.recMargin.toFixed(1)}%）`,
+    '',
+    '【数据口径声明】保本/目标价按 (1 − 费率) 分母复算；采购/头程为手动询价值（默认 1688 估算）；ACOS 为关键词级水位；竞品价格带取自竞品分析；建议价含心理价位取整。'
+  ];
+  const blob = new Blob([L.join('\n')], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='SellerOS定价方案_'+new Date().toISOString().slice(0,10)+'.txt';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+// ── 共用报告主体（模态 + 独立页共用）：返回渐变头 → 温度计 → 六段 HTML ──
+function pricingReportBody(R, market, targetCtrlHTML){
+  window._pricingR = R;   // 供下载按钮取用
+  const m = v => (v<0?'-$':'$')+Math.abs(v).toFixed(2);
+
+  // ── 四维评分卡 ──
+  const scoreCards = [
+    ['利润健康度', R.sHealth, R.recMargin.toFixed(1)+'% 净利率'],
+    ['市场竞争力', R.sCompete, R.hasBand?('竞品带 $'+R.pMin.toFixed(0)+'–'+R.pMax.toFixed(0)):'无竞品数据·估算'],
+    ['转化预期',   R.sConv,   '心理价位 / 价格带'],
+    ['风险抗性',   R.sRisk,   '保本缓冲 '+((R.rec-R.P_floor)/R.rec*100).toFixed(0)+'%'],
+  ].map(([k,v,d])=>{
+    const c = v>=75?'#34c759':v>=55?'#ff9500':'#ff3b30';
+    return `<div style="flex:1;min-width:120px;border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:var(--bg-page)"><div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.3px">${k}</div><div style="font-size:22px;font-weight:800;color:${c};margin-top:3px">${v}<small style="font-size:11px;color:var(--t3)">/100</small></div><div style="font-size:11px;color:var(--t2);margin-top:1px">${d}</div></div>`;
+  }).join('');
+
+  // ── 价格温度计 ──
+  const lo = Math.min(R.P_floor, R.pMin)*0.96;
+  const hi = Math.max(R.P_ceiling, R.pMax)*1.05;
+  const pct = x => Math.max(2, Math.min(98, (x-lo)/(hi-lo||1)*100));
+  // 轨道上只放圆点（防重叠），数值统一放到下方图例
+  const dot=(left,color,big)=>`<div style="position:absolute;left:${left}%;top:${big?'-4px':'-2px'};transform:translateX(-50%);width:${big?16:11}px;height:${big?16:11}px;border-radius:50%;background:${color};border:2px solid var(--bg-card);box-shadow:0 0 0 1.5px ${color},0 1px 3px rgba(0,0,0,.18);z-index:2"></div>`;
+  const legendItem=(color,label,val,big)=>`<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap"><span style="width:${big?12:9}px;height:${big?12:9}px;border-radius:50%;background:${color};flex-shrink:0"></span><span style="color:var(--t2)">${label}</span><b style="color:var(--t0);font-size:${big?15:13}px">${val}</b></span>`;
+  const bandL=pct(R.pMin), bandR=pct(R.pMax);
+  const thermo = `<div style="padding:6px 12px 0">
+      <div style="position:relative;height:16px">
+        <div style="position:absolute;top:3px;left:${bandL}%;width:${Math.max(2,bandR-bandL)}%;height:10px;background:rgba(0,122,255,0.12);border:1px dashed rgba(0,122,255,0.5);border-radius:4px"></div>
+        <div style="position:absolute;top:4px;left:0;right:0;height:8px;border-radius:4px;background:linear-gradient(90deg,#ff3b30,#ff9500,#34c759,#ffd60a)"></div>
+        ${dot(pct(R.P_floor),'#ff3b30')}
+        ${R.hasBand?dot(pct(R.pMid),'#8e8e93'):''}
+        ${dot(pct(R.P_ceiling),'#e8a000')}
+        ${dot(pct(R.rec),'#34c759',true)}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:18px">
+        ${legendItem('#ff3b30','地板价·保本',m(R.P_floor))}
+        ${R.hasBand?legendItem('#8e8e93','竞品中位',m(R.pMid)):''}
+        ${legendItem('#e8a000','天花板·价值',m(R.P_ceiling))}
+        ${legendItem('#34c759','建议价',m(R.rec),true)}
+      </div>
+      <div style="text-align:center;font-size:10px;color:var(--t3);margin-top:10px;line-height:1.5">
+        <span style="display:inline-block;width:16px;height:8px;background:rgba(0,122,255,0.15);border:1px dashed rgba(0,122,255,0.6);vertical-align:middle;border-radius:2px"></span> 竞品价格带（最低-最高） · 🟢 建议价 = clamp(目标利润价, 地板价, 天花板价) → 心理价位
+      </div>
+    </div>`;
+
+  // ── 利润瀑布 ──
+  const _netColor = R.recNet>=0?'#34c759':'#ff3b30';
+  const _netBg    = R.recNet>=0?'rgba(52,199,89,.10)':'rgba(255,59,48,.10)';
+  const _netBd    = R.recNet>=0?'rgba(52,199,89,.42)':'rgba(255,59,48,.42)';
+  const segs = R.waterfall.map(w=>`<div title="${w[0]} ${m(w[1])}" style="width:${Math.max(0,w[1]/R.rec*100)}%;background:${w[2]}"></div>`).join('');
+  const netW = Math.max(0, R.recNet/R.rec*100);
+  // 净利突出：紧凑高亮小条
+  const wfNet = `<div style="display:inline-flex;align-items:baseline;gap:10px;padding:8px 14px;border-radius:10px;background:${_netBg};border:1px solid ${_netBd};margin-bottom:12px">
+      <span style="font-size:11px;color:var(--t2);font-weight:700">到手净利/件</span>
+      <span style="font-size:24px;font-weight:800;color:${_netColor};line-height:1">${m(R.recNet)}</span>
+      <span style="font-size:12px;font-weight:700;color:${_netColor}">净利率 ${R.recMargin.toFixed(1)}%</span>
+    </div>`;
+  // 瀑布条：净利段加白色内描边 + 最小宽度，即使很小也可见
+  const wfBar = `<div style="display:flex;height:30px;border-radius:7px;overflow:hidden;border:1px solid var(--border)">${segs}<div style="min-width:8px;width:${netW}%;background:${_netColor};box-shadow:inset 2px 0 0 rgba(255,255,255,.7)" title="净利 ${m(R.recNet)}"></div></div>`;
+  const wfRows = R.waterfall
+    .map(w=>`<div style="display:flex;align-items:center;gap:8px;font-size:11px;padding:3px 0"><span style="width:9px;height:9px;border-radius:2px;background:${w[2]};flex-shrink:0"></span><span style="color:var(--t2);flex:1">${w[0]}</span><span style="font-weight:800;color:var(--t0)">${m(w[1])}</span><span style="color:var(--t3);width:46px;text-align:right">${(w[1]/R.rec*100).toFixed(1)}%</span></div>`).join('');
+
+  // ── 成本核算（可视化：保本价构成堆叠条）──
+  const _costSegs = [
+    ['固定成本', R.Cfix,           '#af52de'],
+    ['平台佣金', R.P_floor*R.commR,'#ff9500'],
+    ['广告 ACOS', R.P_floor*R.acosR,'#5ac8fa'],
+    ['退货损耗', R.P_floor*R.retR, '#ff3b30'],
+  ];
+  if(R.vatR>0) _costSegs.push(['站点税', R.P_floor*R.vatR, '#8e8e93']);
+  const _pf = R.P_floor||1;
+  const costViz = `<div style="border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:var(--bg-page)">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;margin-bottom:10px">
+        <span style="font-size:12px;color:var(--t2)">固定单位成本</span><span style="font-size:16px;font-weight:800;color:#af52de">${m(R.Cfix)}</span>
+        <span style="font-size:11px;color:var(--t3)">= 采购 ${m(R.cost)} + 头程 ${m(R.freight)} + FBA ${m(R.fba)}</span>
+      </div>
+      <div style="font-size:11px;color:var(--t3);margin-bottom:5px">保本价 ${m(R.P_floor)} 的构成（净利=0）</div>
+      <div style="display:flex;height:30px;border-radius:7px;overflow:hidden;border:1px solid var(--border)">
+        ${_costSegs.map(s=>`<div title="${s[0]} ${m(s[1])}" style="width:${Math.max(0,s[1]/_pf*100)}%;background:${s[2]}"></div>`).join('')}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px">
+        ${_costSegs.map(s=>`<span style="display:inline-flex;align-items:center;gap:6px;font-size:11px"><span style="width:9px;height:9px;border-radius:2px;background:${s[2]}"></span><span style="color:var(--t2)">${s[0]}</span><b style="color:var(--t0)">${m(s[1])}</b><span style="color:var(--t3)">${(s[1]/_pf*100).toFixed(0)}%</span></span>`).join('')}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);align-items:center">
+        <span class="pr-sum-chip">保本价 P_floor <b style="color:#ff3b30">${m(R.P_floor)}</b></span>
+        <span class="pr-sum-chip">目标利润价（净利率${(R.targetM*100).toFixed(0)}%） <b style="color:var(--accent)">${m(R.P_target)}</b></span>
+        <span style="font-size:10px;color:var(--t3)">保本价 = 固定成本 ÷ (1 − 佣金 − 广告 − 退货 − 税)</span>
+      </div>
+    </div>`;
+
+  // ── 竞品定位（可视化：价格带 + 溢价构成）──
+  const _clo=Math.min(R.pMin,R.P_ceiling)*0.9, _chi=Math.max(R.pMax,R.P_ceiling)*1.06;
+  const _cp = x => Math.max(3, Math.min(97, (x-_clo)/((_chi-_clo)||1)*100));
+  const _cMark=(left,color,big)=>`<div style="position:absolute;left:${left}%;top:${big?'-3px':'-1px'};transform:translateX(-50%);width:${big?13:11}px;height:${big?13:11}px;border-radius:50%;background:${color};border:2px solid var(--bg-card);box-shadow:0 0 0 1.5px ${color};z-index:2"></div>`;
+  const _premColors=['#e8a000','#ffb84d','#ffd08a','#ffe1b3'];
+  const _prem=R.premium||0.0001;
+  const compViz = `<div style="border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:var(--bg-page)">
+      <div style="font-size:11px;color:var(--t2);margin-bottom:16px">竞品价格带（${R.peerCount} 个${R.hasBand?'':' · 不足·按估算'}）→ 天花板价 <b style="color:#e8a000">${m(R.P_ceiling)}</b></div>
+      <div style="position:relative;height:14px;margin:0 6px">
+        <div style="position:absolute;top:4px;left:0;right:0;height:6px;border-radius:3px;background:var(--border)"></div>
+        <div style="position:absolute;top:4px;left:${_cp(R.pMin)}%;width:${Math.max(2,_cp(R.pMax)-_cp(R.pMin))}%;height:6px;border-radius:3px;background:linear-gradient(90deg,#5ac8fa,#34c759)"></div>
+        ${_cMark(_cp(R.pMin),'#8e8e93')}${_cMark(_cp(R.pMid),'#34c759')}${_cMark(_cp(R.pMax),'#8e8e93')}${_cMark(_cp(R.P_ceiling),'#e8a000',true)}
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:12px;color:var(--t2)">
+        <span>最低 <b style="color:var(--t0)">${m(R.pMin)}</b></span>
+        <span>中位 <b style="color:#34c759">${m(R.pMid)}</b></span>
+        <span>最高 <b style="color:var(--t0)">${m(R.pMax)}</b></span>
+        <span>天花板 <b style="color:#e8a000">${m(R.P_ceiling)}</b></span>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--border)">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-bottom:6px"><span>差异化溢价率（叠加）</span><b style="color:#e8a000">+${(R.premium*100).toFixed(0)}%</b></div>
+        <div style="display:flex;height:16px;border-radius:5px;overflow:hidden;border:1px solid var(--border)">
+          ${R.factors.map((f,i)=>`<div title="${f[0]} +${(f[1]*100).toFixed(0)}%" style="width:${f[1]/_prem*100}%;background:${_premColors[i%4]}"></div>`).join('')}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:7px">${R.factors.map((f,i)=>`<span style="font-size:10.5px;color:var(--t2)"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${_premColors[i%4]};vertical-align:middle;margin-right:4px"></span>${f[0]} +${(f[1]*100).toFixed(0)}%</span>`).join('')}</div>
+        <div style="font-size:10px;color:var(--t3);margin-top:10px">天花板价 = 中位价 ${m(R.pMid)} × (1 + ${(R.premium*100).toFixed(0)}%) = <b style="color:#e8a000">${m(R.P_ceiling)}</b></div>
+      </div>
+    </div>`;
+
+  // ── 生命周期定价（可视化柱状图）──
+  const _stageColors = ['#5ac8fa','#34c759','#e8a000','#8e8e93'];
+  const _stageMax = Math.max.apply(null, R.stages.map(s=>s[3]).concat([R.rec, 1]));
+  const _chartH = 92;
+  const lifecycleChart = `<div style="border:1px solid var(--border);border-radius:10px;padding:12px 14px 10px;background:var(--bg-page)">
+      <div style="display:flex;align-items:flex-end;gap:10px;height:${_chartH}px">
+        ${R.stages.map((s,i)=>{
+          const h=Math.max(8, Math.round(s[3]/_stageMax*(_chartH-22)));
+          const c=_stageColors[i];
+          return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">
+            <div style="font-size:13px;font-weight:800;color:var(--t0);margin-bottom:3px">${m(s[3])}</div>
+            <div title="${s[1]} · ${s[2]}" style="width:100%;max-width:54px;height:${h}px;background:linear-gradient(180deg,${c},${c}bb);border-radius:6px 6px 0 0;box-shadow:0 2px 6px ${c}44"></div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        ${R.stages.map((s,i)=>`<div style="flex:1;text-align:center">
+          <div style="font-size:12px;font-weight:800;color:${_stageColors[i]}">${s[0]}</div>
+          <div style="font-size:9.5px;color:var(--t3)">${s[1]}</div>
+        </div>`).join('')}
+      </div>
+      <div style="margin-top:9px;border-top:1px dashed var(--border);padding-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px">
+        ${R.stages.map((s,i)=>`<div style="font-size:10.5px;color:var(--t2);display:flex;gap:6px"><span style="flex:0 0 auto;width:7px;height:7px;border-radius:2px;background:${_stageColors[i]};margin-top:4px"></span><span><b style="color:var(--t0)">${s[0]}</b> ${s[2]} → <b style="color:var(--accent)">${m(s[3])}</b></span></div>`).join('')}
+      </div>
+    </div>`;
+
+  // ── 动态调价预警 ──
+  const alerts = [];
+  if(R.recMargin<20) alerts.push(['利润红线预警', `建议价净利率仅 ${R.recMargin.toFixed(1)}%（<20%）。对策：优先降本（换供应商/合并头程/降 FBA 尺寸段），或在 50+ 评论后小步提价 3~5%。`]);
+  alerts.push(['汇率波动', '人民币采购、美元收款。汇率每波动 5%，保本价随之移动约 '+(R.Cfix*0.05/R.rec*100).toFixed(1)+'%；触发即重算保本线，勿让实际价跌破地板价。']);
+  alerts.push(['竞品降价 / 价格战', '监控竞品带：竞品降价 <5% 不跟；≥8% 且抢走 Buy Box 时，用 Coupon/满减对冲而非改标价，守住毛利。']);
+  alerts.push(['佣金 / FBA 调整', '平台费率与 FBA 每季度可能上调，按季用本工具重算 P_floor 与建议价，避免"看着赚实际亏"。']);
+  if(R.rec<=R.P_floor||R.infeasible) alerts.push(['⚠ 成本倒挂', '当前市场价撑不起目标成本，建议价被地板价顶住。上架前必须先降本或做差异化溢价，否则放弃该品。']);
+  const alertHtml = alerts.map(a=>`<div style="display:flex;gap:10px;padding:10px 12px;border:1px solid var(--border);border-left:3px solid #e8850c;border-radius:8px;margin-bottom:8px;background:rgba(232,133,12,0.04)"><div style="flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:#e8850c;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">!</div><div><div style="font-weight:800;font-size:12px;color:var(--t0)">${a[0]}</div><div style="font-size:11px;color:var(--t2);margin-top:1px">${a[1]}</div></div></div>`).join('');
+
+  const sectionTitle = (n,t,s)=>`<div style="margin:13px 0 6px;padding-top:10px;border-top:1.5px solid var(--t0)"><span style="font-size:13.5px;font-weight:800;color:var(--t0)"><span style="color:var(--accent)">${n}</span> ${t}</span>${s?`<div style="font-size:10.5px;color:var(--t3);margin-top:1px">${s}</div>`:''}</div>`;
+  const tblOpen = '<div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px"><table class="frc-table" style="margin:0;font-size:11px;min-width:520px">';
+
+  return `
+      <div style="background:linear-gradient(135deg,#5e5ce6,#007aff);border-radius:12px;padding:16px 20px;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:11px;opacity:.9;font-weight:700">建议零售价</div>
+          <div style="font-size:34px;font-weight:800;line-height:1.1">${m(R.rec)}</div>
+          <div style="font-size:12px;opacity:.94;margin-top:2px">净利/件 ${m(R.recNet)} · 净利率 ${R.recMargin.toFixed(1)}%</div>
+        </div>
+        <div style="height:46px;width:1px;background:rgba(255,255,255,.3)"></div>
+        <div style="font-size:12.5px;line-height:1.7">
+          <div>综合评分 <b style="font-size:15px">${R.composite}</b>/100 · ${R.verdict.t}</div>
+          <div style="opacity:.92">价格区间：地板 ${m(R.P_floor)} → 建议 ${m(R.rec)} → 天花板 ${m(R.P_ceiling)}</div>
+        </div>
+        ${targetCtrlHTML?`<div style="margin-left:auto;text-align:right"><div style="font-size:10px;opacity:.9;margin-bottom:4px">目标净利率</div><div style="display:flex;gap:5px">${targetCtrlHTML}</div></div>`:''}
+      </div>
+
+      ${sectionTitle('01','价格温度计 · 三档定价','建议价卡位竞品带内、保本线之上；越过天花板即为溢价定价')}
+      <div style="border:1px solid var(--border);border-radius:10px;padding:10px 6px 14px;background:var(--bg-page)">${thermo}</div>
+
+      ${sectionTitle('02','生命周期定价策略','同一款品在新品→成长→成熟→清仓四阶段的建议基准价')}
+      ${lifecycleChart}
+
+      ${sectionTitle('03','成本核算 · 保本线','固定成本 + 各项费率 → 保本价（可视化）')}
+      ${costViz}
+
+      ${sectionTitle('04','竞争定位 & 价值溢价','竞品价格带 + 差异化溢价 → 天花板价（可视化）')}
+      ${compViz}
+
+      ${sectionTitle('05','利润瀑布 · @建议价 '+m(R.rec),'售价逐层扣减 佣金 / 广告 / 物流 / 退货 后 = 到手净利')}
+      <div style="border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:var(--bg-page)">
+        ${wfNet}
+        ${wfBar}
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:2px 24px">${wfRows}</div>
+      </div>
+
+      <div style="margin-top:16px;padding:12px 14px;background:rgba(0,0,0,0.02);border:1px solid var(--border);border-radius:8px;font-size:10.5px;color:var(--t2);line-height:1.7">
+        <strong style="color:var(--t1)">数据口径声明：</strong>保本价 / 目标价按「固定成本 ÷ (1 − 费率合计)」复算——佣金、广告、退货、税均为售价百分比，故用 (1−费率) 作分母，而非在成本上乘倍率。采购/头程为手动询价值（默认 1688 估算，请以实际报价校正）；FBA/ACOS/佣金为工具值；竞品价格带取自竞品分析模块；建议价含心理价位取整（.99 结尾）。目标净利率、溢价因子可按实际调整。
+      </div>`;
+}
+// ── Step 4 内嵌入口：模态弹窗（复用报告主体）──
+function flowPreviewPricingReport(){
+  const R = flowBuildPricingData();
+  const market = flowUserData.market || 'Amazon US';
+  const dateStr = new Date().toLocaleDateString();
+  const tgtBtns = [25,30,35,40].map(v=>`<button onclick="flowSetPricingTarget(${v})" style="padding:4px 10px;border:1px solid ${v===(flowPricingTargetM||30)?'var(--accent)':'var(--border2)'};background:${v===(flowPricingTargetM||30)?'var(--accent)':'var(--bg-page)'};color:${v===(flowPricingTargetM||30)?'#fff':'var(--t2)'};border-radius:6px;font-size:11px;font-weight:700;cursor:pointer">${v}%</button>`).join('');
+  document.getElementById('flow-pricing-modal')?.remove();
+  const modal = document.createElement('div');
+  modal.id='flow-pricing-modal';
+  modal.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);animation:fadeIn .25s';
+  modal.onclick=(e)=>{ if(e.target===modal) modal.remove(); };
+  modal.innerHTML = `
+  <div style="width:94%;max-width:940px;max-height:92vh;background:var(--bg-card);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,0.25);overflow:hidden;display:flex;flex-direction:column;animation:slideUp .28s">
+    <div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <div style="width:8px;height:8px;border-radius:50%;background:${R.verdict.c}"></div>
+      <div style="font-size:14px;font-weight:800;color:var(--t0)">智能定价方案 · 定价五步法</div>
+      <div style="font-size:11px;color:var(--t3)">${market} · ${dateStr}</div>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        <button onclick="pricingDownloadPDF()" style="padding:6px 12px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-size:11px;cursor:pointer;font-weight:700">⬇️ 下载 PDF</button>
+        <button onclick="flowDownloadPricingReport()" style="padding:6px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg-page);font-size:11px;color:var(--t2);cursor:pointer;font-weight:600">TXT</button>
+        <button onclick="this.closest('#flow-pricing-modal').remove()" style="padding:6px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg-page);font-size:13px;color:var(--t2);cursor:pointer">✕</button>
+      </div>
+    </div>
+    <div style="overflow-y:auto;padding:20px;flex:1">${pricingReportBody(R, market, tgtBtns)}</div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+
+// ══════════════════════════════════════════════════════════════
+// 智能定价 · 独立工具页（page-pricing）
+//   成本/费率 + 竞品价格带 手动输入 → 内核复算 → 报告主体内联渲染
+// ══════════════════════════════════════════════════════════════
+// 类目 → 佣金率/采购系数/FBA基准/典型ACOS（原型经验值）；站点 → VAT
+const PRICING_CAT = {
+  '家居厨房':{comm:15,costR:0.18,fbaBase:5.7,acos:18},
+  '消费电子':{comm:8, costR:0.22,fbaBase:4.8,acos:22},
+  '运动户外':{comm:15,costR:0.20,fbaBase:6.2,acos:20},
+  '宠物用品':{comm:15,costR:0.19,fbaBase:5.4,acos:19},
+  '美妆个护':{comm:8, costR:0.16,fbaBase:4.2,acos:16},
+  '服装配饰':{comm:17,costR:0.22,fbaBase:4.6,acos:20},
+  '玩具游戏':{comm:15,costR:0.20,fbaBase:5.0,acos:18}
+};
+const PRICING_VAT = {'Amazon US':0,'Walmart US':0,'Amazon UK':20,'Amazon DE':19};
+let _pricingPeers = [];   // 从链接/ASIN 提取的竞品 {asin,price,host}
+
+function pricingParsePeers(txt){
+  return (txt||'').split(/[^0-9.]+/).map(parseFloat).filter(v=>v>0 && v<100000);
+}
+function _prSet(id,v){ const el=document.getElementById(id); if(el) el.value=v; }
+function _prGet(id,d){ const el=document.getElementById(id); const v=el?parseFloat(el.value):NaN; return isFinite(v)?v:d; }
+// 价格带 = 提取的竞品价（仅来自链接/ASIN）
+function pricingBandPrices(){
+  return _pricingPeers.map(p=>p.price);
+}
+// 参考价：优先第一条提取竞品 → 价格带中位 → 已填采购价×3 → 29.99 兜底
+function pricingRefPrice(){
+  if(_pricingPeers.length) return _pricingPeers[0].price;
+  const b = pricingBandPrices().sort((a,z)=>a-z);
+  if(b.length) return b[Math.floor(b.length/2)];
+  const c=_prGet('pr-cost',0); return c>0 ? c*3 : 29.99;
+}
+// 链接/ASIN → 一个稳定的售价（原型：按 ASIN 哈希生成 $12~$59.99，.99 结尾）
+function pricingResolvePriceFromUrl(u){
+  const mm = String(u).toUpperCase().match(/[A-Z0-9]{10}/);
+  const asin = mm ? mm[0] : ('KW-'+(String(u).replace(/[^a-z0-9]/gi,'').slice(-6).toUpperCase()||'000000'));
+  let h=0; for(let i=0;i<asin.length;i++) h=(h*31+asin.charCodeAt(i))>>>0;
+  return { asin, price:+((12+(h%48))+0.99).toFixed(2) };
+}
+function pricingRenderChips(){
+  const box=document.getElementById('pr-url-chips'); if(!box) return;
+  box.innerHTML = _pricingPeers.map((p,i)=>`<span class="pr-chip">🛒 <b>$${p.price.toFixed(2)}</b> · ${p.asin} <span onclick="pricingDelPeer(${i})" style="cursor:pointer;color:var(--t3)">✕</span></span>`).join('');
+}
+function pricingDelPeer(i){ _pricingPeers.splice(i,1); pricingRenderChips(); pricingQuizRefresh(); pricingRun(); }
+function pricingExtractPeer(){
+  const inp=document.getElementById('pr-url-input'); const raw=(inp?inp.value:'').trim();
+  if(!raw){ if(inp) inp.focus(); return; }
+  const btn=document.getElementById('pr-extract-btn'); const t0=btn?btn.textContent:'';
+  if(btn){ btn.textContent='抓取中…'; btn.disabled=true; }
+  setTimeout(()=>{
+    raw.split(/[\s,，]+/).filter(Boolean).forEach(u=>{
+      const r=pricingResolvePriceFromUrl(u);
+      let host='amazon.com'; try{ host=new URL(/^https?:/.test(u)?u:'https://'+u).hostname.replace(/^www\./,''); }catch(e){}
+      _pricingPeers.push({asin:r.asin, price:r.price, host});
+    });
+    if(inp) inp.value='';
+    if(btn){ btn.textContent=t0||'⚡ 提取价格'; btn.disabled=false; }
+    pricingRenderChips(); pricingQuizRefresh(); pricingRun();
+  }, 450);
+}
+
+// ── 成本逐题问答（复用 listing 的 aq-* 问卷样式）──
+const _PQ = [
+  {id:'cost', type:'number', q:'单件采购成本是多少？', unit:'$', hint:'你的真实进货价（1688 / 工厂报价）——最影响利润，务必填准',
+    suggest:()=>{ const c=PRICING_CAT[pricingCatValue()]||PRICING_CAT['家居厨房']; return (pricingRefPrice()*c.costR).toFixed(2); }, suggestTip:'按类目采购系数估算'},
+  {id:'freight', type:'number', q:'单件头程物流成本？', unit:'$', hint:'海运/空运摊到每件；不确定用建议值',
+    suggest:()=>(pricingRefPrice()*0.09).toFixed(2), suggestTip:'按参考价 9% 估算'},
+  {id:'return', type:'choice', q:'预计退货率大概多少？', hint:'退货损耗按不可复售 50% 计入成本',
+    opts:[{v:3,l:'低 · <3%',icon:'🟢'},{v:5,l:'中 · 3~8%',icon:'🟡'},{v:10,l:'高 · >8%',icon:'🔴'}]},
+  {id:'target', type:'choice', q:'目标净利率定多少？', hint:'建议价将尽量达到该净利率（受天花板约束）',
+    opts:[{v:25,l:'25% · 抢量',icon:'📈'},{v:30,l:'30% · 均衡',icon:'⚖️'},{v:35,l:'35% · 利润',icon:'💰'},{v:40,l:'40% · 溢价',icon:'👑'}]}
+];
+let _pqAns = {};
+let _pqCur = 0;
+let _pricingStarted = false;
+let _pqDone = false;   // QA 全部答完才出报告
+const _PQ_LABEL = {cost:'采购',freight:'头程',return:'退货率',target:'目标净利'};
+// 站点选择器值去掉旗帜 emoji → "Amazon US"
+function pricingMarketValue(){ const el=document.getElementById('pr-market'); const raw=el?el.value:''; return raw.replace(/[^\x00-\x7F]/g,'').trim() || 'Amazon US'; }
+// 类目选择器值去掉前导 emoji → "家居厨房"
+function pricingCatValue(){ const el=document.getElementById('pr-cat'); let v=el?el.value:''; v=v.replace(/^[^一-龥A-Za-z]+/,'').trim(); return v || '家居厨房'; }
+// 站点变更 → 自动 VAT
+function pricingOnMarketSel(){
+  _prSet('pr-vat', PRICING_VAT[pricingMarketValue()]!=null?PRICING_VAT[pricingMarketValue()]:0);
+  if(_pricingStarted){ pricingQuizRefresh(); pricingRun(); }
+}
+// 类目变更 → 自动 佣金/ACOS/FBA
+function pricingOnCatSel(){
+  const c=PRICING_CAT[pricingCatValue()];
+  if(c){ _prSet('pr-comm',c.comm); _prSet('pr-acos',c.acos); _prSet('pr-fba',c.fbaBase); }
+  if(_pricingStarted){ pricingQuizRefresh(); pricingRun(); }
+}
+// 点击「开始智能定价」才进入逐题问答（报告要等 QA 全部答完）
+function pricingStart(){
+  _pricingStarted=true; _pqAns={}; _pqCur=0;
+  _prSet('pr-vat', PRICING_VAT[pricingMarketValue()]!=null?PRICING_VAT[pricingMarketValue()]:0);
+  const c=PRICING_CAT[pricingCatValue()]; if(c){ _prSet('pr-comm',c.comm); _prSet('pr-acos',c.acos); _prSet('pr-fba',c.fbaBase); }
+  const btn=document.getElementById('pr-start-btn'); if(btn) btn.textContent='↻ 重新开始';
+  pricingQuizStart();
+}
+function pricingQuizStart(){ _pqCur=0; _pqDone=false; const box=document.getElementById('pr-result'); if(box){ box.style.display='none'; box.innerHTML=''; } document.getElementById('pr-quiz-wrap').style.display='block'; document.getElementById('pr-quiz').style.display='block'; pricingQuizRender(); }
+function pricingQuizRefresh(){ const box=document.getElementById('pr-quiz'); if(box && box.style.display!=='none' && _PQ[_pqCur] && _PQ[_pqCur].type==='number') pricingQuizRender(); }
+function pricingQuizRender(){
+  const wrap=document.getElementById('pr-quiz'); if(!wrap) return;
+  const q=_PQ[_pqCur], total=_PQ.length, pct=Math.round(_pqCur/total*100);
+  const summaryChips = Object.keys(_pqAns).map(id=>{
+    if(_pqAns[id]==null) return '';
+    const v=id==='cost'||id==='freight' ? '$'+(+_pqAns[id]).toFixed(2) : (id==='return'||id==='target'?_pqAns[id]+'%':_pqAns[id]);
+    return `<div class="aq-summary-chip">${_PQ_LABEL[id]}：<span>${v}</span></div>`;
+  }).join('');
+  let bodyHTML;
+  if(q.type==='choice'){
+    bodyHTML = `<div class="aq-options" id="aq-opts">`+q.opts.map(o=>{
+      const sel = String(_pqAns[q.id])===String(o.v) ? 'selected':'';
+      return `<div class="aq-opt ${sel}" onclick="pricingQuizPick('${q.id}','${o.v}')"><span class="aq-opt-icon">${o.icon}</span><span>${o.l}</span><div class="aq-opt-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div></div>`;
+    }).join('')+`</div>`;
+  } else {
+    const sug = q.suggest ? q.suggest() : '';
+    const val = (_pqAns[q.id]!=null) ? _pqAns[q.id] : '';
+    bodyHTML = `<div style="display:flex;align-items:stretch;gap:8px;max-width:360px;margin-top:6px">
+        <div style="position:relative;flex:1"><span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--t3);font-weight:800;font-size:15px">${q.unit||''}</span>
+        <input id="pq-num" type="number" step="0.01" value="${val}" placeholder="${sug}" onkeydown="if(event.key==='Enter'){event.preventDefault();pricingQuizNum()}" style="width:100%;box-sizing:border-box;padding:11px 12px 11px 26px;border:1px solid var(--accent);border-radius:9px;background:var(--bg-input);color:var(--t0);font-size:16px;font-weight:800;font-family:inherit;outline:none"></div>
+        ${sug?`<button onclick="pricingQuizUseSuggest()" style="padding:0 14px;border:1px dashed var(--accent);border-radius:9px;background:var(--accent-bg);color:var(--accent2);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">用建议 ${q.unit}${sug}</button>`:''}
+      </div>${q.suggestTip?`<div style="font-size:10px;color:var(--t3);margin-top:5px">建议值 · ${q.suggestTip}</div>`:''}`;
+  }
+  const isFirst=_pqCur===0, isLast=_pqCur===total-1;
+  const prog = Math.round((_pqCur+1)/total*100);
+  wrap.innerHTML = `<div style="border:1px solid var(--border);border-radius:12px;padding:13px 16px 12px;background:var(--bg-card)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span style="font-size:12px;font-weight:800;color:var(--accent);white-space:nowrap">${_pqCur+1} / ${total}</span>
+      <div style="flex:1;height:4px;border-radius:2px;background:var(--bg-page);overflow:hidden"><div style="width:${prog}%;height:100%;background:var(--accent);transition:width .2s"></div></div>
+      ${summaryChips?`<div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">${summaryChips}</div>`:''}
+    </div>
+    <div style="font-size:15px;font-weight:800;color:var(--t0)">${q.q}</div>
+    ${q.hint?`<div style="font-size:10.5px;color:var(--t3);margin-top:2px">💡 ${q.hint}</div>`:''}
+    <div style="margin-top:10px">${bodyHTML}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+      <button class="aq-btn-back" onclick="pricingQuizBack()" ${isFirst?'style="visibility:hidden"':''}><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>上一步</button>
+      <button class="aq-btn-next ${isLast?'final':''}" onclick="${q.type==='number'?'pricingQuizNum()':'pricingQuizStepNext()'}">${isLast?`<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>生成方案`:`下一步<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>`}</button>
+    </div>
+  </div>`;
+}
+function pricingQuizPick(id,val){
+  _pqAns[id]=val;
+  if(id==='return') _prSet('pr-return',val);
+  if(id==='target') _prSet('pr-target',val);
+  _pqAdvance();
+}
+function pricingQuizNum(){
+  const q=_PQ[_pqCur], el=document.getElementById('pq-num');
+  let v=el?parseFloat(el.value):NaN;
+  if(!isFinite(v)){ const s=q.suggest?parseFloat(q.suggest()):NaN; v=isFinite(s)?s:0; }
+  if(v<0) v=0;
+  _pqAns[q.id]=v; _prSet(q.id==='cost'?'pr-cost':'pr-freight', v.toFixed(2));
+  _pqAdvance();
+}
+function pricingQuizUseSuggest(){ const q=_PQ[_pqCur]; const el=document.getElementById('pq-num'); if(el&&q.suggest) el.value=q.suggest(); }
+function pricingQuizStepNext(){ const q=_PQ[_pqCur]; if(_pqAns[q.id]==null){ /* 选择题未选则不前进 */ return; } _pqAdvance(); }
+function pricingQuizBack(){ if(_pqCur>0){ _pqCur--; pricingQuizRender(); } }
+function _pqAdvance(){ if(_pqCur < _PQ.length-1){ _pqCur++; pricingQuizRender(); } else { pricingQuizFinish(); } }
+function pricingQuizFinish(){
+  _pqDone=true;
+  document.getElementById('pr-quiz-wrap').style.display='none';   // 收起 QA 区（图2位置留空）
+  pricingRun();                                                    // QA 答完才出报告
+  const box=document.getElementById('pr-result'); if(box) box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+// 成本摘要条（回填到报告顶部）
+function pricingSummaryBar(){
+  const items=[
+    ['站点',pricingMarketValue()],['类目',pricingCatValue()],
+    ['采购','$'+_prGet('pr-cost',0).toFixed(2)],['头程','$'+_prGet('pr-freight',0).toFixed(2)],
+    ['佣金',_prGet('pr-comm',15)+'%'],['FBA','$'+_prGet('pr-fba',5.7)],
+    ['ACOS',_prGet('pr-acos',18)+'%'],['VAT',_prGet('pr-vat',0)+'%'],
+    ['退货',_prGet('pr-return',5)+'%'],['目标净利',_prGet('pr-target',30)+'%']
+  ];
+  return `<div class="pr-summary" style="margin-bottom:12px">`+items.map(it=>`<span class="pr-sum-chip">${it[0]} <b>${it[1]}</b></span>`).join('')
+    + `<button onclick="pricingQuizStart()" class="pr-edit-btn">✏️ 修改成本</button></div>`;
+}
+let _pricingOwnFiles = [];
+function pricingOwnName(){
+  const t=((document.getElementById('pr-own')||{}).value||'').trim();
+  if(!t) return '';
+  const line=(t.split('\n').find(l=>l.trim() && !/^https?:\/\//i.test(l.trim()))||t.split('\n')[0]||'').trim();
+  return line.replace(/^https?:\/\/\S+/i,'').trim().slice(0,40);
+}
+function pricingOwnFiles(ev){
+  const files=[...(ev.target.files||[])].map(f=>f.name);
+  _pricingOwnFiles = _pricingOwnFiles.concat(files);
+  pricingRenderOwnFiles();
+  ev.target.value='';
+}
+function pricingRenderOwnFiles(){
+  const box=document.getElementById('pr-own-files'); if(!box) return;
+  box.innerHTML=_pricingOwnFiles.map((n,i)=>`<span class="pr-chip">📄 ${n} <span onclick="pricingDelOwnFile(${i})" style="cursor:pointer;color:var(--t3)">✕</span></span>`).join('');
+}
+function pricingDelOwnFile(i){ _pricingOwnFiles.splice(i,1); pricingRenderOwnFiles(); }
+function pricingBuildFromPage(){
+  const g=_prGet;
+  const prices = pricingBandPrices();
+  const R = pricingCore({
+    name:  pricingOwnName(),
+    cost:  g('pr-cost',5.40), freight:g('pr-freight',2.70), fba:g('pr-fba',5.70),
+    commR: g('pr-comm',15)/100, acosR:g('pr-acos',18)/100,
+    retR:  g('pr-return',5)/100*0.5, vatR:g('pr-vat',0)/100,
+    targetM:g('pr-target',30)/100, prices,
+    curPrice: prices[0] || g('pr-cost',5.40)*3
+  });
+  R._market = pricingMarketValue();
+  return R;
+}
+function pricingRun(){
+  const box = document.getElementById('pr-result'); if(!box) return;
+  if(!_pqDone){ box.style.display='none'; box.innerHTML=''; return; }   // QA 未答完不出报告
+  const R = pricingBuildFromPage();
+  const name = R.name ? `<span style="font-size:12px;color:var(--t3);font-weight:500">· ${R.name}</span>` : '';
+  box.style.display='block';
+  box.innerHTML = `<div style="max-width:960px;margin:0 auto">
+      ${pricingSummaryBar()}
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;box-shadow:0 6px 28px rgba(0,0,0,.07);padding:22px 24px 24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:8px;height:8px;border-radius:50%;background:${R.verdict.c}"></div>
+          <div style="font-size:15px;font-weight:800;color:var(--t0)">智能定价方案 · 定价五步法 ${name}</div>
+          <div style="font-size:11px;color:var(--t3)">${R._market}</div>
+          <div style="margin-left:auto;display:flex;gap:6px">
+            <button onclick="pricingDownloadPDF()" style="padding:6px 13px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-size:11px;cursor:pointer;font-weight:700">⬇️ 下载 PDF</button>
+            <button onclick="flowDownloadPricingReport()" style="padding:6px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg-page);font-size:11px;color:var(--t2);cursor:pointer;font-weight:600">TXT</button>
+          </div>
+        </div>
+        ${pricingReportBody(R, R._market, '')}
+      </div>
+    </div>`;
+}
+// 导出 PDF：打开只含报告的干净打印页 → 浏览器「另存为 PDF」
+function pricingDownloadPDF(){
+  const R = window._pricingR || (typeof pricingBuildFromPage==='function' ? pricingBuildFromPage() : null);
+  if(!R){ alert('请先生成定价方案'); return; }
+  const market = R._market || (window.flowUserData && flowUserData.market) || 'Amazon US';
+  const cs = getComputedStyle(document.documentElement);
+  const vars = ['--t0','--t1','--t2','--t3','--t4','--border','--border2','--bg-card','--bg-page','--bg-input','--accent','--accent2','--accent-bg','--purple','--orange','--blue','--f'];
+  const rootVars = vars.map(v=>v+':'+(cs.getPropertyValue(v)||'').trim()).filter(s=>s.split(':')[1]).join(';');
+  const summary = (typeof pricingSummaryBar==='function') ? pricingSummaryBar() : '';
+  const body = pricingReportBody(R, market, '');
+  const title = '智能定价方案 · 定价五步法' + (R.name ? ' · '+R.name : '');
+  const head = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:8px;height:8px;border-radius:50%;background:'+R.verdict.c+'"></div><div style="font-size:16px;font-weight:800">'+title+'</div><div style="font-size:11px;color:var(--t3);margin-left:auto">'+market+'</div></div>';
+  const css = ':root{'+rootVars+'} *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}'
+    + 'body{margin:0;padding:22px 26px;background:#fff;color:var(--t0,#111);font-family:var(--f,system-ui,-apple-system,\'Segoe UI\',sans-serif);font-size:13px}'
+    + '.pr-summary{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:0 0 14px}'
+    + '.pr-sum-chip{padding:5px 11px;border:1px solid var(--border2);border-radius:999px;background:var(--bg-page);font-size:11px;color:var(--t2)}'
+    + '.pr-sum-chip b{color:var(--t0);font-weight:800;margin-left:2px}'
+    + '.pr-edit-btn{display:none!important}'
+    + '@page{margin:10mm}@media print{body{padding:0}}';
+  const doc = '<!doctype html><html><head><meta charset="utf-8"><title>'+title+'</title><style>'+css+'</style></head><body>'
+    + '<div style="max-width:920px;margin:0 auto">'+head+summary+body+'</div>'
+    + '<scr'+'ipt>window.onload=function(){setTimeout(function(){window.focus();window.print();},350)};window.onafterprint=function(){window.close()};<\/scr'+'ipt>'
+    + '</body></html>';
+  const w = window.open('', '_blank');
+  if(!w){ alert('浏览器拦截了弹窗，请允许后重试导出 PDF'); return; }
+  w.document.open(); w.document.write(doc); w.document.close();
+}
+function pricingInit(){
+  // 若从竞品分析带入，则作为已提取竞品 chip 预填
+  if(!_pricingPeers.length){
+    const src = (flowUserData.competitorAnalysis||flowUserData.reportPeers||[]);
+    _pricingPeers = src.map(x=>({asin:x.asin||'—', price:x.priceNum||_flowNum(x.price), host:'amazon.com'})).filter(p=>p.price>0);
+  }
+  pricingRenderChips();
+  pricingRenderOwnFiles();
+  // 未开始：QA 区显示引导，不问、不出报告
+  _pricingStarted=false; _pqDone=false; _pqAns={}; _pqCur=0;
+  const wrap=document.getElementById('pr-quiz-wrap'); if(wrap) wrap.style.display='block';
+  const q=document.getElementById('pr-quiz');
+  if(q){ q.style.display='block'; q.innerHTML='<div class="pr-start-hint">👉 填我方产品资料 + 粘贴竞品链接组价格带，选好站点与类目，点右下「🎯 开始智能定价」，我会在这里逐题问你成本，答完在下方给出三档定价。</div>'; }
+  const btn=document.getElementById('pr-start-btn'); if(btn) btn.textContent='🎯 开始智能定价';
+  const box=document.getElementById('pr-result'); if(box){ box.style.display='none'; box.innerHTML=''; }
 }
 
 function runFlowPhase4(){
@@ -24743,10 +26239,12 @@ const RC_TEAM_TIERS = [
      '团队共享积分池 <b style="color:#ff9500;font-weight:700">16,000 积分 / 月</b>',
      '额外赠送 3,000 积分（周期内清零）',
      'Listing 生成约 640 次 / 月',
+     'Listing 打分约 1,499 次 / 月',
+     '高级生图 · 最多约 3,500 张 / 月',
+     '视频合成 · 最多约 100 个 20s 视频 / 月',
      '成员管理 · 席位增删',
      '角色权限 · 数据隔离',
-     '专属客服群 · 优先响应',
-     '全部高级生图 / 视频功能'
+     '专属客服群 · 优先响应'
    ]},
   {key:'team_flagship', name:'旗舰版', pos:'中大型团队 · 规模化运营', seats:15, price:2999, orig:4284, discLabel:'7 折', unitLabel:'低至 ¥0.072 / 积分（约 7 折）', hot:true,
    feats:[
@@ -24754,10 +26252,12 @@ const RC_TEAM_TIERS = [
      '团队共享积分池 <b style="color:#ff9500;font-weight:700">45,000 积分 / 月</b>',
      '额外赠送 10,000 积分（周期内清零）',
      'Listing 生成约 1,800 次 / 月',
+     'Listing 打分约 4,200 次 / 月',
+     '高级生图 · 最多约 9,850 张 / 月',
+     '视频合成 · 最多约 280 个 20s 视频 / 月',
      '成员管理 · 用量看板 · 席位增删',
      '角色权限 · 数据隔离 · 审计日志',
-     '<b>专属客户成功经理 · SLA 优先级</b>',
-     '单价最低，约 7 折团队专享'
+     '<b>专属客户成功经理 · SLA 优先级</b>'
    ]}
 ];
 const RC_TEAM_PACKS = [
@@ -24843,9 +26343,6 @@ function rcRenderTeam(){
   box.innerHTML =
      '<div class="rc-sec-head"><div class="rc-sec-title"><span class="rc-sec-num">1</span>选择团队套餐</div><div class="rc-sec-sub">席位越多、共享积分池越大，单个积分越便宜 —— 团队专属折扣</div></div>'
     +'<div class="rc-team-tiers">'+tierCards+customCard+'</div>'
-    +'<div class="rc-sec-head"><div class="rc-sec-title"><span class="rc-sec-num">2</span>购买共享充值包</div><div class="rc-sec-sub">团队积分池的额外补给，全员共用</div></div>'
-    +'<div class="rc-note"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>充值包积分进入<b>团队共享积分池</b>，全体成员共用、<b>不清零</b>，系统优先消耗即将清零的套餐积分。管理员可在「用户与权限」中分配成员席位与用量。</span></div>'
-    +'<div class="rc-packs">'+packCards+customPack+'</div>'
     +'<div class="rc-checkout team"><div class="rc-checkout-info">'+info+'</div><div style="display:flex;align-items:center;gap:16px"><div class="rc-checkout-total"><span>合计 ¥</span>'+sum.toLocaleString()+'</div><button class="rc-checkout-btn" '+disabled+' onclick="rcTeamCheckout()">立即支付</button></div></div>';
 }
 function rcSelectTeamTier(i){ _rcState.teamTier = (_rcState.teamTier===i?null:i); rcRenderTeam(); }
@@ -25579,6 +27076,13 @@ function caUpdateSend(){
   const v=(caEl('ca-input')?.value||'').trim();
   const btn=caEl('ca-send-btn');
   if(btn) btn.classList.toggle('ready', v.length>0);
+  const hint=caEl('ca-send-hint');
+  if(hint){
+    const n=caParseAsins(v).length;
+    hint.innerHTML = n>0
+      ? `已识别 <b>${n}</b> 个竞品 · <span class="k">Ctrl+Enter</span> 开始`
+      : `<span class="k">Ctrl+Enter</span> 粘贴竞品链接开始`;
+  }
 }
 function caMe(){return CA_DATA.find(c=>c.you);}
 function caRivals(){return CA_DATA.filter(c=>!c.you);}
@@ -25708,44 +27212,29 @@ function caRun(){
   caEl('ca-tip').textContent='正在分析竞品 · 本次预估消耗约 140 积分';
   // 三段分析挂载到同一页，每段为独立板块外壳
   caEl('ca-stage1').innerHTML=`
-    <!-- 板块 ①：竞品画像（锁定竞品 + 画像对比合并） -->
+    <!-- 板块 ①：竞品竞争力全景（竞品画像 + 流量与广告 合并为一个板块，内含两个子分区） -->
     <div class="ca-block">
       <div class="ca-block-head">
         <div class="ca-block-no">1</div>
         <div style="flex:1">
-          <div class="ca-block-tt">竞品画像</div>
-          <div class="ca-block-sb">按流量份额锁定竞品，并解构其商品详情、变体结构、销量与价格策略</div>
+          <div class="ca-block-tt">竞品竞争力全景</div>
+          <div class="ca-block-sb">锁定竞品并解构其流量结构与广告策略——竞品基础画像（售价 / 评分 / 月销 / BSR / 变体 / 卖点）已并入下方关键词流量表左栏</div>
         </div>
-        <div class="ca-block-cost" id="ca-cost1">— 点</div>
+        <div class="ca-block-cost">预估合计 · 约 35 点</div>
       </div>
       <div class="ca-block-body">
-        <div class="ca-proc collapsed" id="ca-proc1"><div class="ca-proc-cap toggle" onclick="caToggleProc(1)"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>API 调用过程<span class="ca-cap-status" id="ca-capst1">—</span><svg class="ca-cap-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ca-proc-apis"><div id="ca-apis1"></div></div></div>
-        <div id="ca-cards"></div>
-        <div id="ca-profile" style="margin-top:18px"></div>
-      </div>
-    </div>
-
-    <!-- 板块 ②：流量与广告（流量解构 + 广告活动拆解合并） -->
-    <div class="ca-block">
-      <div class="ca-block-head">
-        <div class="ca-block-no">2</div>
-        <div style="flex:1">
-          <div class="ca-block-tt">流量与广告</div>
-          <div class="ca-block-sb">竞争格局对比、自然 / 广告占比，及 SP / SB / SBV 活动结构、投放小组、主投词</div>
-        </div>
-        <div class="ca-block-cost" id="ca-cost2">— 点</div>
-      </div>
-      <div class="ca-block-body">
-        <div class="ca-proc collapsed" id="ca-proc2"><div class="ca-proc-cap toggle" onclick="caToggleProc(2)"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>API 调用过程<span class="ca-cap-status" id="ca-capst2">—</span><svg class="ca-cap-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ca-proc-apis"><div id="ca-apis2"></div></div></div>
+        <!-- 数据抓取过程：竞品基础数据 + 流量广告两段，画像明细已并入下方关键词流量表左栏 -->
+        <div class="ca-proc collapsed" id="ca-proc1"><div class="ca-proc-cap toggle" onclick="caToggleProc(1)"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>API 调用过程 · 竞品基础数据<span class="ca-cap-status" id="ca-capst1">—</span><span class="ca-proc-cost" id="ca-cost1">— 点</span><svg class="ca-cap-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ca-proc-apis"><div id="ca-apis1"></div></div></div>
+        <div class="ca-proc collapsed" id="ca-proc2" style="margin-top:-8px"><div class="ca-proc-cap toggle" onclick="caToggleProc(2)"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>API 调用过程 · 流量与广告<span class="ca-cap-status" id="ca-capst2">—</span><span class="ca-proc-cost" id="ca-cost2">— 点</span><svg class="ca-cap-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ca-proc-apis"><div id="ca-apis2"></div></div></div>
         <div id="ca-traffic"></div>
         <div id="ca-adcamp" style="margin-top:18px"></div>
       </div>
     </div>
 
-    <!-- 板块 ③：价格与促销监控 -->
+    <!-- 板块 ②：价格与促销监控 -->
     <div class="ca-block">
       <div class="ca-block-head">
-        <div class="ca-block-no">3</div>
+        <div class="ca-block-no">2</div>
         <div style="flex:1">
           <div class="ca-block-tt">价格与促销监控</div>
           <div class="ca-block-sb">当前价 / coupon / deal、近 90 天价格区间、促销频次与价格异常</div>
@@ -25793,7 +27282,7 @@ function caTrace(step,done){
     if(i>=plan.length){ caEl('ca-cost'+step).textContent=CA_COST[step]; if(st) st.textContent=`已完成 ${plan.length} 次调用`; _caState.done[step]=1; done&&done(); return; }
     caEl(`ca-api-${step}-${i}`).querySelector('.ca-api-stat').innerHTML='<div class="ca-ring"></div>';
     if(st) st.textContent=`调用中 ${i+1}/${plan.length}`;
-    i++; setTimeout(tick,500);
+    i++; setTimeout(tick,120);
   };
   tick();
 }
@@ -25809,7 +27298,8 @@ function caPriceTags(c){
 }
 
 function caRenderCards(){
-  caEl('ca-cards').innerHTML=`
+  const _host=caEl('ca-cards'); if(!_host) return;   // 画像卡片区已并入流量表左栏，容器不存在时安全跳过
+  _host.innerHTML=`
     <div class="ca-result-cap" style="margin-bottom:10px"><span class="ca-result-dot"></span>分析结果 · 竞品画像卡片</div>
     <div class="ca-block-cardhint">
       <div style="font-size:12.5px;font-weight:600;color:var(--t1)">已从粘贴链接解析 ${caRivals().length} 个竞品 · 按月销排序</div>
@@ -26023,7 +27513,15 @@ function caRenderKwFlat(){
                 <span><i>变体</i><b>${c.childAsins}</b></span>
               </div>
               <div class="ca-flat-tags">${(c.features||[]).map(f=>`<span class="ca-tg neutral">${f}</span>`).join('')}</div>
-              <div class="ca-flat-sum">总分 ${d.sum.totalScore.toFixed(0)} · 自然${nf}% · 广告词 ${caFmt(d.sum.adKeywordNum)} · 活动 ${d.sum.campaignCnt}</div>
+              ${(()=>{const st=c.salesTrend||[];const up=st.length?st[st.length-1]>=st[0]:true;const adp=100-(+nf);return `
+              <div class="ca-flat-viz">
+                <div class="ca-flat-viz-hd">
+                  <div class="ca-flat-score"><b>${d.sum.totalScore.toFixed(0)}</b><i>总流量得分</i></div>
+                  ${st.length?`<div class="ca-flat-spark">月销 ${caSpark(st,up?'#34c759':'var(--red)')}<span>${caFmt(st[0])}→${caFmt(st[st.length-1])}</span></div>`:''}
+                </div>
+                <div class="ca-flat-splitbar" title="自然 ${nf}% / 广告 ${adp}%"><span class="nf" style="width:${nf}%"></span><span class="ad" style="width:${adp}%"></span></div>
+                <div class="ca-flat-meta"><span><i class="d-nf"></i>自然 <b>${nf}%</b></span><span><i class="d-ad"></i>广告 <b>${adp}%</b></span><span class="sep"></span><span>广告词 <b>${caFmt(d.sum.adKeywordNum)}</b></span><span>活动 <b>${d.sum.campaignCnt}</b></span></div>
+              </div>`;})()}
             </div>
           </div>
         </td>`;
@@ -26177,24 +27675,97 @@ function caInferTargeting(d,c){
 }
 function caTargetPanel(d,c){
   var inf=caInferTargeting(d,c);
-  var rows=inf.analyzed.slice(0,6).map(function(g){
-    var struct=g.extended===0?'无延展':(g.mode.indexOf('广泛')>=0?'词序打乱/中插':'首尾插词');
-    return '<tr><td><span class="ca-cell-name">'+g.root+'</span></td>'
-      +'<td class="num">'+g.n+'</td><td>'+struct+'</td><td>'+g.type+'</td>'
-      +'<td>'+caHint('<b style="color:var(--accent2)">'+g.mode+'</b>',g.why)+'</td>'
-      +'<td>'+g.conf+'</td></tr>';
-  }).join('');
-  return '<div style="border:1px solid var(--accent);background:var(--accent-bg2);border-radius:10px;padding:12px 14px;margin-bottom:14px">'
+  return '<div style="border:1px solid var(--accent);background:var(--accent-bg2);border-radius:10px;padding:11px 14px;margin-bottom:14px">'
     +'<div style="font-size:12.5px;font-weight:700;color:var(--t0);margin-bottom:5px">🧭 投放类型 · 匹配模式推算 '
       +'<span style="font-size:10px;font-weight:600;color:var(--t3)">（基于 ad/keywords 信号 + 匹配规则模型 · 推测，非广告后台真值）</span></div>'
-    +'<div style="font-size:11.5px;color:var(--t2);margin-bottom:10px">总体：<b style="color:var(--accent2)">'+inf.overall.type+'</b> · <b style="color:var(--accent2)">'+inf.overall.mode+'</b>　'
-      +'词根集中度 <b>'+inf.concentration+'</b>（'+inf.nRoots+' 个词根组 · 组均约 '+Math.round(inf.avgKw)+' 词）。'+inf.overall.why+'。</div>'
-    +'<div style="overflow-x:auto"><table class="ca-cmp" style="font-size:11px"><thead><tr>'
-      +'<th>'+caHint('投放词根组','按 ad/keywords 关键词的共同词根聚类得出的投放词组。')+'</th>'
-      +'<th class="num">词数</th><th>'+caHint('结构（延展/词序）','组内关键词相对词根的延展方式：无延展 / 首尾插词 / 词序打乱。')+'</th>'
-      +'<th>推断投放类型</th><th>'+caHint('推断匹配模式','悬停各行看命中的具体规则分支。')+'</th><th>置信度</th>'
-    +'</tr></thead><tbody>'+rows+'</tbody></table></div>'
-    +'<div style="font-size:10.5px;color:var(--t3);margin-top:8px;line-height:1.6">依据《投放词及匹配模式》：① 词数多→偏自动/词组/广泛；② 词数稳定+词根固定→精准；③ 词根集中度 + 组内词序/延展 判定 精准/词组/广泛；④ 大词多为词组/广泛词根，长尾词多为精准。匹配模式为规则推断，出价/预算/花费仍为广告后台数据、此处不可得。</div>'
+    +'<div style="font-size:11.5px;color:var(--t2)">总体：<b style="color:var(--accent2)">'+inf.overall.type+'</b> · <b style="color:var(--accent2)">'+inf.overall.mode+'</b>　'
+      +'词根集中度 <b>'+inf.concentration+'</b>（'+inf.nRoots+' 个词根组 · 组均约 '+Math.round(inf.avgKw)+' 词）。逐组的投放类型 / 匹配模式 / 结构见下方「广告组结构」。</div>'
+    +'<div style="font-size:10.5px;color:var(--t3);margin-top:7px;line-height:1.6">🔵 投放类型 / 匹配模式为规则推断；⛔ 真实匹配类型 / 出价 / 预算 / 花费为广告后台数据，第三方不可得。</div>'
+  +'</div>';
+}
+// ── 广告活动 → 广告组结构（按 SIF ad/campaigns + ad/campaign/adgroups 可返回字段确定性重构）──
+function caAdDate(seed, minD, maxD){
+  var span=Math.max(1,maxD-minD), days=minD+(seed%span);
+  var d=new Date(); d.setDate(d.getDate()-days);
+  var p=function(n){return (n<10?'0':'')+n;};
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
+function caAdId(seed,pfx){ return pfx+(seed>>>0).toString(36).toUpperCase().padStart(9,'0').slice(0,10); }
+// 广告组级推断（🔵 规则推断，非后台真值）——对齐《开发说明》§4.3②③：由构词结构定匹配模式
+// （无延展=精准 / 仅首尾插词=词组 / 词序打乱·中插=广泛），SB·SBV 品牌广告恒为手动，约 24% 的 SP 组判为自动定位
+function caAdGroupInfer(adType, kwNum, seed){
+  if(adType==='SP' && (seed%100)<24) return {bidType:'自动广告', matchType:'自动定位', structure:'自动定位'};
+  var adj=kwNum<=8?-22:(kwNum>20?18:0);            // 词少偏精准、词多偏广泛（规则①④：长尾多精准、大词多词组/广泛）
+  var r=((seed>>>4)%100)+adj, structure, matchType;
+  if(r<34){ structure='无延展'; matchType='精准'; }
+  else if(r<70){ structure='首尾插词'; matchType='词组'; }
+  else { structure='词序打乱/中插'; matchType='广泛'; }
+  return {bidType:'手动广告', matchType:matchType, structure:structure};
+}
+function caAdGroupModel(c){
+  var totalCamp=c.campaignCnt||0, totalAd=c.adGroupNum||0;
+  var spN=Math.max(1,Math.round(totalCamp*0.68)), sbN=Math.round(totalCamp*0.22), sbvN=Math.max(0,totalCamp-spN-sbN);
+  var typeOf=function(i){ return i<spN?'SP':(i<spN+sbN?'SB':'SBV'); };
+  var showN=Math.min(6,totalCamp);
+  var camps=[], weights=[], wsum=0, i, g;
+  for(i=0;i<showN;i++){ var w=1+((caHash(c.asin+'|cw'+i)%60)/20); weights.push(w); wsum+=w; }
+  var perCamp=totalCamp?(totalAd/totalCamp):1;
+  for(i=0;i<showN;i++){
+    var seed=caHash(c.asin+'|cmp'+i), adType=typeOf(i);
+    var grp=Math.max(1, Math.min(6, Math.round(perCamp*weights[i]*showN/wsum)));
+    var gscores=[], gsum=0;
+    for(g=0;g<grp;g++){ var gs=300+(caHash(c.asin+'|gs'+i+'_'+g)%4200); gscores.push(gs); gsum+=gs; }
+    var groups=[];
+    for(g=0;g<grp;g++){
+      var gseed=caHash(c.asin+'|g'+i+'_'+g), kwNum=3+(gseed%48), kt=[];
+      for(var t=0;t<8;t++){ kt.push(2+(caHash(c.asin+'|kt'+i+'_'+g+'_'+t)%Math.max(3,kwNum))); }
+      var inf=caAdGroupInfer(adType,kwNum,gseed);
+      groups.push({adId:caAdId(gseed,'A0'), adType:adType, asinNum:1+(gseed%2), keywordNum:kwNum, kwTrend:kt, score:gscores[g], scoreRatio:gsum?gscores[g]/gsum:0, createdAt:caAdDate(gseed,30,380), bidType:inf.bidType, matchType:inf.matchType, structure:inf.structure});
+    }
+    camps.push({campaignId:caAdId(seed,'A0'), adType:adType, asinNum:1+(seed%3), adNum:grp, createdAt:caAdDate(seed,60,420), score:2000+(seed%9000), changeRatio:(((seed>>>5)%40)-15)/100, groups:groups});
+  }
+  camps.sort(function(a,b){return b.score-a.score;});
+  return {totalCamp:totalCamp, spN:spN, sbN:sbN, sbvN:sbvN, totalAd:totalAd, showN:showN, camps:camps};
+}
+function caAdTypeBadge(t){ return '<span class="ca-adtype '+t.toLowerCase()+'">'+t+'</span>'; }
+function caMatchCls(m){ return m==='精准'?'exact':(m==='词组'?'phrase':(m==='广泛'?'broad':'auto')); }
+function caAdGroupSection(c){
+  var m=caAdGroupModel(c);
+  var campHtml=m.camps.map(function(cp){
+    var chg=cp.changeRatio>=0?'<span class="ca-up">↑'+Math.round(cp.changeRatio*100)+'%</span>':'<span class="ca-down">↓'+Math.abs(Math.round(cp.changeRatio*100))+'%</span>';
+    var grows=cp.groups.map(function(g){
+      var pct=Math.round(g.scoreRatio*100);
+      return '<tr>'
+        +'<td><span style="font-family:monospace;font-size:10.5px">'+caHint(g.adId,'广告组 ID（adId）——广告活动之下的投放单元，真正挂关键词 / 商品定位、共享一套出价与匹配策略。对应 SIF ad/campaign/adgroups.list[].adId。')+'</span></td>'
+        +'<td><span class="ca-mmp '+caMatchCls(g.matchType)+'">'+g.matchType+'</span></td>'
+        +'<td><span style="font-size:10.5px;color:var(--t3)">'+g.bidType.replace('广告','')+' · '+g.structure+'</span></td>'
+        +'<td class="num">'+g.keywordNum+'</td>'
+        +'<td>'+caSpark(g.kwTrend,'#0a84ff')+'</td>'
+        +'<td class="num"><b style="color:var(--t0)">'+caFmt(Math.round(g.score))+'</b></td>'
+        +'<td><div class="ca-share-cell"><div class="ca-share-bar"><span style="width:'+pct+'%"></span></div><span class="ca-share-pct">'+pct+'%</span></div></td>'
+      +'</tr>';
+    }).join('');
+    return '<div class="ca-camp">'
+      +'<div class="ca-camp-hd">'+caAdTypeBadge(cp.adType)
+        +'<span style="font-family:monospace;font-size:11px;color:var(--t1);font-weight:600">'+caHint(cp.campaignId,'广告活动 ID（campaignId）——广告的最上层容器，在这一层定预算 / 投放周期 / 类型（SP·SB·SBV），下辖多个广告组。对应 SIF ad/campaigns.list[].campaignId。')+'</span>'
+        +'<span style="font-size:10.5px;color:var(--t3)">'+cp.adNum+' 组 · '+cp.asinNum+' ASIN · 建于 '+cp.createdAt+'</span>'
+        +'<span style="margin-left:auto;font-size:11px;color:var(--t2)">活动得分 <b style="color:var(--t0)">'+caFmt(cp.score)+'</b> '+chg+'</span>'
+      +'</div>'
+      +'<div style="overflow-x:auto"><table class="ca-cmp ca-adg"><thead><tr>'
+        +'<th>'+caHint('广告组 ID','adId：ad/campaign/adgroups 返回的广告组唯一 ID。')+'</th>'
+        +'<th>'+caHint('推断匹配模式','🔵 规则推断（非后台真值）：由构词结构判定 精准 / 词组 / 广泛；自动组为自动定位。')+'</th>'
+        +'<th>'+caHint('投放类型 · 结构','🔵 规则推断：手动 / 自动 + 组内构词结构（无延展 / 首尾插词 / 词序打乱）。')+'</th>'
+        +'<th class="num">'+caHint('关键词数','keywordNum：该组当前在投关键词数量。')+'</th>'
+        +'<th>'+caHint('词数趋势','keywordTrend：近 8 周该组关键词数量走势。')+'</th>'
+        +'<th class="num">'+caHint('广告得分','score：搜索量加权的广告流量得分。')+'</th>'
+        +'<th>'+caHint('组内占比','scoreRatio：该组得分占所属活动当前周期总广告流量的比例。')+'</th>'
+      +'</tr></thead><tbody>'+grows+'</tbody></table></div>'
+    +'</div>';
+  }).join('');
+  return '<div class="ca-adg-sec">'
+    +'<div class="ca-adg-cap">◈ 广告活动 → 广告组结构　<span style="font-weight:500;color:var(--t3);font-family:monospace;font-size:10px">ad/campaigns · ad/campaign/adgroups</span></div>'
+    +'<div style="font-size:11px;color:var(--t3);margin-bottom:11px">共 <b style="color:var(--t1)">'+m.totalCamp+'</b> 个活动（SP '+m.spN+' · SB '+m.sbN+' · SBV '+m.sbvN+'）、<b style="color:var(--t1)">'+m.totalAd+'</b> 个广告组；按活动得分展示前 <b style="color:var(--t1)">'+m.showN+'</b> 个活动及其广告组。<span style="color:var(--accent2)">🔵 每组的投放类型 / 匹配模式 / 结构为规则推断</span>，其余为接口字段。</div>'
+    +campHtml
   +'</div>';
 }
 function caAdDetail(asin){
@@ -26202,36 +27773,16 @@ function caAdDetail(asin){
   var d=_caKwData&&_caKwData.filter(function(x){return x.asin===asin;})[0];
   var c=CA_DATA.filter(function(x){return x.asin===asin;})[0];
   var body=caEl('ca-addetail-body'); if(!d||!c||!body) return;
-  var rows=d.rows.filter(function(r){return r.spRatio!=null;}).slice(0,8);
   var head='<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">'
     +'<span style="font-size:16px">'+c.emoji+'</span><b style="font-family:monospace;font-size:14px;color:var(--t0)">'+c.asin+'</b>'
     +(c.you?'<span class="ca-you-tag">我方</span>':'')
-    +'<span style="margin-left:auto;font-size:12px;color:var(--t2)">'+caHint('活动总数','在投的广告活动（Campaign）总数。')+' <b style="color:var(--t0)">'+c.campaignCnt+'</b>　'
-    +caHint('小组总数','在投的广告组（Ad Group）总数。')+' <b style="color:var(--t0)">'+c.adGroupNum+'</b>　'
-    +caHint('广告词数','有广告流量的关键词总数。')+' <b style="color:var(--t0)">'+caFmt(c.adKeywordNum)+'</b></span></div>';
-  if(!rows.length){ body.innerHTML=head+'<div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">该 ASIN 暂无广告投放明细</div>'; }
+    +'<span style="margin-left:auto;font-size:12px;color:var(--t2)">'+caHint('活动总数','在投的广告活动（Campaign）总数。ad/campaigns.total')+' <b style="color:var(--t0)">'+c.campaignCnt+'</b>　'
+    +caHint('广告组总数','在投的广告组（Ad Group）总数。ad/campaigns.adNum')+' <b style="color:var(--t0)">'+c.adGroupNum+'</b>　'
+    +caHint('广告词数','有广告流量的关键词总数。ad/keywords.total')+' <b style="color:var(--t0)">'+caFmt(c.adKeywordNum)+'</b></span></div>';
+  if(!(c.campaignCnt>0)){ body.innerHTML=head+'<div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">该 ASIN 暂无广告投放明细</div>'; }
   else{
-    var cards=rows.map(function(r){
-      var campN=r.campN||1, adN=r.adN||1;
-      var vars=caAdVariants(asin,r.kw,r), sph=caAdSpHistory(asin,r.kw,r);
-      return '<div style="border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px">'
-        +'<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px">'
-          +'<b style="font-size:13px;color:var(--t0)">'+r.kw+'</b>'
-          +'<span style="font-size:11px;color:var(--t3)">搜索量 '+r.sv.toLocaleString('en-US')+'</span>'
-          +'<span style="margin-left:auto;font-size:11px;color:var(--t2)">'+caHint('广告分占比','该词广告分占整个 Listing 广告分的比例，越高=预算越集中在这个词。')+' <b style="color:var(--t0)">'+r.spRatio+'%</b>　'
-          +caHint('该词 SP 份额','该 Listing 在这个词的 SP 广告流量中占多大份额，越高=在该词的广告压制力越强。')+' <b style="color:var(--t0)">'+r.adPct+'%</b></span>'
-        +'</div>'
-        +'<div style="font-size:11.5px;line-height:1.9;color:var(--t2)">'
-          +caHint('投放规模','该词挂了几个广告活动 / 广告组，数量越多=预算越集中，越是核心主投词。')+' <b style="color:var(--t0)">'+campN+'</b> 活动 · <b style="color:var(--t0)">'+adN+'</b> 组'
-        +'</div>'
-        +'<div style="margin-top:8px;overflow-x:auto"><table class="ca-cmp" style="font-size:11px"><thead><tr>'
-          +'<th>'+caHint('变体','在投这个词的子体 ASIN。')+'</th><th class="num">'+caHint('广告分','该变体在这个词上的广告得分。')+'</th><th class="num">'+caHint('曝光天数','该变体在这个词上有广告曝光的天数，天数长=常年主投，短=测试词。')+'</th>'
-        +'</tr></thead><tbody>'+vars.map(function(v){ return '<tr><td><span style="font-family:monospace">'+v.asin+'</span></td><td class="num">'+v.adScore+'</td><td class="num">'+v.days+'d</td></tr>'; }).join('')+'</tbody></table></div>'
-        +(sph.length?('<div style="margin-top:8px;font-size:11px;color:var(--t2)"><span style="color:var(--t3)">'+caHint('SP 排名历史','该词的 SP 广告位排名走势：p页码，当前页第几名/该页广告位总数。')+'：</span>'
-          +sph.map(function(h){ return '<span style="display:inline-block;margin-right:10px"><span style="color:var(--t3);font-family:monospace;font-size:10px">'+h.date+'</span> p'+h.page+','+h.cur+'/'+h.total+'</span>'; }).join('')+'</div>'):'')
-      +'</div>';
-    }).join('');
-    body.innerHTML=head+caTargetPanel(d,c)+cards+'<div class="ca-note">上方为按《投放词及匹配模式》规则 + ad/keywords 信号<b>推算</b>的投放类型与匹配模式（推测，非广告后台真值）。下方每个关键词的投放明细：投放规模（活动 / 组数）、在投变体与广告分、SP 排名走势。「新增的是哪些」需对比前后两期 ad/keywords 快照做差集；出价、预算、花费为广告后台数据，此处不可得。</div>';
+    body.innerHTML=head+caAdGroupSection(c)
+      +'<div class="ca-note">「广告活动 → 广告组结构」为 <code>ad/campaigns</code> + <code>ad/campaign/adgroups</code> 反查<b>重构</b>（🟡 重构估计）——广告组 ID / 类型 / 关键词数与趋势 / 广告得分 / 组内占比均为接口可返回字段；<b>投放类型 / 匹配模式 / 结构</b>为按《投放词及匹配模式》规则 <b>推算</b>（🔵，非后台真值）；关键词级 SP 排名可再下钻 <code>ad/keywords</code>。⛔ 出价 / 预算 / 花费 / ACoS / 真实匹配类型第三方拿不到。</div>';
   }
   var m=caEl('ca-addetail-modal'); if(m){ m.classList.add('active'); document.body.style.overflow='hidden'; }
 }
@@ -26314,11 +27865,11 @@ function caTlInner(c){
   const rows=caMergedTimeline(c).slice().reverse();   // 时间倒序：最新在前
   if(!rows.length) return '<div style="font-size:12px;color:var(--t3);padding:10px 0">本期无明显运营动作 / 信号</div>';
   const cap=rows.length, exp=!!_caTlExp[c.asin], shown=exp?cap:Math.min(5,cap);
-  const head='<div class="ca-tl2-row ca-tl2-head"><div>日期</div><div style="color:var(--accent2)">◐ Keepa 信号</div><div style="color:var(--orange)">▶ SIF 动作</div><div>效果</div></div>';
+  const head='<div class="ca-tl2-row ca-tl2-head"><div>日期</div><div style="color:var(--accent2)">◐ 行情信号</div><div style="color:var(--orange)">▶ 运营动作</div><div>效果</div></div>';
   const body=rows.slice(0,shown).map(r=>{
     const kp=r.keepa.map(k=>'<span style="color:'+(CA_SIG[k.t]||'var(--t2)')+';white-space:nowrap">'+k.txt+'</span>').join('<span style="color:var(--t3);margin:0 5px">·</span>');
     const seen={},items=[]; r.acts.forEach(it=>{ const key=it.type+'|'+it.label; if(seen[key])seen[key].n++; else {seen[key]=Object.assign({n:1},it);items.push(seen[key]);} });
-    const ac=items.length?items.map(it=>{ const m=CA_ACT[it.type]||['动作','var(--t2)','rgba(120,120,120,.12)']; const lb=caActTip(it)?caHint(it.label,caActTip(it)):it.label; const dt=(it.type==='ad'||it.type==='adDown')?' <a onclick="caAdDetail(\''+c.asin+'\')" title="查看该 ASIN 的广告投放明细" style="cursor:pointer;color:var(--accent2);font-weight:600;border-bottom:1px solid var(--accent2)">明细</a>':''; return '<span style="white-space:nowrap;margin-right:12px;display:inline-block"><span class="ca-tl-tag" style="color:'+m[1]+';background:'+m[2]+'">'+m[0]+'</span>'+lb+(it.n>1?' ×'+it.n:'')+(it.detail?' <span class="ca-tl-detail">'+it.detail+'</span>':'')+dt+'</span>'; }).join(''):'<span style="color:var(--t3)">—</span>';
+    const ac=items.length?items.map(it=>{ const m=CA_ACT[it.type]||['动作','var(--t2)','rgba(120,120,120,.12)']; const lb=caActTip(it)?caHint(it.label,caActTip(it)):it.label; return '<span style="white-space:nowrap;margin-right:12px;display:inline-block"><span class="ca-tl-tag" style="color:'+m[1]+';background:'+m[2]+'">'+m[0]+'</span>'+lb+(it.n>1?' ×'+it.n:'')+(it.detail?' <span class="ca-tl-detail">'+it.detail+'</span>':'')+'</span>'; }).join(''):'<span style="color:var(--t3)">—</span>';
     const ec=r.effCls==='up'?'#1d9e75':(r.effCls==='down'?'#d4553e':'var(--t3)');
     return '<div class="ca-tl2-row"><div class="ca-tl2-date">'+r.date+'</div><div class="ca-tl2-kp">'+kp+'</div><div class="ca-tl2-ac">'+ac+'</div><div style="color:'+ec+';line-height:1.5">'+r.effect+'</div></div>';
   }).join('');
@@ -26342,15 +27893,15 @@ function caKeepaOffers(c){
   const hasDeal=!!c.dealNow||c.couponNow!=null;
   const prime=((h%100)<55);
   return [
-    {k:'Buy Box',color:'#e6007e',price:p,meta:caOfferSeller(h+11),tip:'Keepa Buy Box：当前购物车价 + 中标卖家。'},
-    {k:'Amazon 直营',color:'#ff9900',price:noAmazon?null:r(p+1),meta:null,tip:'Keepa Amazon：亚马逊自营报价；无 = 当前无直营。'},
-    {k:'New 最低',color:'#7c3aed',price:r(p-0.4),meta:null,tip:'Keepa New：全部新品报价的最低价。'},
-    {k:'New · 第三方 FBA',color:'#ff6a00',price:r(p+0.44),meta:caOfferSeller(h+23),tip:'Keepa New, 3rd Party FBA：第三方 FBA 最低价 + 卖家。'},
-    {k:'New · 第三方 FBM',color:'#2f80ed',price:r(p+3.4),meta:caOfferSeller(h+37),tip:'Keepa New, 3rd Party FBM：第三方自发货最低价 + 卖家。'},
-    {k:'New · Prime 专享',color:'#00a389',price:prime?r(p*0.82):null,meta:null,tip:'Keepa New, Prime exclusive：Prime 会员专享价；无 = 无该报价。'},
-    {k:'Lightning Deal 闪购',color:'#e5342b',price:hasDeal?r(p*0.85):null,meta:null,tip:'Keepa Lightning Deal：限时闪购价；无 = 当前无闪购。'},
-    {k:'List Price 官方价',color:'#8b5a2b',price:r(p*1.15),meta:null,tip:'Keepa List Price：厂商建议零售价 / 官方标价。'},
-    {k:'Used 二手',color:'#9aa0a6',price:r(p*0.76),meta:null,tip:'Keepa Used：二手最低价。'}
+    {k:'Buy Box',color:'#e6007e',price:p,meta:caOfferSeller(h+11),tip:'Buy Box：当前购物车价 + 中标卖家。'},
+    {k:'Amazon 直营',color:'#ff9900',price:noAmazon?null:r(p+1),meta:null,tip:'Amazon：亚马逊自营报价；无 = 当前无直营。'},
+    {k:'New 最低',color:'#7c3aed',price:r(p-0.4),meta:null,tip:'New：全部新品报价的最低价。'},
+    {k:'New · 第三方 FBA',color:'#ff6a00',price:r(p+0.44),meta:caOfferSeller(h+23),tip:'New, 3rd Party FBA：第三方 FBA 最低价 + 卖家。'},
+    {k:'New · 第三方 FBM',color:'#2f80ed',price:r(p+3.4),meta:caOfferSeller(h+37),tip:'New, 3rd Party FBM：第三方自发货最低价 + 卖家。'},
+    {k:'New · Prime 专享',color:'#00a389',price:prime?r(p*0.82):null,meta:null,tip:'New, Prime exclusive：Prime 会员专享价；无 = 无该报价。'},
+    {k:'Lightning Deal 闪购',color:'#e5342b',price:hasDeal?r(p*0.85):null,meta:null,tip:'Lightning Deal：限时闪购价；无 = 当前无闪购。'},
+    {k:'List Price 官方价',color:'#8b5a2b',price:r(p*1.15),meta:null,tip:'List Price：厂商建议零售价 / 官方标价。'},
+    {k:'Used 二手',color:'#9aa0a6',price:r(p*0.76),meta:null,tip:'Used：二手最低价。'}
   ];
 }
 function caOfferRow(o){
@@ -26435,7 +27986,7 @@ function caMiniChart(c){
   const cid='mini-'+c.asin;
   e.push(caHoverLayer(cid,x0,x1,yT,yB,s.priceSeries));
   _caChartReg[cid]={vbW:300,x0,x1,N,xf,yP,yR,priceSeries:s.priceSeries,rank:s.rank,labels:CA_WK,deals:s.deals};
-  return '<svg viewBox="0 0 300 84" width="100%" style="display:block;margin:1px 0 4px;max-width:420px" role="img" aria-label="'+c.asin+' Keepa 价格历史 mini 图"><desc>Buy Box / New / FBA / FBM / Prime 专享 / List 价格与 Sales Rank 近 12 周走势，悬停查看每周数值，橙点为闪购。</desc>'+e.join('')+'</svg><div class="cx-tip"></div>';
+  return '<svg viewBox="0 0 300 84" width="100%" style="display:block;margin:1px 0 4px;max-width:420px" role="img" aria-label="'+c.asin+' 历史价格走势 mini 图"><desc>Buy Box / New / FBA / FBM / Prime 专享 / List 价格与 Sales Rank 近 12 周走势，悬停查看每周数值，橙点为闪购。</desc>'+e.join('')+'</svg><div class="cx-tip"></div>';
 }
 // 放大版曲线（带坐标轴、图例、悬停信息框）
 const CA_WK=['Apr 16','Apr 23','May 1','May 8','May 16','May 24','Jun 1','Jun 8','Jun 16','Jun 23','Jul 1','Jul 8'];
@@ -26463,7 +28014,7 @@ function caBigChart(c){
   e.push(caHoverLayer(cid,L.x0,L.x1,L.yT,L.yB,s.priceSeries));
   _caChartReg[cid]={vbW:1000,x0:L.x0,x1:L.x1,N,xf,yP,yR,priceSeries:s.priceSeries,rank:s.rank,labels:CA_WK,deals:s.deals};
   const legend=s.priceSeries.map(se=>'<span style="display:inline-flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px solid '+se.color+';display:inline-block"></span>'+se.name+'</span>').join('')+'<span style="display:inline-flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px solid #67a352;display:inline-block"></span>Sales Rank</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:5px;border-radius:2px;background:#ef8a2b;display:inline-block"></span>Lightning Deal</span>';
-  return '<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px"><div style="font-size:14px;font-weight:600;color:var(--t0)">'+c.emoji+' '+c.asin+(c.you?' · 我方':'')+'</div><div style="font-size:12px;color:var(--t3)">当前价 '+caMoney(c.currentPrice)+' · 悬停查看每周报价</div></div><div style="display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11.5px;color:var(--t2);margin-bottom:12px">'+legend+'</div><div style="position:relative"><svg viewBox="0 0 1000 378" width="100%" style="min-width:660px" role="img" aria-label="'+c.asin+' Keepa 价格历史放大图"><desc>Buy Box / New / FBA / FBM / Prime 专享 / List / Used 价格与 Sales Rank 走势，含闪购标记；悬停显示十字准星与数值气泡。</desc>'+e.join('')+'</svg><div class="cx-tip"></div></div>';
+  return '<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px"><div style="font-size:14px;font-weight:600;color:var(--t0)">'+c.emoji+' '+c.asin+(c.you?' · 我方':'')+'</div><div style="font-size:12px;color:var(--t3)">当前价 '+caMoney(c.currentPrice)+' · 悬停查看每周报价</div></div><div style="display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11.5px;color:var(--t2);margin-bottom:12px">'+legend+'</div><div style="position:relative"><svg viewBox="0 0 1000 378" width="100%" style="min-width:660px" role="img" aria-label="'+c.asin+' 历史价格走势放大图"><desc>Buy Box / New / FBA / FBM / Prime 专享 / List / Used 价格与 Sales Rank 走势，含闪购标记；悬停显示十字准星与数值气泡。</desc>'+e.join('')+'</svg><div class="cx-tip"></div></div>';
 }
 function caOpenChart(asin){
   const c=CA_SORTED.find(x=>x.asin===asin)||CA_DATA.find(x=>x.asin===asin); if(!c) return;
@@ -26509,7 +28060,7 @@ function caSopSvg(sop,c){
   var s='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">';
   s+='<rect width="'+W+'" height="'+H+'" fill="#ffffff"/>';
   s+='<text x="'+pad+'" y="'+titleY+'" font-size="16" font-weight="700" fill="#1a1a1a">运营策略 SOP · 成长周期甘特图</text>';
-  var sub=(c&&c.you)?('我方 '+e(c.asin)+' · witi S3 Pro 实际计划（上市前 4 周 → W28）'):('竞品 '+e(c?c.asin:'')+' · '+e(sop.stage||'')+' · 现价 '+e(c?caMoney(c.currentPrice):'')+' · SIF 信号反推（推测）');
+  var sub=(c&&c.you)?('我方 '+e(c.asin)+' · witi S3 Pro 实际计划（上市前 4 周 → W28）'):('竞品 '+e(c?c.asin:'')+' · '+e(sop.stage||'')+' · 现价 '+e(c?caMoney(c.currentPrice):'')+' · 行情信号反推（推测）');
   s+='<text x="'+pad+'" y="'+subY+'" font-size="11" fill="#8a8a8e">'+sub+'</text>';
   s+='<text x="'+xMod+'" y="'+wkY+'" font-size="10" font-weight="700" fill="#6a6a6e">模块</text>';
   s+='<text x="'+xTask+'" y="'+wkY+'" font-size="10" font-weight="700" fill="#6a6a6e">任务</text>';
@@ -26547,7 +28098,7 @@ function caSopSvg(sop,c){
     s+='<text x="'+(lx+15)+'" y="'+legendY+'" font-size="9.5" fill="#6a6a6e">'+e(t[1])+'</text>';
     lx+=15+t[1].length*11+18;
   });
-  var foot=(c&&c.you)?'数据源：成长周期甘特图 Excel；各判断条件由 SIF asinOpTrafficTrend 字段实时校验。':'竞品打法为按 SIF asinOpTrafficTrend 信号 + 竞品分析方法论反推（推测），末行为我方应对建议。';
+  var foot=(c&&c.you)?'数据源：成长周期甘特图 Excel；各判断条件由 asinOpTrafficTrend 字段实时校验。':'竞品打法为按 asinOpTrafficTrend 信号 + 竞品分析方法论反推（推测），末行为我方应对建议。';
   s+='<text x="'+pad+'" y="'+footY+'" font-size="9" fill="#a0a0a4">'+e(foot)+'</text>';
   s+='</svg>';
   return s;
@@ -26559,7 +28110,7 @@ function caOpenSop(asin){
   var sop=caSopFor(c);
   var head=c.you
     ? '<span class="ca-sop-stage" style="background:var(--accent)">我方实际计划</span> <b>'+c.emoji+' '+c.asin+'</b> · witi S3 Pro · 上市前 4 周 → W28（次年 1 月）；价格锚点 $199.99，成交价梯度 $109.99 → $119.99 → $129.99 → $139.99'
-    : '<span class="ca-sop-stage">'+(sop.stage||'')+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 '+c.listedDays+' 天（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 '+caMoney(c.currentPrice)+' · 打法按 SIF 信号<b>反推</b>（推测）';
+    : '<span class="ca-sop-stage">'+(sop.stage||'')+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 '+c.listedDays+' 天（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 '+caMoney(c.currentPrice)+' · 打法按 行情信号<b>反推</b>（推测）';
   body.innerHTML='<div class="ca-sop-meta '+(c.you?'plan':'infer')+'" style="margin:0 0 12px">'+head+'</div>'
     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">'
     +'<div style="font-size:12px;color:var(--t2);flex:1;min-width:180px">下方为'+(c.you?'我方成长周期实际计划':'该竞品从上架起的运营打法反推 + 我方应对建议')+'（表格式甘特），可下载 PNG 后在项目管理工具中细化分工与排期。</div>'
@@ -26576,7 +28127,7 @@ function caSopInlineHtml(asin){
   var sop=caSopFor(c);
   var head=c.you
     ? '<span class="ca-sop-stage" style="background:var(--accent)">我方实际计划</span> <b>'+c.emoji+' '+c.asin+'</b> · witi S3 Pro · 上市前 4 周 → W28（次年 1 月）；价格锚点 $199.99，成交价梯度 $109.99 → $119.99 → $129.99 → $139.99'
-    : '<span class="ca-sop-stage">'+(sop.stage||'')+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 '+c.listedDays+' 天（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 '+caMoney(c.currentPrice)+' · 打法按 SIF 信号<b>反推</b>（推测）';
+    : '<span class="ca-sop-stage">'+(sop.stage||'')+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 '+c.listedDays+' 天（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 '+caMoney(c.currentPrice)+' · 打法按 行情信号<b>反推</b>（推测）';
   return '<div class="ca-sop-meta '+(c.you?'plan':'infer')+'" style="margin:0 0 12px">'+head+'</div>'
     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">'
     +'<div style="font-size:12px;color:var(--t2);flex:1;min-width:180px">下方为'+(c.you?'我方成长周期实际计划':'该竞品从上架起的运营投放策略反推')+'（表格式甘特），可下载 PNG 后在项目管理工具中细化分工与排期。</div>'
@@ -26639,7 +28190,7 @@ function caDownloadSop(asin){
 function caRenderPrice(){
   caEl('ca-price').innerHTML=`
     <div class="ca-rcard">
-      <div class="ca-result-cap"><span class="ca-result-dot"></span>分析结果 · 价格与促销监控（Keepa 信号 × SIF 动作反查）</div>
+      <div class="ca-result-cap"><span class="ca-result-dot"></span>分析结果 · 价格与促销监控（行情信号 × 运营动作反查）</div>
       <div class="ca-rcard-body" style="padding-top:12px">
         ${CA_SORTED.filter(c=>!c.you).map(c=>{
           const bsrChg=c.prevBsr-c.bsr;
@@ -26659,14 +28210,14 @@ function caRenderPrice(){
           const keepaSig = `价格波动${c.priceVolatility}、30 天促销 ${c.couponFreq30d} 次、评论 +${c.reviewGrowth30d}、${bsrChg>=0?'BSR 上行':'BSR 下行'}`;
           return `
           <div class="ca-ks ${c.you?'you':''}">
-            <div class="ca-ks-head">${c.emoji} <span class="ca-ks-asin">${c.asin}</span>${c.you?'<span class="ca-you-tag">我方</span>':''}<span style="margin-left:auto;font-size:11px;color:var(--t3);font-weight:500">当前价 ${caMoney(c.currentPrice)}</span><button id="ca-sopbtn-${c.asin}" onclick="caToggleSop('${c.asin}')" title="展开近 12 周运营投放策略甘特图" style="margin-left:12px;font-size:11px;font-weight:600;color:#fff;background:#0a84ff;border:none;border-radius:6px;padding:4px 11px;cursor:pointer;white-space:nowrap">📋 运营策略 SOP ▾</button></div>
+            <div class="ca-ks-head">${c.emoji} <span class="ca-ks-asin">${c.asin}</span>${c.you?'<span class="ca-you-tag">我方</span>':''}<span style="margin-left:auto;font-size:11px;color:var(--t3);font-weight:500">当前价 ${caMoney(c.currentPrice)}</span><button onclick="caAdDetail('${c.asin}')" title="查看广告投放明细：活动 / 广告组结构、投放词、SP 排名（SIF ad 系列接口 · 重构估计，非广告后台真值）" class="ca-addetail-btn" style="margin-left:12px">📊 广告投放明细 →</button><button id="ca-sopbtn-${c.asin}" onclick="caToggleSop('${c.asin}')" title="展开近 12 周运营投放策略甘特图" style="margin-left:8px;font-size:11px;font-weight:600;color:#fff;background:#0a84ff;border:none;border-radius:6px;padding:4px 11px;cursor:pointer;white-space:nowrap">📋 运营策略 SOP ▾</button></div>
             <div class="ca-pr-grid">
               <div class="ca-pr-left">
-                <div class="ca-ks-ct s" style="margin-bottom:8px">信号 → 动作 → 效果（按时间点 · 左 Keepa 信号，中 SIF 动作，右 效果）</div>
+                <div class="ca-ks-ct s" style="margin-bottom:8px">信号 → 动作 → 效果（按时间点 · 左 行情信号，中 运营动作，右 效果）</div>
                 ${caRenderMergedTimeline(c)}
               </div>
               <div class="ca-pr-right">
-                <div class="ca-ks-ct k" style="margin-bottom:8px">◐ Keepa 价格历史（近 12 周 · 悬停看数值 · 点击放大）</div>
+                <div class="ca-ks-ct k" style="margin-bottom:8px">◐ 历史价格走势（近 12 周 · 悬停看数值 · 点击放大）</div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--t2);margin-bottom:10px;align-items:center">
                   <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#e6007e;display:inline-block"></span>Buy Box <b style="color:var(--t0)">${caMoney(c.currentPrice)}</b></span>
                   <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#ff9900;display:inline-block"></span>Amazon <b style="color:var(--t0)">${(c.priceExceptionTags||[]).indexOf('no_amazon_offer')>=0?'无':caMoney(c.currentPrice)}</b></span>
@@ -26674,20 +28225,20 @@ function caRenderPrice(){
                 </div>
                 <div class="ca-mini-wrap" onclick="caOpenChart('${c.asin}')" title="点击放大查看完整价格曲线">${caMiniChart(c)}<span class="ca-mini-zoom">⤢ 点击放大</span></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:11px;color:var(--t2);margin-top:12px">
-                  <span>${caHint('价格波动','Keepa 价格序列振幅，高=频繁调价/促销。')}：${vol}</span>
-                  <span>${caHint('30天促销','Keepa LD 闪购 + coupon 出现次数。')}：${c.couponFreq30d} 次</span>
-                  <span>${caHint('BSR','Keepa SALES rank：上一观测→当前。')}：${bsrTxt}</span>
-                  <span>${caHint('30天评论','Keepa reviewCount 增量。')}：${rev}</span>
+                  <span>${caHint('价格波动','历史价格序列振幅，高=频繁调价/促销。')}：${vol}</span>
+                  <span>${caHint('30天促销','闪购 + coupon 出现次数。')}：${c.couponFreq30d} 次</span>
+                  <span>${caHint('BSR','销量排名：上一观测→当前。')}：${bsrTxt}</span>
+                  <span>${caHint('30天评论','评论数增量。')}：${rev}</span>
                 </div>
                 <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px">${exTags}</div>
-                <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px"><span style="color:var(--t2)">${caHint('主投词','asinKeywords 广告词中得分最高的词。')}</span>${(c.topAdKw||[]).slice(0,3).map(k=>`<span class="ca-tg neutral">${k}</span>`).join(' ')||'—'}<button onclick="caAdDetail('${c.asin}')" title="查看该 ASIN 的广告投放明细（ad/keywords：活动/组、变体、SP 排名历史、广告分占比）" style="margin-left:auto;font-size:11px;font-weight:600;color:var(--accent2);background:var(--accent-bg);border:1px solid var(--accent);border-radius:6px;padding:3px 11px;cursor:pointer;white-space:nowrap">📊 广告投放明细 →</button></div>
+                <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px"><span style="color:var(--t2)">${caHint('主投词','asinKeywords 广告词中得分最高的词。')}</span>${(c.topAdKw||[]).slice(0,3).map(k=>`<span class="ca-tg neutral">${k}</span>`).join(' ')||'—'}</div>
               </div>
             </div>
-            <div class="ca-ks-concl"><b>判定动作：</b>Keepa 侧观测到「${keepaSig}」；SIF 侧归因为「<b style="color:var(--t0)">${actTxt}</b>」 → ${eff}。${priTags?'　'+priTags:''}</div>
+            <div class="ca-ks-concl"><b>判定动作：</b>行情侧观测到「${keepaSig}」；运营侧归因为「<b style="color:var(--t0)">${actTxt}</b>」 → ${eff}。${priTags?'　'+priTags:''}</div>
             <div class="ca-sop-inline" id="ca-sopinline-${c.asin}" style="display:none"></div>
           </div>`;
         }).join('')}
-        <div class="ca-note">每行一个时间点，逐行对齐「Keepa 信号（价格 / BSR / 评论 / 闪购波动）→ SIF 动作（asinOpTrafficTrend 的 title / img / campaign / couponInfo / adScore）→ 效果（后续 BSR 变化）」。逻辑参见《竞品动作反查流程 Keepa×SIF》：Keepa 发现异常 → SIF 解释动作 → 观察效果。悬停顶部指标查看字段口径，点击曲线可放大。</div>
+        <div class="ca-note">每行一个时间点，逐行对齐「行情信号（价格 / BSR / 评论 / 闪购波动）→ 运营动作（标题 / 主图 / 广告活动 / 优惠券 / 广告分变化）→ 效果（后续 BSR 变化）」。逻辑：行情侧发现异常 → 运营侧解释动作 → 观察效果。悬停顶部指标查看字段口径，点击曲线可放大。</div>
       </div>
     </div>`;
 }
@@ -26726,7 +28277,7 @@ const CA_SOP_WITI = (function(){
       bars:[{s:29,e:32,type:'anchor',label:'品牌价',sub:'$139.99'}]}
   ];
   return {you:false, mode:'plan', stage:'实际计划', weeks:weeks, groups:groups, rows:rows, launchIdx:4,
-    source:'数据源：成长周期甘特图 Excel；执行中各"判断条件"由 SIF asinOpTrafficTrend 的 buyboxPrice / couponInfo / bsr / review / adScoreRatios 等字段实时校验。'};
+    source:'数据源：成长周期甘特图 Excel；执行中各"判断条件"由 asinOpTrafficTrend 的 buyboxPrice / couponInfo / bsr / review / adScoreRatios 等字段实时校验。'};
 })();
 
 // —— 竞品：按 SIF 信号反推的从上架起打法 + 我方应对建议 ——
@@ -26814,10 +28365,10 @@ function caSopSource(){
     ['广告结构扩张','campaign（新增活动） · ad（新增广告组） · adScore',''],
     ['Listing 变更','title（改标题 0/1） · img（改主图 0/1）',''],
     ['关键词 / 搜索量','relevanceScreen/keywordByCategory 等关键词接口',''],
-    ['CTR / CVR / CPC / ACoS','广告后台数据，SIF 不提供',1],
-    ['库存 / 物流（发货·空运·海运）','SIF 无物流类接口',1]
+    ['CTR / CVR / CPC / ACoS','广告后台数据，本接口不提供',1],
+    ['库存 / 物流（发货·空运·海运）','本接口无物流类接口',1]
   ];
-  return '<div class="ca-sop-src"><div class="ca-sop-src-h">判断条件 → SIF 可提供的接口字段（asinOpTrafficTrend 时光机为主）</div>'
+  return '<div class="ca-sop-src"><div class="ca-sop-src-h">判断条件 → 可提供的接口字段（asinOpTrafficTrend 时光机为主）</div>'
     +'<table class="ca-sop-srct"><tbody>'+rows.map(function(r){
       return '<tr><td class="k">'+r[0]+'</td><td class="'+(r[2]?'f na':'f')+'">'+r[1]+'</td></tr>';
     }).join('')+'</tbody></table></div>';
@@ -26846,7 +28397,7 @@ function caSopRenderView(){
   if(sop.you){
     meta='<div class="ca-sop-meta plan"><span class="ca-sop-stage" style="background:var(--accent)">我方实际计划</span> 产品 <b>'+c.emoji+' '+c.asin+'</b> · witi S3 Pro · 自 <b>上市前 4 周</b> 起至 <b>W28（次年 1 月）</b>；价格锚点 <b>$199.99</b>，成交价梯度 <b>$109.99 → $119.99 → $129.99 → $139.99</b>。'+CA_SOP_WITI.source+'</div>';
   } else {
-    meta='<div class="ca-sop-meta infer"><span class="ca-sop-stage">'+sop.stage+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 <b>'+c.listedDays+' 天</b>（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 <b>'+caMoney(c.currentPrice)+'</b>。以下打法按 SIF 信号<b>反推</b>（推测），末行虚线框为<b>我方应对建议</b>。</div>';
+    meta='<div class="ca-sop-meta infer"><span class="ca-sop-stage">'+sop.stage+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 <b>'+c.listedDays+' 天</b>（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 <b>'+caMoney(c.currentPrice)+'</b>。以下打法按 行情信号<b>反推</b>（推测），末行虚线框为<b>我方应对建议</b>。</div>';
   }
   view.innerHTML=meta+caSopTable(sop)+caSopLegend()+caSopSource();
 }
@@ -26895,7 +28446,7 @@ function caTraceCustom(key, plan, costText, done){
     if(i>=plan.length){ if(st) st.textContent=`已完成 ${plan.length} 次调用 · ${costText}`; done&&done(); return; }
     caEl(`ca-api-${key}-${i}`).querySelector('.ca-api-stat').innerHTML='<div class="ca-ring"></div>';
     if(st) st.textContent=`调用中 ${i+1}/${plan.length}`;
-    i++; setTimeout(tick,500);
+    i++; setTimeout(tick,120);
   };
   tick();
 }
