@@ -6,7 +6,7 @@
 <title>SellerOS</title>
 </head>
 <body>
-<!-- deploy-marker: v6-selfcontained-20260819 -->
+<!-- deploy-marker: v7-selfcontained-20260819 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -2600,7 +2600,7 @@ table.ca-flat tbody tr:hover td.ca-flat-asin{background:var(--bg-card2)}
 #ca-comp-card{overflow:visible}
 #ca-stage1 .ca-block{overflow:visible}
 #ca-stage1 .ca-block>.ca-block-head{border-radius:var(--radius-lg) var(--radius-lg) 0 0}
-.ca-ctabs{display:flex;gap:10px;padding:14px 18px 15px;overflow-x:auto;background:var(--bg-card2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:6;box-shadow:0 3px 10px rgba(0,0,0,.045)}
+.ca-ctabs{display:flex;gap:10px;padding:14px 18px 15px;overflow-x:auto;background:var(--bg-card2);border-top:1px solid var(--border2);border-bottom:2px solid var(--border2);position:sticky;top:0;z-index:6;box-shadow:0 4px 12px rgba(0,0,0,.07)}
 /* 未选中：压暗、去饱和、扁平 —— 一眼看出不是当前项 */
 .ca-ctab{flex:1 1 0;display:flex;align-items:center;gap:11px;min-width:212px;max-width:340px;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--bg-card);cursor:pointer;font-family:inherit;text-align:left;position:relative;overflow:hidden;opacity:.72;filter:saturate(.5);transition:background .18s,border-color .18s,box-shadow .18s,transform .18s}
 .ca-ctab:hover{opacity:1;filter:none;border-color:var(--t3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.07)}
@@ -2641,7 +2641,7 @@ table.ca-flat tbody tr:hover td.ca-flat-asin{background:var(--bg-card2)}
 /* 维度分段（平铺展开） */
 .ca-sec{border-top:1px solid var(--border)}
 .ca-sec:first-of-type{border-top:none}
-.ca-sec-hd{display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--bg-card2);border-bottom:1px solid var(--border);position:sticky;top:93px;z-index:3}
+.ca-sec-hd{display:flex;align-items:center;gap:10px;padding:13px 18px;background:var(--bg-card2);border-bottom:1px solid var(--border);position:sticky;top:94px;z-index:3}
 .ca-sec-no{width:22px;height:22px;border-radius:7px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ca-sec-tx{min-width:0}
 .ca-sec-tt{font-size:13px;font-weight:700;color:var(--t0);letter-spacing:-.1px}
@@ -4744,17 +4744,29 @@ select.ql-f-in{cursor:pointer}
 
         <div class="nav-label" style="margin-top:12px">管理</div>
 
-        <!-- 产品管理 -->
-        <div class="nav-item" onclick="toggleNavGroup('grp-product-mgmt')" style="cursor:pointer">
+        <!-- 商品库：是资产不是流水，提到一级，和下面的「使用记录」区分开 -->
+        <div class="nav-item" id="nav-product_pool" onclick="setPage('product_pool')">
           <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-          <span>产品管理</span>
+          <span>商品库</span>
+          <span id="product-pool-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
+        </div>
+
+        <!-- 使用记录 -->
+        <div class="nav-item" onclick="toggleNavGroup('grp-product-mgmt')" style="cursor:pointer">
+          <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+          <span>使用记录</span>
           <svg id="chev-grp-product-mgmt" viewBox="0 0 24 24" style="width:14px;height:14px;margin-left:auto;stroke:var(--t3);stroke-width:2;fill:none;transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="nav-sub" id="grp-product-mgmt" style="display:none;padding-left:20px">
-          <div class="nav-item" id="nav-listing_records" onclick="setPage('listing_records')" style="font-size:12px;padding:6px 10px">
+          <div class="nav-item" id="nav-listing_gen_records" onclick="setPage('listing_gen_records')" style="font-size:12px;padding:6px 10px">
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>lisiting生成记录</span>
+            <span id="listing-gen-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
+          </div>
+          <div class="nav-item" id="nav-listing_opt_records" onclick="setPage('listing_opt_records')" style="font-size:12px;padding:6px 10px">
             <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            <span>lisiting生成/优化记录</span>
-            <span id="listing-record-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
+            <span>lisiting打分记录</span>
+            <span id="listing-opt-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
           </div>
           <div class="nav-item" id="nav-competitor_records" onclick="setPage('competitor_records')" style="font-size:12px;padding:6px 10px">
             <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -4764,6 +4776,7 @@ select.ql-f-in{cursor:pointer}
           <div class="nav-item" id="nav-selection_records" onclick="setPage('selection_records')" style="font-size:12px;padding:6px 10px">
             <svg viewBox="0 0 24 24" style="width:15px;height:15px"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
             <span>选品分析记录</span>
+            <span id="sel-record-count" style="font-size:8px;padding:1px 5px;border-radius:8px;background:rgba(0,122,255,0.08);color:var(--accent2);font-weight:700;margin-left:auto;display:none">0</span>
           </div>
           <div class="nav-item" id="nav-launch_records" onclick="setPage('launch_records')" style="font-size:12px;padding:6px 10px">
             <svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
@@ -5411,6 +5424,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
         <div class="aud-modal-card wide ca-content-wide" onclick="event.stopPropagation()">
           <div class="aud-modal-head">
             <div class="aud-modal-title">竞品分析内容</div>
+            <button id="ca-content-report-btn" style="margin-left:auto;margin-right:10px;padding:7px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">📄 竞品分析报告</button>
             <button class="aud-modal-close" onclick="caCloseContent()" title="关闭">✕</button>
           </div>
           <div class="aud-modal-body" id="ca-content-body"></div>
@@ -5957,13 +5971,12 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
 
       </div>
 
-      <!-- PAGE: 优选商品库 -->
+      <!-- PAGE: 商品库 -->
       <div class="page" id="page-product_pool">
-        <div style="max-width:1120px;margin:0 auto;padding:20px 16px">
+        <div>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
             <div>
-              <div style="font-size:20px;font-weight:800;color:var(--t0)">优选商品库</div>
-              <div style="font-size:12px;color:var(--t3);margin-top:3px">精品线：全链路选品入选的商品，点卡片看分析报告　·　精铺线：切到「📦 精铺货盘」做分档、试单排期与汰换</div>
+              <div style="font-size:20px;font-weight:800;color:var(--t0)">商品库</div>
             </div>
             <button onclick="setPage('flow')" style="border:none;background:var(--accent);color:#fff;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:800;cursor:pointer">+ 去选品</button>
           </div>
@@ -6115,29 +6128,35 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
             <div class="section-sub" id="ca-rec-count-text">共 0 条记录</div>
           </div>
         </div>
-        <div id="ca-rec-list"></div>
-      </div>
-
-      <!-- PAGE: 产品分析报告 -->
-      <div class="page" id="page-product_reports">
-        <div class="section-header">
-          <div>
-            <div class="section-title">产品分析报告</div>
-            <div class="section-sub">选品流程生成的分析报告存档</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+          <div style="position:relative;flex:1;min-width:200px;max-width:360px">
+            <svg viewBox="0 0 24 24" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="ca-rec-search" type="text" placeholder="搜索 ASIN（我方或任一竞品）…" oninput="renderCaRecords()"
+              style="width:100%;padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);outline:none;background:var(--bg-card)">
           </div>
+          <select id="ca-rec-site" onchange="renderCaRecords()" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
+            <option value="">全部站点</option>
+          </select>
+          <select id="ca-rec-time" onchange="renderCaRecords()" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
+            <option value="">全部时间</option>
+            <option value="7">近 7 天</option>
+            <option value="30">近 30 天</option>
+            <option value="90">近 90 天</option>
+          </select>
+          <button id="ca-rec-reset" onclick="caResetRecFilters()" style="display:none;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">重置</button>
         </div>
-        <div id="product-reports-list"></div>
+        <div id="ca-rec-list"></div>
       </div>
 
       <!-- PAGE: Listing分析记录 -->
       <div class="page" id="page-listing_records">
         <div class="section-header">
           <div>
-            <div class="section-title">Listing 生成记录</div>
+            <div class="section-title" id="lr-title">Listing 生成记录</div>
             <div class="section-sub" id="lr-count-text">共 0 条记录</div>
           </div>
         </div>
-        <!-- 工具栏：搜索 / 类型筛选 / 每页条数 -->
+        <!-- 工具栏：搜索 / 每页条数（生成与优化已拆成两个入口，不再需要类型页签） -->
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
           <div style="position:relative;flex:1;min-width:200px;max-width:360px">
             <svg viewBox="0 0 24 24" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -6145,11 +6164,23 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
               style="width:100%;padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);outline:none;background:var(--bg-card)"
               onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
           </div>
-          <div id="lr-type-tabs" style="display:flex;gap:2px;background:var(--bg-page);padding:3px;border-radius:8px">
-            <button class="lr-type-btn active" data-type="all" onclick="lrSetType('all')">全部</button>
-            <button class="lr-type-btn" data-type="生成" onclick="lrSetType('生成')">Listing 生成</button>
-            <button class="lr-type-btn" data-type="打分" onclick="lrSetType('打分')">Listing 打分</button>
-          </div>
+          <select id="lr-f-market" onchange="lrSetFilter('market',this.value)" style="display:none;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
+            <option value="">全部站点</option>
+          </select>
+          <select id="lr-f-score" onchange="lrSetFilter('score',this.value)" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
+            <option value="">全部评分</option>
+            <option value="80">优秀 · 80 分以上</option>
+            <option value="60-79">良好 · 60–79 分</option>
+            <option value="0-59">待优化 · 60 分以下</option>
+          </select>
+          <select id="lr-f-time" onchange="lrSetFilter('time',this.value)" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
+            <option value="">全部时间</option>
+            <option value="30">近 30 天</option>
+            <option value="90">近 90 天</option>
+            <option value="180">近 180 天</option>
+          </select>
+          <button id="lr-reset" onclick="lrResetFilters()" style="display:none;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">重置</button>
+          <div id="lr-type-tabs" style="display:none"></div>
           <div style="display:none;margin-left:auto;align-items:center;gap:6px;font-size:12px;color:var(--t3)">
             每页
             <select id="lr-pagesize" onchange="lrSetPageSize(this.value)" style="padding:6px 8px;border:1px solid var(--border);border-radius:7px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
@@ -6619,14 +6650,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
                 <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 积分明细
               </button>
-              <button id="rc-mc-btn" class="rc-hist-btn" onclick="showMemberCenterModal()">
-                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.7 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>
-                会员充值中心
-              </button>
               <div class="rc-switch" id="rc-switch">
-                <button data-lv="5">Lv.5 视角</button>
-                <button data-lv="4" class="active">Lv.4 视角</button>
-                <button data-lv="3">Lv.3 视角</button>
+                <button data-lv="3" class="active">Lv.3 视角</button>
                 <button data-lv="2">Lv.2 视角</button>
                 <button data-lv="1">Lv.1 视角</button>
                 <button data-lv="6">团队成员视角</button>
@@ -6804,16 +6829,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
         <!-- 邀请 / 分销区（Lv.4 被邀请人、Lv.5 邀请人视角）·紧跟钱包卡之后 -->
         <div id="rc-invitee-block" style="margin-bottom:14px"></div>
 
-        <!-- 按量计费说明：压成一条横幅置于套餐区上方，套餐卡照常展示（只读） -->
-        <div id="rc-usage-note" style="display:none;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding:12px 18px;background:rgba(232,176,75,.07);border:1px solid rgba(232,176,75,.3);border-radius:12px">
-          <div style="flex:1;min-width:280px">
-            <div style="font-size:12.5px;font-weight:700;color:#c8901f;margin-bottom:3px">你当前为邀请制按量计费，以下套餐仅供查看</div>
-            <div style="font-size:11.5px;color:var(--t2);line-height:1.6">Lv.4 Founder / Lv.5 Inviter 享长期专属折扣 <b>¥0.080 / 积分</b>，积分永不清零、用多少扣多少，<b>无需也无法自助订阅套餐</b>。如需转为套餐制请联系客户成功经理。</div>
-          </div>
-          <button onclick="rcShowPlanDetail()" style="flex-shrink:0;padding:7px 14px;border:1px solid rgba(232,176,75,.5);border-radius:8px;background:var(--bg-card);color:#c8901f;font-family:var(--f);font-size:11.5px;font-weight:700;cursor:pointer">单价对比 →</button>
-        </div>
-
-        <!-- 选择会员等级（Lv.4/5 为只读查看） -->
+        <!-- 选择会员等级 -->
         <div id="rc-tier-block">
           <!-- 到期提醒 banner（即将到期 / 宽限期 / 已过期时显示） -->
           <div id="rc-reminder" style="display:none;margin-bottom:14px"></div>
@@ -9272,16 +9288,25 @@ SD-商品定位 | 展示型 | $480 | $760 | 63.2% | 210,000 | 1,540 | 34</textar
 
       <!-- 产品管理 · 选品分析记录 -->
       <div class="page" id="page-selection_records">
-        <div class="gen-hero"><div class="gen-hero-top">
-          <div class="gen-hero-title">选品分析记录</div>
-          <div class="gen-hero-sub">历史选品分析记录归档，可回看选品报告与决策过程。</div>
-        </div></div>
-        <div class="ph-holder">
-          <div class="ph-ico"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
-          <div class="ph-title">选品分析记录 · 页面建设中</div>
-          <div class="ph-desc">该功能已按导航结构占位，具体交互与内容待开发。</div>
-          <div class="ph-tag">占位页 · Placeholder</div>
+        <div class="section-header">
+          <div>
+            <div class="section-title">选品分析记录</div>
+            <div class="section-sub" id="sel-rec-count-text">共 0 条记录</div>
+          </div>
         </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+          <div style="position:relative;flex:1;min-width:200px;max-width:360px">
+            <svg viewBox="0 0 24 24" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--t3);stroke-width:2;fill:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="sel-rec-search" type="text" placeholder="搜索关键词 / 类目 / 站点…" oninput="renderSelRecords()"
+              style="width:100%;padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);outline:none;background:var(--bg-card)">
+          </div>
+          <select id="sel-rec-entry" onchange="renderSelRecords()" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--f);color:var(--t0);background:var(--bg-card);outline:none;cursor:pointer">
+            <option value="">全部入口</option>
+            <option value="cat">类目选品</option>
+            <option value="link">产品验证</option>
+          </select>
+        </div>
+        <div id="sel-rec-list"></div>
       </div>
 
       <!-- 词库管理 · 内置提示词（生图） -->
@@ -9703,16 +9728,20 @@ function setPage(p, sub){
   } else if(p==='flow'){
     document.getElementById('page-flow').classList.add('active');
     initCatCascade();
-  } else if(p==='product_reports'){
-    document.getElementById('page-product_reports').classList.add('active');
-    renderProductReports();
-  } else if(p==='listing_records'){
+  } else if(p==='listing_gen_records' || p==='listing_opt_records'){
+    // 生成 / 优化 拆成两个入口，共用同一张列表页，按类型锁定筛选
     document.getElementById('page-listing_records').classList.add('active');
     _lrState.page=1; _lrState.selected.clear();
+    _lrState.type = (p==='listing_gen_records') ? '生成' : '打分';
+    const _lrT = document.getElementById('lr-title');
+    if(_lrT) _lrT.textContent = (p==='listing_gen_records') ? 'Listing 生成记录' : 'Listing 打分记录';
     renderListingScoreRecords();
   } else if(p==='competitor_records'){
     document.getElementById('page-competitor_records').classList.add('active');
     renderCaRecords();
+  } else if(p==='selection_records'){
+    document.getElementById('page-selection_records').classList.add('active');
+    renderSelRecords();
   } else if(p==='recharge'){
     document.getElementById('page-recharge').classList.add('active');
     rcInit();
@@ -9760,7 +9789,7 @@ function setPage(p, sub){
   }
   // Update topbar title
   const titleText = document.getElementById('topbar-title-text');
-  const titleMap={home:'首页',quick_launch:'一键上架',launch_records:'上架记录',listing:'lisiting生成',listing_optimize:'lisiting优化',product_listing:'AI 商品工厂','listing-score':'ASIN 审计',competitor_analysis:'竞品分析',score:'选品打分',flow:'选品工具',consumer_lab:'AI消费者实验室',inspiration_radar:'灵感雷达',market_research:'市场前调',product_dev_advice:'产品开发建议',img_general:'生图 · 通用创作',img_ecommerce:'生图 · 电商创作',img_batch:'批量改图',img_process:'图像处理',video_general:'生视频 · 通用创作',video_promo:'带货工作流',video_batch:'批量工作流',video_tools:'工具站',new_product_promo:'新品推广计划',ad_optimize_advice:'广告优化建议',pricing:'智能定价',patent_screening:'产品专利查询',material_pool:'素材池',image_template:'图片模板库',selection_records:'选品分析记录',builtin_prompts:'内置提示词（生图）',product_pool:'优选商品库',aiask:'AI 问一问',history:'历史记录',agent:'Agents',org:'组织架构',product_reports:'产品分析报告',listing_records:'lisiting生成/优化记录',competitor_records:'竞品分析记录',user_mgmt:'用户管理',invite:'邀请 / 分销',perm_config:'角色管理',cust_ops:'客户运营',team_mgmt:'企业团队管理',user_recharge:'用户充值',user_profile:'个人信息',change_pwd:'修改密码',usage_dashboard:'用量统计',recharge:'会员充值',sensitive_words:'敏感词库'};
+  const titleMap={home:'首页',quick_launch:'一键上架',launch_records:'上架记录',listing:'lisiting生成',listing_optimize:'lisiting优化',product_listing:'AI 商品工厂','listing-score':'ASIN 审计',competitor_analysis:'竞品分析',score:'选品打分',flow:'选品工具',consumer_lab:'AI消费者实验室',inspiration_radar:'灵感雷达',market_research:'市场前调',product_dev_advice:'产品开发建议',img_general:'生图 · 通用创作',img_ecommerce:'生图 · 电商创作',img_batch:'批量改图',img_process:'图像处理',video_general:'生视频 · 通用创作',video_promo:'带货工作流',video_batch:'批量工作流',video_tools:'工具站',new_product_promo:'新品推广计划',ad_optimize_advice:'广告优化建议',pricing:'智能定价',patent_screening:'产品专利查询',material_pool:'素材池',image_template:'图片模板库',selection_records:'选品分析记录',builtin_prompts:'内置提示词（生图）',product_pool:'商品库',aiask:'AI 问一问',history:'历史记录',agent:'Agents',org:'组织架构',listing_gen_records:'lisiting生成记录',listing_opt_records:'lisiting打分记录',competitor_records:'竞品分析记录',user_mgmt:'用户管理',invite:'邀请 / 分销',perm_config:'角色管理',cust_ops:'客户运营',team_mgmt:'企业团队管理',user_recharge:'用户充值',user_profile:'个人信息',change_pwd:'修改密码',usage_dashboard:'用量统计',recharge:'会员充值',sensitive_words:'敏感词库'};
   titleText.textContent=titleMap[p]||p;
   // Show/hide nav flow sub-steps
   const nfs = document.getElementById('nav-flow-steps');
@@ -17771,7 +17800,13 @@ function pvShowReport(dataBuilder){
     <div style="width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;margin:0 auto 14px;animation:spin 0.7s linear infinite"></div>
     <div style="font-size:13px;font-weight:600">正在拉取 ABA 关键词、竞品 Top100 与新品榜…</div></div>
   <style>@keyframes spin{to{transform:rotate(360deg)}}</style>`;
-  setTimeout(()=>{ const d=dataBuilder(); host.innerHTML=pvRenderReport(d); host.scrollIntoView({behavior:'smooth',block:'start'}); }, 650);
+  setTimeout(()=>{
+    const d=dataBuilder();
+    host.innerHTML=pvRenderReport(d);
+    host.scrollIntoView({behavior:'smooth',block:'start'});
+    // 验证结果归档到「使用记录 / 选品分析记录」，可回看整份报告
+    try{ if(typeof selSavePvRecord==='function') selSavePvRecord(d, flowUserData._pvProduct, host.innerHTML); }catch(e){}
+  }, 650);
 }
 
 function pvRenderReport(d){
@@ -17894,10 +17929,12 @@ function pvRenderReport(d){
         <ul style="margin:0;padding-left:20px;font-size:12px">${riskList}</ul>
       </div>
     </div>`);
-  // 底部动作
-  const foot=`<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:18px">
-    <button type="button" onclick="pvRunValidation()" style="padding:9px 16px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--t1);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">↻ 重新验证</button>
-    <button type="button" onclick="alert('已存入选品清单（示例）')" style="padding:9px 18px;border:none;border-radius:var(--radius-sm);background:var(--accent);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 1px 3px rgba(0,122,255,.3)">＋ 存入选品清单</button></div>`;
+  // 底部动作：入库按钮与产品卡上的完全一致（同一个 flowMyLibBtn，状态互通）
+  const _pvProd = pvBuildLibProduct(d);
+  flowUserData._pvProduct = _pvProd;   // 供 flowToggleMyLib 反查这件商品
+  const foot=`<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px">
+    ${flowMyLibBtn(_pvProd.asin,'primary')}
+    <button type="button" onclick="pvRunValidation()" style="margin-left:auto;padding:9px 16px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--t1);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">↻ 重新验证</button></div>`;
   // 上传新品也先做「类目机会诊断」（复用逛类目的两栏组件，图2 风格）
   const recCat=(d.positioning.find(p=>p.rec)||d.positioning[0]||{}).cat||d.name;
   let catDiag=(typeof flowRenderCategoryDiagnosis==='function' && recCat)?flowRenderCategoryDiagnosis([recCat]):'';
@@ -17931,6 +17968,109 @@ function pvRenderReport(d){
       <thead><tr style="color:var(--t3);font-size:10.5px;text-align:left"><th style="padding:6px 10px;font-weight:700">维度</th><th style="padding:6px 10px;font-weight:700">判断</th><th style="padding:6px 10px;font-weight:700">依据</th></tr></thead>
       <tbody>${_kaBody}</tbody></table></div>`);
   return `<div style="display:flex;flex-direction:column;gap:14px">${head}${catDiag}${sec2}${sec4}${sec5}${sec6}${secKa}${foot}</div>`;
+}
+// ── 产品验证的结果 → 商品库条目 ──
+// 验证的是「你自己还没上架的新品」，没有 ASIN 也没有真实销量/评论，
+// 所以只带验证真正算得出来的东西（机会分 / 锚价 / 价格带 / 竞品数 / 打法），不假造竞品指标。
+function pvBuildLibProduct(d){
+  const m = String(d.name||'').match(/\b(B0[A-Z0-9]{8})\b/i);
+  const asin = m ? m[1].toUpperCase() : ('NP-' + flowHashNum(String(d.name||'新品'), 7).toString(36).toUpperCase().slice(0,6));
+  const pos = (d.positioning||[]).find(x=>x.rec) || (d.positioning||[])[0] || {};
+  // 主推词按搜索量排，但衰退/红海词（tone bad）永远排在后面 —— 报告里明确说要规避的词不该当主词
+  const kws = (d.aba||[]).slice().sort((a,b)=>
+    ((a.tone==='bad')-(b.tone==='bad')) || ((b.sv||0)-(a.sv||0)));
+  const score10 = +((Number(d.score)||0)/10).toFixed(1);
+  return {
+    asin,
+    title: d.name || '待验证新品',
+    brand: m ? '同类竞品' : '自有新品',
+    category: pos.cat || '—',
+    keyword: (kws[0]||{}).kw || '—',
+    price: d.price ? ('$'+d.price) : '—',
+    priceNum: Number(d.price)||0,
+    compScore: score10,
+    verdict: d.verdict || '—',
+    qualified: (Number(d.score)||0) >= 70,
+    vetoed: (Number(d.score)||0) < 55,
+    daysAgo: 0,
+    // 验证专属字段（商品库里用这套渲染，不走竞品三维那套）
+    fromValidation: true,
+    pv: {
+      score: Number(d.score)||0,
+      tone: d.tone || '#ff9500',
+      oneLine: d.oneLine || '',
+      market: d.market || 'Amazon US',
+      cost: d.cost || 0,
+      priceMedian: d.priceMedian, priceAvg: d.priceAvg,
+      targetBand: (d.priceBands||[]).find(b=>b.target) || null,
+      rivals: pos.rivals || '—',
+      brandCount: (d.brands||[]).length,
+      newPerWeek: (d.newRel||[]).reduce((a,b)=>a+(b.n||0),0),
+      keywords: kws.slice(0,4).map(k=>({kw:k.kw, sv:k.sv, wow:k.wow, tone:k.tone})),
+      play: (d.play||[]).slice(0,4),
+      risks: (d.risks||[]).slice(0,3)
+    }
+  };
+}
+// 验证品在商品库里的卡片：结构对齐普通产品卡（三栏），但内容换成验证真正有的数据
+function flowRenderPvCard(p, i){
+  const v = p.pv || {};
+  const barColor = p.qualified ? '#34c759' : p.vetoed ? '#ff3b30' : '#ff9500';
+  const verdictClass = p.qualified ? 'good' : p.vetoed ? 'bad' : 'warn';
+  const kwRows = (v.keywords||[]).map(k=>`<li style="margin-bottom:5px;line-height:1.55"><b>${k.kw}</b> · 周搜 ${(k.sv||0).toLocaleString()} · 环比 ×${k.wow}${k.tone==='good'?' <span class="frc-tag good" style="font-size:8px">上行</span>':k.tone==='bad'?' <span class="frc-tag bad" style="font-size:8px">衰退</span>':''}</li>`).join('') || '<li style="color:var(--t3)">暂无关键词数据</li>';
+  const playRows = (v.play||[]).map(x=>`<li style="margin-bottom:5px;line-height:1.55">${x}</li>`).join('') || '<li style="color:var(--t3)">—</li>';
+  const riskRows = (v.risks||[]).map(x=>`<li style="margin-bottom:3px;line-height:1.5">${x}</li>`).join('');
+  const stat=(label,val,color)=>`<div style="text-align:center;min-width:0"><div style="font-size:12.5px;font-weight:800;color:${color||'var(--t0)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${val}</div><div style="font-size:8px;color:var(--t3);margin-top:1px">${label}</div></div>`;
+  return `
+  <div class="flow-result-card" style="border-left:3px solid ${barColor};padding:0;overflow:hidden;margin:0">
+    <div class="flow-prodcard-2col">
+      <div style="padding:14px 16px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <div style="font-size:11px;font-weight:800;color:var(--t3)">🖼 产品画像</div>
+          <span class="frc-tag" style="font-size:8px">产品验证</span>
+          ${flowMyLibBtn(p.asin,'mini')}
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          ${flowProductThumb(p,i,54,true)}
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12.5px;font-weight:800;color:var(--t0);line-height:1.35">${p.title}</div>
+            <div style="font-size:9px;color:var(--t3);margin-top:4px">${p.asin} · ${p.brand} · ${v.market||''}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:18px;font-weight:800;color:${v.tone||barColor};line-height:1">${v.score}<small style="font-size:9px;color:var(--t3)">/100</small></div>
+            <span class="frc-tag ${verdictClass}" style="font-size:8px">${p.verdict}</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:11px 0">
+          <span style="font-size:9px;color:var(--t2);background:var(--bg-page);padding:1px 7px;border-radius:5px">「${p.keyword}」</span>
+          ${p.category?`<span style="font-size:9px;color:var(--t3)">${p.category}</span>`:''}
+          ${p.savedAt?`<span title="入库时间 ${new Date(p.savedAt).toLocaleString()}" style="font-size:9px;color:#2d9e5a;background:rgba(52,199,89,0.10);padding:1px 7px;border-radius:5px">★ ${p.fromSource||'已入库'} · ${String(p.savedAt).slice(0,10)}</span>`:''}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:8px 6px;background:var(--bg-page);border-radius:8px">
+          ${stat('锚定售价',p.price,'var(--accent2)')}
+          ${stat('Top100 中位',v.priceMedian!=null?('$'+v.priceMedian):'—')}
+          ${stat('Top100 均价',v.priceAvg!=null?('$'+v.priceAvg):'—')}
+          ${stat('品牌数',v.brandCount||'—')}
+          ${stat('新品/周',v.newPerWeek||'—','#ff9500')}
+        </div>
+        ${v.targetBand?`<div style="margin-top:9px;font-size:10px;color:var(--t2);line-height:1.6">🎯 目标价格带 <b style="color:var(--t0)">${v.targetBand.band}</b>（该带 ${v.targetBand.n} 席）· 直接对手 ${v.rivals}</div>`:''}
+      </div>
+      <div style="padding:14px 16px">
+        <div style="font-size:11px;font-weight:800;color:var(--t3);margin-bottom:8px">💡 验证结论</div>
+        <div style="font-size:10.5px;color:var(--t1);line-height:1.7">${v.oneLine||'—'}</div>
+        <div style="font-size:11px;font-weight:800;color:var(--t3);margin:14px 0 8px">🛠 进场打法</div>
+        <ul style="margin:0;padding-left:16px;font-size:10.5px;color:var(--t1)">${playRows}</ul>
+        ${riskRows?`<div style="margin-top:8px;font-size:10px;color:#c0392b"><b>⚠️ 风险：</b><ul style="margin:4px 0 0;padding-left:16px">${riskRows}</ul></div>`:''}
+      </div>
+      <div style="padding:14px 16px">
+        <div style="font-size:11px;font-weight:800;color:var(--t3);margin-bottom:8px">📋 需求验证 · ABA 核心词</div>
+        <ul style="margin:0;padding-left:16px;font-size:10.5px;color:var(--t1)">${kwRows}</ul>
+        <div style="margin-top:12px;padding:9px 11px;background:var(--bg-page);border-radius:8px;font-size:10px;color:var(--t2);line-height:1.65">
+          该商品来自「产品验证」，尚未上架，因此没有真实销量 / 评论 / 广告数据。跑完选品漏斗或上架后，这里会替换为竞品三维分析。
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 function pvStat(k,v,tone){ return `<div style="background:var(--bg-page);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 12px"><div style="font-size:14px;font-weight:700;color:${tone||'var(--t0)'}">${v}</div><div style="font-size:9.5px;color:var(--t3);margin-top:1px">${k}</div></div>`; }
 function pvSection(num,title,body){
@@ -18077,7 +18217,6 @@ function flowRenderCategoryDiagnosis(cats){
       <div class="frc-icon" style="background:rgba(255,149,0,0.08)">🗂️</div>
       <div>
         <div class="frc-title">类目机会诊断 · 定赛道</div>
-        <div class="frc-sub">已诊断 ${list.length} 个类目逐个罗列：容量 / 竞争 / 入局三维打分 + 价格空白带，先定赛道再挖词${list.length>1?`　·　建议优先做 <b style="color:${best.vColor}">${best.label||best.name}（${best.verdict}）</b>`:''}</div>
       </div>
     </div>
     <div class="frc-body">${paras}</div>
@@ -18995,7 +19134,6 @@ function flowGateHTML(stepId, fnName, extra){
     <div class="fg-ic">🔒</div>
     <div class="fg-body">
       <div class="fg-t">下一步 · ${c.t}</div>
-      <div class="fg-d">${c.d}${extra?'　'+extra:''}</div>
       <div class="fg-meta">本步消耗 <b class="fg-cost">${c.n} 积分</b>　·　当前余额 <b>${flowCredits.toLocaleString()}</b>${enough?` → 分析后 <b>${(flowCredits-c.n).toLocaleString()}</b>`:'　<span style="color:#ff3b30;font-weight:700">余额不足</span>'}</div>
     </div>
     <button class="fg-btn ${enough?'':'off'}" ${enough?`onclick="flowGateGo('${stepId}',function(){${fnName}})"`:'disabled'}>${enough?`确认并分析 · 扣 ${c.n} 积分`:'积分不足'}</button>
@@ -19211,7 +19349,6 @@ function flowDoProductVerify(){
 function flowRenderProductPool(){
   const list=flowDedupeProducts();
   const sel=flowUserData.selectedProductAsins||[];
-  const totalRaw=(flowUserData.selectedKeywordIndexes||[]).reduce((a,i)=>a+(((flowUserData.keywordAnalysis[i]||{}).rows)||[]).length,0);
   const rows=list.map((p,i)=>{
     const on=sel.indexOf(p.asin)>=0;
     const sc=p.asinScore||0;
@@ -19235,12 +19372,10 @@ function flowRenderProductPool(){
       <td style="padding:7px 8px;font-weight:700;color:${i<3?'#ff9500':'var(--t1)'}">${p.traffic_share}</td>
     </tr>`;
   }).join('');
-  const multi=list.filter(p=>(p.fromKws||[]).length>1).length;
   return `${FLOW_GATE_CSS}<div class="flow-result-card">
     <div class="frc-header">
       <div class="frc-icon" style="background:rgba(175,82,222,0.08)">🧭</div>
-      <div><div class="frc-title">产品验证</div>
-      <div class="frc-sub">已选关键词下的竞品汇总去重后共 <b>${list.length}</b> 个产品（原始 ${totalRaw} 条，去重掉 ${totalRaw-list.length} 条${multi?` · 其中 ${multi} 个被多个词共用`:''}），按机会分从高到低排序 —— 勾 3-5 个进入流量与广告验证</div></div>
+      <div><div class="frc-title">产品验证</div></div>
     </div>
     <div class="frc-body">
       <div style="font-size:11.5px;color:var(--t2);margin-bottom:8px">已选 <b style="color:var(--accent)">${sel.length}</b> 个　·　机会分 ＝ 销量体量×0.35 + 评论壁垒×0.35 + 上架新鲜度×0.20 + 口碑缺口×0.10，分越高＝需求已验证、评论壁垒低、上架新可复制</div>
@@ -21751,10 +21886,11 @@ function flowRenderFullChainReport(p){
 }
 // ── 产品卡：左「产品画像」· 中「推荐理由 + 优化建议」· 右「全链路分析报告」──
 function flowRenderProductCard(p, i){
+  // 产品验证存进来的新品没有竞品三维数据，走专属卡片，避免整排 0 / — 误导
+  if(p && p.fromValidation) return flowRenderPvCard(p, i);
   const barColor = p.vetoed ? '#ff3b30' : p.qualified ? '#34c759' : '#ff9500';
   const scoreColor = p.qualified ? '#34c759' : p.vetoed ? '#ff3b30' : '#ff9500';
   const verdictClass = p.qualified ? 'good' : p.vetoed ? 'bad' : 'warn';
-  const saved = (typeof flowIsInMyLib==='function') && flowIsInMyLib(p.asin);
   const R = flowBuildSelectionReason(p);
   const advice = flowBuildProductAdvice(p);
   const reasonsHtml = (R.reasons.length?R.reasons:[R.oneLiner]).map(r=>`<li style="margin-bottom:5px;line-height:1.55">${r}</li>`).join('');
@@ -21765,7 +21901,10 @@ function flowRenderProductCard(p, i){
     <div class="flow-prodcard-2col">
       <!-- 左：产品画像 -->
       <div style="padding:14px 16px">
-        <div style="font-size:11px;font-weight:800;color:var(--t3);margin-bottom:10px">🖼 产品画像</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <div style="font-size:11px;font-weight:800;color:var(--t3)">🖼 产品画像</div>
+          ${flowMyLibBtn(p.asin,'mini')}
+        </div>
         <div style="display:flex;gap:10px;align-items:flex-start">
           ${flowProductThumb(p,i,54)}
           <div style="flex:1;min-width:0">
@@ -21781,6 +21920,7 @@ function flowRenderProductCard(p, i){
           ${flowPersonaTag(p,'9px')}
           <span style="font-size:9px;color:var(--t2);background:var(--bg-page);padding:1px 7px;border-radius:5px">「${p.keyword}」</span>
           ${p.category?`<span style="font-size:9px;color:var(--t3)">${p.category}</span>`:''}
+          ${p.savedAt?`<span title="入库时间 ${new Date(p.savedAt).toLocaleString()}" style="font-size:9px;color:#2d9e5a;background:rgba(52,199,89,0.10);padding:1px 7px;border-radius:5px">★ ${p.fromSource||'已入库'} · ${String(p.savedAt).slice(0,10)}</span>`:''}
         </div>
         ${flowProductStatsRow(p)}
         <div style="margin:12px -16px -14px;border-top:1px solid var(--border)">${(typeof flowRenderProductDetailSection==='function')?flowRenderProductDetailSection(p):''}</div>
@@ -21795,10 +21935,6 @@ function flowRenderProductCard(p, i){
       </div>
       <!-- 右：全链路分析报告 -->
       <div style="padding:14px 16px">${(typeof flowRenderFullChainReport==='function')?flowRenderFullChainReport(p):''}</div>
-    </div>
-    <div style="display:flex;gap:6px;padding:11px 16px;border-top:1px solid var(--border);justify-content:flex-end">
-      <button onclick="flowToggleMyLib('${p.asin}',this)" title="${saved?'已加入我的商品库，点击移出':'加入我的商品库'}" style="border:1px solid ${saved?'#34c759':'var(--border2)'};background:${saved?'rgba(52,199,89,0.10)':'var(--bg-card)'};color:${saved?'#2d9e5a':'var(--t2)'};border-radius:8px;padding:9px 12px;font-size:13px;font-weight:800;cursor:pointer">${saved?'★':'☆'}</button>
-      <button onclick="flowDownloadProductReport(${i})" title="下载报告" style="border:1px solid var(--border2);background:var(--bg-card);color:var(--t1);border-radius:8px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer">⬇</button>
     </div>
   </div>`;
 }
@@ -21984,9 +22120,6 @@ async function flowFetchProductDetail(p){
 }
 function flowRenderProductDetailSection(p){
   const d = p._detail || flowDeriveProductDetail(p);
-  const srcTag = d.real
-    ? '<span class="frc-tag good" style="font-size:8px">实时数据</span>'
-    : '<span class="frc-tag" style="font-size:8px">推算值·接入后拉真实</span>';
   const mom = (v, pct)=>{ if(v==null) return ''; const cls = v>=0?'#2d9e5a':'#e5484d'; const s = (v>=0?'+':'')+(pct? (v+'%') : Math.round(v).toLocaleString()); return `<span style="color:${cls}">${v>=0?'▲':'▼'} ${s}</span>`; };
   const tile = (label, val, sub)=>`<div style="padding:8px 10px;background:var(--bg-page);border:1px solid var(--border);border-radius:8px">
     <div style="font-size:14px;font-weight:800;color:var(--t0);line-height:1.25">${val}</div>
@@ -21996,8 +22129,6 @@ function flowRenderProductDetailSection(p){
     <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <div style="font-size:12px;font-weight:800;color:var(--t0)">📦 更多产品信息</div>
-        ${srcTag}
-        <div style="margin-left:auto;font-size:9px;color:var(--t3)">来源：batchAsinDetail · variantLastSales · asinOpTrafficTrend / Keepa</div>
       </div>
       <div style="display:flex;gap:10px;align-items:stretch;margin-bottom:8px">
         <div style="flex:0 0 auto;min-width:130px;padding:10px 14px;background:linear-gradient(135deg,rgba(175,82,222,0.10),rgba(0,122,255,0.08));border:1px solid rgba(175,82,222,0.18);border-radius:10px;display:flex;flex-direction:column;justify-content:center">
@@ -22179,7 +22310,7 @@ function flowDownloadProductReport(i){
   URL.revokeObjectURL(url);
 }
 
-// ── 优选商品库：示范数据 + 筛选（关键词 / 类目 / 售价 / 推荐时间）──
+// ── 商品库：示范数据 + 筛选（关键词 / 类目 / 售价 / 推荐时间）──
 // 由紧凑规格生成完整产品对象（评分/机会/市场验证/竞品三维全自洽），供卡片、报告、AI 建议、同类对比复用
 function _poolMake(o){
   const trafficScore = o.organic>=60?10:o.organic>=50?8:o.organic>=40?6:o.organic>=30?3:0;
@@ -22275,38 +22406,89 @@ function flowSaveMyLib(arr){
 function flowIsInMyLib(asin){
   return flowLoadMyLib().some(x=>x && x.asin===asin);
 }
+// 入库数在两处显示：侧栏「商品库」徽标 + 页内计数，一起刷新
+function flowSyncLibCounts(n){
+  const inline = document.getElementById('mylib-count');
+  if(inline) inline.textContent = '('+n+')';
+  const nav = document.getElementById('product-pool-count');
+  if(nav){ nav.textContent = n; nav.style.display = n ? 'inline' : 'none'; }
+}
+// ── 「存入商品库」按钮：每个商品卡两处（画像标题行 mini / 卡底 full），状态自动互相同步 ──
+function flowMyLibBtn(asin, variant){
+  const saved = flowIsInMyLib(asin);
+  const s = flowMyLibBtnStyle(saved, variant);
+  return `<button data-mylib="${asin}" data-variant="${variant}" onclick="flowToggleMyLib('${asin}',this)" title="${s.title}" style="${s.css}">${s.label}</button>`;
+}
+// variant: mini = 产品卡头部的入库口（未入库时用蓝色描边强调，不再是灰色幽灵按钮）
+//          primary = 报告页底部的主操作（实心蓝，最重）
+function flowMyLibBtnStyle(saved, variant){
+  const title = saved ? '已在我的商品库，点击移出' : '存入「商品库 / 我的商品库」';
+  const base  = 'cursor:pointer;white-space:nowrap;font-family:inherit;line-height:1.2;transition:all .15s';
+  if(variant === 'mini'){
+    return {
+      title,
+      label: saved ? '★ 已入库' : '☆ 存入商品库',
+      css: `margin-left:auto;${base};border:1px solid ${saved?'#34c759':'var(--accent)'};background:${saved?'rgba(52,199,89,0.12)':'rgba(0,122,255,0.08)'};color:${saved?'#2d9e5a':'var(--accent2)'};border-radius:7px;padding:4px 11px;font-size:11px;font-weight:800`
+    };
+  }
+  if(variant === 'primary'){
+    return {
+      title,
+      label: saved ? '★ 已在商品库' : '⭐ 存入商品库',
+      css: `${base};border:1px solid ${saved?'#34c759':'var(--accent)'};background:${saved?'rgba(52,199,89,0.12)':'var(--accent)'};color:${saved?'#2d9e5a':'#fff'};border-radius:var(--radius-sm);padding:9px 20px;font-size:13px;font-weight:700;box-shadow:${saved?'none':'0 1px 3px rgba(0,122,255,.3)'}`
+    };
+  }
+  return {
+    title,
+    label: saved ? '★ 已在商品库' : '⭐ 存入商品库',
+    css: `${base};border:1px solid ${saved?'#34c759':'var(--border2)'};background:${saved?'rgba(52,199,89,0.10)':'var(--bg-card)'};color:${saved?'#2d9e5a':'var(--t2)'};border-radius:8px;padding:9px 14px;font-size:12px;font-weight:800`
+  };
+}
+// 同一个 ASIN 可能同时出现在卡头、卡底、弹窗里，统一刷新，避免状态各说各话
+function flowSyncMyLibBtns(asin){
+  const saved = flowIsInMyLib(asin);
+  document.querySelectorAll(`[data-mylib="${asin}"]`).forEach(b=>{
+    const s = flowMyLibBtnStyle(saved, b.dataset.variant || 'full');
+    b.textContent = s.label; b.title = s.title; b.setAttribute('style', s.css);
+  });
+}
 function flowToggleMyLib(asin, btn){
   const lib = flowLoadMyLib();
   const i = lib.findIndex(x=>x && x.asin===asin);
   let saved;
-  if(i>=0){ lib.splice(i,1); saved=false; }
+  if(i>=0){
+    // 移出只影响商品库这一份，选品/验证的分析记录不动
+    const p = lib[i];
+    if(!confirm('确认从商品库移除这个商品？\n\n'+(p.title||asin)+'\n'+asin+(p.fromSource?'（'+p.fromSource+'）':'')
+      +'\n\n移除后该商品将从商品库消失，且不可撤销。\n「使用记录 / 选品分析记录」里的分析记录不受影响，仍可查看，也可从那里重新入库。')) return;
+    lib.splice(i,1); saved=false;
+  }
   else {
-    const src = (flowUserData._poolAll||[]).concat(flowUserData.productReportList||[], flowUserData.finalProductList||[]);
+    const src = (flowUserData._poolAll||[]).concat(flowUserData.productReportList||[], flowUserData.finalProductList||[], flowUserData._pvProduct?[flowUserData._pvProduct]:[]);
     const p = src.find(x=>x && x.asin===asin);
     if(!p) return;
-    lib.push(p); saved=true;
+    lib.push(typeof flowStampLibSource==='function' ? flowStampLibSource(p) : p); saved=true;
   }
   flowSaveMyLib(lib);
-  const cntEl = document.getElementById('mylib-count'); if(cntEl) cntEl.textContent = '('+lib.length+')';
-  if(btn){
-    btn.textContent = saved?'★':'☆';
-    btn.title = saved?'已加入我的商品库，点击移出':'加入我的商品库';
-    btn.style.borderColor = saved?'#34c759':'var(--border2)';
-    btn.style.background = saved?'rgba(52,199,89,0.10)':'var(--bg-card)';
-    btn.style.color = saved?'#2d9e5a':'var(--t2)';
-  }
+  flowSyncLibCounts(lib.length);
+  // 回写「本轮已入库多少款」，选品分析记录里可见
+  try{
+    const _rec = (typeof _selRecords!=='undefined') ? _selRecords.find(r=>r.id===_selCurRecId) : null;
+    if(_rec){ _rec.savedToLib = (flowUserData.finalProductList||[]).filter(x=>flowIsInMyLib(x.asin)).length; selPersist(); }
+  }catch(e){}
+  flowSyncMyLibBtns(asin);
+  if(typeof showTrToast==='function') showTrToast(saved?('已存入商品库 · '+asin):('已从商品库移出 · '+asin));
   // 在「我的商品库」视图里移出后需要即时消失
   if((flowUserData._poolView||'all')==='mine' && document.getElementById('product-pool-grid')) flowApplyPoolFilters();
 }
 function flowSetPoolView(v){ flowUserData._poolView = v; renderProductPool(); }
+// 商品库只保留「我的商品库」，不再有视图切换；精铺货盘从「选品工具 · 配一盘货」进，带返回链接
 function flowPoolViewSwitch(view, n){
-  const btn = (v,label,active)=>`<button onclick="flowSetPoolView('${v}')" style="border:1px solid ${active?'var(--accent)':'var(--border)'};background:${active?'var(--accent)':'var(--bg-card)'};color:${active?'#fff':'var(--t2)'};border-radius:8px;padding:6px 14px;font-size:12px;font-weight:800;cursor:pointer">${label}</button>`;
-  const _sp=(typeof spLoadPlan==='function')?spLoadPlan():null;
-  const _spN=(_sp&&_sp.survived)?_sp.survived.length:0;
-  return `<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-    ${btn('all','系统推荐',view==='all')}
-    ${btn('mine',`⭐ 我的商品库 <span id="mylib-count">(${n})</span>`,view==='mine')}
-    ${btn('plan',`📦 精铺货盘${_spN?` (${_spN})`:''}`,view==='plan')}
+  if(view !== 'plan') return `<div style="display:none"><span id="mylib-count">(${n})</span></div>`;
+  return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+    <button onclick="flowSetPoolView('mine')" style="border:1px solid var(--border);background:var(--bg-card);color:var(--t2);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:800;cursor:pointer">← 返回商品库</button>
+    <span style="font-size:13px;font-weight:800;color:var(--t0)">📦 精铺货盘</span>
+    <span style="display:none"><span id="mylib-count">(${n})</span></span>
   </div>`;
 }
 // ── 选品偏好默认配置（目标类目 + 售价区间），本地持久化 ──
@@ -22439,21 +22621,13 @@ function flowPoolFilterBar(all){
 }
 function flowApplyPoolFilters(){
   const view = flowUserData._poolView || 'all';
-  const cfg = flowLoadPoolConfig();
   const kw = (document.getElementById('pool-f-kw')?.value||'').trim().toLowerCase();
   const cat = document.getElementById('pool-f-cat')?.value||'';
   const price = document.getElementById('pool-f-price')?.value||'';
   const time = document.getElementById('pool-f-time')?.value||'';
   const base = view==='mine' ? flowLoadMyLib() : (flowUserData._poolAll || []);
-  let expired = 0;
   const list = base.filter(p=>{
     const pr = p.priceNum!=null?p.priceNum:(parseFloat(String(p.price).replace(/[^\d.]/g,''))||0);
-    // 默认配置（选品偏好）仅作用于「系统推荐」视图：目标类目 + 售价区间
-    if(view==='all'){
-      if(cfg.cats && cfg.cats.length && cfg.cats.indexOf(p.category)<0) return false;
-      if(cfg.priceMin!=null && pr < cfg.priceMin) return false;
-      if(cfg.priceMax!=null && pr > cfg.priceMax) return false;
-    }
     // 快捷筛选：关键词 + 类目 + 售价 + 推荐时间
     if(kw && !((p.keyword||'').toLowerCase().indexOf(kw)>=0 || (p.title||'').toLowerCase().indexOf(kw)>=0)) return false;
     if(cat && p.category!==cat) return false;
@@ -22468,22 +22642,16 @@ function flowApplyPoolFilters(){
       if(time==='30' && d>30) return false;
       if(time==='90' && d>90) return false;
     }
-    // 推荐保留期仅作用于系统推荐：超过 N 天分析可能失效，不再展示
-    if(view==='all' && cfg.retentionDays!=null && p.daysAgo!=null && p.daysAgo > cfg.retentionDays){ expired++; return false; }
     return true;
   });
   flowUserData.productReportList = list;   // 报告模态 / 下载按过滤后索引取用
   flowUserData.reportPeers = (flowUserData._poolAll && flowUserData._poolAll.length) ? flowUserData._poolAll : list;  // 同类对比对照系统库
   const label = document.getElementById('pool-count-label');
-  if(label) label.textContent = view==='mine'
-    ? `我的商品库 ${list.length} 款`
-    : `共 ${list.length} / ${base.length} 款` + (expired?` · ${expired} 款超 ${cfg.retentionDays} 天已隐藏`:'');
+  if(label) label.textContent = `共 ${list.length} / ${base.length} 款`;
   const grid = document.getElementById('product-pool-grid');
   if(!grid) return;
   if(!list.length){
-    grid.innerHTML = view==='mine'
-      ? '<div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">我的商品库还是空的 —— 在「系统推荐」里点商品卡上的 ☆ 加入</div>'
-      : '<div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">没有符合「选品偏好」或筛选的商品，点右上「编辑配置」放宽类目 / 售价</div>';
+    grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">没有符合筛选条件的商品</div>';
     return;
   }
   grid.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">${list.map((p,i)=>flowRenderProductCard(p,i)).join('')}</div>`;
@@ -22493,23 +22661,21 @@ function renderProductPool(){
   if(!body) return;
   const all = flowGetProductPool();
   flowUserData._poolAll = all;
-  const cnt = document.getElementById('product-pool-count');
-  if(cnt){ if(all.length){ cnt.textContent = all.length; cnt.style.display='inline'; } else cnt.style.display='none'; }
-  const _view0 = flowUserData._poolView || 'all';
-  // 精铺货盘：独立视图，与「系统推荐 / 我的商品库」并列，空库也能进
-  if(_view0==='plan'){
+  // 精铺货盘：独立视图，只从「选品工具 · 配一盘货」进
+  if(flowUserData._poolView === 'plan'){
+    document.getElementById('product-pool-count').style.display='none';
     body.innerHTML = flowPoolViewSwitch('plan', flowLoadMyLib().length) + spRenderPlanView();
     return;
   }
-  if(!all.length){
-    body.innerHTML = flowPoolViewSwitch(_view0, flowLoadMyLib().length) + '<div style="padding:48px 20px;text-align:center;background:var(--bg-card);border:1px solid var(--border);border-radius:12px"><div style="font-size:36px;margin-bottom:10px">🗂️</div><div style="font-size:14px;color:var(--t2);font-weight:600">还没有入选商品</div><div style="font-size:12px;color:var(--t3);margin-top:5px">去「选品工具」跑一轮选品流程，入选的商品会自动汇集到这里</div></div>';
+  flowUserData._poolView = 'mine';            // 商品库 = 我的商品库，没有别的视图
+  const mine = flowLoadMyLib();
+  const cnt = document.getElementById('product-pool-count');
+  if(cnt){ if(mine.length){ cnt.textContent = mine.length; cnt.style.display='inline'; } else cnt.style.display='none'; }
+  if(!mine.length){
+    body.innerHTML = flowPoolViewSwitch('mine', 0) + '<div style="padding:48px 20px;text-align:center;background:var(--bg-card);border:1px solid var(--border);border-radius:12px"><div style="font-size:36px;margin-bottom:10px">🗂️</div><div style="font-size:14px;color:var(--t2);font-weight:600">商品库还是空的</div><div style="font-size:12px;color:var(--t3);margin-top:5px">去「选品工具」跑一轮选品或产品验证，在结果里点「存入商品库」</div></div>';
     return;
   }
-  const view = flowUserData._poolView || 'all';
-  const cfg = flowLoadPoolConfig(all);
-  const switchHtml = flowPoolViewSwitch(view, flowLoadMyLib().length);
-  const configHtml = flowPoolConfigBar(cfg);   // 两个视图都保留，布局一致
-  body.innerHTML = switchHtml + configHtml + flowPoolFilterBar(all) + '<div id="product-pool-grid"></div>';
+  body.innerHTML = flowPoolViewSwitch('mine', mine.length) + flowPoolFilterBar(mine) + '<div id="product-pool-grid"></div>';
   flowApplyPoolFilters();
 }
 
@@ -23310,7 +23476,7 @@ function runFlowPhase4(silent){
   }
   flowUserData.productReportList = products;   // 供报告模态 / 下载按索引取用
   flowUserData.reportPeers = flowUserData.competitorAnalysis || products;  // 同类对比对照全部已分析竞品
-  // 同步「优选商品库」侧边计数
+  // 同步「商品库」侧边计数
   const _poolCnt = document.getElementById('product-pool-count');
   if(_poolCnt){ _poolCnt.textContent = products.length; _poolCnt.style.display='inline'; }
 
@@ -23326,9 +23492,9 @@ function runFlowPhase4(silent){
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px">
             <div>
               <div style="font-size:14px;font-weight:800;color:var(--t0)">入选 ${products.length} 款</div>
-              <div style="font-size:11px;color:var(--t3);margin-top:2px">${flowUserData.market||'Amazon US'} · 点击卡片查看全链路分析报告 + AI 优化建议 + 同类对比</div>
             </div>
-            <div style="display:flex;gap:8px">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button id="flow-savelib-all" onclick="flowSaveAllToMyLib(this)" title="把入选商品一次性存进「商品库 / 我的商品库」" style="border:1px solid var(--border2);background:var(--bg-card);color:var(--t1);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer">⭐ 全部保存到商品库</button>
               <button onclick="flowPreviewSelectionReport()" style="border:none;background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>在线预览</button>
               <button onclick="flowDownloadSelectionReport()" style="border:1px solid var(--border2);background:var(--bg-card);color:var(--t1);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer">下载报告</button>
             </div>
@@ -23338,6 +23504,8 @@ function runFlowPhase4(silent){
         <div style="display:grid;grid-template-columns:1fr;gap:12px">${productCards}</div>
         ${flowPaidTip('traffic')}
       </div>`;
+    // 本轮选品归档到「使用记录 / 选品分析记录」
+    if(typeof selSaveRecord==='function') selSaveRecord();
   },800);
 }
 // ── Phase 5: 单品深度分析 ──
@@ -23680,7 +23848,7 @@ function openReportModal(){
       <div style="font-size:14px;font-weight:700;color:var(--t0)">选品分析报告 · ${cat}</div>
       <div style="font-size:11px;color:var(--t3)">${flowUserData.market} · ${new Date().toLocaleDateString()}</div>
       <div style="margin-left:auto;display:flex;gap:6px">
-        <button onclick="saveFlowReport();this.textContent='✓ 已保存';this.style.background='rgba(52,199,89,0.1)';this.style.color='#2d9e5a'" style="padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:11px;color:var(--t1);cursor:pointer;font-weight:600">📁 保存到产品文件</button>
+        <button onclick="alert('本报告已自动归档到「使用记录 / 选品分析记录」')" style="padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:11px;color:var(--t1);cursor:pointer;font-weight:600">📁 已自动归档</button>
         <button onclick="alert('下载功能开发中，敬请期待')" style="padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:11px;color:var(--t1);cursor:pointer;font-weight:600">⬇️ 下载PDF</button>
         <button onclick="this.closest('#report-modal').remove()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:13px;color:var(--t2);cursor:pointer">✕</button>
       </div>
@@ -23888,34 +24056,6 @@ function openReportModal(){
     </div>
   </div>`;
   document.body.appendChild(modal);
-}
-
-// ── Save report to history ──
-const productReportsData = [];
-
-function saveFlowReport(){
-  const line = flowUserData.bestLine || {name:flowUserData.cats[0]};
-  const cat = line.name;
-  const snapshot = [];
-  for(let i=1;i<=7;i++){
-    const el = document.getElementById('flow-result-'+i);
-    snapshot.push(el ? el.innerHTML : '');
-  }
-  addHist('选品报告', cat, 82, snapshot);
-  // Check if already saved
-  if(productReportsData.find(r=>r.name===cat)){return;}
-  // Save to product reports
-  productReportsData.unshift({
-    id: Date.now(),
-    name: cat,
-    score: 82,
-    verdict: 'GO',
-    date: new Date().toLocaleDateString(),
-    market: flowUserData.market || 'Amazon US',
-    price: '$29.99',
-    margin: '35.6%'
-  });
-  updateProductReportCount();
 }
 
 // 生图/生视频 创作台交互
@@ -26121,64 +26261,6 @@ function toggleAccountMgmt(){
   }
 }
 
-function updateProductReportCount(){
-  const el = document.getElementById('product-report-count');
-  if(el && productReportsData.length > 0){
-    el.textContent = productReportsData.length;
-    el.style.display = 'inline';
-  }
-}
-
-function deleteProductReport(id, e){
-  e.stopPropagation();
-  const idx = productReportsData.findIndex(r=>r.id===id);
-  if(idx>-1) productReportsData.splice(idx, 1);
-  updateProductReportCount();
-  renderProductReports();
-}
-
-function renderProductReports(){
-  const container = document.getElementById('product-reports-list');
-  if(!container) return;
-  if(!productReportsData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center"><div style="font-size:32px;margin-bottom:8px">📋</div><div style="font-size:14px;color:var(--t3)">暂无产品分析报告</div><div style="font-size:12px;color:var(--t4);margin-top:4px">完成选品工作台流程，或在「竞品分析」跑完一次分析后，报告将显示在这里</div></div>';
-    return;
-  }
-  container.innerHTML = productReportsData.map((r) => {
-    const isCa  = r.kind === 'competitor';
-    const open  = isCa ? `caViewReport('${r.recId}')` : 'openReportModal()';
-    const title = isCa ? `${r.name}（竞品分析报告）` : `${r.name}（选品分析报告）`;
-    const meta  = isCa
-      ? `${r.market} · ${r.date} · 对比 ${r.comps} 个竞品 · 售价${r.price}`
-      : `${r.market} · ${r.date} · 售价${r.price} · 毛利${r.margin}`;
-    const grad  = isCa ? 'linear-gradient(135deg,#0f5ef7,#38bdf8)' : 'linear-gradient(135deg,#6c5ce7,#a855f7)';
-    const chips = isCa
-      ? `<div style="text-align:center;padding:4px 10px;background:rgba(15,94,247,0.08);border-radius:6px"><div style="font-size:14px;font-weight:800;color:#0f5ef7">${r.nf}%</div><div style="font-size:8px;color:var(--t3)">自然流量</div></div>
-         <div style="padding:4px 10px;background:rgba(255,149,0,0.10);border-radius:6px;text-align:center"><div style="font-size:12px;font-weight:700;color:#c76b00">⚔️ 攻防</div></div>`
-      : `<div style="text-align:center;padding:4px 10px;background:rgba(108,92,231,0.08);border-radius:6px"><div style="font-size:14px;font-weight:800;color:#6c5ce7">${r.score}</div><div style="font-size:8px;color:var(--t3)">评分</div></div>
-         <div style="padding:4px 10px;background:rgba(52,199,89,0.08);border-radius:6px;text-align:center"><div style="font-size:12px;font-weight:700;color:#2d9e5a">✅ ${r.verdict}</div></div>`;
-    return `
-    <div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 2px 12px rgba(0,0,0,0.06)'" onmouseout="this.style.boxShadow='none'">
-      <div style="width:44px;height:44px;border-radius:10px;background:${grad};display:flex;align-items:center;justify-content:center;flex-shrink:0" onclick="${open}">
-        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#fff;stroke-width:2;fill:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      </div>
-      <div style="flex:1;min-width:0" onclick="${open}">
-        <div style="font-size:13px;font-weight:600;color:var(--t0)">${title}</div>
-        <div style="font-size:11px;color:var(--t2);margin-top:2px">${meta}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        ${chips}
-        <button onclick="${open}" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:var(--accent2);cursor:pointer;font-weight:600">👁 查看</button>
-        <button onclick="alert('下载功能开发中')" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:var(--t2);cursor:pointer;font-weight:600">⬇️</button>
-        <button onclick="deleteProductReport(${r.id},event)" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg-page);font-size:10px;color:#ff3b30;cursor:pointer">✕</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// Init count on load
-setTimeout(updateProductReportCount, 500);
-
 // ══════════════════════════════════════════════════════
 // Listing 生成记录系统（生成 / 打分 混合 · 搜索 / 筛选 / 分页 / 批量）
 // ══════════════════════════════════════════════════════
@@ -26231,16 +26313,47 @@ function _lrSeed(){
 let listingScoreRecords = _lrSeed();
 
 // 筛选 / 分页 / 选择 状态
-const _lrState = { search:'', type:'all', page:1, pageSize:20, selected:new Set() };
+const _lrState = { search:'', type:'all', market:'', score:'', time:'', page:1, pageSize:20, selected:new Set() };
+
+// 记录时间：'2026/4/17' + '16:18:40'
+function _lrTime(r){ const t = Date.parse(String(r.date).replace(/-/g,'/')+' '+(r.time||'00:00:00')); return isNaN(t)?0:t; }
 
 // 当前筛选后的列表
 function _lrFiltered(){
   const q = _lrState.search.trim().toLowerCase();
+  const days = parseInt(_lrState.time,10);
+  const now = Date.now();
   return listingScoreRecords.filter(r=>{
     if(_lrState.type!=='all' && r.type!==_lrState.type) return false;
     if(q && !String(r.title).toLowerCase().includes(q)) return false;
+    if(_lrState.market && r.market!==_lrState.market) return false;
+    if(_lrState.score){
+      const s = Number(r.score)||0;
+      if(_lrState.score==='80' && s<80) return false;
+      if(_lrState.score==='60-79' && !(s>=60 && s<80)) return false;
+      if(_lrState.score==='0-59' && s>=60) return false;
+    }
+    if(days){ const t=_lrTime(r); if(!t || (now-t) > days*86400000) return false; }
     return true;
   });
+}
+// 站点下拉按当前类型下实际出现过的站点生成；打分记录没有站点字段，整个下拉隐藏
+function lrSyncMarketOptions(){
+  const sel = document.getElementById('lr-f-market'); if(!sel) return;
+  const pool = listingScoreRecords.filter(r=>_lrState.type==='all' || r.type===_lrState.type);
+  const markets = [];
+  pool.forEach(r=>{ if(r.market && markets.indexOf(r.market)<0) markets.push(r.market); });
+  if(!markets.length){ sel.style.display='none'; _lrState.market=''; return; }
+  sel.style.display='';
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">全部站点</option>'+markets.map(m=>`<option value="${m}">${m}</option>`).join('');
+  sel.value = markets.indexOf(cur)>=0 ? cur : '';
+}
+function lrSetFilter(k,v){ _lrState[k]=v; _lrState.page=1; _lrState.selected.clear(); renderListingScoreRecords(); }
+function lrResetFilters(){
+  _lrState.search=''; _lrState.market=''; _lrState.score=''; _lrState.time=''; _lrState.page=1; _lrState.selected.clear();
+  ['lr-search','lr-f-market','lr-f-score','lr-f-time'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
+  renderListingScoreRecords();
 }
 
 function lrSetSearch(v){ _lrState.search=v; _lrState.page=1; renderListingScoreRecords(); }
@@ -26631,11 +26744,12 @@ function showSaveToast(title){
 }
 
 function updateListingRecordCount(){
-  const el = document.getElementById('listing-record-count');
-  if(el && listingScoreRecords.length > 0){
-    el.textContent = listingScoreRecords.length;
-    el.style.display = 'inline';
-  }
+  const nGen = listingScoreRecords.filter(r=>r.type==='生成').length;
+  const nOpt = listingScoreRecords.filter(r=>r.type==='打分').length;
+  [['listing-gen-count',nGen],['listing-opt-count',nOpt]].forEach(([id,n])=>{
+    const el = document.getElementById(id);
+    if(el){ el.textContent = n; el.style.display = n ? 'inline' : 'none'; }
+  });
   // Auto-expand 产品管理 submenu so user can see the record
   const sub = document.getElementById('product-mgmt-sub');
   const chevron = document.getElementById('product-mgmt-chevron');
@@ -26737,12 +26851,17 @@ function renderListingScoreRecords(){
   const container = document.getElementById('listing-records-list');
   if(!container) return;
   const countEl = document.getElementById('lr-count-text');
+  lrSyncMarketOptions();
   const filtered = _lrFiltered();
+  const hasFilter = !!(_lrState.search.trim() || _lrState.market || _lrState.score || _lrState.time);
+  const resetBtn = document.getElementById('lr-reset');
+  if(resetBtn) resetBtn.style.display = hasFilter ? 'inline-block' : 'none';
   if(countEl){
-    const hasFilter = _lrState.search.trim() || _lrState.type!=='all';
+    // 类型已由导航入口锁定，总数按该类型算，不再拿全量做分母
+    const typeTotal = _lrState.type==='all' ? listingScoreRecords.length : listingScoreRecords.filter(r=>r.type===_lrState.type).length;
     countEl.textContent = hasFilter
-      ? `筛选出 ${filtered.length} 条 · 共 ${listingScoreRecords.length} 条记录`
-      : `共 ${listingScoreRecords.length} 条记录`;
+      ? `筛选出 ${filtered.length} 条 · 共 ${typeTotal} 条记录`
+      : `共 ${typeTotal} 条记录`;
   }
   // 清理已不在筛选结果中的选中项
   const filteredIds = new Set(filtered.map(r=>r.id));
@@ -27714,7 +27833,7 @@ function _teamName(t){
 }
 function _teamUnnamed(t){ return !!t && !t.name; }
 /* 团队版到期三段式：提醒期 → 宽限期（冻结，30 天）→ 失效（数据保留 60 天）
-   比会员套餐的 7 天宽限期长，因为团队版牵扯多名成员的日常工作，断供破坏性大。 */
+   个人会员套餐没有宽限期（到期即清零），团队版给 30 天，因为牵扯多名成员的日常工作，断供破坏性大。 */
 const TEAM_GRACE = 30;      // 宽限期：共享池冻结但不清零，续费即恢复
 const TEAM_DATA_KEEP = 60;  // 失效后数据保留天数，期间续费仍可完整恢复
 function _teamState(t){
@@ -28078,8 +28197,10 @@ const MOCK_ROLES_DUMMY_ANCHOR = true;
 const MENU_TREE = [
   {group:'工具', items:['Listing 生成','ASIN 审计','选品工作台','数字人视频','AI 创作平台','AI 问一问']},
   {group:'管理', items:[
-    {name:'产品管理', path:'/product', children:[
-      {name:'产品分析报告', path:'/product-reports'},
+    '商品库',
+    {name:'使用记录', path:'/records', children:[
+      {name:'选品分析记录', path:'/selection-records'},
+      {name:'竞品分析记录', path:'/competitor-records'},
       {name:'Listing分析记录', path:'/listing-records'},
       {name:'lisiting敏感词库', path:'/sensitive-words'}
     ]},
@@ -28100,7 +28221,7 @@ function _menuChildren(it){ return (it && typeof it==='object' && Array.isArray(
 // 菜单项默认页面路径（演示用），新加项可自定义
 const MENU_PATHS = {
   'Listing 生成':'/listing','ASIN 审计':'/listing-score','选品工作台':'/flow','数字人视频':'/avatar','AI 创作平台':'/aigc','AI 问一问':'/aiask',
-  '产品管理':'/product','产品分析报告':'/product-reports','Listing分析记录':'/listing-records','lisiting敏感词库':'/sensitive-words',
+  '商品库':'/product-pool','使用记录':'/records','选品分析记录':'/selection-records','竞品分析记录':'/competitor-records','Listing分析记录':'/listing-records','lisiting敏感词库':'/sensitive-words',
   '用户管理':'/user-mgmt','角色管理':'/perm-config','用量看板':'/usage-dashboard','会员充值':'/recharge','客户管理':'/customers','用户与权限':'/account',
   '客户运营':'/cust-ops','企业团队管理':'/team-mgmt',
   '组织架构':'/org'
@@ -28108,11 +28229,11 @@ const MENU_PATHS = {
 
 const ROLE_PERMS = {
   admin: null, // null = all
-  ops_lead: ['Listing 生成','Listing 打分','选品工作台','AI 问一问','产品分析报告','Listing分析记录','类目分析师','竞品分析师','单品分析师','Review 挖掘师','Listing 写手','Listing 评分师','定价优化师','组织架构'],
+  ops_lead: ['Listing 生成','Listing 打分','选品工作台','AI 问一问','商品库','选品分析记录','竞品分析记录','Listing分析记录','类目分析师','竞品分析师','单品分析师','Review 挖掘师','Listing 写手','Listing 评分师','定价优化师','组织架构'],
   ops_staff: ['Listing 生成','Listing 打分','AI 问一问','Listing分析记录','Listing 写手','Listing 评分师'],
   listing_writer: ['Listing 生成','Listing 打分','AI 问一问','Listing分析记录','Listing 写手','Listing 评分师'],
-  analyst: ['选品工作台','AI 问一问','产品分析报告','类目分析师','竞品分析师','单品分析师','Review 挖掘师','定价优化师'],
-  cs: ['AI 问一问','产品分析报告','Review 挖掘师'],
+  analyst: ['选品工作台','AI 问一问','商品库','选品分析记录','竞品分析记录','类目分析师','竞品分析师','单品分析师','Review 挖掘师','定价优化师'],
+  cs: ['AI 问一问','Review 挖掘师'],
 };
 
 let currentOrgFilter = 'all';
@@ -32395,12 +32516,23 @@ if(document.readyState==='loading'){
 } else { initDefaultMarket(); }
 
 // ══════════ 会员充值页逻辑 ══════════
+/* ══ 邀请返利：不再是独立计费身份 ══════════════════════════════
+   原 Lv.4 Founder / Lv.5 Inviter 两个「邀请制按量计费」身份已取消（开发文档 v1.2 §1）：
+   没有按量计费形态、没有 ¥0.080 专属单价、没有「余额积分永不清零」这一类积分。
+   邀请人 / 被邀请人回归成普通账号上的一层**关系**，挂在 Lv.1-3 之上。
+   演示里用下表把三种关系分挂到三个视角，方便一屏看全：
+     Lv.1 视角 = 被邀请人（有邀请人、享平台折扣）
+     Lv.2 视角 = 无邀请关系的普通用户
+     Lv.3 视角 = 邀请人（有下级、有返利收益）
+   真实实现不要读这张表，读账号自身的 invitedBy / canInvite。 */
+const RC_INVITE_ROLE = {1:'invitee', 3:'inviter'};
+function _rcInviteRole(lv){ return RC_INVITE_ROLE[(lv==null ? (typeof _rcState!=='undefined'&&_rcState?_rcState.currentLv:null) : lv)] || null; }
+
 const RC_TIERS = [
   /* 权益一条只说一件事：原来「Listing 生成约 360 次 · 打分约 699 次」这种把两件事拿「·」串起来的写法，
      卡片一窄就从中间折行，后半句掉到下一行看着像另一条权益。拆开后每条都短，怎么排都不会断句。 */
-  {lv:4, key:'founder', name:'Founder', pos:'平台早期邀请制核心用户', mode:'usage', unitLabel:'¥0.08 / 积分（专属折扣）',
-   feats:['享受长期专属折扣优惠','按实际使用量消耗，用多少扣多少','余额积分永不清零，可持续累积','邀请制核心用户专属身份']},
-  {lv:3, key:'lv3', name:'Ultra', pos:'高客单 · 长期订阅用户', mode:'plan', price:699, orig:874, discLabel:'8 折', priceUnit:'/月', unitLabel:'¥0.082 / 积分',
+
+  {lv:3, key:'lv3', name:'Ultra', pos:'高客单 · 长期订阅用户', mode:'plan', price:699, orig:874, discLabel:'8 折', priceUnit:'/月', unitLabel:'¥0.078 / 积分',
    feats:['共 <b>9,000 积分</b> / 月','套餐含 7,000 积分，<b style="color:#ff9500;font-weight:700">赠送 2,000 积分</b>','Listing 生成约 360 次','Listing 打分约 699 次','高级生图功能','最多生成 1,500 张图','最多合成 50 个 20s 视频','单价最低，约 8 折专属折扣','赠送积分周期内清零']},
   {lv:2, key:'lv2', name:'Plus', pos:'主力付费用户', mode:'plan', price:399, orig:469, discLabel:'8.5 折', priceUnit:'/月', unitLabel:'¥0.087 / 积分',
    feats:['共 <b>4,600 积分</b> / 月','套餐含 4,000 积分，<b style="color:#ff9500;font-weight:700">赠送 600 积分</b>','Listing 生成约 200 次','Listing 打分约 399 次','高级生图功能','最多生成 750 张图','最多合成 25 个 20s 视频','约 8.5 折优惠','赠送积分周期内清零']},
@@ -32440,15 +32572,7 @@ const RC_HISTORY = [
   {time:'2025-08-12 10:24', type:'gift', typeLabel:'赠送', item:'邀请注册赠送积分', amt:'—', credits:'+200', status:'done'}
 ];
 // Founder（Lv.4）按量计费 · 后台手动调整为主，无套餐订阅
-const RC_HISTORY_FOUNDER = [
-  {time:'2026-05-19 10:12', type:'manual', typeLabel:'手动调整', item:'后台增加积分', amt:'—', credits:'+5,000', status:'done'},
-  {time:'2026-04-22 09:28', type:'manual', typeLabel:'手动调整', item:'后台扣减积分', amt:'—', credits:'-800', status:'done'},
-  {time:'2026-04-08 18:03', type:'manual', typeLabel:'手动调整', item:'后台增加积分', amt:'—', credits:'+3,000', status:'done'},
-  {time:'2025-08-12 10:24', type:'gift', typeLabel:'赠送', item:'邀请注册赠送积分', amt:'—', credits:'+200', status:'done'}
-];
-function _rcActiveHistory(){
-  return (_rcState && _rcState.currentLv===4) ? RC_HISTORY_FOUNDER : RC_HISTORY;
-}
+function _rcActiveHistory(){ return RC_HISTORY; }
 const RC_USAGE = [
   {time:'2026-05-20 16:48', module:'Listing 生成', spent:'-120', src:'self_plan', remain:'2,480'},
   {time:'2026-05-20 11:23', module:'Listing 打分', spent:'-80', src:'self_plan', remain:'2,600'},
@@ -32459,15 +32583,7 @@ const RC_USAGE = [
   {time:'2026-05-15 10:08', module:'Listing 打分', spent:'-80', src:'self_balance', remain:'3,450'}
 ];
 // Founder（Lv.4）按量计费 · 个人余额 / 个人赠送 / 邀请人额度
-const RC_USAGE_FOUNDER = [
-  {time:'2026-05-20 16:48', module:'Listing 生成', spent:'-120', src:'self_balance', remain:'2,480'},
-  {time:'2026-05-20 11:23', module:'Listing 打分', spent:'-80', src:'self_balance', remain:'2,600'},
-  {time:'2026-05-19 15:06', module:'竞品分析师', spent:'-200', src:'self_gift', remain:'2,680'},
-  {time:'2026-05-18 09:51', module:'Review 挖掘师', spent:'-150', src:'self_gift', remain:'2,880'},
-  {time:'2026-05-17 20:34', module:'Listing 生成', spent:'-120', src:'inviter_balance', remain:'3,030'},
-  {time:'2026-05-16 14:12', module:'类目分析师', spent:'-300', src:'inviter_balance', remain:'3,150'},
-  {time:'2026-05-15 10:08', module:'Listing 打分', spent:'-80', src:'inviter_gift', remain:'3,450'}
-];
+
 // Lv.5 邀请人 · 含下级共享额度消耗（byUser 标识使用者，本人则为空）
 const RC_USAGE_INVITER = [
   {time:'2026-05-20 16:48', module:'Listing 生成', spent:'-120', src:'recharge', remain:'2,480', byUser:''},
@@ -32479,8 +32595,8 @@ const RC_USAGE_INVITER = [
   {time:'2026-05-15 10:08', module:'Listing 打分', spent:'-80', src:'gift', remain:'3,450', byUser:''}
 ];
 function _rcActiveUsage(){
-  if(_rcState && _rcState.currentLv===5) return RC_USAGE_INVITER;
-  return (_rcState && _rcState.currentLv===4) ? RC_USAGE_FOUNDER : RC_USAGE;
+  // 邀请人要看到下级共享额度产生的消耗，其余用通用记录
+  return _rcInviteRole()==='inviter' ? RC_USAGE_INVITER : RC_USAGE;
 }
 // 扣费来源标签
 const RC_SRC_LABELS = {
@@ -32488,24 +32604,24 @@ const RC_SRC_LABELS = {
   plan_pts:'套餐积分',
   gift:'赠送积分',
   self_plan:'个人套餐赠送积分',
-  self_balance:'个人余额积分',
+  self_balance:'个人充值包积分',
   self_gift:'个人赠送积分',
   inviter_gift:'邀请人赠送积分',
-  inviter_balance:'邀请人余额积分',
+  inviter_balance:'邀请人充值包积分',
   // 兼容旧值
-  plan:'个人套餐赠送积分', balance:'个人余额积分', inviter:'邀请人余额积分'
+  plan:'个人套餐赠送积分', balance:'个人充值包积分', inviter:'邀请人充值包积分'
 };
 function _rcSrcLabel(src){
   const cls = (src==='plan'?'self_plan':src==='balance'?'self_balance':src==='inviter'?'inviter_balance':src) || 'self_balance';
-  const text = RC_SRC_LABELS[src] || RC_SRC_LABELS[cls] || '个人余额积分';
+  const text = RC_SRC_LABELS[src] || RC_SRC_LABELS[cls] || '个人充值包积分';
   return '<span class="rc-hist-src '+cls+'">'+text+'</span>';
 }
-// 扣费来源筛选选项：Lv.5 邀请人为「充值/套餐/赠送积分」三类，其余为原五类
+// 扣费来源筛选选项：邀请人为「充值/套餐/赠送积分」三类，其余为原五类（含由邀请人代付的两类）
 function _rcSrcFilterOptions(selected){
-  const lv5 = (_rcState && _rcState.currentLv===5);
-  const opts = lv5
+  const isInviter = (_rcInviteRole()==='inviter');
+  const opts = isInviter
     ? [['recharge','充值积分'],['plan_pts','套餐积分'],['gift','赠送积分']]
-    : [['self_plan','个人套餐赠送积分'],['self_balance','个人余额积分'],['self_gift','个人赠送积分'],['inviter_gift','邀请人赠送积分'],['inviter_balance','邀请人余额积分']];
+    : [['self_plan','个人套餐赠送积分'],['self_balance','个人充值包积分'],['self_gift','个人赠送积分'],['inviter_gift','邀请人赠送积分'],['inviter_balance','邀请人充值包积分']];
   return '<option value="all"'+(selected==='all'?' selected':'')+'>全部</option>'
     + opts.map(o=>'<option value="'+o[0]+'"'+(selected===o[0]?' selected':'')+'>'+o[1]+'</option>').join('');
 }
@@ -32513,8 +32629,6 @@ let _rcHistTab = 'usage';
 const RC_WALLET = {
   // 无等级视角（演示用新注册用户）：没订阅过任何套餐，手里只有注册赠送的积分
   0:{avatar:'N', name:'新用户', badge:'○ 未订阅', keepName:'赠送积分', keepN:200, expN:null, expFoot:'注册赠送，用完即止；订阅套餐后按周期发放', expTag:'未订阅'},
-  5:{avatar:'I', badge:'✦ 分销用户', keepName:'余额积分', keepN:2480, expN:null, expFoot:'可邀请他人注册 · 返利收益单独累计（见下方邀请概览）', expTag:'按量'},
-  4:{avatar:'F', badge:'★ Lv.4 Founder', keepName:'余额积分（Lv.4）', keepN:2480, expN:null, expFoot:'按量计费，无套餐积分（无需重置）', expTag:'按量'},
   3:{avatar:'U', badge:'◆ Lv.3 Ultra', keepName:'充值积分', keepN:320, expN:8640, expFoot:'<b style="color:#ff9500;font-weight:700">8,640</b> 套餐积分将于 <span class="rc-reset">6 月 1 日</span> 清零', expTag:'周期内清零'},
   2:{avatar:'L', name:'李婉婷', badge:'● Lv.2 Plus', keepName:'充值积分', keepN:0, expN:0, expFoot:'套餐已过期，套餐积分已清零，续费后恢复', expTag:'已过期'},
   1:{avatar:'E', badge:'○ Lv.1 Explorer', keepName:'充值积分', keepN:0, expN:540, expFoot:'<b style="color:#ff9500;font-weight:700">540</b> 套餐积分将于 <span class="rc-reset">6 月 1 日</span> 清零', expTag:'周期内清零'},
@@ -32747,7 +32861,7 @@ function _rcSyncInviteBtn(){
   const lv = _rcState.currentLv;
   const uid = (lv===7) ? RC_ADMIN_UID : (typeof INVITE_CURRENT_ID!=='undefined' ? INVITE_CURRENT_ID : null);
   const me = (uid!=null && typeof _userById==='function') ? _userById(uid) : null;
-  const on = _rcState.edition==='personal' && (lv===5 || (lv===7 && !!(me && me.canInvite)));
+  const on = _rcState.edition==='personal' && (_rcInviteRole(lv)==='inviter' || (lv===7 && !!(me && me.canInvite)));
   btn.style.display = on ? 'inline-flex' : 'none';
   const badge = document.getElementById('rc-invite-btn-badge');
   if(badge){
@@ -32849,8 +32963,8 @@ function rcRenderWallet2(){
   // 顶部「我的充值记录」与头像积分卡：已被钱包卡取代，无钱包卡时才保留
   const topHist = document.getElementById('rc-top-hist-btn');
   const topChip = document.getElementById('rc-profile-chip');
-  // 团队版页签不展示个人钱包；Lv.4/5 与企业成员视角也给同款钱包卡（口径不同）
-  const showCard = _rcState.edition==='personal' && (_rcTeam.active || RC_BUCKETS[lv] || lv===0 || lv===4 || lv===5 || lv===6 || lv===7 || lv===8 || lv===9);
+  // 团队版页签不展示个人钱包；企业成员 / 归档视角也给同款钱包卡（口径不同）
+  const showCard = _rcState.edition==='personal' && (_rcTeam.active || RC_BUCKETS[lv] || lv===0 || lv===6 || lv===7 || lv===8 || lv===9);
   if(!showCard){
     box.style.display='none'; box.innerHTML='';
     if(topHist) topHist.style.display='inline-flex';
@@ -33058,40 +33172,6 @@ function rcRenderWallet2(){
       +'</div>';
     return;
   }
-  /* Lv.4/5 按量计费：没有套餐/赠送周期，钱包卡沿用 Lv.1 的版式，
-     四栏换成「可用积分 / 余额积分 / 赠送积分 / 返利收益」 */
-  if(lv===4 || lv===5){
-    const w = RC_WALLET[lv]||{};
-    const ir = (typeof _inviterRebate==='function') ? _inviterRebate(lv===5?INVITE_CURRENT_ID:INVITE_INVITEE_ID) : {rebate:0,team:[]};
-    const bal = w.keepN||0, gift = w.expN||0;
-    const cell=(name,color,val,unit,foot,pct)=>'<div class="rcw-cell"><div class="rcw-cl">'
-      +(color?'<span class="rcw-dot" style="background:'+color+'"></span>':'')+name+'</div>'
-      +'<div class="rcw-cv"><b>'+_rcFmt(val)+'</b><span>'+(unit||'积分')+'</span></div>'
-      +'<div class="rcw-bar"><i style="width:'+(pct==null?100:pct)+'%;background:'+(color||'linear-gradient(90deg,#007aff,#6c5ce7)')+'"></i></div>'
-      +'<div class="rcw-cf">'+foot+'</div></div>';
-    box.innerHTML =
-      '<div class="rcw">'
-      +'<div class="rcw-head">'
-        +'<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
-          +'<div class="rcw-title"><svg viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>我的积分钱包</div>'
-          +'<span class="rcw-freeze" style="background:rgba(232,176,75,.14);color:#c8901f">✦ '+(lv===5?'分销用户 · 可邀请他人注册 · 返利收益单独累计':'Lv.4 Founder · 按量计费 · 积分永不清零')+'</span>'
-        +'</div>'
-        +'<div class="rcw-acts">'
-          +'<button class="rcw-btn" onclick="rcOpenHistory(\'recharge\')"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>充值记录</button>'
-          +'<button class="rcw-btn" onclick="rcOpenHistory(\'usage\')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>消耗记录</button>'
-          +'<button class="rcw-btn primary" onclick="rcOpenTopup()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>积分充值</button>'
-        +'</div></div>'
-      +'<div class="rcw-grid">'
-        +cell('当前可用积分', null, bal+gift, '积分', '按量扣费 · 用多少扣多少', 100)
-        +cell('余额积分', '#34c759', bal, '积分', '充值所得 · 永不过期', bal+gift>0?Math.round(bal/(bal+gift)*100):0)
-        +cell('赠送积分', '#ff9500', gift, '积分', gift>0?'平台赠送 · 优先消耗':'暂无赠送积分', bal+gift>0?Math.round(gift/(bal+gift)*100):0)
-        +cell('返利收益', '#007aff', ir.rebate||0, '积分', '团队 '+(ir.team?ir.team.length:0)+' 人消耗返给我', 100)
-      +'</div>'
-      +'<div class="rcw-rule"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:var(--t3);stroke-width:2;fill:none;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
-        +'<span>扣费顺序：<b>先扣赠送积分</b> → 再扣余额积分。你无套餐周期，积分<b>永不清零</b>；返利收益单独累计，可在下方分销区查看明细。</span></div>'
-      +'</div>';
-    return;
-  }
   const s = _rcWalletStats(lv);
   const bs = s.buckets;
   const meta = [
@@ -33150,6 +33230,16 @@ function rcRenderWallet2(){
       : _al('rgba(52,199,89,.1)','#1f9d57','✓ 暂无临期积分 · 套餐有效期至 '+_rcExpiryStr());
   }
   const detail = '';   // 到期明细改成弹窗看，钱包卡里不再内联展开
+  /* 原来只有 Lv.5 才有的「返利收益」格，现在挂在普通等级上：是邀请人就多一格。
+     返利单独累计，不属于三类批次，也不参与扣费顺序 —— 所以放在三个桶之后单列。 */
+  let rebateCell = '';
+  if(_rcInviteRole(lv)==='inviter' && typeof _inviterRebate==='function'){
+    const ir = _inviterRebate(typeof INVITE_CURRENT_ID!=='undefined' ? INVITE_CURRENT_ID : null) || {rebate:0, team:[]};
+    rebateCell = '<div class="rcw-cell"><div class="rcw-cl"><span class="rcw-dot" style="background:#007aff"></span>返利收益</div>'
+      +'<div class="rcw-cv"><b>'+_rcFmt(ir.rebate||0)+'</b><span>积分</span></div>'
+      +'<div class="rcw-bar"><i style="width:100%;background:#007aff"></i></div>'
+      +'<div class="rcw-cf">团队 '+(ir.team?ir.team.length:0)+' 人消耗返给我 · 单独累计，不随套餐清零</div></div>';
+  }
   box.innerHTML =
     '<div class="rcw">'
     +'<div class="rcw-head">'
@@ -33170,7 +33260,7 @@ function rcRenderWallet2(){
         +'<div class="rcw-cv"><b>'+_rcFmt(s.avail)+'</b><span>积分</span></div>'
         +'<div class="rcw-bar"><i style="width:100%;background:linear-gradient(90deg,#007aff,#6c5ce7)"></i></div>'
         +'</div>'
-      +cards
+      +cards+rebateCell
     +'</div>'
     +detail
     +'</div>';
@@ -33366,12 +33456,10 @@ function rcRenderWallet(){
   // 各视角用户名（未指定则默认张明）—— 同步到钱包名，供收据/头像卡读取
   const nmEl = document.querySelector('#page-recharge .rc-wallet-name');
   if(nmEl) nmEl.textContent = w.name || '张明';
-  // 按视角控制顶部按钮：L1/2/3 只显示积分明细；L4 只显示会员充值中心；L5 两个都显示
+  // 顶部按钮：个人订阅视角显示积分明细；「会员充值中心」是按量计费的单价对比入口，身份取消后已下掉
   const btnLv = _rcState.currentLv;
   const histBtn = document.getElementById('rc-hist-btn');
-  const mcBtn = document.getElementById('rc-mc-btn');
-  if(histBtn) histBtn.style.display = (btnLv===1 || btnLv===2 || btnLv===3 || btnLv===5) ? 'inline-flex' : 'none';
-  if(mcBtn) mcBtn.style.display = (btnLv===4 || btnLv===5) ? 'inline-flex' : 'none';
+  if(histBtn) histBtn.style.display = (btnLv===1 || btnLv===2 || btnLv===3) ? 'inline-flex' : 'none';
   // 可用总积分 = 不清零积分 + 套餐积分(若有)
   const total = w.keepN + (w.expN || 0);
   document.getElementById('rc-total-num').textContent = _rcFmt(total);
@@ -33398,21 +33486,11 @@ function rcRenderWallet(){
   if(typeof _rcSyncTopChip==='function') _rcSyncTopChip();   // 团队版 + Lv.1–3 时这组要收起
   const lv = _rcState.currentLv;
   rcRenderReminder();  // 到期提醒 banner
-  // Lv.4/Lv.5 为按量计费，没有套餐可买 —— 说明横幅和只读套餐区一起省掉，单价对比在钱包卡里
+  // 按量计费身份已取消：说明横幅与只读套餐区一并下掉，个人版只剩「未订阅 / Lv.1-3 套餐」
   const usageNote = document.getElementById('rc-usage-note');
   if(usageNote) usageNote.style.display = 'none';
-  // Lv.4 仅赠送积分；Lv.4/Lv.5 隐藏套餐/充值选择区
   const expName = document.getElementById('rc-exp-name');
-  if(expName) expName.textContent = (lv===4||lv===5) ? '赠送积分' : '套餐 / 赠送积分';
-  // Lv.5 显示折扣 + 返佣比（返利不计入个人积分）
-  const expFootEl = document.getElementById('rc-exp-foot');
-  if(lv===5){
-    const me = (typeof _userById==='function') ? _userById(INVITE_CURRENT_ID) : null;
-    const disc = me ? Math.round((me.discount!=null?me.discount:1)*100) : 100;
-    const reb = me ? Math.round(((me.rebate!=null?me.rebate:(typeof INVITE_REBATE!=='undefined'?INVITE_REBATE:0.3)))*100) : 30;
-    if(expFootEl) expFootEl.innerHTML = `按量计费 · 返佣比 <b style="color:#ff9500">${reb}%</b> · 折扣 <b style="color:var(--accent2)">${disc}%</b>（返利收益单独累计，不计入个人积分）`;
-  }
-  // 各等级都可在自己的端口充值：Lv.1-3 套餐制，Lv.4/5 按量计费仅充值余额
+  if(expName) expName.textContent = '套餐 / 赠送积分';  // 各等级都可在自己的端口充值：Lv.1-3 套餐制，Lv.4/5 按量计费仅充值余额
   const planSection = document.getElementById('rc-plan-section');
   if(planSection) planSection.style.display = '';
   const isMember = (lv===6);                 // 企业成员：无个人套餐，用量走共享池
@@ -33436,8 +33514,8 @@ function rcRenderWallet(){
         +'<span style="display:block;font-size:10.5px;color:var(--t2);margin-top:1px;white-space:nowrap">'
         +(isCorpAdmin ? '你是本企业管理员 · 个人套餐已终止，不重复计费' : '你是本企业席位成员 · 用量走共享积分池，无需个人订阅')+'</span></span>';
   })();
-  // Lv.5 是「带邀请功能的普通用户」，个人版照常能订阅套餐；只有 Lv.4 Founder 是纯按量计费
-  const usageMode = (lv===4);
+  // 按量计费身份已取消，个人版只剩「未订阅 / Lv.1-3 套餐」；常量保留为 false，下方分支无需逐处改写
+  const usageMode = false;
   const tierBlock = document.getElementById('rc-tier-block');
   // 已升级团队版：个人套餐已终止；Lv.4 按量计费买不了套餐；企业成员/管理员走企业池 —— 都不展示套餐区
   if(tierBlock) tierBlock.style.display = (_rcTeam.active || usageMode || lv===6 || lv===7) ? 'none' : '';
@@ -33494,35 +33572,35 @@ function rcRenderWallet(){
     if(typeof rcRenderWallet2==='function') rcRenderWallet2();
     return;
   }
-  if(lv===4 && typeof renderInviteeView==='function'){
-    // Lv.4：被邀请人 —— 积分明细 + 右上角邀请人
-    if(invBlock){ invBlock.style.display=''; invBlock.innerHTML = renderInlineHistory(); }
+  /* 邀请返利不再是计费身份，改按「账号关系」挂在普通等级上（见 RC_INVITE_ROLE）。
+     页面里只在钱包卡右上角挂一枚身份标，明细仍走顶部「邀请返利」弹窗，不在页面里再铺一大块。 */
+  const _invRole = _rcInviteRole(lv);
+  if(_invRole==='invitee'){
+    if(invBlock){ invBlock.style.display='none'; invBlock.innerHTML=''; }
     if(invSlot){
       const me = (typeof _userById==='function') ? _userById(INVITE_INVITEE_ID) : null;
       const inviter = me && me.invitedBy ? _userById(me.invitedBy) : null;
       const disc = me ? Math.round((me.discount!=null?me.discount:1)*100) : 100;
       invSlot.style.display = '';
-      invSlot.innerHTML = `<div style="font-size:10px;color:var(--t3);margin-bottom:2px">我的邀请人</div>
-        <div style="font-size:14px;font-weight:700;color:var(--accent2)">${inviter ? inviter.name : '—'}</div>
-        <div style="font-size:10px;color:var(--t3);margin-top:4px">平台折扣 <b style="color:var(--accent2)">${disc}%（${(disc/10).toFixed(1)}折）</b></div>`;
+      invSlot.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-bottom:2px">我的邀请人</div>'
+        +'<div style="font-size:14px;font-weight:700;color:var(--accent2)">'+(inviter ? inviter.name : '-')+'</div>'
+        +'<div style="font-size:10px;color:var(--t3);margin-top:4px">平台折扣 <b style="color:var(--accent2)">'+disc+'%（'+(disc/10).toFixed(1)+'折）</b></div>';
     }
-  } else if(lv===5 && typeof renderInviterView==='function'){
-    // 分销用户：整套邀请/分销功能收进顶部「邀请返利」弹窗，页面里不再铺一大块
+  } else if(_invRole==='inviter'){
     if(invBlock){ invBlock.style.display='none'; invBlock.innerHTML=''; }
     if(invSlot){
       invSlot.style.display='';
-      invSlot.innerHTML = `<div style="font-size:10px;color:var(--t3);margin-bottom:2px">分销身份</div>
-        <div style="font-size:14px;font-weight:700;color:var(--accent2)">分销用户 · 可邀请注册</div>`;
+      invSlot.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-bottom:2px">分销身份</div>'
+        +'<div style="font-size:14px;font-weight:700;color:var(--accent2)">可邀请注册 · 返利单独累计</div>';
     }
-  } else {
-    if(invBlock){ invBlock.style.display='none'; invBlock.innerHTML=''; }
+  } else {    if(invBlock){ invBlock.style.display='none'; invBlock.innerHTML=''; }
     if(invSlot){ invSlot.style.display='none'; invSlot.innerHTML=''; }
   }
   if(typeof _rcSyncInviteBtn==='function') _rcSyncInviteBtn();
   if(typeof rcRenderWallet2==='function') rcRenderWallet2();   // 我的积分钱包（Lv.1–3）
 }
 function rcRenderTiers(){
-  /* 个人版仅展示 3 个订阅套餐；Founder 为按量计费·邀请制不在此列。
+  /* 个人版仅展示 3 个订阅套餐（按量计费身份已取消，不再有只读档）。
      卡片按 Lv.1 → Lv.3 从低到高排，当前套餐在最左，升级路径自然向右；
      折扣信息原来在「折扣角标 / 立省 / 单价（约 X 折）」重复三遍，合并成一行。 */
   const _tiers = RC_TIERS.filter(t=>t.mode!=='usage').slice().sort((a,b)=>a.lv-b.lv);
@@ -33538,16 +33616,6 @@ function rcRenderTiers(){
     const acctExpired = _rcIsExpired();  // 当前账户套餐是否已过期（按当前等级）
     const noPlan = _rcPlanExp[_rcState.currentLv]===undefined;   // 视角本身没有套餐周期（如 Lv.5）→ 可直接订阅
     let cta;
-    // Lv.4 Founder 为纯按量计费：只读查看，不给订阅入口
-    if(_rcState.currentLv===4){
-      return '<div class="rc-tier '+t.key+'">'
-        +'<div class="rc-tier-lv">LV.'+t.lv+'</div><div class="rc-tier-name">'+t.name+'</div>'
-        +'<div class="rc-tier-pos">'+t.pos+'</div>'
-        +'<div class="rc-paymode plan">套餐订阅</div>'
-        +priceHtml+'<div class="rc-tier-divider"></div>'
-        +'<ul class="rc-feats">'+t.feats.map(f=>'<li>'+_rcCheck+'<span>'+f+'</span></li>').join('')+'</ul>'
-        +'<button class="rc-tier-cta" onclick="rcShowPlanFeats('+t.lv+')" style="background:var(--bg-card2);color:var(--t1);border:1px solid var(--border2)">查看权益明细</button></div>';
-    }
     if(t.mode==='usage'){
       cta = '<button class="rc-tier-cta owned" disabled style="cursor:default;opacity:.7">邀请制专属</button>';
     } else if(isCur){
@@ -33558,8 +33626,16 @@ function rcRenderTiers(){
       const sel = isSel && _rcState.tierAction==='subscribe';
       cta = '<button class="rc-tier-cta" onclick="rcTierAction('+t.lv+',\'subscribe\')">'+(sel?'✓ 已选订阅':'订阅此套餐')+'</button>';
     } else if(t.lv>_rcState.currentLv){
-      const sel = isSel && _rcState.tierAction==='upgrade';
-      cta = '<button class="rc-tier-cta" onclick="rcTierAction('+t.lv+',\'upgrade\')">'+(sel?'✓ 已选升级':'升级')+'</button>';
+      /* 升级按整月差价计价 —— 周期末升级等于买一堆立刻清零的积分。
+         剩余 <=7 天时收掉升级入口，改成「续费到 Lv.N」：全价、全额积分、顺延 30 天。 */
+      if(_rcUpgradeBlocked()){
+        const sel = isSel && _rcState.tierAction==='renewup';
+        cta = '<button class="rc-tier-cta" onclick="rcTierAction('+t.lv+',\'renewup\')">'+(sel?'✓ 已选 · 续费到 '+t.name:'续费到 '+t.name+' · ¥'+t.price)+'</button>'
+          +'<div style="margin-top:7px;font-size:10.5px;color:#e8890b;line-height:1.5">仅剩 '+_rcDaysLeft()+' 天，升级补进来的整月积分会立刻随套餐清零，已改为换档续费（+30 天）</div>';
+      } else {
+        const sel = isSel && _rcState.tierAction==='upgrade';
+        cta = '<button class="rc-tier-cta" onclick="rcTierAction('+t.lv+',\'upgrade\')">'+(sel?'✓ 已选升级':'升级')+'</button>';
+      }
     } else {
       cta = '<button class="rc-tier-cta owned" disabled style="cursor:default;opacity:.5">低于当前等级</button>';
     }
@@ -33714,7 +33790,7 @@ function rcRenderPacks(){
 const RC_TEAM_TIERS = [
   /* 权益一条只说一件事，和个人套餐卡同一套写法：原来「Listing 生成约 640 次 · 打分约 1,499 次 / 月」
      这种一行串三件事的，卡片一窄就从中间折断，后半句看着像另一条权益。 */
-  {key:'team_standard', name:'团队版', pos:'初创团队 · 协作起步', seats:5, price:1299, orig:1665, discLabel:'7.8 折', unitLabel:'低至 ¥0.078 / 积分（约 7.8 折）', pool:16000, giftPool:3000,
+  {key:'team_standard', name:'团队版', pos:'初创团队 · 协作起步', seats:5, price:1299, orig:1665, discLabel:'7.8 折', unitLabel:'低至 ¥0.068 / 积分（约 7.8 折）', pool:16000, giftPool:3000,
    feats:[
      '<b>5 个成员席位</b>，管理员统一分配',
      '共享积分池 <b style="color:#ff9500;font-weight:700">16,000 积分</b> / 月',
@@ -33727,7 +33803,7 @@ const RC_TEAM_TIERS = [
      '角色权限分配',
      '专属客服群 · 优先响应'
    ]},
-  {key:'team_flagship', name:'旗舰版', pos:'中大型团队 · 规模化运营', seats:15, price:2999, orig:4284, discLabel:'7 折', unitLabel:'低至 ¥0.072 / 积分（约 7 折）', hot:true, pool:45000, giftPool:10000,
+  {key:'team_flagship', name:'旗舰版', pos:'中大型团队 · 规模化运营', seats:15, price:2999, orig:4284, discLabel:'7 折', unitLabel:'低至 ¥0.055 / 积分（约 7 折）', hot:true, pool:45000, giftPool:10000,
    feats:[
      '<b>15 个成员席位</b>，可叠加扩充',
      '共享积分池 <b style="color:#ff9500;font-weight:700">45,000 积分</b> / 月',
@@ -33813,7 +33889,11 @@ function _rcTeamCta(i, isSel){
   const t = RC_TEAM_TIERS[i];
   if(_rcTeam.active){
     if(_rcTeam.tierIdx===i) return '续费本版本 · ¥'+_rcFmt(t.price);
-    return i>_rcTeam.tierIdx ? '升级席位 · 补差价 ¥'+_rcFmt(t.price-RC_TEAM_TIERS[_rcTeam.tierIdx].price) : '低于当前版本';
+    if(i<_rcTeam.tierIdx) return '低于当前版本';
+    // 剩余 <=7 天不给「升席位」，改成「续费到 X」：新档全价 + 全额池 + 顺延 30 天
+    return _rcTeamSeatUpBlocked()
+      ? '续费到 '+t.name+' · ¥'+_rcFmt(t.price)
+      : '升级席位 · 补差价 ¥'+_rcFmt(t.price-RC_TEAM_TIERS[_rcTeam.tierIdx].price);
   }
   const pr = _rcTeamProrate();
   // 手上没有生效中的个人套餐（如归档企业释放出来的成员）就不是「升级」，是从零订阅
@@ -33941,6 +34021,10 @@ function _rcTeamProrate(){
     dayRatio, creditRatio, ratio, by: creditRatio<dayRatio ? 'credit' : 'day',
     creditPct: Math.round(creditRatio*100), dayPct: Math.round(dayRatio*100)};
 }
+/* 团队版剩余天数与「升席位」守卫：与个人套餐 _rcUpgradeBlocked 同口径同阈值。
+   剩余 <=7 天补整月差价升席位，等于买一批几天后就随周期清零的池积分 —— 改走换档续费。 */
+function _rcTeamDaysLeft(){ return _rcTeam.expTs ? Math.ceil((_rcTeam.expTs - Date.now())/_RC_DAY) : null; }
+function _rcTeamSeatUpBlocked(){ const d=_rcTeamDaysLeft(); return d!==null && d>0 && d<=_RC_UPGRADE_MIN_DAYS; }
 function rcSetTeamPackChoice(v){
   _rcTeamPackChoice = v;
   const b = document.getElementById('rc-teamup-body'); _rcTeamScroll = b ? b.scrollTop : 0;
@@ -34029,7 +34113,7 @@ function rcSelectTeamTier(i){
 }
 /* 团队版续费 / 升级席位账单
    续费：席位与共享池不变，有效期在原基础上顺延 30 天，共享池按套餐额度重新发放
-   升席位：补差价，席位与共享池即时扩容，有效期重置为 30 天 */
+   升席位：补整月差价，席位与共享池即时扩容，到期日不变；剩余 <=7 天时改走换档续费（全价 + 全额池 + 顺延 30 天） */
 function rcTeamRenewInfo(i, act){
   _rcEnsureReceiptCss();
   const t = RC_TEAM_TIERS[i]; if(!t) return;
@@ -34039,9 +34123,12 @@ function rcTeamRenewInfo(i, act){
   // 升席位 = 同产品线换档：到期日不动，所以按两档之间的整月差补 —— 差多少钱补多少钱，共享池差多少补多少
   const fullPay = Math.max(0, t.price - cur.price);
   const fullPool = Math.max(0, (t.pool + t.giftPool) - (cur.pool + cur.giftPool));
-  const pay = isRenew ? t.price : fullPay;
-  const newExp = isRenew ? _rcDateStr(Math.max(Date.now(), _rcTeam.expTs) + 30*_RC_DAY) : _rcDateStr(_rcTeam.expTs);
-  const addPool = isRenew ? (t.pool + t.giftPool) : fullPool;
+  // 剩余 <=7 天的升席位改走「换档续费」：新档全价、全额池、有效期顺延 30 天
+  const seatRenewUp = !isRenew && _rcTeamSeatUpBlocked();
+  const extend = isRenew || seatRenewUp;
+  const pay = extend ? t.price : fullPay;
+  const newExp = extend ? _rcDateStr(Math.max(Date.now(), _rcTeam.expTs) + 30*_RC_DAY) : _rcDateStr(_rcTeam.expTs);
+  const addPool = extend ? (t.pool + t.giftPool) : fullPool;
   const row = (k,v)=>'<div style="display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px dashed var(--border,#eee);font-size:13px"><span style="color:var(--t2,#666);flex-shrink:0">'+k+'</span><span style="color:var(--t0,#222);text-align:right">'+v+'</span></div>';
   const rows = isRenew ? [
       row('当前版本', cur.name+'（'+_rcTeam.seats+' 席位）'),
@@ -34050,6 +34137,14 @@ function rcTeamRenewInfo(i, act){
       row('共享池到账', '<b style="color:#1f9d57">+'+_rcFmt(addPool)+' 积分</b>（'+_rcFmt(t.pool)+' 套餐 + '+_rcFmt(t.giftPool)+' 赠送）'),
       row('续费后有效期', '<b>'+newExp+'</b>（在原有效期上顺延 30 天）'),
       row('席位', '保持 '+_rcTeam.seats+' 个不变')
+    ].join('') : seatRenewUp ? [
+      row('当前版本', cur.name+'（'+cur.seats+' 席位 · ¥'+_rcFmt(cur.price)+'/月）'),
+      row('当前有效期', _rcDateStr(_rcTeam.expTs)+' · <b style="color:#e8890b">仅剩 '+daysLeft+' 天</b>'),
+      row('换档至', '<b style="color:var(--accent2)">'+t.name+'</b>（'+t.seats+' 席位 · ¥'+_rcFmt(t.price)+'/月）'),
+      row('席位扩容', '<b style="color:#1f9d57">+'+(t.seats-cur.seats)+' 个</b>（'+_rcTeam.seats+' → '+t.seats+'）· 立即生效'),
+      row('续费金额', '<b style="color:#c8901f">¥'+_rcFmt(t.price)+'</b>（'+t.name+' 全价，非补差价）'),
+      row('共享池到账', '<b style="color:#1f9d57">+'+_rcFmt(addPool)+' 积分</b>（按 '+t.name+' 全额重新发放）'),
+      row('换档后有效期', '<b>'+newExp+'</b><span style="color:var(--t3)"> · 在原有效期上顺延 30 天</span>')
     ].join('') : [
       row('当前版本', cur.name+'（'+cur.seats+' 席位 · ¥'+_rcFmt(cur.price)+'/月）'),
       row('当前有效期', _rcDateStr(_rcTeam.expTs)+' · <b>剩 '+daysLeft+' 天</b>'),
@@ -34063,12 +34158,12 @@ function rcTeamRenewInfo(i, act){
   const ov=document.createElement('div');
   ov.id='rc-teamre-ov'; ov.className='rc-ov';
   ov.innerHTML='<div class="rc-dialog" style="width:460px">'
-    +'<div class="rc-dialog-head"><div class="rc-dialog-title">'+(isRenew?'续费团队版':'升级席位')+'</div>'
+    +'<div class="rc-dialog-head"><div class="rc-dialog-title">'+(isRenew?'续费团队版':seatRenewUp?'席位换档续费':'升级席位')+'</div>'
     +'<button class="rc-dialog-x" onclick="document.getElementById(\'rc-teamre-ov\').remove()">×</button></div>'
     +'<div class="rc-dialog-body">'+rows
     +'</div>'
     +'<div class="rc-dialog-foot"><button class="rc-btn-ghost" onclick="document.getElementById(\'rc-teamre-ov\').remove()">取消</button>'
-    +'<button class="rc-btn-primary" onclick="rcTeamConfirmRenew('+i+',\''+act+'\')">确认 · 支付 ¥'+_rcFmt(pay)+'</button></div>'
+    +'<button class="rc-btn-primary" onclick="rcTeamConfirmRenew('+i+',\''+(isRenew?'renew':(seatRenewUp?'seatsrenew':'seats'))+'\')">确认 · 支付 ¥'+_rcFmt(pay)+'</button></div>'
     +'</div>';
   document.body.appendChild(ov);
   ov.addEventListener('click',e=>{ if(e.target===ov) ov.remove(); });
@@ -34194,7 +34289,7 @@ function rcRenderHistory(){
       if(f.type!=='all' && h.type!==f.type) return false;
       return true;
     });
-    const hideAmt = (_rcState && _rcState.currentLv===4);
+    const hideAmt = false;
     const rows = list.map(h=>{
       const statusBadge = h.status==='done'
         ? '<span class="rc-hist-badge done">'+checkSvg+'已完成</span>'
@@ -34260,7 +34355,7 @@ function _rcHistTableHTML(tab){
       if(f.type!=='all' && h.type!==f.type) return false;
       return true;
     });
-    const hideAmt = (_rcState && _rcState.currentLv===4);
+    const hideAmt = false;
     const rows = list.map(h=>{
       const statusBadge = h.status==='done'
         ? '<span class="rc-hist-badge done">'+checkSvg+'已完成</span>'
@@ -34390,64 +34485,6 @@ function rcSelectTier(lv, act){
   rcRenderTiers(); rcUpdateCheckout();
 }
 // 切换会员等级视角（演示）
-/* Lv.4/5 的套餐详情：他们无套餐可订阅，但常常想知道
-   「我这个按量单价，跟套餐比到底划不划算」—— 所以做成只读对比，
-   把自己的按量单价并排放进去，而不是把套餐卡原样搬过来。 */
-function rcShowPlanDetail(){
-  _rcEnsureReceiptCss();
-  const lv = _rcState.currentLv;
-  const me = RC_TIERS.find(t=>t.lv===4) || {};
-  const myRate = 0.08;                                   // Lv.4/5 邀请制专属单价
-  const plans = RC_TIERS.filter(t=>t.mode==='plan').sort((a,b)=>a.lv-b.lv);
-  const old=document.getElementById('rc-plan-ov'); if(old) old.remove();
-  const ov=document.createElement('div');
-  ov.id='rc-plan-ov'; ov.className='rc-ov';
-  const th=(l,a)=>'<th style="padding:10px 13px;text-align:'+(a||'left')+';font-size:10.5px;font-weight:700;color:var(--t2);white-space:nowrap;background:var(--bg-page)">'+l+'</th>';
-  const cell=(v,a,st)=>'<td style="padding:10px 13px;text-align:'+(a||'left')+';font-size:12px;color:var(--t1);white-space:nowrap;'+(st||'')+'">'+v+'</td>';
-  const rows = plans.map(t=>{
-    const credits = RC_PLAN_CREDITS[t.lv]||0;
-    const unit = t.price/credits;
-    const cheaper = unit < myRate;
-    return '<tr style="border-top:1px solid var(--border)">'
-      +cell('<b style="color:'+(t.lv===3?'#7c5cff':t.lv===2?'var(--accent2)':'var(--t0)')+'">Lv.'+t.lv+' '+t.name+'</b>'
-            +'<span style="display:block;font-size:10px;color:var(--t3);margin-top:2px">'+t.pos+'</span>')
-      +cell('<b style="font-family:Inter,var(--f);font-size:14px">¥'+t.price+'</b><span style="color:var(--t3);font-size:10.5px"> /月</span>','right')
-      +cell('<b style="font-family:Inter,var(--f)">'+credits.toLocaleString()+'</b>','right')
-      +cell('<b style="font-family:Inter,var(--f);color:'+(cheaper?'#1f9d57':'var(--t1)')+'">¥'+unit.toFixed(3)+'</b>','right')
-      +cell(cheaper
-          ? '<span style="color:#1f9d57;font-weight:700">比你便宜 '+Math.round((1-unit/myRate)*100)+'%</span>'
-          : '<span style="color:var(--t3)">贵 '+Math.round((unit/myRate-1)*100)+'%</span>','right')
-      +cell('<button onclick="rcShowPlanFeats('+t.lv+')" style="padding:4px 11px;border:1px solid var(--border);border-radius:7px;background:var(--bg-card);color:var(--accent2);font-size:10.5px;font-weight:600;cursor:pointer;font-family:var(--f)">权益明细</button>','right')
-    +'</tr>';
-  }).join('');
-  ov.innerHTML='<div class="rc-dialog" style="width:720px;max-width:96vw;max-height:88vh;display:flex;flex-direction:column">'
-    +'<div class="rc-dialog-head"><div><div class="rc-dialog-title">套餐详情与单价对比</div>'
-      +'<div style="font-size:11.5px;color:var(--t3);margin-top:3px">你当前为'+(lv===5?'分销用户':'Lv.4 Founder')+' · 专属单价 <b style="color:#c8901f">¥'+myRate.toFixed(3)+' / 积分</b> · 积分永不清零</div></div>'
-    +'<button class="rc-dialog-x" onclick="document.getElementById(\'rc-plan-ov\').remove()">×</button></div>'
-    +'<div class="rc-dialog-body" style="overflow:auto;flex:1">'
-      +'<div style="border:1px solid var(--border);border-radius:11px;overflow:hidden;overflow-x:auto">'
-      +'<table style="width:100%;min-width:600px;border-collapse:collapse">'
-      +'<thead><tr>'+th('套餐')+th('月费','right')+th('含积分','right')+th('单价 / 积分','right')+th('对比我的单价','right')+th('','right')+'</tr></thead>'
-      +'<tbody>'
-        +'<tr style="background:rgba(232,176,75,.07)">'
-          +cell('<b style="color:#c8901f">'+(lv===5?'分销用户':'Lv.4 Founder')+'（我）</b><span style="display:block;font-size:10px;color:var(--t3);margin-top:2px">'+(lv===5?'可邀请注册 · 按量计费':'邀请制 · 按量计费')+'</span>')
-          +cell('<span style="color:var(--t3)">按量</span>','right')
-          +cell('<span style="color:var(--t3)">充多少用多少</span>','right')
-          +cell('<b style="font-family:Inter,var(--f);color:#c8901f">¥'+myRate.toFixed(3)+'</b>','right')
-          +cell('<span style="color:var(--t3)">—</span>','right')+cell('','right')
-        +'</tr>'+rows
-      +'</tbody></table></div>'
-      +'<div style="margin-top:12px;font-size:11.5px;color:var(--t3);line-height:1.8">'
-        +'· 套餐单价 = 月费 ÷ 套餐含积分（含赠送部分）。套餐积分<b>周期内清零</b>，你的按量积分<b>永不清零</b>，单价之外还要算上这笔差异。<br>'
-        +'· 你是<b>邀请制</b>用户，享长期专属折扣，<b>无需也无法自助订阅套餐</b>；此处仅供了解产品线与做单价参考。<br>'
-        +'· 如确需转为套餐制，请联系你的客户成功经理。</div>'
-    +'</div>'
-    +'<div class="rc-dialog-foot"><button class="rc-btn-ghost" onclick="openHelpModal&&openHelpModal(\'consult\')">联系顾问</button>'
-    +'<button class="rc-btn-primary" onclick="document.getElementById(\'rc-plan-ov\').remove()">知道了</button></div>'
-    +'</div>';
-  document.body.appendChild(ov);
-  ov.addEventListener('click',e=>{ if(e.target===ov) ov.remove(); });
-}
 // 单个套餐的完整权益清单
 function rcShowPlanFeats(lv){
   const t = RC_TIERS.find(x=>x.lv===lv); if(!t) return;
@@ -34499,8 +34536,8 @@ function _rcViewUid(lv){
   if(lv===7) return RC_ADMIN_UID;
   if(lv===8) return RC_ARCHIVED_UID;
   if(lv===9) return ((typeof MOCK_TEAMS!=='undefined' ? MOCK_TEAMS.find(x=>x.id===RC_ARCHIVED_TID) : null)||{}).adminId;
-  if(lv===5) return (typeof INVITE_CURRENT_ID!=='undefined') ? INVITE_CURRENT_ID : null;
-  if(lv===4) return (typeof INVITE_INVITEE_ID!=='undefined') ? INVITE_INVITEE_ID : null;
+  if(_rcInviteRole(lv)==='inviter') return (typeof INVITE_CURRENT_ID!=='undefined') ? INVITE_CURRENT_ID : null;
+  if(_rcInviteRole(lv)==='invitee') return (typeof INVITE_INVITEE_ID!=='undefined') ? INVITE_INVITEE_ID : null;
   return null;
 }
 function _rcSyncSidebar(){
@@ -34613,15 +34650,20 @@ function rcSwitchView(lv){
 function _rcPreviewExpiry(act){
   const cur = _rcPlanExp[_rcState.currentLv];
   if(act==='upgrade' && cur && !_rcIsExpired()) return _rcDateStr(cur);
-  const base = act==='renew' ? Math.max(Date.now(), cur||Date.now()) : Date.now();
+  const base = (act==='renew'||act==='renewup') ? Math.max(Date.now(), cur||Date.now()) : Date.now();
   const d=new Date(base+30*_RC_DAY),p=n=>String(n).padStart(2,'0');
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
 }
 /* 同一产品线内升档的按比例折算：只为「剩余天数」补差价与补积分。
    剩余 5 天升 Lv.2，就只补这 5 天的价差与积分，到期日照旧。 */
 /* 升级只换档、不改计费周期：到期日一天没变，所以补的是「两档之间的整月差」——
-   套餐差多少钱补多少钱，积分差多少补多少，不再按剩余天数打折。
+   套餐差多少钱补多少钱，积分差多少补多少，不按剩余天数打折（2026-08-19 裁决：走整月差价）。
    days 仍然算出来，只用于提示"剩没几天了，补进来的积分很快会随套餐清零"。 */
+/* 整月差价的代价：周期末升级会买到一批马上随套餐清零的积分。
+   因此配套硬约束 —— 剩余 <= _RC_UPGRADE_MIN_DAYS 天时禁用「升级」，
+   只给「续费到 Lv.N」(renewup：全价 + 全额积分 + 有效期顺延 30 天)。 */
+const _RC_UPGRADE_MIN_DAYS = 7;
+function _rcUpgradeBlocked(){ const d=_rcDaysLeft(); return d!==null && d>0 && d<=_RC_UPGRADE_MIN_DAYS; }
 function _rcUpgradeProrate(fromLv, toLv){
   const from = RC_TIERS.find(t=>t.lv===fromLv) || {price:0};
   const to   = RC_TIERS.find(t=>t.lv===toLv)   || {price:0};
@@ -34661,6 +34703,16 @@ function rcShowTierInfo(lv, act){
       ['补充积分', '<b style="color:#1f9d57">+'+pr.credits.toLocaleString()+' 积分</b>（'+pr.toCredits.toLocaleString()+' − '+pr.fromCredits.toLocaleString()+'）'],
       ['升级后有效期', '<b>'+newExp+'</b><span style="color:var(--t3)"> · 保持不变</span>']
     ];
+  } else if(act==='renewup'){
+    payAmt = t.price; title = '换档续费'; confirmLabel = '确认续费到 Lv.'+t.lv+' · ¥'+t.price;
+    rows = [
+      ['当前套餐', 'Lv.'+(cur?cur.lv:'-')+' '+(cur?cur.name:'-')+'（'+curCredits.toLocaleString()+' 积分 / 30 天）'],
+      ['当前有效期', curExp+' · <b style="color:#e8890b">仅剩 '+daysLeft+' 天</b>'],
+      ['换档至', 'Lv.'+t.lv+' '+t.name+'（'+newCredits.toLocaleString()+' 积分 / 30 天）'],
+      ['续费金额', '<b style="color:#c8901f">¥'+t.price+'</b>（Lv.'+t.lv+' 全价，非补差价）'],
+      ['到账积分', '<b style="color:#1f9d57">+'+newCredits.toLocaleString()+' 积分</b>（按 Lv.'+t.lv+' 全额重新发放）'],
+      ['续费后有效期', '<b>'+newExp+'</b><span style="color:var(--t3)"> · 在原有效期上顺延 30 天</span>']
+    ];
   } else if(act==='subscribe'){
     payAmt = t.price; title = '订阅套餐'; confirmLabel = '确认订阅 · ¥'+t.price;
     rows = [
@@ -34694,9 +34746,8 @@ function rcShowTierInfo(lv, act){
       +'<div style="margin-top:14px;font-size:11.5px;color:var(--t3,#999);background:var(--bg-page,#f7f8fa);border-radius:8px;padding:9px 11px;line-height:1.6">'
       +(act==='upgrade'
         ? '升级立即生效，<b>计费周期不变</b> —— 补足两档之间的整月价差与积分差，到期日仍是 '+curExp+'。到期后按 Lv.'+t.lv+' 全价续费。'
-          +(( _rcDaysLeft()||0) <= 7
-            ? '<div style="margin-top:7px;color:#e8890b">💡 只剩 '+(_rcDaysLeft()||0)+' 天，本次补进来的 '+pr.credits.toLocaleString()+' 积分会随套餐一起到期清零；想拿满 30 天建议直接<b>续费到 Lv.'+t.lv+'</b>（¥'+t.price+'）。</div>'
-            : '')
+        : act==='renewup'
+        ? '剩余不足 '+_RC_UPGRADE_MIN_DAYS+' 天，此时按整月差价升级会拿到一批立刻清零的积分 —— 已改为<b>换档续费</b>：按 Lv.'+t.lv+' 全价重新发放 '+newCredits.toLocaleString()+' 积分，有效期在原到期日 '+curExp+' 上<b>顺延 30 天</b>。'
         : act==='subscribe'?(_rcPlanExp[_rcState.currentLv]===undefined
             ? '本次为新订阅（全价），到账全部套餐积分，有效期自今日起 30 天。'
             : '原套餐已过期，本次为重新订阅（全价），到账全部套餐积分，有效期自今日起 30 天。')
@@ -34727,7 +34778,7 @@ function rcCloseHistory(){
 function rcSelectPack(i){ _rcState.selectedPack = _rcState.selectedPack===i?null:i; rcRenderPacks(); rcUpdateCheckout(); }
 function rcUpdateCheckout(){
   const info=document.getElementById('rc-checkout-info'), total=document.getElementById('rc-checkout-total'), btn=document.getElementById('rc-checkout-btn');
-  const usageMode = (_rcState.currentLv===4);   // Lv.5 可订阅套餐，不算纯按量
+  const usageMode = false;   // 按量计费身份已取消
   let sum=0, parts=[];
   if(_rcState.selectedTier!==null){
     const t=RC_TIERS.find(x=>x.lv===_rcState.selectedTier);
@@ -34735,6 +34786,7 @@ function rcUpdateCheckout(){
       const act=_rcState.tierAction;
       if(act==='upgrade'){ const cur=_rcCurTier(); const diff=t.price-(cur?cur.price:0); sum+=diff; parts.push('升级至 '+t.name+'（补差价 ¥'+diff+'）'); }
       else if(act==='renew'){ sum+=t.price; parts.push(t.name+' 续费 ¥'+t.price); }
+      else if(act==='renewup'){ sum+=t.price; parts.push('换档续费至 '+t.name+' ¥'+t.price); }
       else { sum+=t.price; parts.push(t.name+' 套餐 ¥'+t.price); }
     }
     else parts.push('切换为 '+t.name+' 按量计费');
@@ -34744,7 +34796,7 @@ function rcUpdateCheckout(){
   // 企业成员/管理员无个人订阅、Lv.4 纯按量没有套餐可结算 —— 不显示结算条
   const _clv=_rcState.currentLv;
   const checkoutBar=document.getElementById('rc-checkout');
-  if(checkoutBar) checkoutBar.style.display = (_clv===4 || _clv===6 || _clv===7) ? 'none' : '';
+  if(checkoutBar) checkoutBar.style.display = (_clv===6 || _clv===7) ? 'none' : '';
   if(parts.length===0){ info.textContent=usageMode?'请选择充值金额':'请选择会员等级（积分充值请点上方「积分充值」）'; total.innerHTML='<span>合计 ¥</span>0'; btn.disabled=true; }
   else { info.innerHTML=parts.map(p=>'<b>'+p+'</b>').join(' ＋ '); total.innerHTML='<span>合计 ¥</span>'+sum; btn.disabled=false; }
 }
@@ -34803,20 +34855,23 @@ function _rcRmbUpper(n){
 }
 // 组装订单（source: 'checkout' | 'custom'）
 function _rcBuildOrder(source){
-  const usageMode=(_rcState.currentLv===4||_rcState.currentLv===5);
+  const usageMode=false;
   // 积分钱包「积分充值」入口：只买充值包，不与套餐订阅混单
   // 团队版续费 / 升级席位
   if(source==='team_renew'){
     const t=RC_TEAM_TIERS[_rcState.teamTier]; if(!t) return null;
     const cur=RC_TEAM_TIERS[_rcTeam.tierIdx]||{price:0,pool:0,giftPool:0,seats:0};
     const isRenew=_rcTeamAct==='renew';
-    const amount=isRenew ? t.price : Math.max(0, t.price-cur.price);
-    const credits=isRenew ? (t.pool+t.giftPool) : Math.max(0,(t.pool+t.giftPool)-(cur.pool+cur.giftPool));
-    return {kind:'team_renew', typeLabel:isRenew?'团队版续费':'团队席位升级', histType:'plan', expiring:true,
+    const isSeatRenewUp=_rcTeamAct==='seatsrenew';        // 剩余 <=7 天的升席位：走换档续费
+    const full=isRenew||isSeatRenewUp;
+    const amount=full ? t.price : Math.max(0, t.price-cur.price);
+    const credits=full ? (t.pool+t.giftPool) : Math.max(0,(t.pool+t.giftPool)-(cur.pool+cur.giftPool));
+    const itemName = isRenew      ? t.name+' 续费（'+t.seats+' 席位 · 延长 30 天）'
+                   : isSeatRenewUp? '席位换档续费至 '+t.name+'（席位 '+cur.seats+' → '+t.seats+'，全价 · 全额池 · 顺延 30 天）'
+                                  : '升级至 '+t.name+'（席位 '+cur.seats+' → '+t.seats+'，补整月价差 · 到期日不变）';
+    return {kind:'team_renew', typeLabel:isRenew?'团队版续费':(isSeatRenewUp?'席位换档续费':'团队席位升级'), histType:'plan', expiring:true,
       amount, credits, action:_rcTeamAct, teamIdx:_rcState.teamTier,
-      items:[{name:isRenew ? t.name+' 续费（'+t.seats+' 席位 · 延长 30 天）'
-                           : '升级至 '+t.name+'（席位 '+cur.seats+' → '+t.seats+'，补整月价差 · 到期日不变）',
-              qty:1, amount, credits, expiring:true}]};
+      items:[{name:itemName, qty:1, amount, credits, expiring:true}]};
   }
   // 个人版 → 团队版升级：团队套餐 − 个人套餐剩余时长折抵
   if(source==='team'){
@@ -34880,6 +34935,9 @@ function _rcBuildOrder(source){
         items.push({name:'升级至 Lv.'+t.lv+' '+t.name+'（补整月价差，补 '+pr.credits.toLocaleString()+' 积分 · 到期日不变）',
           qty:1, amount:pr.price, credits:pr.credits, expiring:true});
         amount+=pr.price; credits+=pr.credits; typeLabel='套餐升级';
+      } else if(act==='renewup'){
+        items.push({name:'换档续费至 Lv.'+t.lv+' '+t.name+'（全价 · 全额积分 · 顺延 30 天）', qty:1, amount:t.price, credits:fullCredits, expiring:true});
+        amount+=t.price; credits+=fullCredits; typeLabel='换档续费';
       } else if(act==='renew'){
         items.push({name:'Lv.'+t.lv+' '+t.name+' 续费（延长 30 天）', qty:1, amount:t.price, credits:fullCredits, expiring:true});
         amount+=t.price; credits+=fullCredits; typeLabel='套餐续费';
@@ -35076,7 +35134,7 @@ function _rcQrSuccessHTML(order, receipt){
     const isRenew=order.action==='renew';
     return '<div class="rc-dialog-body" style="text-align:center;padding:32px 24px">'
       +'<div style="width:66px;height:66px;border-radius:50%;background:#e8f8ef;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><span style="font-size:36px;color:#1f9d57">✔</span></div>'
-      +'<div style="font-size:20px;font-weight:800;color:var(--t0,#1a1a1a);margin-bottom:6px">'+(isRenew?'续费成功':'席位升级成功')+'</div>'
+      +'<div style="font-size:20px;font-weight:800;color:var(--t0,#1a1a1a);margin-bottom:6px">'+(isRenew?'续费成功':(order.action==='seatsrenew'?'换档续费成功':'席位升级成功'))+'</div>'
       +'<div style="font-size:13px;color:var(--t2,#666)">'+t.name+' · '+t.seats+' 个席位</div>'
       +'<div style="margin:16px 0 4px;background:var(--bg-page,#f7f8fa);border-radius:11px;padding:13px 16px;text-align:left;font-size:12.5px;color:var(--t1);line-height:1.9">'
         +'<div>共享池'+(isRenew?'到账':'补充')+'　<b style="color:#1f9d57">+'+order.credits.toLocaleString()+' 积分</b></div>'
@@ -35166,7 +35224,7 @@ function _rcCommitBuckets(order, lv, prevLv){
 function _rcCommit(order, receipt){
   const prevLv=_rcState.currentLv;
   // 套餐订阅 / 升级：切换当前等级（续费保持不变）
-  if(order.kind==='plan' && (order.action==='upgrade' || order.action==='subscribe') && order.newLv){
+  if(order.kind==='plan' && (order.action==='upgrade' || order.action==='subscribe' || order.action==='renewup') && order.newLv){
     _rcState.currentLv=order.newLv;
   }
   // 共享池充值包：只加池子，不动席位与有效期，也不进任何人的个人钱包
@@ -35188,11 +35246,12 @@ function _rcCommit(order, receipt){
   if(order.kind==='team_renew'){
     const t=RC_TEAM_TIERS[order.teamIdx];
     const isRenew=order.action==='renew';
+    const extend=isRenew || order.action==='seatsrenew';
     _rcTeam.tierIdx=order.teamIdx;
     _rcTeam.seats=t.seats;
     _rcTeam.pool=(_rcTeam.pool||0)+order.credits;
-    // 续费顺延 30 天；升席位不动到期日（同产品线换档，计费锚点不变）
-    if(isRenew) _rcTeam.expTs = Math.max(Date.now(), _rcTeam.expTs||Date.now()) + 30*_RC_DAY;
+    // 续费 / 席位换档续费顺延 30 天；剩余 >7 天的升席位不动到期日（同产品线换档，计费锚点不变）
+    if(extend) _rcTeam.expTs = Math.max(Date.now(), _rcTeam.expTs||Date.now()) + 30*_RC_DAY;
     const st=_rcTeam.storeId ? (typeof _teamById==='function' ? _teamById(_rcTeam.storeId) : null) : null;
     if(st){ st.seats=t.seats; st.pool.plan=t.pool; st.pool.recharge=(st.pool.recharge||0)+t.giftPool; st.pool.expiry=_rcDateStr(_rcTeam.expTs);
       if(typeof teamSyncFromStore==='function') teamSyncFromStore();
@@ -35252,6 +35311,11 @@ function _rcCommit(order, receipt){
       if(prevLv && prevLv!==lvNow && _rcPlanExp[prevLv]!==undefined) _rcPlanExp[lvNow] = _rcPlanExp[prevLv];
     }
     else if(order.action==='renew') _rcExtendPlan();
+    else if(order.action==='renewup'){
+      // 换档续费：等级已切到新档，有效期要在「原等级」的到期日上顺延 30 天
+      const _b = Math.max(Date.now(), (prevLv!=null && _rcPlanExp[prevLv]) || Date.now());
+      _rcPlanExp[lvNow] = _b + 30*_RC_DAY;
+    }
     else _rcSetPlanFresh();
   }
   if(RC_BUCKETS[lvNow]){
@@ -35272,7 +35336,7 @@ function _rcCommit(order, receipt){
 }
 // 从历史行补开/查看收据
 function _rcEnsureRids(){
-  [RC_HISTORY, RC_HISTORY_FOUNDER].forEach(arr=>arr.forEach(h=>{ if(!h._rid) h._rid='r'+(_rcRidSeq++); }));
+  [RC_HISTORY].forEach(arr=>arr.forEach(h=>{ if(!h._rid) h._rid='r'+(_rcRidSeq++); }));
 }
 function _rcReceiptCell(h){
   if(!h._rid) h._rid='r'+(_rcRidSeq++);
@@ -35295,7 +35359,7 @@ function _rcReceiptOf(row){
 }
 function rcReissue(rid){
   let row=null;
-  [RC_HISTORY, RC_HISTORY_FOUNDER].forEach(arr=>arr.forEach(h=>{ if(h._rid===rid) row=h; }));
+  [RC_HISTORY].forEach(arr=>arr.forEach(h=>{ if(h._rid===rid) row=h; }));
   const r=_rcReceiptOf(row); if(r) rcShowReceipt(r);
 }
 // ══ 收据中心 ══
@@ -35661,7 +35725,7 @@ function caApplyPastedAsins(asins, meAsin){
 // ── 竞品分析记录（分析完成后自动保存到 产品管理/竞品分析记录）──
 var _caRecords=[];
 var _caCurRecId=null;   // 当前预览的报告对应的记录 id
-function caFmtTime(d){ const p=n=>(n<10?'0':'')+n; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function caFmtTime(d){ if(!(d instanceof Date)) d=new Date(d); if(isNaN(d.getTime())) return '—'; const p=n=>(n<10?'0':'')+n; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
 function caUpdateRecCount(){ const b=document.getElementById('ca-record-count'); if(b){ b.textContent=_caRecords.length; b.style.display=_caRecords.length?'inline-block':'none'; } }
 function caSaveRecord(){
   var me=caMe(), rivals=caRivals();
@@ -35671,31 +35735,34 @@ function caSaveRecord(){
     snapshot: JSON.parse(JSON.stringify(CA_DATA))
   };
   _caRecords.unshift(rec);
+  if(_caRecords.length>30) _caRecords.length=30;   // 只留最近 30 条，避免 localStorage 撑爆
   _caCurRecId=rec.id;
   caUpdateRecCount();
-  caSaveCompetitorReport(rec);
+  caPersistRecords();
+  if(typeof renderCaRecords==='function') renderCaRecords();
 }
-// 竞品分析报告 → 存入「产品管理 / 产品分析报告」，可在该模块在线预览
-function caSaveCompetitorReport(rec){
-  if(!rec || typeof productReportsData==='undefined') return;
-  if(productReportsData.find(function(r){return r.recId===rec.id;})) return;
-  var data=rec.snapshot||CA_DATA;
-  var me=data.find(function(c){return c.you;});
-  if(!me) return;
-  var nf=Math.round(me.nfScoreRatio/(me.nfScoreRatio+me.adScoreRatio)*100);
-  productReportsData.unshift({
-    id: Date.now(),
-    kind: 'competitor',
-    recId: rec.id,
-    name: me.asin,
-    date: new Date().toLocaleDateString(),
-    market: rec.country||'Amazon US',
-    comps: rec.comps.length,
-    nf: nf,
-    price: caMoney(me.price)
-  });
-  updateProductReportCount();
-  renderProductReports();
+// 竞品分析记录持久化（localStorage，刷新后仍在「使用记录 / 竞品分析记录」）
+function caPersistRecords(){
+  try{ localStorage.setItem('seelorCaRecords', JSON.stringify(_caRecords)); }catch(e){}
+}
+function caLoadRecords(){
+  try{
+    var raw=localStorage.getItem('seelorCaRecords');
+    if(raw){ var a=JSON.parse(raw); if(Array.isArray(a)) _caRecords=a; }
+  }catch(e){}
+  caUpdateRecCount();
+}
+function caDeleteRecord(id,e){
+  if(e&&e.stopPropagation) e.stopPropagation();
+  var i=_caRecords.findIndex(function(x){return x.id===id;});
+  if(i<0) return;
+  var r=_caRecords[i];
+  if(!confirm('确认删除这条竞品分析记录？\n\n我方 '+r.me+' vs '+(r.comps||[]).length+' 个竞品 · '+caFmtTime(r.time)
+    +'\n分析内容与分析报告都会一并删除。\n\n此操作不可撤销。')) return;
+  _caRecords.splice(i,1);
+  if(_caCurRecId===id) _caCurRecId=(_caRecords[0]||{}).id||null;
+  caUpdateRecCount(); caPersistRecords();
+  renderCaRecords();
 }
 function caRestoreRecord(r){
   if(!r||!r.snapshot) return false;
@@ -35712,6 +35779,10 @@ function caViewContent(id){
   try{ caRenderCards(); caRenderCompTabs(); }catch(e){}
   var body=caEl('ca-content-body');
   if(body && stage.parentNode!==body){ _caStageHome=stage.parentNode; body.appendChild(stage); }
+  _caCurRecId=id;
+  // 报告从分析内容里进，记录行只留一个「查看」
+  var rb=caEl('ca-content-report-btn');
+  if(rb) rb.onclick=function(){ caCloseContent(); caViewReport(id); };
   var m=caEl('ca-content-modal'); if(m){ m.classList.add('active'); document.body.style.overflow='hidden'; }
 }
 function caCloseContent(e){
@@ -35725,20 +35796,50 @@ function caViewReport(id){
   _caCurRecId=id;
   caOpenReport();
 }
+// 站点下拉：按已有记录动态生成，避免和「竞品分析」页的站点选项写死两份
+function caSyncRecSiteOptions(){
+  var sel=caEl('ca-rec-site'); if(!sel) return;
+  var sites=[]; _caRecords.forEach(function(r){ if(r.country && sites.indexOf(r.country)<0) sites.push(r.country); });
+  var cur=sel.value;
+  sel.innerHTML='<option value="">全部站点</option>'+sites.map(function(s){
+    return '<option value="'+s.replace(/"/g,'&quot;')+'">'+s+'</option>';
+  }).join('');
+  sel.value = sites.indexOf(cur)>=0 ? cur : '';
+}
+function caResetRecFilters(){
+  ['ca-rec-search','ca-rec-site','ca-rec-time'].forEach(function(id){ var el=caEl(id); if(el) el.value=''; });
+  renderCaRecords();
+}
 function renderCaRecords(){
   var list=caEl('ca-rec-list'); if(!list) return;
-  var ct=caEl('ca-rec-count-text'); if(ct) ct.textContent='共 '+_caRecords.length+' 条记录';
+  caSyncRecSiteOptions();
+  var kw=((caEl('ca-rec-search')||{}).value||'').trim().toLowerCase();
+  var site=(caEl('ca-rec-site')||{}).value||'';
+  var days=parseInt((caEl('ca-rec-time')||{}).value||'',10);
+  var rst=caEl('ca-rec-reset'); if(rst) rst.style.display=(kw||site||days)?'inline-block':'none';
+  var now=Date.now();
+  var rows=_caRecords.filter(function(r){
+    if(site && r.country!==site) return false;
+    if(days){
+      var t=new Date(r.time).getTime();
+      if(isNaN(t) || (now-t) > days*86400000) return false;
+    }
+    if(kw && ((r.me||'')+' '+(r.comps||[]).join(' ')).toLowerCase().indexOf(kw)<0) return false;
+    return true;
+  });
+  var ct=caEl('ca-rec-count-text');
+  if(ct) ct.textContent = rows.length===_caRecords.length ? ('共 '+_caRecords.length+' 条记录') : ('筛出 '+rows.length+' / '+_caRecords.length+' 条记录');
   if(!_caRecords.length){ list.innerHTML='<div style="padding:48px;text-align:center"><div style="font-size:30px;margin-bottom:8px">📊</div><div style="font-size:14px;color:var(--t3)">暂无竞品分析记录</div><div style="font-size:12px;color:var(--t4);margin-top:4px">在「竞品分析」完成一次分析后，将自动保存到这里</div></div>'; return; }
-  list.innerHTML=_caRecords.map(function(r){
+  if(!rows.length){ list.innerHTML='<div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">没有符合筛选条件的记录</div>'; return; }
+  list.innerHTML=rows.map(function(r){
     return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
-      +'<div style="width:36px;height:36px;border-radius:9px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--accent2);stroke-width:1.8;fill:none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>'
       +'<div style="min-width:200px">'
         +'<div style="font-size:14px;font-weight:600;color:var(--t0)">竞品分析 · 我方 <span style="font-family:monospace">'+r.me+'</span> vs '+r.comps.length+' 个竞品</div>'
         +'<div style="font-size:11px;color:var(--t3);margin-top:3px">'+caFmtTime(r.time)+' · 站点 '+r.country+' · 竞品 '+r.comps.join('、')+'</div>'
       +'</div>'
       +'<div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">'
-        +'<button onclick="caViewContent(\''+r.id+'\')" style="padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--t1);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">查看分析内容</button>'
-        +'<button onclick="caViewReport(\''+r.id+'\')" style="padding:7px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">查看分析报告</button>'
+        +'<button onclick="caViewContent(\''+r.id+'\')" style="padding:7px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">查看</button>'
+        +'<button onclick="caDeleteRecord(\''+r.id+'\',event)" title="删除该记录" style="padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg-page);color:#ff3b30;font-size:12px;cursor:pointer;font-family:inherit">✕</button>'
       +'</div>'
     +'</div>';
   }).join('');
@@ -36657,8 +36758,9 @@ function caSopInlineHtml(asin){
   var head=c.you
     ? '<span class="ca-sop-stage" style="background:var(--accent)">我方实际计划</span> <b>'+c.emoji+' '+c.asin+'</b> · witi S3 Pro · 上市前 4 周 → W28（次年 1 月）；价格锚点 $199.99，成交价梯度 $109.99 → $119.99 → $129.99 → $139.99'
     : '<span class="ca-sop-stage">'+(sop.stage||'')+'</span> 竞品 <b>'+c.emoji+' '+c.asin+'</b> · 上架 '+c.listedDays+' 天（约 '+Math.round((c.listedDays||0)/7)+' 周）· 现价 '+caMoney(c.currentPrice)+' · 打法按 行情信号<b>反推</b>（推测）';
-  return '<div class="ca-sop-meta '+(c.you?'plan':'infer')+'" style="margin:0 0 12px">'+head+'</div>'
-    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">'
+  // 阶段条与下载按钮同一行：左 阶段信息，右 下载
+  return '<div style="display:flex;align-items:center;gap:10px;margin:0 0 12px;flex-wrap:wrap">'
+    +'<div class="ca-sop-meta '+(c.you?'plan':'infer')+'" style="margin:0;flex:1;min-width:240px">'+head+'</div>'
     +'<button onclick="caDownloadSopExcel(\''+asin+'\')" style="font-size:12px;font-weight:600;color:var(--accent2);background:var(--accent-bg);border:1px solid var(--accent);border-radius:7px;padding:7px 14px;cursor:pointer;white-space:nowrap">⬇ 下载 Excel</button>'
     +'<button onclick="caDownloadSop(\''+asin+'\')" style="font-size:12px;font-weight:600;color:#fff;background:#0a84ff;border:none;border-radius:7px;padding:7px 14px;cursor:pointer;white-space:nowrap">⬇ 下载甘特图 (PNG)</button>'
     +'</div>'
@@ -37681,8 +37783,8 @@ function caRenderReport(){
 
     <div class="ca-foot">
       <button class="ca-btn-ghost" onclick="caCloseReport()">关闭</button>
-      <button class="btn-primary" style="width:auto;padding:11px 22px" onclick="caExportReport()">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>存入产品分析报告</button>
+      <button class="btn-primary" style="width:auto;padding:11px 22px" onclick="caDownloadReportPdf()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载 PDF</button>
     </div>`;
 }
 
@@ -37817,19 +37919,319 @@ function caOpenReport(){
   const m=caEl('ca-report-modal');
   if(m){ m.classList.add('active'); document.body.style.overflow='hidden'; }
 }
-// 「存入产品分析报告」：把当前预览的这份报告写进产品分析报告模块
-function caExportReport(){
-  var rec=_caRecords.find(function(r){return r.id===_caCurRecId;})||_caRecords[0];
-  if(!rec){ showTrToast('未找到分析记录，无法存入'); return; }
-  var existed=productReportsData.some(function(r){return r.recId===rec.id;});
-  caSaveCompetitorReport(rec);
-  showTrToast(existed?'该报告已在「产品管理 / 产品分析报告」中':'已存入「产品管理 / 产品分析报告」，可在该页在线预览');
-}
 function caCloseReport(e){
   if(e && e.target !== caEl('ca-report-modal')) return; // 点遮罩才关；卡片内部点击不关
   const m=caEl('ca-report-modal');
   if(m){ m.classList.remove('active'); document.body.style.overflow=''; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   选品分析记录（使用记录 / 选品分析记录）
+   —— 每跑完一轮选品漏斗（Phase 4 出入选清单）自动归档一条
+   —— 报告只在本记录页里看，不再单独存一份
+   —— localStorage: seelorSelectionRecords（最多 30 条）
+   ══════════════════════════════════════════════════════════════ */
+var _selRecords = [];
+const SEL_ENTRY_LABEL = {keyword:'关键词选品', cat:'类目选品', link:'产品验证', bulk:'精铺货盘'};
+
+// 记录带整段分析过程的 HTML 快照（单条约 100–150KB），超配额时从最旧的开始丢，保证新记录写得进去
+function selPersist(){
+  for(let guard=0; guard<40; guard++){
+    try{ localStorage.setItem('seelorSelectionRecords', JSON.stringify(_selRecords)); return; }
+    catch(e){
+      if(_selRecords.length<=1){ try{ localStorage.removeItem('seelorSelectionRecords'); }catch(_){} return; }
+      _selRecords.pop();          // 丢最旧的一条再试
+    }
+  }
+}
+// 抓当前漏斗各步已渲染的结果，作为「分析过程」存档
+function selCaptureProcess(){
+  const steps = [
+    {no:'01', title:'需求验证 · ABA 关键词', id:'flow-result-1'},
+    {no:'02', title:'关键词机会与竞品初筛',   id:'flow-result-2'},
+    {no:'03', title:'流量结构与销量趋势',     id:'flow-result-3'},
+    {no:'04', title:'产品清单 · 最终产出',    id:'flow-result-4'}
+  ];
+  return steps.map(s=>{
+    const el = document.getElementById(s.id);
+    const html = el ? el.innerHTML : '';
+    return html.trim() ? {no:s.no, title:s.title, html} : null;
+  }).filter(Boolean);
+}
+function selLoad(){
+  try{
+    const raw = localStorage.getItem('seelorSelectionRecords');
+    if(raw){ const a = JSON.parse(raw); if(Array.isArray(a)) _selRecords = a; }
+  }catch(e){}
+  selUpdateCount();
+}
+function selUpdateCount(){
+  const b = document.getElementById('sel-record-count');
+  if(b){ b.textContent = _selRecords.length; b.style.display = _selRecords.length ? 'inline-block' : 'none'; }
+}
+function selFmtTime(t){
+  const d = (t instanceof Date) ? t : new Date(t);
+  if(isNaN(d.getTime())) return '—';
+  const p = n => (n<10?'0':'')+n;
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+
+// 归档一条选品记录（Phase 4 渲染完调用；同一轮重复触发不重复写）
+function selSaveRecord(){
+  const picked = flowUserData.finalProductList || [];
+  if(!picked.length) return null;
+  const cands = flowUserData.competitorAnalysis || picked;
+  let R = {};
+  try{ R = flowBuildSelectionReportData() || {}; }catch(e){ R = {}; }
+  const kws = (flowUserData.keywords || []).slice();
+  const entry = (typeof flowInputMode!=='undefined' && flowInputMode) ? flowInputMode : 'keyword';
+  // 同一轮漏斗（同入口 + 同关键词 + 同入选 ASIN 组）只留一条，避免重跑 Phase 4 刷屏
+  const sig = entry+'|'+kws.join(',')+'|'+picked.map(p=>p.asin).join(',');
+  const dup = _selRecords.find(r=>r.sig===sig);
+  if(dup){ _selCurRecId = dup.id; return dup; }
+
+  const best = R.bestPick || picked.slice().sort((a,b)=>(b.compScore||0)-(a.compScore||0))[0] || {};
+  const rec = {
+    id: 'sel'+Date.now(),
+    sig,
+    time: new Date().toISOString(),
+    entry, entryLabel: SEL_ENTRY_LABEL[entry] || '关键词选品',
+    market: flowUserData.market || 'Amazon US',
+    keywords: kws,
+    category: flowUserData.category || (flowUserData.cats||[]).join('、') || '—',
+    candidates: cands.length,
+    picked: picked.length,
+    composite: R.composite != null ? R.composite : 0,
+    recommend: !!R.recommend,
+    bestKeyword: (R.bestMeta && R.bestMeta.keyword) || kws[0] || '—',
+    bestAsin: best.asin || '—',
+    bestTitle: best.title || '—',
+    bestScore: best.compScore != null ? best.compScore : 0,
+    avgPrice: R.avgPrice || 0,
+    savedToLib: picked.filter(p=>typeof flowIsInMyLib==='function' && flowIsInMyLib(p.asin)).length,
+    snapshot: {
+      finalProductList: JSON.parse(JSON.stringify(picked)),
+      competitorAnalysis: JSON.parse(JSON.stringify(cands)),
+      keywords: kws,
+      market: flowUserData.market || 'Amazon US',
+      category: flowUserData.category || '',
+      cats: (flowUserData.cats || []).slice()
+    },
+    process: selCaptureProcess()
+  };
+  _selRecords.unshift(rec);
+  if(_selRecords.length > 10) _selRecords.length = 10;   // 含过程快照，单条 100KB+，只留最近 10 轮
+  _selCurRecId = rec.id;
+  selUpdateCount();
+  selPersist();
+  if(document.getElementById('page-selection_records') && document.getElementById('page-selection_records').classList.contains('active')) renderSelRecords();
+  return rec;
+}
+
+// 产品验证跑完 → 也归档一条「选品分析记录」，查看时回放整份验证报告
+function selSavePvRecord(d, prod, html){
+  if(!prod || !html) return null;
+  const sig = 'link|'+prod.asin;
+  const dup = _selRecords.find(r=>r.sig===sig);
+  if(dup){                       // 同一个品重验：更新过程快照与时间，不新增一条
+    dup.time = new Date().toISOString();
+    dup.process = [{no:'01', title:'产品验证报告', html}];
+    _selCurRecId = dup.id;
+    selPersist(); selUpdateCount();
+    return dup;
+  }
+  const score = (prod.pv && prod.pv.score) || 0;
+  const rec = {
+    id: 'sel'+Date.now(),
+    sig,
+    time: new Date().toISOString(),
+    entry: 'link', entryLabel: SEL_ENTRY_LABEL.link,
+    market: (prod.pv && prod.pv.market) || 'Amazon US',
+    keywords: prod.keyword ? [prod.keyword] : [],
+    category: prod.category || '—',
+    candidates: 1, picked: 1,
+    composite: score,
+    recommend: score >= 70,
+    bestKeyword: prod.keyword || '—',
+    bestAsin: prod.asin,
+    bestTitle: prod.title || '—',
+    bestScore: prod.compScore || 0,
+    avgPrice: prod.priceNum || 0,
+    savedToLib: (typeof flowIsInMyLib==='function' && flowIsInMyLib(prod.asin)) ? 1 : 0,
+    snapshot: {
+      finalProductList: [JSON.parse(JSON.stringify(prod))],
+      competitorAnalysis: [],
+      keywords: prod.keyword ? [prod.keyword] : [],
+      market: (prod.pv && prod.pv.market) || 'Amazon US',
+      category: prod.category || '',
+      cats: []
+    },
+    process: [{no:'01', title:'产品验证报告', html}]
+  };
+  _selRecords.unshift(rec);
+  if(_selRecords.length > 10) _selRecords.length = 10;
+  _selCurRecId = rec.id;
+  selUpdateCount(); selPersist();
+  const page = document.getElementById('page-selection_records');
+  if(page && page.classList.contains('active')) renderSelRecords();
+  return rec;
+}
+
+// 把记录快照载回 flowUserData（报告模态 / 下载 / 商品卡都读它）
+var _selCurRecId = null;
+function selRestoreRecord(id){
+  const r = _selRecords.find(x=>x.id===id);
+  if(!r || !r.snapshot) return null;
+  const s = r.snapshot;
+  flowUserData.finalProductList   = JSON.parse(JSON.stringify(s.finalProductList||[]));
+  flowUserData.competitorAnalysis = JSON.parse(JSON.stringify(s.competitorAnalysis||[]));
+  flowUserData.productReportList  = flowUserData.finalProductList;
+  flowUserData.reportPeers        = flowUserData.competitorAnalysis;
+  flowUserData.keywords = (s.keywords||[]).slice();
+  flowUserData.market   = s.market || 'Amazon US';
+  flowUserData.category = s.category || '';
+  flowUserData.cats     = (s.cats||[]).slice();
+  _selCurRecId = id;
+  return r;
+}
+function selViewReport(id){
+  if(!selRestoreRecord(id)){ if(typeof showTrToast==='function') showTrToast('该记录快照已失效'); return; }
+  flowPreviewSelectionReport();
+}
+// ── 查看：完整回放这一轮的分析过程（漏斗各步原样重现 / 产品验证则是整份验证报告）──
+function selViewProcess(id){
+  const r = _selRecords.find(x=>x.id===id);
+  if(!r){ if(typeof showTrToast==='function') showTrToast('记录不存在'); return; }
+  selRestoreRecord(id);                     // 过程里的按钮（下载报告 / 入库 / 在线预览）要读 flowUserData
+  const steps = r.process || [];
+  const isPv  = r.entry === 'link';
+  document.getElementById('sel-process-modal')?.remove();
+  const modal = document.createElement('div');
+  modal.id = 'sel-process-modal';
+  modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
+  modal.onclick = e => { if(e.target===modal) modal.remove(); };
+  const subline = isPv
+    ? `${selFmtTime(r.time)} · ${r.market} · 机会分 ${r.composite}/100 · ${r.category||''}`
+    : `${selFmtTime(r.time)} · ${r.market} · ${(r.keywords||[]).join('、')||r.category} · 候选 ${r.candidates} → 入选 ${r.picked} 款`;
+  const body = steps.length
+    ? steps.map(s=>`
+        <div style="margin-bottom:18px">
+          ${isPv?'':`<div style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 7px;border-radius:6px;background:var(--accent-bg);color:var(--accent2);font-size:11px;font-weight:800">${s.no}</span>
+            <span style="font-size:13px;font-weight:800;color:var(--t0)">${s.title}</span>
+          </div>`}
+          <div>${s.html}</div>
+        </div>`).join('')
+    : '<div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">这条记录没有存下分析过程<div style="font-size:12px;color:var(--t4);margin-top:6px">（早于该功能上线时归档的旧记录）</div></div>';
+  modal.innerHTML = `
+    <div style="width:min(1280px,95vw);max-height:90vh;overflow:auto;background:var(--bg-card);border-radius:14px;border:1px solid var(--border)">
+      <div style="position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--bg-card);border-bottom:1px solid var(--border)">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:800;color:var(--t0)">${r.entryLabel} · 分析过程</div>
+          <div style="font-size:11px;color:var(--t3);margin-top:2px">${subline}</div>
+        </div>
+        ${isPv?'':`<button onclick="selViewReport('${r.id}')" style="padding:7px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">📄 选品报告</button>`}
+        <button onclick="this.closest('#sel-process-modal').remove()" style="padding:6px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg-page);font-size:13px;color:var(--t2);cursor:pointer">✕</button>
+      </div>
+      <style>.flow-prodcard-2col{display:grid;grid-template-columns:0.95fr 1.05fr 1fr}.flow-prodcard-2col>div{border-right:1px solid var(--border)}.flow-prodcard-2col>div:last-child{border-right:none}@media(max-width:1000px){.flow-prodcard-2col{grid-template-columns:1fr}.flow-prodcard-2col>div{border-right:none;border-bottom:1px solid var(--border)}.flow-prodcard-2col>div:last-child{border-bottom:none}}</style>
+      <div style="padding:16px 18px 20px">${body}</div>
+    </div>`;
+  document.body.appendChild(modal);
+  // 快照里的入库按钮状态是归档当时的，重新对齐现在的商品库
+  ((r.snapshot&&r.snapshot.finalProductList)||[]).forEach(p=>{ if(p&&p.asin) flowSyncMyLibBtns(p.asin); });
+  if(isPv && flowUserData._pvProduct) flowSyncMyLibBtns(flowUserData._pvProduct.asin);
+}
+function selDeleteRecord(id, e){
+  if(e && e.stopPropagation) e.stopPropagation();
+  const i = _selRecords.findIndex(x=>x.id===id);
+  if(i<0) return;
+  const r = _selRecords[i];
+  const what = r.entry==='link'
+    ? `${r.entryLabel} · ${r.bestTitle||r.category}`
+    : `${r.entryLabel} · ${(r.keywords||[]).join('、')||r.category} · 入选 ${r.picked}/${r.candidates} 款`;
+  if(!confirm('确认删除这条选品分析记录？\n\n'+what+' · '+selFmtTime(r.time)
+    +'\n分析过程与选品报告都会一并删除。\n\n此操作不可撤销。')) return;
+  _selRecords.splice(i,1);
+  selUpdateCount(); selPersist();
+  renderSelRecords();
+}
+
+function renderSelRecords(){
+  const list = document.getElementById('sel-rec-list');
+  if(!list) return;
+  const kw = (document.getElementById('sel-rec-search')?.value||'').trim().toLowerCase();
+  const entry = document.getElementById('sel-rec-entry')?.value || '';
+  const rows = _selRecords.filter(r=>{
+    if(entry && r.entry!==entry) return false;
+    if(!kw) return true;
+    return ((r.keywords||[]).join(' ')+' '+(r.category||'')+' '+(r.market||'')+' '+(r.bestKeyword||'')).toLowerCase().indexOf(kw)>=0;
+  });
+  const ct = document.getElementById('sel-rec-count-text');
+  if(ct) ct.textContent = rows.length===_selRecords.length ? ('共 '+_selRecords.length+' 条记录') : ('筛出 '+rows.length+' / '+_selRecords.length+' 条记录');
+  if(!_selRecords.length){
+    list.innerHTML = '<div style="padding:48px;text-align:center"><div style="font-size:30px;margin-bottom:8px">🗂️</div><div style="font-size:14px;color:var(--t3)">暂无选品分析记录</div><div style="font-size:12px;color:var(--t4);margin-top:4px">在「选品工具」跑完一轮漏斗、出到「产品清单」后，将自动归档到这里</div></div>';
+    return;
+  }
+  if(!rows.length){ list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">没有符合筛选条件的记录</div>'; return; }
+  list.innerHTML = rows.map(r=>{
+    const isPv    = r.entry === 'link';
+    // 产品验证是「验一个新品」，没有候选/入选口径，标题与副行走另一套
+    const title = isPv
+      ? `${r.entryLabel} · <span style="font-family:monospace">${r.bestTitle||r.category}</span>`
+      : `${r.entryLabel} · <span style="font-family:monospace">${(r.keywords||[]).join('、')||r.category}</span> · 入选 ${r.picked}/${r.candidates} 款`;
+    const sub = `${selFmtTime(r.time)} · 站点 ${r.market}`;
+    return `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="min-width:240px;flex:1">
+        <div style="font-size:14px;font-weight:600;color:var(--t0)">${title}</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:3px">${sub}</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="selViewProcess('${r.id}')" style="padding:7px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">查看</button>
+        <button onclick="selDeleteRecord('${r.id}',event)" title="删除该记录" style="padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:var(--bg-page);color:#ff3b30;font-size:12px;cursor:pointer;font-family:inherit">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── 一键把本轮入选商品全部存进「商品库 / 我的商品库」──
+function flowSaveAllToMyLib(btn){
+  const list = flowUserData.finalProductList || flowUserData.productReportList || [];
+  if(!list.length){ if(typeof showTrToast==='function') showTrToast('当前没有可保存的入选商品'); return; }
+  const lib = flowLoadMyLib();
+  let added = 0;
+  list.forEach(p=>{
+    if(!p || !p.asin) return;
+    if(lib.some(x=>x && x.asin===p.asin)) return;
+    lib.push(flowStampLibSource(p));
+    added++;
+  });
+  flowSaveMyLib(lib);
+  flowSyncLibCounts(lib.length);
+  // 记录里回写入库数量，选品记录列表能看到「已入库 N 款」
+  const rec = _selRecords.find(r=>r.id===_selCurRecId);
+  if(rec){ rec.savedToLib = list.filter(p=>flowIsInMyLib(p.asin)).length; selPersist(); }
+  if(btn){ btn.textContent = added ? `✓ 已入库 ${added} 款` : '✓ 均已在库中'; btn.style.color='#2d9e5a'; btn.style.borderColor='#34c759'; btn.style.background='rgba(52,199,89,0.10)'; }
+  if(typeof showTrToast==='function') showTrToast(added ? `已保存 ${added} 款到「商品库 / 我的商品库」` : '这些商品都已在商品库中');
+  // 刷新每张卡上的入库按钮状态
+  list.forEach(p=>{ if(p && p.asin) flowSyncMyLibBtns(p.asin); });
+  if((flowUserData._poolView||'all')==='mine' && document.getElementById('product-pool-grid')) flowApplyPoolFilters();
+}
+// 入库时打上来源戳：哪一轮选品、什么时候存的 —— 商品库里可溯源
+function flowStampLibSource(p){
+  const c = JSON.parse(JSON.stringify(p));
+  c.savedAt = new Date().toISOString();
+  c.fromRecordId = _selCurRecId || null;
+  c.fromSource = c.fromValidation ? '产品验证' : (_selCurRecId ? '选品分析' : (c.fromSource || '手动加入'));
+  return c;
+}
+
+// ── 启动：把三处存档读回来 ──
+document.addEventListener('DOMContentLoaded', function(){
+  try{ selLoad(); }catch(e){}
+  try{ if(typeof updateListingRecordCount==='function') updateListingRecordCount(); }catch(e){}
+  try{ if(typeof caLoadRecords==='function') caLoadRecords(); }catch(e){}
+  try{ localStorage.removeItem('seelorProductReports'); }catch(e){}   // 「产品分析报告」已并入各自记录页，清掉旧存档
+});
 
 </script>
 
