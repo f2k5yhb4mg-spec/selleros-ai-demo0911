@@ -6,7 +6,7 @@
 <title>SellerOS</title>
 </head>
 <body>
-<!-- deploy-marker: v7-selfcontained-20260819 -->
+<!-- deploy-marker: v8-selfcontained-20260820 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1682,6 +1682,13 @@ body{background:var(--bg-page);color:var(--t0);font-family:var(--f);min-height:6
   cursor:pointer;font-family:var(--f);transition:all .13s;
 }
 .gen-url-btn:hover{background:var(--bg-input);border-color:var(--accent);color:var(--accent)}
+/* ASIN 审计输入区 · 上传广告数据 */
+.ls-adup{display:inline-flex;align-items:center;gap:6px;margin-left:4px;padding:6px 13px;border:1px dashed var(--border2);border-radius:999px;background:transparent;color:var(--t3);font-size:12px;font-weight:600;font-family:var(--f);cursor:pointer;transition:.15s;white-space:nowrap;max-width:230px;overflow:hidden}
+.ls-adup svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;flex-shrink:0}
+.ls-adup:hover{border-color:rgba(255,149,0,0.6);color:#cc7a00;background:rgba(255,149,0,0.06)}
+.ls-adup.on{border-style:solid;border-color:rgba(255,149,0,0.5);background:rgba(255,149,0,0.10);color:#cc7a00}
+.ls-adup.on svg{stroke:#ff9500}
+.ls-adup.on:hover{background:rgba(255,149,0,0.16)}
 .gen-url-btn svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none}
 
 /* 市场/类目选择器 - Gemini 下拉风格 */
@@ -3157,7 +3164,10 @@ table.ca-sop-srct td.na{color:var(--orange);font-weight:600}
 .aud-overall-score span{font-size:12px;font-weight:500;color:var(--t3)}
 .aud-overall-main{flex:1;min-width:0}
 .aud-overall-t{font-size:12.5px;color:var(--t2)}
-.aud-overall-d{font-size:11.5px;color:var(--t3);line-height:1.6;margin-top:3px}
+.aud-overall-d{font-size:11.5px;color:var(--t3);line-height:1.9;margin-top:4px}
+.aud-ov-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);padding:2px 9px;border-radius:9px;margin-right:6px}
+.aud-ov-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c)}
+.aud-ov-note{font-size:10.5px;color:var(--t3)}
 /* 域内评分环 + 雷达 */
 .aud-dom-viz{display:flex;align-items:center;justify-content:center;gap:4px;margin:8px 0 6px}
 .aud-dom-ring,.aud-dom-radar{flex-shrink:0}
@@ -3170,8 +3180,15 @@ table.ca-sop-srct td.na{color:var(--orange);font-weight:600}
 .aud-dom-narr b{font-weight:700}
 .aud-narr-tag{display:inline-block;font-size:10px;font-weight:700;color:#fff;background:var(--dc,var(--accent));padding:2px 8px;border-radius:6px;margin-right:8px;vertical-align:middle}
 @media(max-width:820px){.aud-dom-body{flex-direction:column}.aud-dom-left{width:100%}}
-/* 三域诊断卡（Listing 内容 / 关键词与流量 / 广告投放）竖向堆叠，右侧留足分析空间 */
-.aud-domains{display:flex;flex-direction:column;gap:12px}
+/* 三域诊断卡（Listing 内容 / 关键词与流量 / 广告投放）三列并排 */
+.aud-domains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+/* 列内宽度有限：打分环+雷达横排置顶，诊断文字整列铺开 */
+.aud-domains .aud-dom-body{flex-direction:column;gap:0;align-items:stretch}
+.aud-domains .aud-dom-left{width:100%;flex-direction:row;justify-content:center;align-items:center;gap:6px;margin-bottom:10px}
+.aud-domains .aud-dom-right{width:100%;flex:none}
+.aud-domains .aud-dom-stats{grid-template-columns:repeat(2,1fr)}
+.aud-domains .ls-cp-header{flex-wrap:wrap;row-gap:4px}
+@media(max-width:1180px){.aud-domains{grid-template-columns:1fr}}
 .aud-dom-card{background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--dc,var(--accent));border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:14px 16px;display:flex;flex-direction:column}
 .aud-dom-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .aud-dom-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--t0)}
@@ -3186,6 +3203,12 @@ table.ca-sop-srct td.na{color:var(--orange);font-weight:600}
 .aud-dom-dim-bar i{display:block;height:100%;border-radius:3px;transition:width .5s ease}
 .aud-dom-dim-s{font-size:12px;font-weight:700;width:26px;text-align:right;flex-shrink:0}
 .aud-dom-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 4px}
+/* 紧凑指标条：去卡片化，一行三个，只留细分隔线 */
+.aud-dom-stats.slim{display:flex;flex-wrap:wrap;row-gap:7px;gap:0;margin:10px 0 2px;padding:8px 0;background:var(--bg-page);border:1px solid var(--border);border-radius:9px}
+.aud-dom-stats.slim .aud-dom-stat{flex:1 1 33.33%;background:none;border:none;border-right:1px solid var(--border);border-radius:0;padding:0 6px;text-align:center}
+.aud-dom-stats.slim .aud-dom-stat:nth-child(3n),.aud-dom-stats.slim .aud-dom-stat:last-child{border-right:none}
+.aud-dom-stats.slim .k{font-size:9px;letter-spacing:.2px}
+.aud-dom-stats.slim .v{font-size:12.5px;margin-top:1px}
 .aud-dom-stat{background:var(--bg-page);border:1px solid var(--border);border-radius:8px;padding:7px 4px;text-align:center}
 .aud-dom-stat .k{font-size:9.5px;color:var(--t3)}
 .aud-dom-stat .v{font-size:13px;font-weight:800;color:var(--t0);margin-top:2px}
@@ -3193,8 +3216,79 @@ table.ca-sop-srct td.na{color:var(--orange);font-weight:600}
 .aud-dom-prob{font-size:11.5px;color:var(--t2);line-height:1.6;margin-bottom:5px}
 .aud-dom-prob b{font-weight:700}
 .aud-dom-fix{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;color:var(--t1);line-height:1.55;margin-bottom:6px}
-.aud-dom-fix span{flex-shrink:0;width:16px;height:16px;border-radius:5px;background:var(--dc,var(--accent));color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.aud-dom-fix>span{flex-shrink:0;width:16px;height:16px;border-radius:5px;background:var(--dc,var(--accent));color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+/* 问题诊断 / 优化建议的取证级明细 */
+.aud-dom-prob{margin-bottom:9px}
+.aud-dom-prob-subs{margin-top:4px;padding-left:9px;border-left:2px solid var(--border)}
+.aud-dom-prob-sub{font-size:10.5px;color:var(--t3);line-height:1.65;margin-top:3px}
+.aud-dom-fix{margin-bottom:9px}
+.aud-dom-fix-main{flex:1;min-width:0}
+.aud-dom-fix-t{font-size:11.5px;font-weight:600;color:var(--t1);line-height:1.55}
+.aud-dom-fix-do{font-size:10.5px;color:var(--t2);line-height:1.65;margin-top:3px}
+.aud-dom-fix-gain{display:block;font-size:10px;color:#1f9c4a;margin-top:1px;padding-left:9px}
+/* 广告问题诊断 · 四类审计规则（曝光 / 点击 / 转化 / ACOS·CPA） */
+.aud-rule-diag{display:flex;flex-direction:column;gap:10px}
+.aud-rule-cat{border-left:2px solid var(--rc,var(--accent));padding:0 0 0 9px}
+.aud-rule-cat-h{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:3px}
+.aud-rule-dot{display:none}
+.aud-rule-name{font-size:11.5px;font-weight:700;color:var(--t0)}
+.aud-rule-gap{flex:1;min-width:0}
+.aud-rule-sev{font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:9px;flex-shrink:0}
+.aud-rule-tacos{font-size:10px;color:var(--t2);display:inline-flex;align-items:center;gap:3px;flex-shrink:0}
+.aud-rule-tacos input{width:44px;padding:2px 4px;border:1px solid var(--border2);border-radius:5px;font-size:10.5px;font-weight:700;color:var(--t0);font-family:var(--f);text-align:center;background:var(--bg-card)}
+.aud-rule-hit{padding:3px 0}
+.aud-rule-cat .aud-rule-hit:first-of-type{padding-top:0}
+.aud-rule-cond{font-size:10.5px;color:var(--t1);line-height:1.5}
+.aud-rule-cond i{display:inline-block;width:4px;height:4px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.aud-rule-cond b{font-weight:700}
+.aud-rule-ev{font-size:9.5px;color:var(--t3);line-height:1.45;margin-top:1px;padding-left:9px}
+.aud-rule-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.aud-rule-head .aud-rule-tacos{text-transform:none;letter-spacing:0}
+.aud-rule-clean{font-size:11px;color:#1f9c4a;background:rgba(31,156,74,0.08);border-radius:8px;padding:8px 11px}
+/* 优化页：三大分区 + 域级优化建议 */
+.aud-opt-part{margin-top:22px}
+.aud-opt-part:first-child{margin-top:6px}
+.aud-opt-part-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 13px;margin-bottom:12px;border-left:3px solid var(--dc,var(--accent));border-radius:9px;background:color-mix(in srgb,var(--dc,var(--accent)) 8%,transparent)}
+.aud-opt-part-n{width:20px;height:20px;border-radius:6px;background:var(--dc,var(--accent));color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.aud-opt-part-t{font-size:14px;font-weight:700;color:var(--t0)}
+.aud-opt-part-s{font-size:11px;color:var(--t3);flex:1;min-width:0}
+.aud-adv-card{background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--dc,var(--accent));border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:13px 16px 14px;margin-bottom:12px}
+.aud-adv-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.aud-adv-h-t{font-size:12.5px;font-weight:700;color:var(--t0)}
+.aud-adv-h-n{font-size:10px;color:var(--t3)}
+.aud-adv-item{display:flex;gap:9px;padding:10px 0;border-top:1px dashed var(--border)}
+.aud-adv-card .aud-adv-item:first-of-type{border-top:none;padding-top:0}
+.aud-adv-i-n{width:18px;height:18px;border-radius:6px;background:var(--dc,var(--accent));color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.aud-adv-i-main{flex:1;min-width:0}
+.aud-adv-i-t{font-size:12px;font-weight:700;color:var(--t0);line-height:1.55}
+.aud-adv-from{margin-left:7px;font-size:9.5px;font-weight:600;color:var(--dc,var(--accent));background:color-mix(in srgb,var(--dc,var(--accent)) 12%,transparent);padding:1px 7px;border-radius:8px;white-space:nowrap}
+.aud-adv-i-do{font-size:11px;color:var(--t2);line-height:1.65;margin-top:6px;padding-left:10px;border-left:2px solid var(--border)}
+.aud-adv-i-gain{display:block;width:fit-content;max-width:100%;font-size:10px;color:#1a8a3e;background:rgba(52,199,89,0.09);border-radius:6px;padding:2px 8px;margin-top:4px}
+.aud-adv-empty{font-size:11.5px;color:var(--t3);padding:14px 16px;background:var(--bg-page);border:1px dashed var(--border2);border-radius:10px}
+.aud-adv-rule{border-left:2px solid var(--rc,var(--accent));padding-left:10px;margin-bottom:11px}
+.aud-adv-rule:last-child{margin-bottom:0}
+.aud-adv-rule-h{font-size:11.5px;font-weight:700;color:var(--t0);margin-bottom:4px}
+.aud-adv-rule-i{font-size:10.5px;color:var(--t2);line-height:1.6;margin-bottom:3px}
+.aud-adv-rule-i b{font-weight:700;color:var(--t1)}
+.aud-adv-rule-i span{display:block;color:var(--t3);font-size:9.5px}
+/* 三个分区的详情面板统一：白卡 + 顶边主色 + 与动作卡左右齐平 */
+.aud-opt-part .aud-kt-rec{margin:0 0 12px;padding:13px 16px 14px;background:var(--bg-card);border:1px solid var(--border);border-top:3px solid #5ac8fa;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.aud-opt-part .result-panel{margin:0 0 12px;border-top:3px solid #007aff}
+.aud-opt-part .aud-kt-rec .aud-ad-rec-head{margin-bottom:10px}
+.aud-opt-part .aud-ad-rec-title{font-size:12.5px}
 .aud-dom-more{margin-top:6px;align-self:flex-start;background:none;border:none;color:var(--accent2);font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--f);padding:8px 0 0}
+.aud-dom-more.primary{align-self:stretch;margin-top:14px;padding:11px 16px;border:none;border-radius:10px;background:var(--dc,var(--accent));color:#fff;font-size:13px;font-weight:700;text-align:center;box-shadow:0 3px 10px color-mix(in srgb,var(--dc,var(--accent)) 32%,transparent);transition:.15s}
+.aud-dom-more.primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+/* 广告卡底部动作区：查看 / 重新分析 / 下载 */
+.aud-dom-acts{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.aud-dom-act{display:inline-flex;align-items:center;gap:6px;font-family:var(--f);font-size:12px;font-weight:700;cursor:pointer;border-radius:9px;transition:.15s;white-space:nowrap}
+.aud-dom-act svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;flex-shrink:0}
+.aud-dom-act.link{flex:1;min-width:0;justify-content:flex-start;padding:0;border:none;background:none;color:var(--accent2);font-weight:600;font-size:11.5px}
+.aud-dom-act.link:hover{text-decoration:underline}
+.aud-dom-act.ghost{padding:8px 14px;border:1px solid var(--dc,var(--accent));background:transparent;color:var(--dc,var(--accent))}
+.aud-dom-act.ghost:hover{background:color-mix(in srgb,var(--dc,var(--accent)) 10%,transparent)}
+.aud-dom-act.solid{padding:8px 15px;border:none;background:var(--dc,var(--accent));color:#fff;box-shadow:0 3px 10px color-mix(in srgb,var(--dc,var(--accent)) 32%,transparent)}
+.aud-dom-act.solid:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .aud-dom-crit{margin-top:8px}
 .aud-dom-crit .ls-criteria-panel{margin-bottom:8px}
 .aud-dom-locked{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:20px 8px;margin-top:10px;background:var(--bg-page);border:1px dashed var(--border2);border-radius:10px}
@@ -5192,7 +5286,6 @@ select.ql-f-in{cursor:pointer}
         <div class="gen-hero">
           <div class="gen-hero-top">
             <div class="gen-hero-title">ASIN 审计</div>
-            <div class="gen-hero-sub">输入 ASIN 或粘贴 Listing 全文，AI 整合领星 ERP 数据，按 A10 关键词 / COSMO / Rufus 语义 + CDQ 完整性 四维 100 分制评分（CDQ 权重对齐）</div>
           </div>
 
           <!-- 大输入卡片 -->
@@ -5206,6 +5299,7 @@ select.ql-f-in{cursor:pointer}
                 <input type="text" id="ls-score-url"
                   placeholder="产品 URL（可选，自动抓取）"
                   style="border:none;outline:none;background:transparent;font-size:12px;color:var(--t2);font-family:var(--f);width:220px">
+                <button class="ls-adup" id="ls-ad-upload-btn" onclick="audUploadAdData()" title="上传亚马逊广告后台搜索词报表，解锁广告问题诊断与广告评分"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>上传广告数据</button>
               </div>
               <div class="gen-send-wrap">
                 <select class="gen-selector" id="ls-market-sel">
@@ -5250,20 +5344,6 @@ select.ql-f-in{cursor:pointer}
 
           <!-- 取证 -->
           <div class="aud-flow-sec" id="aud-collect-section">
-            <!-- 广告分析提示条：是否上传亚马逊广告后台数据 -->
-            <div class="aud-adprompt" id="aud-adprompt">
-              <div class="aud-adprompt-ic" id="aud-adprompt-ic">
-                <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1v.2h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
-              </div>
-              <div class="aud-adprompt-main">
-                <div class="aud-adprompt-title" id="aud-adprompt-title">是否分析广告？</div>
-                <div class="aud-adprompt-sub" id="aud-adprompt-sub">上传广告后台数据可解锁「问题类型判定」</div>
-              </div>
-              <div class="aud-adprompt-acts" id="aud-adprompt-acts">
-                <button class="aud-adprompt-btn up" onclick="audUploadAdData()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>上传广告数据</button>
-                <button class="aud-adprompt-btn skip" onclick="audSkipAds()">暂不分析</button>
-              </div>
-            </div>
 
             <!-- 取证完成后的折叠概要条（点击展开核对 7 项证据） -->
             <div class="aud-chk-summary" id="aud-chk-summary" style="display:none" onclick="audToggleChkList()">
@@ -5287,26 +5367,16 @@ select.ql-f-in{cursor:pointer}
           <!-- 打分（取证完成后自动展开） -->
           <div class="aud-flow-sec" id="aud-score-section" style="display:none">
             <div class="aud-section-head">
-              <div class="aud-section-name">Listing 质量评分 · 问题类型判定</div>
-              <div class="aud-section-sub">基于取证证据的六维结构化诊断评分</div>
-              <button class="aud-optimize-top" onclick="audRevealOptimize()" title="基于诊断结果生成优化交付物">
+              <div class="aud-section-name">综合诊断 · 内容 / 关键词与流量 / 广告投放</div>
+              <button class="aud-optimize-top" style="margin-left:auto" onclick="audRevealOptimize()" title="基于诊断结果生成优化交付物">
                 <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                一键优化
+                开始优化
               </button>
             </div>
 
             <!-- Listing 质量评分报告 (六维评分) 挂载点 -->
             <div id="aud-step1-score"></div>
 
-            <!-- 优化能力 CTA：提示用户可进一步一键优化，点击才展开优化部分 -->
-            <div class="aud-optcta">
-              <div class="aud-optcta-ic">✨</div>
-              <div class="aud-optcta-main">
-                <div class="aud-optcta-title">诊断完成，我们还能帮你「一键优化」</div>
-                <div class="aud-optcta-sub">基于以上评分与问题判定，AI 可生成优化后的标题 / 五点 / 描述、图片卖点与 A+ 创意等九项交付物。点击展开优化内容。</div>
-              </div>
-              <button class="aud-optcta-btn" onclick="audRevealOptimize()">开始优化 →</button>
-            </div>
           </div>
 
           <!-- 优化（点击「开始优化」或顶部「优化」标签后按分页独立展示） -->
@@ -5319,24 +5389,6 @@ select.ql-f-in{cursor:pointer}
             <!-- 原文件 showLsScorePage() 的两栏布局挂载点 (左:AI优化Listing · 右:六维评分) -->
             <div id="ls-score-result"></div>
 
-            <!-- 7 维详细优化报告入口 (Modal · 10 模块) -->
-            <div class="aud-deliv-section">
-              <div class="aud-deliv-cta">
-                <div class="aud-deliv-cta-icon">📊</div>
-                <div class="aud-deliv-cta-main">
-                  <div class="aud-deliv-cta-title">ASIN 审计报告</div>
-                  <div class="aud-deliv-cta-sub">10 模块 · 产品概览 / 算法评分卡 / 语义检索盲区 / COSMO 节点诊断 / Rufus 问答能力 / 用户行为信号 / 竞品差异化 / 改进优先级 / 优化后文案 / 图片卖点与 A+ 创意</div>
-                </div>
-                <button onclick="audOpen7DReport()" style="flex-shrink:0;padding:8px 16px;background:linear-gradient(135deg,#6c5ce7,#a855f7);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">
-                  <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                  在线预览
-                </button>
-              </div>
-            </div>
-
-            <div class="aud-foot">
-              <div class="aud-foot-info" style="text-align:center">六维评分 + 九项交付物已生成 · 可保存至「Listing 分析记录」</div>
-            </div>
           </div>
         </div>
       </div>
@@ -10098,7 +10150,6 @@ function audUploadAdData(){
         <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:#cc7a00;stroke-width:2;fill:none;flex-shrink:0;margin-top:1px"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1v.2h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
         <div style="font-size:11.5px;color:var(--t1);line-height:1.65">
           <b style="color:#cc7a00">上传建议</b>：优先「广告活动 · 搜索词报告」，<b style="color:var(--t0)">时间跨度 ≥ 30 天</b>；数据周期越长、样本越多，诊断越准确。<br>
-          <span style="color:var(--t3)">兼容：亚马逊广告报表 / 业务报告（Business Report）/ 领星导出报表等。</span>
         </div>
       </div>
       <label id="aud-upload-zone" class="upload-zone" style="display:block;position:relative;cursor:pointer">
@@ -10455,8 +10506,8 @@ function audShowAdAnalysis(){
         <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,149,0,0.12);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:#cc7a00;stroke-width:2;fill:none"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div style="flex:1">
           <div style="font-size:15px;font-weight:700;color:var(--t0)">广告搜索词审计 · 清洗结果</div>
-          <div style="font-size:11px;color:var(--t3);margin-top:1px">${d.fileName} · ${d.rowCount} 行 · 分层汇总重算指标 → 对比活动/广告组/投放类型/全站基准 → 逐词判断/清洗建议</div>
         </div>
+        <button onclick="audDownloadAdAudit()" title="导出逐词清洗结果为 CSV（可直接用 Excel 打开）" style="flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border2);border-radius:8px;background:var(--bg-card);color:var(--t1);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载清洗结果</button>
         <button onclick="document.getElementById('aud-ad-analysis-overlay').remove()" style="width:30px;height:30px;border:1px solid var(--border);border-radius:8px;background:var(--bg-page);cursor:pointer;font-size:15px;color:var(--t2)">✕</button>
       </div>
       <!-- 全表总览 -->
@@ -10478,12 +10529,81 @@ function audShowAdAnalysis(){
           ⚠️ CTR=点击/展示 · CPC=花费/点击 · CVR=订单/点击 · ACOS=花费/销售额 · CPA=花费/订单；均在<b>汇总后用总量重新计算</b>，不对原表比例求平均。
         </div>
       </div>
+      <!-- 底部：确认并分析 -->
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 24px;border-top:1px solid var(--border);background:var(--bg-page);border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+        <div style="flex:1;min-width:0;font-size:11.5px;color:var(--t3);line-height:1.5">已按 5 个层级汇总重算指标并完成逐词判断。确认后以这份清洗结果生成<b style="color:var(--t2)">广告问题诊断</b>与<b style="color:var(--t2)">广告评分</b>，并计入综合分。</div>
+        <button onclick="document.getElementById('aud-ad-analysis-overlay').remove()" style="flex-shrink:0;padding:8px 16px;border:1px solid var(--border2);border-radius:8px;background:var(--bg-card);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f)">继续核对</button>
+        <button onclick="audConfirmAdAnalysis()" style="flex-shrink:0;padding:8px 18px;border:none;border-radius:8px;background:#ff9500;color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--f);box-shadow:0 3px 10px rgba(255,149,0,0.3)">确认并分析 →</button>
+      </div>
     </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click',(ev)=>{ if(ev.target===overlay) overlay.remove(); });
   audSwitchAdDim(_AD_DIM_DEFS[0].key);
 }
 
+
+
+// 导出逐词清洗结果（⑤ 客户搜索词·审计 全量）为 CSV —— 带 BOM，Excel 直接可开
+function audDownloadAdAudit(){
+  const d = _audAdData; if(!d) return;
+  const siteCTR  = d.grand.imp>0   ? d.grand.clk/d.grand.imp     : 0;
+  const siteCVR  = d.grand.clk>0   ? d.grand.orders/d.grand.clk  : 0;
+  const siteAcos = d.grand.sales>0 ? d.grand.spend/d.grand.sales : 0;
+  const pf = (x)=> x==null ? '' : (x*100).toFixed(2)+'%';
+  const mn = (x)=> (x||0).toFixed(2);
+  const rows = _audWalkRows(d,'searchTerm').sort((a,b)=>(b.raw.spend||0)-(a.raw.spend||0));
+  const head = ['广告活动','广告组','投放类型','客户搜索词','总展示','总点击','总花费','总订单','总销售额',
+                'CTR','CPC','CVR','ACOS','CPA','活动均CTR','广告组均CTR','投放类型均CTR','全站均CTR','全站均CVR','全站均ACOS','判断','清洗建议'];
+  const esc = (v)=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const lines = [head.map(esc).join(',')];
+  rows.forEach(r=>{
+    const m=r.raw;
+    const ctr = m.imp>0 ? m.clk/m.imp : null;
+    const cpc = m.clk>0 ? m.spend/m.clk : null;
+    const cvr = m.clk>0 ? m.orders/m.clk : null;
+    const acos= m.sales>0 ? m.spend/m.sales : null;
+    const cpa = m.orders>0 ? m.spend/m.orders : null;
+    const campCTR = r.campAgg && r.campAgg.imp>0 ? r.campAgg.clk/r.campAgg.imp : 0;
+    const grpCTR  = r.grpAgg  && r.grpAgg.imp>0  ? r.grpAgg.clk/r.grpAgg.imp   : 0;
+    const mtB = (d.dims.matchType||{})[r.mt] || {};
+    const mtCTR = mtB.imp>0 ? mtB.clk/mtB.imp : 0;
+    const v = _auditVerdict(m, grpCTR, siteAcos);
+    lines.push([r.ctx[0],r.ctx[1],r.ctx[2],r.ctx[3],
+      m.imp||0, m.clk||0, mn(m.spend), m.orders||0, mn(m.sales),
+      pf(ctr), cpc!=null?mn(cpc):'', pf(cvr), pf(acos), cpa!=null?mn(cpa):'',
+      pf(campCTR), pf(grpCTR), pf(mtCTR), pf(siteCTR), pf(siteCVR), pf(siteAcos),
+      v.act, v.t].map(esc).join(','));
+  });
+  const base = (d.fileName||'广告搜索词报告').replace(/\.[^.]+$/,'');
+  const blob = new Blob(['﻿'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = base+'-清洗结果.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
+  if(typeof _lrToast==='function') _lrToast('已导出 '+rows.length+' 行清洗结果', '#ff9500');
+}
+// 清洗结果确认 → 以该结果生成广告诊断/评分，并回到诊断区
+function audConfirmAdAnalysis(){
+  const ov = document.getElementById('aud-ad-analysis-overlay');
+  if(ov) ov.remove();
+  if(!_audAdData) return;
+  _audState.adAnalysis = true;
+  _audState.adConfirmed = true;
+  if(typeof audRenderAdPrompt==='function') audRenderAdPrompt();
+  if(typeof audRenderChecklist==='function') audRenderChecklist();
+  const opt = document.getElementById('aud-opt-section');
+  const onOpt = opt && opt.style.display !== 'none';
+  if(typeof audRenderStep1Score==='function') audRenderStep1Score();
+  if(onOpt && typeof audRenderStep3==='function') audRenderStep3();
+  if(typeof _lrToast==='function') _lrToast('已确认清洗结果 · 广告诊断与评分已更新', '#ff9500');
+  setTimeout(()=>{
+    const target = onOpt
+      ? document.querySelectorAll('.aud-opt-part')[2]
+      : document.querySelectorAll('.aud-dom-card')[2];
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  }, 120);
+}
 // 切换维度并渲染该维度的指标表（每行：维度值 + 5 原始量 + 5 计算指标）
 function audSwitchAdDim(dimKey){
   const d = _audAdData; if(!d) return;
@@ -11450,6 +11570,21 @@ function audFillChkBody(key){
 
 // 广告分析提示条状态渲染（null=未决定 / true=已上传 / false=已跳过）
 function audRenderAdPrompt(){
+  // 顶部输入区的「上传广告数据」按钮状态（提示条已移除，这里是唯一入口）
+  const heroBtn = document.getElementById('ls-ad-upload-btn');
+  if(heroBtn){
+    const ic = '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+    if(_audAdData){
+      const fn = String(_audAdData.fileName||'广告报表');
+      heroBtn.innerHTML = ic + '已上传 ' + (fn.length>16 ? fn.slice(0,14)+'…' : fn);
+      heroBtn.classList.add('on');
+      heroBtn.title = '已上传 ' + fn + ' · 点击可重新上传';
+    }else{
+      heroBtn.innerHTML = ic + '上传广告数据';
+      heroBtn.classList.remove('on');
+      heroBtn.title = '上传亚马逊广告后台搜索词报表，解锁广告问题诊断与广告评分';
+    }
+  }
   const banner = document.getElementById('aud-adprompt');
   const title = document.getElementById('aud-adprompt-title');
   const sub = document.getElementById('aud-adprompt-sub');
@@ -11460,16 +11595,16 @@ function audRenderAdPrompt(){
   if(_audState.adAnalysis===true || _audAdData){
     banner.classList.add('decided');
     title.textContent = '✓ 已启用广告分析';
-    sub.innerHTML = _audAdData ? `已上传「<b>${_audAdData.fileName}</b>」·「问题类型判定」已解锁` : '「问题类型判定」已解锁';
+    sub.textContent = ''; sub.style.display = 'none';
     acts.innerHTML = `<button class="aud-adprompt-btn skip" onclick="audUploadAdData()">重新上传</button>`;
   } else if(_audState.adAnalysis===false){
     banner.classList.add('skipped');
     title.textContent = '已跳过广告分析';
-    sub.textContent = '可随时上传广告数据解锁「问题类型判定」';
+    sub.style.display = ''; sub.textContent = '可随时上传广告数据解锁「问题类型判定」';
     acts.innerHTML = `<button class="aud-adprompt-btn up" onclick="audUploadAdData()">${upIcon}上传广告数据</button>`;
   } else {
     title.textContent = '是否分析广告？';
-    sub.innerHTML = '上传广告后台数据可解锁「问题类型判定」';
+    sub.style.display = ''; sub.innerHTML = '上传广告后台数据可解锁「问题类型判定」';
     acts.innerHTML = `<button class="aud-adprompt-btn up" onclick="audUploadAdData()">${upIcon}上传广告数据</button><button class="aud-adprompt-btn skip" onclick="audSkipAds()">暂不分析</button>`;
   }
 }
@@ -12169,6 +12304,503 @@ function audAutoFetch(){
 //   ② 综合分环 + 7 边雷达 + AI 优化建议（来自 buildListingScoreHTML，使用 7 维模型）
 //   ③ NEW: 问题类型判定区（曝光/点击/转化/预期错配 4 类）
 //   ④ 7 个评分维度卡（同样由 buildListingScoreHTML 输出）
+// ══════════════════════════════════════════════
+// 广告投放评分模型（5 维加权 100 分制）
+// 全部指标由上传的「搜索词报告」实算，不写死；基准取亚马逊 SP 大盘：
+//   CTR 0.40% / CVR 9.5% / ACOS 25%（目标线）/ ROAS 4.0
+// 逐词好坏沿用 _auditVerdict（与逐词清洗结果同一套判断，保证口径一致）
+// ══════════════════════════════════════════════
+function buildAdScoreModel(){
+  const d = _audAdData; if(!d) return [];
+  const g = d.grand || {};
+  const rows = _audWalkRows(d, 'searchTerm');
+  const P = (x)=> (x*100).toFixed(2)+'%';
+  const M = (x)=> '$'+(x||0).toFixed(2);
+  // 越大越好 / 越小越好 的线性打分器（full=拿满分的值，zero=计 0 分的值）
+  const up   = (v,full,zero,max)=> Math.max(0, Math.min(max, Math.round(max*(v-zero)/((full-zero)||1))));
+  const down = (v,full,zero,max)=> Math.max(0, Math.min(max, Math.round(max*(zero-v)/((zero-full)||1))));
+
+  const siteAcos = g.sales>0 ? g.spend/g.sales : 0;
+  const ctr  = g.imp>0 ? g.clk/g.imp : 0;
+  const cvr  = g.clk>0 ? g.orders/g.clk : 0;
+  const roas = g.spend>0 ? g.sales/g.spend : 0;
+
+  // ── 逐词遍历，汇总各口径花费 / 数量 ──
+  let sp={good:0,bad:0,warn:0,watch:0,neutral:0}, cnt={good:0,bad:0,warn:0,watch:0,neutral:0};
+  let totSpend=0, totImp=0;
+  let zeroOrdSpend=0, highClkZeroOrd=0, highAcosSpend=0, lowCtrSpend=0, zeroClkImp=0;
+  let ordTerms=0, effTerms=0, longTailSpend=0, autoBroadSpend=0;
+  let goodSpend=0, goodSales=0, goodPreciseSpend=0;
+  const spendRank=[];
+  rows.forEach(r=>{
+    const m=r.raw, s=m.spend||0;
+    const gc = r.grpAgg && r.grpAgg.imp>0 ? r.grpAgg.clk/r.grpAgg.imp : 0;
+    const v  = _auditVerdict(m, gc, siteAcos);
+    sp[v.cls]+=s; cnt[v.cls]++; totSpend+=s; totImp+=(m.imp||0);
+    const rctr = m.imp>0 ? m.clk/m.imp : 0;
+    const racos= m.sales>0 ? m.spend/m.sales : null;
+    if(m.orders>0) ordTerms++; else zeroOrdSpend+=s;
+    if((m.clk||0)>=10 && !(m.orders>0)) highClkZeroOrd++;
+    if(racos!=null && siteAcos>0 && racos>siteAcos*1.5) highAcosSpend+=s;
+    if(gc>0 && rctr<gc*0.5) lowCtrSpend+=s;
+    if(!(m.clk>0)) zeroClkImp+=(m.imp||0); else effTerms++;
+    const isAutoBroad = /自动|auto|broad|广泛/i.test(r.mt||'');
+    if(isAutoBroad) autoBroadSpend+=s;
+    if(v.cls==='good'){ goodSpend+=s; goodSales+=(m.sales||0); if(!isAutoBroad) goodPreciseSpend+=s; }
+    const term=(r.ctx&&r.ctx[3])||'';
+    if(term.trim().split(/\s+/).filter(Boolean).length>=3) longTailSpend+=s;
+    spendRank.push({s:s, ord:m.orders||0});
+  });
+  const T = totSpend>0 ? totSpend : 1;
+  const badShare       = sp.bad/T;
+  const goodShare      = sp.good/T;
+  const zeroOrdShare   = zeroOrdSpend/T;
+  const highAcosShare  = highAcosSpend/T;
+  const lowCtrShare    = lowCtrSpend/T;
+  const autoBroadShare = autoBroadSpend/T;
+  const longTailShare  = longTailSpend/T;
+  const zeroClkImpShare= totImp>0 ? zeroClkImp/totImp : 0;
+  const ordTermShare   = rows.length ? ordTerms/rows.length : 0;
+  const goodAcos       = goodSales>0 ? goodSpend/goodSales : siteAcos;
+  const goodPreciseShare = goodSpend>0 ? goodPreciseSpend/goodSpend : 0;
+  // 花费 TOP10 集中度 & 其中出单词数
+  spendRank.sort((a,b)=>b.s-a.s);
+  const top10 = spendRank.slice(0,10);
+  const top10Share = top10.reduce((a,x)=>a+x.s,0)/T;
+  const top10Ord   = top10.filter(x=>x.ord>0).length;
+  // 广告活动结构
+  const camps = _audWalkRows(d,'campaign');
+  const campCount = camps.length;
+  const maxCampShare = campCount ? Math.max.apply(null, camps.map(x=>(x.raw.spend||0)))/T : 1;
+  const avgTermsPerCamp = campCount ? rows.length/campCount : 0;
+  const structRatio = Math.min(campCount/3,1) * Math.min(avgTermsPerCamp/20,1);
+  // 自动 / 广泛拓新健康区间 20%~50%：区间内满分，越偏离扣越多
+  const newTrafficScore = (function(){
+    if(autoBroadShare>=0.20 && autoBroadShare<=0.50) return 3;
+    const dist = autoBroadShare<0.20 ? (0.20-autoBroadShare) : (autoBroadShare-0.50);
+    return Math.max(0, Math.round(3*(1-dist/0.25)));
+  })();
+
+  // 文案按实际数据裁剪：计数为 0 的短板不出现在结论里
+  const J = (arr)=> arr.filter(Boolean).join("、");
+  const costIssue = J([`总 ACOS ${P(siteAcos)}、ROAS ${roas.toFixed(2)}`, highAcosShare>0?`高 ACOS 词占去 ${Math.round(highAcosShare*100)}% 花费`:``]) + `，单位销售额的广告成本偏高`;
+  const wasteIssue = J([cnt.bad>0?`${cnt.bad} 个烧钱词吃掉 ${Math.round(badShare*100)}% 花费`:``, `零出单词花费占比 ${Math.round(zeroOrdShare*100)}%`, highClkZeroOrd>0?`${highClkZeroOrd} 个高点击零转化词待否定`:``]);
+  const wasteFix = cnt.bad>0 ? `否定 / 大幅降价 ${cnt.bad} 个烧钱词${highClkZeroOrd>0?`，优先处理点击 ≥10 且 0 单的 ${highClkZeroOrd} 个词`:``}，立刻止住无效花费` : `对零出单且已有点击积累的词分档降价，压住 ${Math.round(zeroOrdShare*100)}% 的无效花费`;
+  const cvrIssue = `整体 CVR ${P(cvr)}、出单词 ${ordTerms} 个（占 ${Math.round(ordTermShare*100)}%）` + (cnt.good>0?`，${cnt.good} 个优质词只拿到 ${Math.round(goodShare*100)}% 花费`:`，尚未跑出可加预算收割的优质词`);
+  const structIssue = `单个广告活动占去 ${Math.round(maxCampShare*100)}% 花费、花费 TOP10 词集中 ${Math.round(top10Share*100)}%，有效词 ${effTerms} 个、自动 / 广泛拓新占 ${Math.round(autoBroadShare*100)}%`;
+  const cvrFix = cnt.good>0 ? `把预算集中到已验证出单的 ${ordTerms} 个词，对 ${cnt.good} 个优质词提价 / 加预算并转精准词收割` : `先把预算集中到已出单的 ${ordTerms} 个词跑出稳定样本，再筛优质词转精准收割`;
+  const c = (name,rule,ref,max,score,deduct)=>({name:name,rule:rule,ref:ref,max:max,score:score,deduct:deduct});
+  return [
+    {id:'adcost', name:'成本效率（ACOS/ROAS）', short:'成本效率', weight:24, color:'#ff3b30', bg:'rgba(255,59,48,0.10)', desc:'广告花费产出比是否守住目标线',
+     issue:costIssue,
+     fix:`对 ACOS 超全站均值 1.5 倍的词分档降竞价（-15%~-30%），把预算挪向 ACOS 低于均值的词`,
+     criteria:[
+       c('总 ACOS ≤ 25%（目标线）','ACOS = 广告花费 / 广告销售额。多数类目盈亏平衡线在 25%~35%，≤25% 满分，≥60% 计 0 分','广告数据',6,down(siteAcos,.25,.60,6),`当前总 ACOS ${P(siteAcos)}，高于 25% 目标线`),
+       c('广告 ROAS ≥ 4.0','ROAS = 广告销售额 / 广告花费，ACOS 的倒数视角；≥4.0 满分，≤1.2（接近白投）计 0 分','行业研究',4,up(roas,4,1.2,4),`当前 ROAS ${roas.toFixed(2)}，未达 4.0`),
+       c('高 ACOS 词花费占比 ≤ 10%','统计 ACOS > 全站均值 1.5 倍的搜索词，其花费占总花费比例；≤10% 满分，≥40% 计 0 分','广告数据',4,down(highAcosShare,.10,.40,4),`高 ACOS 词花费 ${M(highAcosSpend)}，占总花费 ${Math.round(highAcosShare*100)}%`)
+     ]},
+    {id:'adwaste', name:'无效花费控制', short:'无效花费', weight:22, color:'#ff9500', bg:'rgba(255,149,0,0.10)', desc:'烧钱词与零转化词的止血程度',
+     issue:wasteIssue,
+     fix:wasteFix,
+     criteria:[
+       c('零出单搜索词花费占比 ≤ 25%','未产生任何订单的搜索词，其花费占总花费比例；≤25% 属正常试错成本，≥65% 计 0 分','广告数据',6,down(zeroOrdShare,.25,.65,6),`零出单词花费 ${M(zeroOrdSpend)}，占 ${Math.round(zeroOrdShare*100)}%`),
+       c('高点击零转化词（点击 ≥10 且 0 单）= 0 个','点击够多仍不出单 = 相关性或转化端有硬伤，是否定词的第一优先级；0 个满分，≥12 个计 0 分','广告数据',4,down(highClkZeroOrd,0,12,4),`存在 ${highClkZeroOrd} 个高点击零转化词，需优先否定`),
+       c('烧钱词（否定 / 大幅降价档）花费占比 ≤ 10%','按逐词清洗判定为「否定 / 大幅降价」的词，其花费占比；≤10% 满分，≥35% 计 0 分','广告数据',4,down(badShare,.10,.35,4),`烧钱词花费 ${M(sp.bad)}，占 ${Math.round(badShare*100)}%`)
+     ]},
+    {id:'adcvr', name:'转化效率与好词收割', short:'转化收割', weight:20, color:'#34c759', bg:'rgba(52,199,89,0.10)', desc:'成交能力，以及好词有没有被喂饱',
+     issue:cvrIssue,
+     fix:cvrFix,
+     criteria:[
+       c('整体 CVR ≥ 10%（SP 大盘约 9.5%）','CVR = 订单 / 点击。≥10% 满分，≤3% 计 0 分；低 CVR 说明流量不精准或落地页说服力不足','行业研究',6,up(cvr,.10,.03,6),`当前 CVR ${P(cvr)}，低于 10% 基准（出单词 ${ordTerms} 个，占 ${Math.round(ordTermShare*100)}%）`),
+       c('花费 TOP10 搜索词中出单词 ≥ 6 个','钱花得最多的 10 个词是否都在成交，是预算分配是否正确的最直接体检','广告数据',4,up(top10Ord,6,0,4),`花费 TOP10 词中只有 ${top10Ord} 个出单，预算压在了未验证的词上`),
+       c('优质词花费占比 ≥ 25%','已验证「转化好 + ACOS 优于均值」的词应拿到足够预算，并下沉到词组 / 精准匹配；≥25% 满分，≤5% 计 0 分','广告数据',4,up(goodShare,.25,.05,4),`${cnt.good} 个优质词仅占 ${Math.round(goodShare*100)}% 花费，其中 ${Math.round(goodPreciseShare*100)}% 已转词组 / 精准`)
+     ]},
+    {id:'adctr', name:'流量精准度（CTR）', short:'流量精准', weight:18, color:'#007aff', bg:'rgba(0,122,255,0.10)', desc:'曝光是否被换成有效点击',
+     issue:`整体 CTR ${P(ctr)}，低 CTR 词占去 ${Math.round(lowCtrShare*100)}% 花费，另有 ${Math.round(zeroClkImpShare*100)}% 曝光是零点击的无效曝光`,
+     fix:`优化主图与标题前 80 字符提高点击；对显著低于广告组均值的词降价或否定，把曝光让给精准词`,
+     criteria:[
+       c('整体 CTR ≥ 0.40%（SP 类目均值）','CTR = 点击 / 曝光。亚马逊 SP 大盘约 0.40%，≥0.40% 满分，≤0.10% 计 0 分','行业研究',5,up(ctr,.004,.001,5),`当前 CTR ${P(ctr)}，低于 0.40% 类目均值`),
+       c('低 CTR 词（< 0.5× 广告组均值）花费占比 ≤ 20%','显著低于所在广告组平均点击率的词，说明相关性弱；≤20% 满分，≥50% 计 0 分','广告数据',4,down(lowCtrShare,.20,.50,4),`低 CTR 词花费 ${M(lowCtrSpend)}，占 ${Math.round(lowCtrShare*100)}%`),
+       c('零点击词曝光占比 ≤ 25%','拿到曝光却一次点击都没有的词，其曝光占总曝光比例；≤25% 满分，≥60% 计 0 分','广告数据',3,down(zeroClkImpShare,.25,.60,3),`零点击词吃掉 ${Math.round(zeroClkImpShare*100)}% 曝光，挤占了精准词的展示位`)
+     ]},
+    {id:'adstruct', name:'结构与词库健康', short:'结构词库', weight:16, color:'#5ac8fa', bg:'rgba(90,200,250,0.12)', desc:'预算分散度与拓新节奏',
+     issue:structIssue,
+     fix:`拆分高占比广告活动、扩宽出单词库，并保留 20%~50% 预算给自动 / 广泛持续拓新`,
+     criteria:[
+       c('单个广告活动花费占比 ≤ 40%','预算过度压在一个活动上，一旦该活动下滑整盘受影响；≤40% 满分，≥85% 计 0 分','操作建议',4,down(maxCampShare,.40,.85,4),`最大广告活动占总花费 ${Math.round(maxCampShare*100)}%（共 ${campCount} 个活动），预算过度集中`),
+       c('花费 TOP10 搜索词合计占比 ≤ 50%','词级集中度；过高说明词库过窄、抗风险能力差；≤50% 满分，≥85% 计 0 分','操作建议',4,down(top10Share,.50,.85,4),`花费 TOP10 词合计占 ${Math.round(top10Share*100)}%，有效词仅 ${effTerms} 个，词库过窄`),
+       c('自动 / 广泛拓新花费占比落在 20%~50%','拓新预算过低则词库枯竭，过高则失控烧钱，20%~50% 为健康区间','操作建议',4,Math.round(newTrafficScore*4/3),`自动 / 广泛占比 ${Math.round(autoBroadShare*100)}%，偏离 20%~50% 健康区间（长尾词占 ${Math.round(longTailShare*100)}%）`)
+     ]}
+  ];
+}
+
+// ══════════════════════════════════════════════
+// 广告问题诊断 · 四类审计规则（曝光 / 点击 / 转化 / ACOS·CPA）
+// 规则表来自《ASIN 审计需求更新 · 4. 该板块的审计规则》，逐条用搜索词报表实算命中
+// ══════════════════════════════════════════════
+let _audTargetAcos = 0.25;   // 目标 ACOS（手动填写，默认 25%）
+
+function audSetTargetAcos(el){
+  const v = parseFloat(el.value);
+  if(!isNaN(v) && v>0 && v<200) _audTargetAcos = v/100;
+  audRenderStep1Score();
+}
+
+function buildAdRuleDiag(){
+  const d=_audAdData; if(!d) return [];
+  const g=d.grand||{};
+  const rows=_audWalkRows(d,'searchTerm');
+  if(!rows.length) return [];
+  const P=(x)=>(x*100).toFixed(2)+'%';
+  const M=(x)=>'$'+(x||0).toFixed(2);
+  const N=(x)=>x.toLocaleString('en-US');
+
+  const siteCtr = g.imp>0 ? g.clk/g.imp : 0;
+  const siteCvr = g.clk>0 ? g.orders/g.clk : 0;
+  const siteAcos= g.sales>0 ? g.spend/g.sales : 0;
+  const aov     = g.orders>0 ? g.sales/g.orders : 0;      // 客单价（报表均单价，用于核算目标 CPA）
+  const tAcos   = _audTargetAcos;
+  const tCpa    = aov * tAcos;                            // 目标 CPA = 客单价 × 目标 ACOS
+  let totImp=0, totSpend=0;
+  rows.forEach(r=>{ totImp+=(r.raw.imp||0); totSpend+=(r.raw.spend||0); });
+  const avgImp = rows.length ? totImp/rows.length : 0;
+  const T = totSpend>0 ? totSpend : 1;
+  const isAB = (mt)=> /自动|auto|broad|广泛/i.test(mt||'');   // 自动 / 广泛
+  const isEx = (mt)=> /精准|exact/i.test(mt||'');             // 精准
+
+  // ── 分桶统计 ──
+  const B={imp:0,clk:0,terms:0,spend:0}, E={imp:0,clk:0,terms:0,spend:0};
+  const hit=(o)=>({n:0,spend:0,imp:0,top:null});
+  const H={
+    lowImpLowClk:hit(), broadScatter:hit(), exactLowImpHighCvr:hit(),
+    highImpLowCtr:hit(), longLowCtr:hit(),
+    clkNoOrder:hit(), clkLowCvr:hit(), ordHighAcos:hit(), highCvrLowImp:hit(),
+    acosOk:hit(), acosMid:hit(), acosHigh:hit(), cpaBad:hit(), spendNoOrder:hit()
+  };
+  const push=(h,r,m)=>{h.n++;h.spend+=(m.spend||0);h.imp+=(m.imp||0);const t=(r.ctx&&r.ctx[3])||'';if(!h.top||(m.spend||0)>h.topSpend){h.top=t;h.topSpend=(m.spend||0);}};
+
+  rows.forEach(r=>{
+    const m=r.raw, mt=r.mt||'';
+    const imp=m.imp||0, clk=m.clk||0, ord=m.orders||0, spend=m.spend||0, sales=m.sales||0;
+    const rctr = imp>0?clk/imp:0, rcvr = clk>0?ord/clk:0, racos = sales>0?spend/sales:null;
+    const gctr = r.grpAgg&&r.grpAgg.imp>0 ? r.grpAgg.clk/r.grpAgg.imp : 0;
+    if(isAB(mt)){ B.imp+=imp; B.clk+=clk; B.terms++; B.spend+=spend; }
+    if(isEx(mt)){ E.imp+=imp; E.clk+=clk; E.terms++; E.spend+=spend; }
+    // ① 曝光
+    if(imp < avgImp*0.2 && clk===0) push(H.lowImpLowClk,r,m);
+    if(isEx(mt) && imp < avgImp && siteCvr>0 && rcvr >= siteCvr*1.2 && ord>0) push(H.exactLowImpHighCvr,r,m);
+    // ② 点击
+    if(imp >= avgImp*2 && siteCtr>0 && rctr < siteCtr*0.5) push(H.highImpLowCtr,r,m);
+    if(imp >= avgImp*3 && gctr>0 && rctr < gctr*0.5) push(H.longLowCtr,r,m);
+    // ③ 转化
+    if(clk>=10 && ord===0) push(H.clkNoOrder,r,m);
+    if(clk>=10 && ord>0 && siteCvr>0 && rcvr < siteCvr*0.5) push(H.clkLowCvr,r,m);
+    if(ord>0 && racos!=null && siteAcos>0 && racos > siteAcos*1.5) push(H.ordHighAcos,r,m);
+    if(siteCvr>0 && rcvr >= siteCvr*1.5 && ord>0 && imp < avgImp) push(H.highCvrLowImp,r,m);
+    // ④ ACOS / CPA
+    if(racos!=null){
+      if(racos <= tAcos) push(H.acosOk,r,m);
+      else if(racos <= tAcos*1.3) push(H.acosMid,r,m);
+      else push(H.acosHigh,r,m);
+    }
+    if(ord>0 && ord<=2 && tCpa>0 && (spend/ord) > tCpa) push(H.cpaBad,r,m);
+    if(ord===0 && tCpa>0 && spend >= tCpa) push(H.spendNoOrder,r,m);
+  });
+
+  // 广告活动有曝光但广告组几乎无曝光
+  let deadGroups=0, deadGroupEg='';
+  const tree=d.tree||{};
+  Object.keys(tree).forEach(cn=>{
+    const cImp=tree[cn].agg.imp||0; if(cImp<=0) return;
+    Object.keys(tree[cn].groups).forEach(gn=>{
+      const gImp=tree[cn].groups[gn].agg.imp||0;
+      if(gImp===0 || gImp/cImp < 0.02){ deadGroups++; if(!deadGroupEg) deadGroupEg=cn+' / '+gn; }
+    });
+  });
+  // Broad/Auto 流量分散：词数占比高但单词平均曝光远低于精准
+  const bAvg = B.terms? B.imp/B.terms : 0, eAvg = E.terms? E.imp/E.terms : 0;
+  const bTermShare = rows.length ? B.terms/rows.length : 0;
+  const bCtr = B.imp>0?B.clk/B.imp:0, eCtr = E.imp>0?E.clk/E.imp:0;
+
+  const pctSpend=(h)=>Math.round(h.spend/T*100);
+  const R=(cond,result,ev,tone)=>({cond:cond,result:result,ev:ev,tone:tone});
+  const cats=[];
+
+  // ───── ① 曝光问题 ─────
+  let e1=[];
+  if(H.lowImpLowClk.n>0 && H.lowImpLowClk.n/rows.length>=0.15)
+    e1.push(R('展示量很低，点击也低','流量不足，可能是出价低、预算低、相关性低',`${N(H.lowImpLowClk.n)} 个词展示 < 词均 ${Math.round(avgImp)} 的 20% 且零点击（占词数 ${Math.round(H.lowImpLowClk.n/rows.length*100)}%）`,'bad'));
+  if(deadGroups>0)
+    e1.push(R('广告活动有曝光，但某广告组无曝光','广告组结构或关键词竞争力不足',`${deadGroups} 个广告组曝光占所属活动 < 2%，如「${deadGroupEg}」`,'bad'));
+  if(bTermShare>=0.5 && eAvg>0 && bAvg < eAvg*0.5)
+    e1.push(R('投放词有曝光，但客户搜索词很分散','Broad / Auto 流量过散',`自动 / 广泛承接 ${N(B.terms)} 个搜索词（占 ${Math.round(bTermShare*100)}%），单词均曝光 ${Math.round(bAvg)} 仅为精准词 ${Math.round(eAvg)} 的 ${Math.round(bAvg/eAvg*100)}%`,'warn'));
+  if(H.exactLowImpHighCvr.n>0)
+    e1.push(R('精准词展示低但 CVR 高','应该提高出价或单独建活动放量',`${H.exactLowImpHighCvr.n} 个精准词 CVR 高于全站 1.2 倍但曝光低于词均，如「${H.exactLowImpHighCvr.top}」`,'good'));
+  cats.push({key:'exposure',name:'曝光问题',desc:'有没有获得足够流量',metrics:'展示量 / 点击量 / CTR / 活动·广告组曝光占比',color:'#007aff',hits:e1});
+
+  // ───── ② 点击问题 ─────
+  let e2=[];
+  if(H.highImpLowCtr.n>0)
+    e2.push(R('展示高、点击低、CTR 低','点击吸引力不足 / 关键词太大 / 搜索词相关性差',`${N(H.highImpLowCtr.n)} 个词曝光 ≥ 词均 2 倍但 CTR < 全站 ${P(siteCtr)} 的一半，合计吃掉 ${N(H.highImpLowCtr.imp)} 次曝光`,'bad'));
+  if(B.imp>0 && siteCtr>0 && bCtr < siteCtr*0.8)
+    e2.push(R('广泛(Broad) / Auto 投放下 CTR 低','搜索词相关性差 / 广告位不佳',`自动·广泛整体 CTR ${P(bCtr)}，低于全站 ${P(siteCtr)}`,'warn'));
+  if(E.imp>0 && siteCtr>0 && eCtr < siteCtr*0.8)
+    e2.push(R('精准(Exact) 投放下 CTR 低','主图 / 标题 / 价格 / 评分不吸引人',`精准词整体 CTR ${P(eCtr)}，低于全站 ${P(siteCtr)}——词已精准仍不点，问题在 Listing 本身`,'bad'));
+  if(H.longLowCtr.n>0)
+    e2.push(R('某些词展示高但 CTR 长期表现低','搜索词相关性差 → 需降低出价 / 否词',`${H.longLowCtr.n} 个词曝光 ≥ 词均 3 倍且 CTR < 所在广告组均值一半，占花费 ${pctSpend(H.longLowCtr)}%`,'bad'));
+  cats.push({key:'click',name:'点击问题',desc:'用户触达面 OK，但不点击',metrics:'展示量 / 点击量 / CTR / 投放类型 / 搜索词相关性',color:'#ff9500',hits:e2});
+
+  // ───── ③ 转化问题 ─────
+  let e3=[];
+  if(H.clkNoOrder.n>0)
+    e3.push(R('点击多，订单 0','高浪费搜索词',`${H.clkNoOrder.n} 个词点击 ≥10 且零订单，烧掉 ${M(H.clkNoOrder.spend)}（占花费 ${pctSpend(H.clkNoOrder)}%）`,'bad'));
+  if(H.clkLowCvr.n>0)
+    e3.push(R('点击多，CVR 低','Listing 转化不足 / 搜索词预期错配',`${H.clkLowCvr.n} 个词点击 ≥10 但 CVR 不足全站 ${P(siteCvr)} 的一半`,'bad'));
+  if(H.ordHighAcos.n>0)
+    e3.push(R('有订单但 ACOS 高','成本不可控，关键词位置被抢 / 位置不佳，需要降低竞价',`${H.ordHighAcos.n} 个出单词 ACOS 超全站均值 ${P(siteAcos)} 的 1.5 倍，占花费 ${pctSpend(H.ordHighAcos)}%`,'warn'));
+  if(H.highCvrLowImp.n>0)
+    e3.push(R('CVR 高但曝光低','优质词，应该放量',`${H.highCvrLowImp.n} 个词 CVR ≥ 全站 1.5 倍但曝光低于词均，如「${H.highCvrLowImp.top}」`,'good'));
+  cats.push({key:'cvr',name:'转化问题',desc:'点进详情页了，但跳出率高（不转化）',metrics:'点击量 / 订单数 / CVR / CPA / ACOS / 花费 / 销售额',color:'#af52de',hits:e3});
+
+  // ───── ④ ACOS / CPA 问题 ─────
+  let e4=[];
+  const overall = siteAcos<=tAcos ? R('整体 ACOS ≤ 目标 ACOS','可放量',`全站 ACOS ${P(siteAcos)} ≤ 目标 ${P(tAcos)}，整体成本可控`,'good')
+    : siteAcos<=tAcos*1.3 ? R('整体 ACOS 是目标的 1~1.3 倍','观察或轻微降低竞价',`全站 ACOS ${P(siteAcos)}，目标 ${P(tAcos)}`,'warn')
+    : R('整体 ACOS > 目标的 1.3 倍','成本偏高，可观察后决定是否降低竞价',`全站 ACOS ${P(siteAcos)}，已达目标 ${P(tAcos)} 的 ${(siteAcos/tAcos).toFixed(1)} 倍`,'bad');
+  e4.push(overall);
+  if(H.acosHigh.n>0)
+    e4.push(R('ACOS > 目标 ACOS 的 1.3 倍','成本偏高，可观察后决定是否降低竞价',`${H.acosHigh.n} 个出单词超标，占花费 ${pctSpend(H.acosHigh)}%`,'bad'));
+  if(H.acosMid.n>0)
+    e4.push(R('ACOS 是目标 ACOS 的 1~1.3 倍','观察或轻微降低竞价',`${H.acosMid.n} 个词处于临界区，占花费 ${pctSpend(H.acosMid)}%`,'warn'));
+  if(H.cpaBad.n>0)
+    e4.push(R('CPA > 目标 CPA 且订单少','广告投放效率差',`${H.cpaBad.n} 个词单均成本超目标 CPA ${M(tCpa)} 且订单 ≤2`,'warn'));
+  if(H.spendNoOrder.n>0)
+    e4.push(R('花费 ≥ 目标 CPA 但订单 = 0','优先否定',`${H.spendNoOrder.n} 个词花费已超 ${M(tCpa)} 仍零单，合计 ${M(H.spendNoOrder.spend)}（占花费 ${pctSpend(H.spendNoOrder)}%）`,'bad'));
+  if(H.acosOk.n>0)
+    e4.push(R('ACOS ≤ 目标 ACOS','可放量',`${H.acosOk.n} 个词达标，占花费 ${pctSpend(H.acosOk)}%，可提价 / 加预算`,'good'));
+  cats.push({key:'acos',name:'ACOS / CPA 问题',desc:`目标 ACOS ${P(tAcos)} · 目标 CPA ${M(tCpa)}（客单价 ${M(aov)} × 目标 ACOS）`,metrics:'ACOS / CPA / 花费 / 订单数',color:'#ff3b30',hits:e4,tacos:true});
+
+  cats.forEach(cat=>{
+    cat.sev = cat.hits.some(h=>h.tone==='bad') ? {t:'严重',c:'bad'}
+            : cat.hits.some(h=>h.tone==='warn') ? {t:'关注',c:'warn'}
+            : cat.hits.length ? {t:'正常',c:'ok'} : {t:'未命中',c:'ok'};
+  });
+  return cats;
+}
+
+// 四类审计规则诊断的 HTML —— 只列「问题」：正向命中（可放量 / 优质词等机会点）
+// 属于优化建议，不在问题诊断里出现；整类没有问题的也不展示
+function adRuleDiagHtml(){
+  const cats=buildAdRuleDiag()
+    .map(c=>({name:c.name,color:c.color,sev:c.sev,hits:(c.hits||[]).filter(h=>h.tone!=='good')}))
+    .filter(c=>c.hits.length);
+  if(!cats.length) return `<div class="aud-rule-clean">四类审计规则均未命中问题，广告投放结构健康。</div>`;
+  const SEV={bad:'#ff3b30',warn:'#cc7a00',ok:'#1f9c4a'};
+  const TONE={bad:'#ff3b30',warn:'#cc7a00',good:'#1f9c4a'};
+  return `<div class="aud-rule-diag">`+cats.map(cat=>`
+    <div class="aud-rule-cat" style="--rc:${cat.color}">
+      <div class="aud-rule-cat-h">
+        <span class="aud-rule-name">${cat.name}</span>
+        <span class="aud-rule-gap"></span>
+        <span class="aud-rule-sev" style="color:${SEV[cat.sev.c]};background:${SEV[cat.sev.c]}16">${cat.sev.t}</span>
+      </div>
+      ${cat.hits.map(h=>`
+      <div class="aud-rule-hit">
+        <div class="aud-rule-cond"><i style="background:${TONE[h.tone]}"></i>${h.cond}<b style="color:${TONE[h.tone]}"> → ${h.result}</b></div>
+        <div class="aud-rule-ev">${h.ev}</div>
+      </div>`).join('')}
+    </div>`).join('')+`</div>`;
+}
+
+// 维度级问题结论与主动作（诊断卡与优化页共用）
+const LS_DIM_ADVICE = {
+    sem:     {issue:'核心词未在标题前 80 字 / Bullet 充分覆盖，语义匹配偏弱', fix:'把周搜索量 >3000 的 S/A 级词写进标题前 80 字与 Bullet'},
+    cosmo7:  {issue:'USED_FOR / USED_IN 等场景语义关系不足，类目驱动匹配弱', fix:'描述补场景化表达（用于… / 适用…），提升 COSMO 匹配'},
+    rufus7:  {issue:'卖点缺可验证数据点与因果表述，Rufus 难以引用', fix:'每条 Bullet 给硬数据（35dB/48H/IPX5）+「因为…所以…」'},
+    diff:    {issue:'与竞品差异化不够突出，缺可提取的对比点', fix:'加参数对比 / 对比模块，突出本品相对竞品优势'},
+    asset:   {issue:'A+ / 图片 / 视频等内容资产不完整', fix:'补齐 A+ 模块、信息图与竖版视频'},
+    attr:    {issue:'核心属性字段 / 后台 Search Terms 未填满，进不了筛选维度', fix:'补齐材质/尺寸/认证等属性，Search Terms 填满 250 字节'},
+    traffic: {issue:'关键词与流量承接不足，自然 / 广告排名承接弱', fix:'核心词布自然位 + 广告卡位，承接高意图流量'},
+    rankcov: {issue:'核心词自然排名多在首页外，且自然位与广告位没有形成同屏双卡位', fix:'给有自然位的核心词补精准广告卡位，同时推进 2–3 页高潜词进首页'},
+    trafmix: {issue:'流量过度集中在头部大词，长尾承接不足、机会词未覆盖', fix:'按大词 3 / 长尾 7 重配预算，把机会词分批建组跑起来'},
+    behavior:{issue:'CTR / CVR 等行为信号偏弱', fix:'优化主图与标题前置卖点，提升点击与转化'}
+};
+
+
+// ── 域级「优化建议」块（诊断卡只留问题，建议统一落到优化页）──
+function buildDomainAdviceHtml(ids, color, label){
+  const detail = buildLsDimDetail();
+  const dimOf  = (id)=>LS_MODEL_7D.find(d=>d.id===id);
+  const scoreOf= (id)=>{const d=dimOf(id); if(!d) return 100; const r=d.criteria.reduce((a,c)=>a+c.score,0), mx=d.criteria.reduce((a,c)=>a+c.max,0); return mx?Math.round(r/mx*100):0;};
+  const dims = ids.map(id=>({id:id,name:(dimOf(id)||{}).name||id,s:scoreOf(id)})).sort((a,b)=>a.s-b.s);
+  const weak = dims.filter(d=>d.s<85);
+  const list = (weak.length?weak:[dims[0]]).slice(0,3);
+  const body = list.map((d,i)=>{
+    const a=LS_DIM_ADVICE[d.id]||{}, dt=detail[d.id]||{acts:[]};
+    const acts=(dt.acts||[]).map(x=>`<div class="aud-adv-i-do">${x.do}<span class="aud-adv-i-gain">预期 · ${x.gain}</span></div>`).join('');
+    return `<div class="aud-adv-item">
+      <span class="aud-adv-i-n">${i+1}</span>
+      <div class="aud-adv-i-main">
+        <div class="aud-adv-i-t">${a.fix||'—'}<span class="aud-adv-from">${d.name} ${d.s} 分</span></div>
+        ${acts}
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="aud-adv-card" style="--dc:${color}">
+    <div class="aud-adv-h"><span class="aud-adv-h-t">${label||'优化动作'}</span></div>
+    ${body}
+  </div>`;
+}
+
+// ── 广告域「优化建议」：5 维短板动作 + 四类审计规则的逐条处置 ──
+function buildAdAdviceHtml(){
+  if(!(_audState.adAnalysis===true && _audAdData))
+    return `<div class="aud-adv-empty">未上传广告数据，广告优化建议不生成。上传亚马逊广告后台搜索词报表后自动补齐。</div>`;
+  const M=buildAdScoreModel();
+  const sc=(dm)=>{const r=dm.criteria.reduce((a,c)=>a+c.score,0), mx=dm.criteria.reduce((a,c)=>a+c.max,0); return mx?Math.round(r/mx*100):0;};
+  const dims=M.map(dm=>({dm:dm,s:sc(dm)})).sort((a,b)=>a.s-b.s);
+  const weak=dims.filter(x=>x.s<85);
+  const list=(weak.length?weak:[dims[0]]).slice(0,3);
+  const body=list.map((x,i)=>`<div class="aud-adv-item">
+      <span class="aud-adv-i-n">${i+1}</span>
+      <div class="aud-adv-i-main">
+        <div class="aud-adv-i-t">${x.dm.fix}<span class="aud-adv-from">${x.dm.name} ${x.s} 分</span></div>
+        <div class="aud-adv-i-do">${x.dm.issue}</div>
+      </div>
+    </div>`).join('');
+  const cats=buildAdRuleDiag().filter(c=>c.hits.length);
+  const rules=cats.map(cat=>`<div class="aud-adv-rule" style="--rc:${cat.color}">
+      <div class="aud-adv-rule-h">${cat.name}</div>
+      ${cat.hits.map(h=>`<div class="aud-adv-rule-i"><b>${h.result}</b><span>${h.ev}</span></div>`).join('')}
+    </div>`).join('');
+  return `<div class="aud-adv-card" style="--dc:#ff9500">
+    <div class="aud-adv-h"><span class="aud-adv-h-t">广告投放优化动作</span></div>
+    ${body}
+  </div>`
+  + (rules?`<div class="aud-adv-card" style="--dc:#ff9500">
+    <div class="aud-adv-h"><span class="aud-adv-h-t">按四类审计规则逐条处置</span><span class="aud-adv-h-n">${cats.length} 类 · ${cats.reduce((a,c)=>a+c.hits.length,0)} 条</span></div>
+    ${rules}
+  </div>`:'');
+}
+// 优化页分区标题
+function audOptPart(n, title, sub, color, inner){
+  return `<div class="aud-opt-part" style="--dc:${color}">
+    <div class="aud-opt-part-h"><span class="aud-opt-part-n">${n}</span><span class="aud-opt-part-t">${title}</span><span class="aud-opt-part-s">${sub}</span></div>
+    ${inner}
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+// 维度级「问题诊断 / 优化建议」明细 —— 资深跨境运营视角
+// 全部结论回到取证阶段的证据卡：A 内容 / B 评论 / C 竞品 / P 参数 / D 流量 / E 经营
+// 每个维度给 2 条具体问题（带证据）+ 2 条可执行动作（带预期收益）
+// ══════════════════════════════════════════════
+function buildLsDimDetail(){
+  const EV = (_audState && _audState.evidence) || {};
+  const A = EV.A || {}, B = EV.B || {}, C = EV.C || {}, P = EV.P || {}, D = EV.D || {};
+  const title = A.title || '';
+  const bullets = A.bullets || [];
+  const st = A.searchTerms || [];
+  const stBytes = st.join(' ').length;                       // 后台 Search Terms 已用字节（近似）
+  const aplusN = (A.aplusModules || []).length;
+  const qaN = (A.qa || []).length;
+  const comps = C.competitors || [];
+  const kws = C.keywords || [];
+  const topKw = kws[0] || {kw:'核心大词', searches:'—', tier:'S'};
+  const kw2 = kws[2] || kws[1] || {kw:'第二梯队词', searches:'—'};
+  const pain = B.painPoints || [];
+  const p1 = pain[0] || {text:'高频差评', freq:0}, p2 = pain[1] || {text:'次高频差评', freq:0};
+  const dist = B.dist || [];
+  const badPct = dist.filter(x=>x.bad).reduce((a,x)=>a+parseFloat(x.pct||0),0);
+  const groups = (P.groups || []).length;
+  const ks = D.kwStats || {reversed:0,core:0,organic:0,ad:0,opportunity:0};
+  const kt = D.kwTop || [];
+  const head = kt[0] || {kw:'头部词', contribution:0, ranking:'—'};
+  // Top10 核心词里自然排名进首页的个数（ranking 形如「自然17 / 广告19」，≤10 记首页）
+  let homeN = 0, adMissN = 0;
+  kt.forEach(k=>{
+    const m = /自然\s*(\d+)/.exec(k.ranking||'');
+    if(m && parseInt(m[1],10) <= 10) homeN++;
+    if(/广告\s*无排名/.test(k.ranking||'')) adMissN++;
+  });
+  const ktN = kt.length || 10;
+  const F = (n)=> n>0 ? n : '若干';
+
+  const act = (doTxt, gain)=>({do:doTxt, gain:gain});
+  return {
+    sem: {sub:[
+        `标题共 ${title.length||0} 字符，前 80 字符只压住了「${topKw.kw}」这一个 ${topKw.tier||'S'} 级词；「${kw2.kw}」（月搜 ${kw2.searches}）被挤到截断位之后，移动端根本看不到`,
+        `后台 Search Terms 只填了 ${st.length} 组、约 ${stBytes} 字节，249 字节的额度空了一半，长尾词与西语变体完全没铺`
+      ], acts:[
+        act('按「品类词 + 核心属性 + 使用场景」重排标题前 80 字符，把 C 卡里周搜 >3000 的 S/A 级词全部前置','核心词自然位有机会从当前位次推进到首页，自然曝光通常能起 15%~30%'),
+        act('Search Terms 填满 249 字节：补长尾组合、常见拼写变体与西语词（earbuds inalámbricos）','捡回被大词遮蔽的长尾流量，这部分词 ACOS 普遍只有大词的一半')
+      ]},
+    cosmo7: {sub:[
+        `${bullets.length} 条五点几乎全是 High Quality / Long Battery 这类主观形容词，没有一条写清 USED_FOR 的受众（通勤族 / 健身人群 / 学生党）`,
+        `描述里只有 sports、travel、commuting 一处场景枚举，缺 USED_IN 的具体语境（地铁通勤 / 健身房 / 开放式办公室），COSMO 挂不上类目驱动关系`
+      ], acts:[
+        act('每条 Bullet 前置一个真实场景与受众，句式统一成「For 通勤族 —— …」，把人群写死','A10 与 Rufus 对隐式查询（best earbuds for commuting）的召回明显变好'),
+        act('描述补 2~3 段 USED_IN 场景化表达，覆盖购买动机最强的三个使用语境','长尾场景词的自然收录数通常能翻一倍')
+      ]},
+    rufus7: {sub:[
+        `Q&A 里自己写着「About 6 hours per charge」，而 B 卡差评第 1 位正是「${p1.text}」（${F(p1.freq)} 条）——文案讲 All-day，实测对不上，这是典型的预期错配源头`,
+        `五点里没有一条给得出可验证参数（降噪 dB / 频响 / 防水等级 / 实测续航），Rufus 回答时无数可引，只能跳过你的 Listing`
+      ], acts:[
+        act('每条卖点补硬参数并写成因果句：「因为 ANC 主动降噪 -35dB，所以地铁里音量开到 50% 就够」','Rufus / AI 导购的引用率提升，问答场景的曝光是纯增量'),
+        act(`把 Q&A 里 ${qaN} 条高赞问题的答案直接写进 Bullet 与 A+，同时把续航口径改成「单次 6h / 配合充电盒 24h」`,'既喂饱 Rufus，又提前拆掉「续航虚标」这条差评的引信')
+      ]},
+    diff: {sub:[
+        `C 卡 ${comps.length} 个竞品（${comps.slice(0,2).join('、')}${comps.length>2?' 等':''}）与本品在标题层高度同质，五点里找不到一条是竞品没有的能力点`,
+        `「${p2.text}」（${F(p2.freq)} 条）是全类目共性痛点，竞品同样中招——这本该是最好的差异化切口，却一个字都没写`
+      ], acts:[
+        act('做一张四维参数对比图（续航 / 降噪 / 防水 / 重量）放进 A+ 第二屏，直接对位这 3 个竞品','用户对比阶段的跳出率通常能降 10%~20%'),
+        act('围绕竞品共性痛点立一条独家卖点，配实测图证（如佩戴稳固性实测）','拿到一个竞品无法快速跟进的记忆点，评论区口碑也会跟着走')
+      ]},
+    asset: {sub:[
+        `A+ 只有 ${aplusN} 个模块（品牌故事 / 产品图文 / 场景图），既没有对比表也没有规格表，移动端翻两屏就到底了`,
+        `没有产品视频，Q&A 仅 ${qaN} 条——同类目头部普遍在 15 条以上，内容资产厚度明显落后`
+      ], acts:[
+        act('A+ 补到 5 个模块，优先加「竞品对比表」和「规格参数表」，这两块的转化边际收益最高','A+ 完整度补齐后，详情页转化率的典型增幅在 0.8~1.5 个百分点'),
+        act('拍 1 条 30 秒竖版视频，重点演示佩戴稳固性与充电盒续航，直接回应 Top2 差评','视频位是移动端第二眼位置，同时也是 Rufus 的高权重信号源')
+      ]},
+    attr: {sub:[
+        `P 卡 ${groups} 组参数里，防水等级（IPX）与认证（CE / FCC）字段为空，这两项恰好是本类目筛选器命中率最高的维度，缺了就进不了筛选结果页`,
+        `部分属性词与后台 Search Terms 重复填写，白白吃掉了本就紧张的字节额度`
+      ], acts:[
+        act('补齐 IPX 等级、认证、兼容机型三个属性字段，按平台枚举值填写而不是自由文本','进入左侧筛选器后，能拿到一批意图极强的免费精准流量'),
+        act('把已在前台属性里出现的词从 Search Terms 删掉，腾出的字节改填长尾','等于零成本扩了一批长尾覆盖')
+      ]},
+    traffic: {sub:[
+        `D 卡反查 ${ks.reversed} 个词，核心词 ${ks.core} 个，其中自然位 ${ks.organic} 个、广告位 ${ks.ad} 个，双卡位重叠不足，等于同一批高意图流量只占了一半坑位`,
+        `「${head.kw}」一个词就贡献 ${head.contribution||0}% 的流量，集中度过高——这个词排名一波动，整盘流量就塌`
+      ], acts:[
+        act('对「已有自然位但没有广告位」的核心词批量补精准广告，抢同屏双坑位','双卡位词的整体点击份额通常比单卡位高 40% 以上'),
+        act(`把 ${ks.opportunity} 个机会词分批建精准广告组跑起来，目标是把头部单词流量占比压到 25% 以内`,'流量结构变稳，大词排名波动时不至于整盘失速')
+      ]},
+    behavior: {sub:[
+        `评分 ${B.rating||'—'}、评论 ${(B.reviewCount||0).toLocaleString('en-US')} 条，但 1–2★ 合计 ${badPct||0}%，高于类目健康线（≤8%），负面信号会被检索引擎持续放大`,
+        `Top 差评「${p1.text}」出现 ${F(p1.freq)} 次，用户在评论区看到后直接流失，点击进来也留不住`
+      ], acts:[
+        act('文案端先止血：如实标注续航口径与适用场景，删掉 All-day 这类容易被打脸的表述','预期错配型差评是可以靠文案直接压下来的，见效最快'),
+        act('主图重做（纯白底 + 佩戴稳固性视觉 + 核心参数角标），并 A/B 测两版','CTR 抬到类目均值以上后，自然排名与广告质量分是双向受益')
+      ]},
+    rankcov: {sub:[
+        `Top${ktN} 核心词里只有 ${homeN} 个自然排名进首页，其余分散在 2–4 页，用户根本翻不到`,
+        `${adMissN} 个核心词处于「有自然位、无广告位」的裸奔状态，竞品在同一屏用广告位把流量截走`
+      ], acts:[
+        act('先给「自然位在 11–30 名 + 有转化记录」的词补精准广告卡位，用广告位把自然位往上顶','自然位与广告位互相加权，是最省钱的排名推进方式'),
+        act('对自然位在 2–3 页的高潜词安排一轮秒杀 / 站外冲量，做单量爬坡','词一旦进首页，后续维持成本远低于推进成本')
+      ]},
+    trafmix: {sub:[
+        `流量结构过度依赖头部大词：「${head.kw}」独占 ${head.contribution||0}%，长尾词承接明显不足，健康结构应接近 3:7`,
+        `${ks.opportunity} 个机会词（竞品吃到、你没吃到）尚未覆盖，这部分是最容易拿的增量`
+      ], acts:[
+        act('按「大词 3 / 长尾 7」重新分配广告预算，长尾词单独建组、单独设竞价','长尾词 ACOS 通常只有大词的一半，整体成本会明显下来'),
+        act('建立每周例行动作：从搜索词报告里筛出新长尾词入库、把跑通的词转精准','词库滚动更新后，流量盘子会持续变宽而不是吃老本')
+      ]}
+  };
+}
+
 function audRenderStep1Score(){
   const mount = document.getElementById('aud-step1-score');
   if(!mount) return;
@@ -12322,18 +12954,9 @@ function audRenderStep1Score(){
       </div>
     </div>`;
 
-  // 三域：每域各有 打分环 + 雷达 + 问题诊断 + 优化建议
-  const DIM_SHORT = {sem:'语义匹配',cosmo7:'COSMO',rufus7:'Rufus',diff:'差异化',asset:'内容资产',attr:'属性覆盖',traffic:'流量承接',behavior:'行为信号'};
-  const DIM_ADVICE = {
-    sem:     {issue:'核心词未在标题前 80 字 / Bullet 充分覆盖，语义匹配偏弱', fix:'把周搜索量 >3000 的 S/A 级词写进标题前 80 字与 Bullet'},
-    cosmo7:  {issue:'USED_FOR / USED_IN 等场景语义关系不足，类目驱动匹配弱', fix:'描述补场景化表达（用于… / 适用…），提升 COSMO 匹配'},
-    rufus7:  {issue:'卖点缺可验证数据点与因果表述，Rufus 难以引用', fix:'每条 Bullet 给硬数据（35dB/48H/IPX5）+「因为…所以…」'},
-    diff:    {issue:'与竞品差异化不够突出，缺可提取的对比点', fix:'加参数对比 / 对比模块，突出本品相对竞品优势'},
-    asset:   {issue:'A+ / 图片 / 视频等内容资产不完整', fix:'补齐 A+ 模块、信息图与竖版视频'},
-    attr:    {issue:'核心属性字段 / 后台 Search Terms 未填满，进不了筛选维度', fix:'补齐材质/尺寸/认证等属性，Search Terms 填满 250 字节'},
-    traffic: {issue:'关键词与流量承接不足，自然 / 广告排名承接弱', fix:'核心词布自然位 + 广告卡位，承接高意图流量'},
-    behavior:{issue:'CTR / CVR 等行为信号偏弱', fix:'优化主图与标题前置卖点，提升点击与转化'}
-  };
+  // 三域：每域各有 打分环 + 雷达 + 问题诊断（优化建议已移到「优化」步骤）
+  const DIM_SHORT = {sem:'语义匹配',cosmo7:'COSMO',rufus7:'Rufus',diff:'差异化',asset:'内容资产',attr:'属性覆盖',traffic:'流量承接',behavior:'行为信号',rankcov:'排名卡位',trafmix:'流量结构'};
+  const DIM_ADVICE = LS_DIM_ADVICE;
   const dimById=(id)=>LS_MODEL_7D.find(d=>d.id===id);
   const domScore=(ids)=>{let a=0,w=0;ids.forEach(id=>{const d=dimById(id);const ww=d?d.weight:0;a+=dimScore(id)*ww;w+=ww;});return w?Math.round(a/w):0;};
   const gradeOf=(s)=> s>=85?'优秀':s>=70?'良好':s>=50?'一般':'待优化';
@@ -12360,7 +12983,9 @@ function audRenderStep1Score(){
     asset:'详情页说服力不足，看了却不下单',
     attr:'进不了筛选器、错过精准流量',
     traffic:'有搜索需求却承接不住，自然与广告排名双输',
-    behavior:'点击 / 转化信号偏弱，广告与自然排名都会被压'
+    behavior:'点击 / 转化信号偏弱，广告与自然排名都会被压',
+    rankcov:'高意图流量被竞品在同屏截走，自然位的价值没吃满',
+    trafmix:'单点依赖头部大词，排名一波动整盘流量失速'
   };
   function domCardHtml(key,name,color,ids){
     const sc=domScore(ids);
@@ -12368,12 +12993,21 @@ function audRenderStep1Score(){
     const dims=ids.map(id=>({id,name:(dimById(id)||{}).name||id,s:dimScore(id)})).sort((a,b)=>a.s-b.s);
     const best=dims[dims.length-1], worst=dims[0], second=dims[1];
     const weak=dims.filter(d=>d.s<85); const probList=(weak.length?weak:[worst]).slice(0,3);
-    const problems=probList.map(d=>{const a=DIM_ADVICE[d.id]||{};return `<div class="aud-dom-prob"><b style="color:${lsScoreColor(d.s)}">${d.name} ${d.s}</b>：${a.issue||'—'}</div>`;}).join('');
-    const fixes=probList.map((d,i)=>{const a=DIM_ADVICE[d.id]||{};return `<div class="aud-dom-fix"><span>${i+1}</span>${a.fix||'—'}</div>`;}).join('');
+    const DETAIL=buildLsDimDetail();
+    const problems=probList.map(d=>{
+      const a=DIM_ADVICE[d.id]||{}, dt=DETAIL[d.id]||{sub:[]};
+      const subs=(dt.sub||[]).map(s=>`<div class="aud-dom-prob-sub">${s}</div>`).join('');
+      return `<div class="aud-dom-prob"><b style="color:${lsScoreColor(d.s)}">${d.name} ${d.s}</b>：${a.issue||'—'}${subs?`<div class="aud-dom-prob-subs">${subs}</div>`:''}</div>`;
+    }).join('');
+    const fixes=probList.map((d,i)=>{
+      const a=DIM_ADVICE[d.id]||{}, dt=DETAIL[d.id]||{acts:[]};
+      const acts=(dt.acts||[]).map(x=>`<div class="aud-dom-fix-do">· ${x.do}<span class="aud-dom-fix-gain">预期：${x.gain}</span></div>`).join('');
+      return `<div class="aud-dom-fix"><span>${i+1}</span><div class="aud-dom-fix-main"><div class="aud-dom-fix-t">${a.fix||'—'}</div>${acts}</div></div>`;
+    }).join('');
     const critPanels=ids.map((id,di)=>{const d=dimById(id);return d?buildLsCriteriaPanel(d,'lscrit-'+key+'-'+di):'';}).join('');
     const scope = key==='listing' ? '内容与文案' : '关键词与流量承接';
     const wc=lsScoreColor(worst.s);
-    const narrative = `<b class="aud-narr-tag">资深运营诊断</b>这条 Listing 的<b>${scope}</b>整体 <b style="color:${lsScoreColor(sc)}">${sc} 分（${gradeOf(sc)}）</b>。${sc>=85?`基本盘扎实——${best.name} 等维度已达标；`:``}当前最该先修的是<b style="color:${wc}">${worst.name}（${worst.s}分）</b>：${(DIM_ADVICE[worst.id]||{}).issue||''}，${DIM_IMPACT[worst.id]||''}。${(second&&second.s<85)?`其次<b style="color:${lsScoreColor(second.s)}">${second.name}（${second.s}分）</b>也需跟进。`:`其余维度表现良好，集中资源攻克上面这项即可拿到最大提升。`}`;
+    const narrative = `<b class="aud-narr-tag">诊断</b>这条 Listing 的<b>${scope}</b>整体 <b style="color:${lsScoreColor(sc)}">${sc} 分（${gradeOf(sc)}）</b>。${sc>=85?`基本盘扎实——${best.name} 等维度已达标；`:``}当前最该先修的是<b style="color:${wc}">${worst.name}（${worst.s}分）</b>：${(DIM_ADVICE[worst.id]||{}).issue||''}，${DIM_IMPACT[worst.id]||''}。${(second&&second.s<85)?`其次<b style="color:${lsScoreColor(second.s)}">${second.name}（${second.s}分）</b>也需跟进。`:`其余维度表现良好，集中资源攻克上面这项即可拿到最大提升。`}`;
     return `<div class="aud-dom-card" style="--dc:${color}">
       <div class="aud-dom-head"><div class="aud-dom-title"><span class="aud-dom-dot" style="background:${color}"></span>${name}问题诊断</div><span class="aud-dom-gradetag" style="color:${lsScoreColor(sc)};background:${lsScoreColor(sc)}18">${gradeOf(sc)} · ${ids.length} 维</span></div>
       <div class="aud-dom-body">
@@ -12381,10 +13015,8 @@ function audRenderStep1Score(){
         <div class="aud-dom-right">
           <div class="aud-dom-narr">${narrative}</div>
           <div class="aud-dom-sec-t">问题诊断</div><div class="aud-dom-probs">${problems}</div>
-          <div class="aud-dom-sec-t">优化建议</div><div class="aud-dom-fixes">${fixes}</div>
         </div>
       </div>
-      <button class="aud-dom-more" onclick="audToggleDomCrit('${key}')">收起维度细则 ‹</button>
       <div class="aud-dom-crit" id="aud-dom-crit-${key}" style="display:block">${critPanels}</div>
     </div>`;
   }
@@ -12403,51 +13035,73 @@ function audRenderStep1Score(){
       </div>`;
     }
     const d=_audAdData, gm=_adMetrics(d.grand);
-    const siteAcos=d.grand.sales>0?d.grand.spend/d.grand.sales:0;
-    const ctr=d.grand.imp>0?d.grand.clk/d.grand.imp:0, cvr=d.grand.clk>0?d.grand.orders/d.grand.clk:0;
     const rows=_audWalkRows(d,'searchTerm');
-    let sp={good:0,bad:0,warn:0,watch:0,neutral:0},cnt={good:0,bad:0,warn:0,watch:0,neutral:0},tot=0;
-    rows.forEach(r=>{const gc=r.grpAgg&&r.grpAgg.imp>0?r.grpAgg.clk/r.grpAgg.imp:0;const v=_auditVerdict(r.raw,gc,siteAcos);const s=r.raw.spend||0;sp[v.cls]+=s;cnt[v.cls]++;tot+=s;});
-    const adScore=tot>0?Math.round(100*(1-sp.bad/tot)):0;
-    const badPct=tot>0?Math.round(100*sp.bad/tot):0, badShare=tot>0?sp.bad/tot:0, goodShare=tot>0?sp.good/tot:0;
-    const points=[
-      {name:'点击率',v:Math.min(1,ctr/0.03),color},
-      {name:'转化率',v:Math.min(1,cvr/0.08),color},
-      {name:'成本控制',v:Math.max(0,1-siteAcos/0.4),color},
-      {name:'花费健康',v:1-badShare,color},
-      {name:'词质量',v:goodShare,color}
-    ];
+    // 5 维加权评分（与另外两域同一套 criteria 结构，可展开维度细则）
+    const AD_MODEL=buildAdScoreModel();
+    const adDimScore=(dm)=>{const r=dm.criteria.reduce((a,c)=>a+c.score,0),mx=dm.criteria.reduce((a,c)=>a+c.max,0);return mx?Math.round(r/mx*100):0;};
+    const adScore=calcTotal(AD_MODEL);
+    const adDims=AD_MODEL.map(dm=>({dm:dm,s:adDimScore(dm)})).sort((a,b)=>a.s-b.s);
+    const adBest=adDims[adDims.length-1], adWorst=adDims[0], adSecond=adDims[1];
+    const points=AD_MODEL.map(dm=>({name:dm.short,v:adDimScore(dm)/100,color:dm.color}));
+    const weakAd=adDims.filter(x=>x.s<85); const adProbList=(weakAd.length?weakAd:[adWorst]).slice(0,3);
+    const problems=adProbList.map(x=>`<div class="aud-dom-prob"><b style="color:${lsScoreColor(x.s)}">${x.dm.name} ${x.s}</b>：${x.dm.issue}</div>`).join('');
+    const fixes=adProbList.map((x,i)=>`<div class="aud-dom-fix"><span>${i+1}</span>${x.dm.fix}</div>`).join('');
+    const roasTxt=(d.grand.spend>0?(d.grand.sales/d.grand.spend).toFixed(2):'—');
     const stat=(l,v)=>`<div class="aud-dom-stat"><div class="k">${l}</div><div class="v">${v}</div></div>`;
-    const metrics=`<div class="aud-dom-stats">${stat('总花费',gm.spend||'—')}${stat('ACOS',gm.acos||'—')}${stat('CTR',gm.ctr||'—')}${stat('CVR',gm.cvr||'—')}</div>`;
-    const problems=`<div class="aud-dom-prob"><b style="color:#ff3b30">${cnt.bad} 个烧钱 / 高 ACOS 词</b>：占花费 ${badPct}%，出单差或 ACOS 超均值 1.5 倍</div>
-      ${cnt.warn?`<div class="aud-dom-prob"><b style="color:#cc7a00">${cnt.warn} 个低点击率 / 未转化词</b>：CTR 显著低于广告组均值或点击未转化</div>`:''}
-      ${cnt.good?`<div class="aud-dom-prob"><b style="color:#1f9c4a">${cnt.good} 个优质词</b>：转化良好、ACOS 优于全站均值</div>`:''}`;
-    const fixes=`<div class="aud-dom-fix"><span>1</span>否定 / 大幅降价 ${cnt.bad} 个烧钱词，止损无效花费</div>
-      <div class="aud-dom-fix"><span>2</span>对 ${cnt.good} 个优质词提价 / 加预算 / 转精准词收割</div>
-      <div class="aud-dom-fix"><span>3</span>${cnt.warn} 个低点击率词优化相关性（主图 / 价格 / 关键词）</div>`;
-    const narrative=`<b class="aud-narr-tag">资深运营诊断</b>广告整体 <b style="color:${lsScoreColor(adScore)}">${adScore} 分</b>、总 ACOS ${gm.acos||'—'}。当前有 <b style="color:#ff3b30">${cnt.bad} 个词在烧钱</b>（占花费 ${badPct}%）——出单差或 ACOS 超均值 1.5 倍，是最该立刻止血的；同时 <b style="color:#1f9c4a">${cnt.good} 个优质词</b>转化好、ACOS 低于全站均值，值得加预算收割。${badPct>30?'无效花费偏高，广告结构需要一轮清洗。':'花费结构尚健康，精细化调优即可。'}`;
+    const metrics=`<div class="aud-dom-stats slim">${stat('总花费',gm.spend||'—')}${stat('广告销售额',gm.sales||'—')}${stat('ACOS',gm.acos||'—')}${stat('ROAS',roasTxt)}${stat('CTR',gm.ctr||'—')}${stat('CVR',gm.cvr||'—')}</div>`;
+    const narrative=`<b class="aud-narr-tag">诊断</b>这条 Listing 的<b>广告投放</b>整体 <b style="color:${lsScoreColor(adScore)}">${adScore} 分（${gradeOf(adScore)}）</b>，${rows.length} 个搜索词、总 ACOS ${gm.acos||'—'}。${adScore>=85?`基本盘扎实——${adBest.dm.name} 等维度已达标；`:``}当前最该先修的是<b style="color:${lsScoreColor(adWorst.s)}">${adWorst.dm.name}（${adWorst.s}分）</b>：${adWorst.dm.issue}。${(adSecond&&adSecond.s<85)?`其次<b style="color:${lsScoreColor(adSecond.s)}">${adSecond.dm.name}（${adSecond.s}分）</b>也需跟进。`:`其余维度表现良好，集中资源攻克上面这项即可拿到最大提升。`}`;
+    const critPanels=AD_MODEL.map((dm,i)=>buildLsCriteriaPanel(dm,'lscrit-ad-'+i)).join('');
     return `<div class="aud-dom-card" style="--dc:${color}">
-      <div class="aud-dom-head"><div class="aud-dom-title"><span class="aud-dom-dot" style="background:${color}"></span>广告投放问题诊断</div><span class="aud-dom-gradetag" style="color:${lsScoreColor(adScore)};background:${lsScoreColor(adScore)}18">${gradeOf(adScore)} · ${rows.length} 词</span></div>
+      <div class="aud-dom-head"><div class="aud-dom-title"><span class="aud-dom-dot" style="background:${color}"></span>广告投放问题诊断</div><span class="aud-dom-gradetag" style="color:${lsScoreColor(adScore)};background:${lsScoreColor(adScore)}18">${gradeOf(adScore)} · ${AD_MODEL.length} 维</span></div>
       <div class="aud-dom-body">
         <div class="aud-dom-left"><div class="aud-dom-ring">${ringSvg(adScore,lsScoreColor(adScore))}</div><div class="aud-dom-radar">${miniRadar(points,color)}</div></div>
         <div class="aud-dom-right">
           <div class="aud-dom-narr">${narrative}</div>
           ${metrics}
-          <div class="aud-dom-sec-t">问题诊断</div><div class="aud-dom-probs">${problems}</div>
-          <div class="aud-dom-sec-t">优化建议</div><div class="aud-dom-fixes">${fixes}</div>
+          <div class="aud-dom-sec-t aud-rule-head">问题诊断 · 四类审计规则<span class="aud-rule-tacos">目标 ACOS <input type="number" min="1" max="199" step="1" value="${Math.round(_audTargetAcos*100)}" onchange="audSetTargetAcos(this)">%</span></div>${adRuleDiagHtml()}
         </div>
       </div>
-      <button class="aud-dom-more" onclick="audShowAdAnalysis()">查看逐词清洗结果 ›</button>
+      <div class="aud-dom-crit" id="aud-dom-crit-ad" style="display:block">${critPanels}</div>
+      <div class="aud-dom-acts">
+        <button class="aud-dom-act ghost" onclick="audUploadAdData()"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>重新分析</button>
+        <button class="aud-dom-act solid" onclick="audDownloadAdAudit()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载清洗结果</button>
+      </div>
     </div>`;
   }
 
   const domainsHtml = `<div class="aud-domains">
     ${domCardHtml('listing','Listing 内容','#007aff',['sem','cosmo7','rufus7','diff','asset'])}
-    ${domCardHtml('traffic','关键词与流量','#5ac8fa',['attr','traffic','behavior'])}
+    ${domCardHtml('traffic','关键词与流量','#5ac8fa',['attr','traffic','behavior','rankcov','trafmix'])}
     ${adDomCardHtml()}
   </div>`;
 
-  mount.innerHTML = `<div class="aud-diag">${domainsHtml}</div>`;
+  // ─── 整体打分：三域加权（内容 : 流量 : 广告；广告未上传时不计入分母）───
+  const _cIds=['sem','cosmo7','rufus7','diff','asset'], _tIds=['attr','traffic','behavior','rankcov','trafmix'];
+  const _wOf=(ids)=>ids.reduce((a,id)=>a+((dimById(id)||{}).weight||0),0);
+  const sContent=domScore(_cIds), sTraffic=domScore(_tIds);
+  const _adOn=(_audState.adAnalysis===true && _audAdData);
+  const sAd=_adOn?calcTotal(buildAdScoreModel()):null;
+  const wC=_wOf(_cIds), wT=_wOf(_tIds), wA=40;
+  const overallScore=Math.round(_adOn ? (sContent*wC+sTraffic*wT+sAd*wA)/(wC+wT+wA) : (sContent*wC+sTraffic*wT)/(wC+wT));
+  const oCol=lsScoreColor(overallScore), oGrade=gradeOf(overallScore);
+  const oVerdict = overallScore>=85?'整体健康，按建议精进即可'
+                 : overallScore>=70?'基本盘可用，需补 1–2 处短板'
+                 : overallScore>=50?'存在明显短板，建议按优先级逐项修'
+                 : '多域同时失分，需要一轮系统性重做';
+  const overallBar = `
+    <div class="aud-overall">
+      <div class="aud-overall-score" style="color:${oCol}">${overallScore}<span>/100</span></div>
+      <div class="aud-overall-main">
+        <div class="aud-overall-t"><b style="color:${oCol}">整体 ${oGrade}</b> · ${oVerdict} · ${market}</div>
+        <div class="aud-overall-d">
+          <span class="aud-ov-chip" style="--c:#007aff">Listing 内容 ${sContent}</span>
+          <span class="aud-ov-chip" style="--c:#5ac8fa">关键词与流量 ${sTraffic}</span>
+          <span class="aud-ov-chip" style="--c:#ff9500">广告投放 ${_adOn?sAd:'未解锁'}</span>
+          <span class="aud-ov-note">三域按 ${wC} : ${wT}${_adOn?' : '+wA:''} 加权${_adOn?'':'；广告数据未上传，暂不计入综合分'}</span>
+        </div>
+      </div>
+    </div>`;
+  mount.innerHTML = `<div class="aud-diag">${overallBar}${domainsHtml}</div>`;
 
   // 维度细则默认展开：各维表头卡常驻，仅把每维的行明细折叠起来
   mount.querySelectorAll('.aud-dom-crit .ls-criteria-panel').forEach(card=>{
@@ -12667,12 +13321,12 @@ function audRunDiagnosis(){
          <div style="font-size:10.5px;color:var(--t3)">* "竞品自然占比" 来自对应词的 <span class="mono">naturalRatio</span>，说明竞品在这个词上靠自然流量拿到多少，暗示该词 SEO 空间存在。</div>`,
         '机会词已充分覆盖');
 
-      // 子维度4：流量集中度风险（最高扣3）
-      const sub4 = card('子维度4 · 流量集中度风险', 3, ded[3],
+      // 子维度4：核心词依赖合理性（最高扣3）—— 不因核心词占比高本身扣分，只看依赖是否合理、有没有第二承接
+      const sub4 = card('子维度4 · 核心词依赖合理性', 3, ded[3],
         [{min:2,tag:'紧急',color:'#ff3b30',dot:'🔴'},{min:1,tag:'重要',color:'#ff9500',dot:'🟡'}],
-        `<div style="margin-bottom:6px">${ded[3]>=2?'输出分散策略建议':'输出 1 条分散建议'}。读取核心词，输出：</div>
-         <div class="aud-kt-ai">当前词 "wireless earbuds"（月搜索量 245K）贡献了约 69% 的总流量，集中度过高。若该词搜索量季节性下滑或竞品强投，整体流量将剧烈波动。建议在 Bullet 与 Search Term 中培育 2~3 个腰部词（如 "noise canceling earbuds" / "earbuds for running"）作为第二流量来源，把 Top1 词占比降到 50% 以下。</div>`,
-        '流量结构分布均匀');
+        `<div style="margin-bottom:6px">${ded[3]>=2?'输出核心词依赖修正策略':'输出 1 条关键词结构补强建议'}。先读取核心词、月搜索量、腰部词与长尾词覆盖情况、Listing 匹配度，再判断依赖是否合理：</div>
+         <div class="aud-kt-ai">当前词 "wireless earbuds"（月搜索量 245K）是该类目的核心流量词，<b>核心依赖本身不一定是风险</b>——通用类目、标准化商品、强品类驱动类目本就依赖核心大词。但当前 Listing 对<b>功能词</b>（noise canceling / ANC）与<b>场景词</b>（for running / for commuting）承接不足，关键词结构偏单一：若该核心词搜索量季节性下滑、竞品加大投放，整体曝光稳定性会受影响。建议在 Bullet 与 Search Term 中补充「noise canceling earbuds」「earbuds for running」等高相关腰部词，形成"核心大词 + 功能词 + 场景词 + 兼容词/人群词"的组合关键词结构，降低单一入口依赖。</div>`,
+        '核心词依赖合理，关键词结构健康：当前 Listing 以核心词作为主要流量入口符合该类目搜索习惯，且已覆盖功能词 / 场景词等第二承接，未发现明显单一关键词依赖风险');
 
       const totalDeduct = ded.reduce((a,b)=>a+b,0);
       keywordTrafficAdvice = `
@@ -12680,7 +13334,7 @@ function audRunDiagnosis(){
           <div class="aud-ad-rec-head">
             <span class="aud-kt-badge">🔑 关键词与流量建议</span>
             <span class="aud-ad-rec-title">关键词与流量承接优化方案</span>
-            <span class="aud-ad-rec-sub">按扣分量从大到小决定优先级与篇幅 · 本维度共扣 ${totalDeduct} 分（满分 16）· 满分子维度仅显示"表现良好"</span>
+            
           </div>
           ${[ [ded[0],sub1],[ded[1],sub2],[ded[2],sub3],[ded[3],sub4] ]
               .sort((a,b)=>b[0]-a[0])   // 扣分多的排前面
@@ -12696,7 +13350,7 @@ function audRunDiagnosis(){
             <span style="padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;background:linear-gradient(135deg,rgba(0,122,255,0.1),rgba(108,92,231,0.1));color:#6c5ce7">✨ AI 优化</span>
             Listing 生成结果 · ${market}
           </div>
-          <div style="font-size:11px;color:var(--t3);margin-top:2px">基于 AI 优化建议自动生成 · 蓝色标记为优化内容</div>
+          <!-- 副标题已移除 -->
         </div>
         <div style="display:flex;gap:8px">
           <div class="chip chip-orange" onclick="copyBackendFormat('lsscore','${market}')" style="cursor:pointer">📋 复制描述HTML</div>
@@ -12753,12 +13407,18 @@ function audRunDiagnosis(){
         </div>
         </div><!-- /RIGHT col -->
       </div>
-      ${keywordTrafficAdvice}
     </div>`;
 
     // Only the left column — no right-column score panel (it's now in Step 1).
     // Also no top status bar — Step 1's audRenderStep1Score has the same status bar already.
-    area.innerHTML = `<div style="margin-top:14px">${leftPanel}</div>`;
+    // 优化页分三块：① Listing 优化 ② 流量与关键词优化 ③ 广告优化建议
+    const part1 = audOptPart(1,'Listing 优化','','#007aff',
+      buildDomainAdviceHtml(['sem','cosmo7','rufus7','diff','asset'],'#007aff','内容与文案优化动作') + leftPanel);
+    const part2 = audOptPart(2,'流量与关键词优化','','#5ac8fa',
+      buildDomainAdviceHtml(['attr','traffic','behavior','rankcov','trafmix'],'#5ac8fa','关键词与流量优化动作') + (keywordTrafficAdvice||''));
+    const part3 = audOptPart(3,'广告优化建议','','#ff9500',
+      buildAdAdviceHtml());
+    area.innerHTML = `<div style="margin-top:14px">${part1}${part2}${part3}</div>`;
   }, 1800);
 }
 
@@ -13250,55 +13910,67 @@ const LS_MODEL = LS_MODEL_A;
 // 来源：Claude Code + Sorftime + Sif MCP 智能审计方法论 (一个 ASIN 拆成 7 个评分维度)
 // 每个维度 score / max — 总分 100；颜色色系刻意区别于六维模型
 const LS_MODEL_7D = [
-  {id:'sem', name:'语义检索匹配度', weight:15, color:'#007aff', bg:'rgba(0,122,255,0.10)', desc:'A10 语义检索引擎匹配率',
+  {id:'sem', name:'语义检索匹配度', weight:14, color:'#007aff', bg:'rgba(0,122,255,0.10)', desc:'A10 语义检索引擎匹配率',
    criteria:[
      {name:'核心查询词在标题前80字内出现',rule:'语义检索按标题前 80 字截取做相关性匹配，超出区域权重显著下降',ref:'官方',max:6,score:6},
      {name:'核心查询词在 Bullet/描述中至少出现 2 次',rule:'分布越广，词条与产品的相关性信号越强',ref:'行业研究',max:5,score:5},
      {name:'长尾查询词 (≥3 词组合) 覆盖率 ≥ 60%',rule:'长尾词命中率反映"非头部流量"的获取能力',ref:'穿透数据',max:4,score:4}
    ]},
-  {id:'cosmo7', name:'COSMO 对齐度', weight:14, color:'#5ac8fa', bg:'rgba(90,200,250,0.12)', desc:'COSMO 15 类语义关系覆盖',
+  {id:'cosmo7', name:'COSMO 对齐度', weight:12, color:'#5ac8fa', bg:'rgba(90,200,250,0.12)', desc:'COSMO 15 类语义关系覆盖',
    criteria:[
      {name:'USED_FOR (功能/受众/场景) 三类全覆盖',rule:'COSMO 高优先级关系类，影响 Rufus 的隐式查询解析',ref:'官方论文',max:6,score:5,deduct:'USED_FOR 三类中"受众(AUD)"覆盖不足，文案未明确目标人群（如通勤族/运动人群），扣 1 分'},
      {name:'IS_A / CAPABLE_OF 已显式写入',rule:'品类身份和能力描述需在 Bullet 或描述中明确表述',ref:'官方论文',max:4,score:4},
      {name:'品类驱动关系 (USED_ON / USED_IN_BODY) 与产品类型匹配',rule:'根据产品大类自动判定适用的语义关系是否完备',ref:'操作建议',max:4,score:4}
    ]},
-  {id:'rufus7', name:'Rufus 因果链', weight:13, color:'#af52de', bg:'rgba(175,82,222,0.10)', desc:'Rufus 能否从 Listing 推导因果回答',
+  {id:'rufus7', name:'Rufus 因果链', weight:12, color:'#af52de', bg:'rgba(175,82,222,0.10)', desc:'Rufus 能否从 Listing 推导因果回答',
    criteria:[
      {name:'每条 Bullet 含可验证数据点 (规格/认证/数字)',rule:'Rufus 偏好可引用的硬数据，非主观形容词',ref:'操作建议',max:5,score:5},
      {name:'描述含 ≥2 个具体使用场景 (非泛化措辞)',rule:'场景越具体，Rufus 越容易判断该 Listing 是否匹配用户意图',ref:'官方',max:5,score:4,deduct:'描述仅含 1 个具体场景（通勤），缺第 2 个场景（如运动/居家），未达 ≥2 个要求，扣 1 分'},
      {name:'前 80 字符语义连贯 (无关键词堆砌)',rule:'Rufus 视语义不连贯为低质量信号',ref:'行业研究',max:3,score:3}
    ]},
-  {id:'attr', name:'查询属性覆盖度', weight:12, color:'#34c759', bg:'rgba(52,199,89,0.10)', desc:'属性字段覆盖率',
+  {id:'attr', name:'查询属性覆盖度', weight:9, color:'#34c759', bg:'rgba(52,199,89,0.10)', desc:'属性字段覆盖率',
    criteria:[
      {name:'核心属性字段 (材质/尺寸/颜色/兼容/认证) 已填写',rule:'后台属性字段直接被检索引擎读取，缺失项不出现在筛选维度',ref:'官方',max:5,score:4,deduct:'核心属性中"认证(certification)"字段未填写，该项无法进入对应筛选维度，扣 1 分'},
      {name:'后台 Search Terms 字节 ≥ 200',rule:'249 字节上限，建议尽量填满；< 200 字节扣分',ref:'官方IDQ',max:4,score:4},
      {name:'品类专属属性 (蓝牙版本/电池容量/防水等级) 已写入',rule:'品类相关的属性词条，跨平台一致填写',ref:'操作建议',max:3,score:2,deduct:'品类专属属性中"防水等级(IPX)"未在后台属性写入，仅出现在文案，扣 1 分'}
    ]},
-  {id:'behavior', name:'用户行为信号', weight:10, color:'#ff9500', bg:'rgba(255,149,0,0.10)', desc:'点击/加购/留存信号',
+  {id:'behavior', name:'用户行为信号', weight:8, color:'#ff9500', bg:'rgba(255,149,0,0.10)', desc:'点击/加购/留存信号',
    criteria:[
      {name:'主图视觉吸引力 (CTR vs 品类基准)',rule:'主图 CTR 高于品类平均 = 正向信号；低于平均扣分',ref:'广告数据',max:4,score:2,deduct:'主图 CTR 0.42%，低于耳机类目基准 0.55%，视觉吸引力不足，扣 2 分'},
      {name:'评分 ≥ 4.0 ★ 且评论数 ≥ 100',rule:'低评分或低评论数会被检索引擎视为不稳定信号',ref:'官方',max:3,score:3},
      {name:'近 30 天加购率不低于品类中位数',rule:'加购率反映用户对产品 + 价位的认可度',ref:'广告数据',max:3,score:2,deduct:'近 30 天加购率 6.8%，低于品类中位数 8.0%，价位/卖点说服力有提升空间，扣 1 分'}
    ]},
-  {id:'diff', name:'竞品差异化可提取性', weight:12, color:'#ff3b30', bg:'rgba(255,59,48,0.10)', desc:'与 Top 3 竞品的可提取差异',
+  {id:'diff', name:'竞品差异化可提取性', weight:11, color:'#ff3b30', bg:'rgba(255,59,48,0.10)', desc:'与 Top 3 竞品的可提取差异',
    criteria:[
      {name:'存在 ≥3 条独家卖点 (USP)',rule:'独家卖点 = 非竞品 Bullet 共有的能力点',ref:'穿透数据',max:5,score:5},
      {name:'卖点表述含"数据支撑"或"权威认证"',rule:'有可验证背书的卖点更易被 AI 模型识别为差异化',ref:'操作建议',max:4,score:3,deduct:'5 条卖点中 2 条缺数据支撑/认证背书（如"音质出色"无频响数据），可信度偏弱，扣 1 分'},
      {name:'已主动回应竞品 Top 3 差评痛点',rule:'用 Listing 文案预防性回应竞品高频差评，提升预期错配修复率',ref:'Sorftime VOC',max:3,score:3}
    ]},
-  {id:'asset', name:'内容资产成熟度', weight:8, color:'#6c5ce7', bg:'rgba(108,92,231,0.10)', desc:'图片/A+/视频/Q&A 完整度',
+  {id:'asset', name:'内容资产成熟度', weight:7, color:'#6c5ce7', bg:'rgba(108,92,231,0.10)', desc:'图片/A+/视频/Q&A 完整度',
    criteria:[
      {name:'主图 + 6 张副图 (含场景图/对比图/规格图)',rule:'7 张图片为亚马逊上限；副图类型完备 = 高完整度',ref:'官方',max:3,score:2,deduct:'仅 5 张图片，缺"对比图"和"规格图"2 类副图，未填满 7 张上限，扣 1 分'},
      {name:'A+ 内容含 ≥5 个模块 (Banner + 对比表 + 场景)',rule:'A+ 模块数和内容结构影响移动端转化',ref:'官方',max:3,score:2,deduct:'A+ 仅 3 个模块（缺对比表、缺第 2 张场景图），未达 ≥5 个模块要求，扣 1 分'},
      {name:'已上传 ≥1 个产品视频 / Q&A ≥6 条',rule:'视频和 Q&A 是 Rufus 训练高权重信号源',ref:'操作建议',max:2,score:1,deduct:'已有 4 条 Q&A 但无产品视频，视频缺失影响 Rufus 信号源，扣 1 分'}
    ]},
-  {id:'traffic', name:'关键词与流量承接诊断', weight:16, color:'#0aa', bg:'rgba(0,170,170,0.10)', desc:'接入卖家精灵 API，诊断关键词流量承接能力', isNew:true,
+  {id:'traffic', name:'关键词与流量承接诊断', weight:12, color:'#0aa', bg:'rgba(0,170,170,0.10)', desc:'接入卖家精灵 API，诊断关键词流量承接能力', isNew:true,
    criteria:[
      {name:'核心词首页命中 (5分)',rule:'取反查结果中按 searches 降序的 Top10 词，统计自然排名在首页 (rankPosition.page == 1) 的词数：7~10个=5 / 4~6个=3 / 1~3个=1 / 0个=0',ref:'卖家精灵API',max:5,score:3,deduct:'Top10 核心词仅 5 个自然排名在首页，"noise canceling earbuds"(P2-pos.35)、"earbuds for iphone"(无排名) 未进首页'},
      {name:'自然流量健康度 (4分)',rule:'加权平均自然占比 = ∑(naturalRatio × trafficPercentage) / ∑trafficPercentage：≥70%=4 / 50~70%=2 / 30~50%=1 / <30%=0',ref:'卖家精灵API',max:4,score:2,deduct:'加权平均自然占比仅 56%，落在 50~70% 区间，广告流量占比偏高 (约 44%)'},
      {name:'机会词覆盖率 (4分)',rule:'机会词需同时满足 searches≥1000、rankPosition.page≥2 或无自然排名、purchaseRate≥0.015、adRatio<0.3；覆盖率=已出现在文案中的机会词数/总机会词数：≥60%或机会词为0=4 / 40~60%=2 / 20~40%=1 / <20%=0',ref:'卖家精灵API',max:4,score:2,deduct:'共识别 15 个机会词，文案仅覆盖 7 个 (覆盖率 47%)，"earbuds for small ears""gym workout earbuds" 等高价值词未布局'},
-     {name:'流量集中度风险 (3分)',rule:'取 trafficPercentage 最高的单词占比：<20%=3 / 20~35%=2 / 35~50%=1 / >50%=0（占比越高越依赖单一词，风险越大）',ref:'卖家精灵API',max:3,score:2,deduct:'Top1 词 "wireless earbuds" 贡献 69% 流量，落在 >50% 区间，过度依赖单一大词'}
-   ]}
+     {name:'核心词依赖合理性 (3分)',rule:'读取核心词/月搜索量/腰部词与长尾词覆盖情况/Listing 匹配度综合判断——不因核心词占比高本身扣分（通用类目、标准化商品、强品类驱动类目本就依赖核心大词）；仅当依赖不合理、或 Listing 缺少第二关键词承接时扣分：腰部+长尾承接充分=3 / 承接偏弱=2 / 仅核心词单点承接=1 / 完全单一入口=0',ref:'卖家精灵API',max:3,score:2,deduct:'核心词 "wireless earbuds"（月搜 245K）符合该类目搜索习惯，核心依赖本身不算风险；但 Bullet 与 Search Term 对功能词（noise canceling）与场景词（for running）承接不足，缺少第二流量入口，关键词结构偏单一'}
+   ]},
+  {id:'rankcov', name:'自然排名与广告卡位覆盖', weight:9, color:'#5856d6', bg:'rgba(88,86,214,0.10)', desc:'核心词自然位 / 广告位的同屏占位能力', isNew:true,
+   criteria:[
+     {name:'Top10 核心词自然排名进首页 ≥ 5 个',rule:'取 D 卡反查 Top10 核心词，统计自然排名 ≤10（首页）的个数：≥8 个=5 / 5~7 个=3 / 2~4 个=1 / ≤1 个=0',ref:'卖家精灵API',max:5,score:2,deduct:'Top10 核心词中仅 3 个自然排名进首页，"noise canceling earbuds"(自然 14)、"earbuds for iphone"(无排名) 均在首页外，扣 3 分'},
+     {name:'核心词「自然位 + 广告位」双卡位覆盖 ≥ 30%',rule:'同一核心词同时拥有首页自然位与广告位时，点击份额显著高于单卡位；覆盖率 <30% 扣分',ref:'广告数据',max:4,score:1,deduct:'仅 1 个核心词实现双卡位，覆盖率约 10%，多个有自然位的词处于「无广告位」裸奔状态，扣 3 分'},
+     {name:'近 30 天核心词排名无大幅掉档',rule:'核心词自然排名较上期下滑 >10 位视为掉档，反映排名稳定性与竞争压力',ref:'卖家精灵API',max:3,score:3}
+   ]},
+  {id:'trafmix', name:'流量结构与词库分布', weight:6, color:'#ff2d55', bg:'rgba(255,45,85,0.10)', desc:'大词 / 长尾配比与流量集中度风险',
+   criteria:[
+     {name:'大词 : 长尾词流量配比落在 3:7 ~ 5:5',rule:'过度依赖头部大词时，排名波动会直接冲垮整盘流量；长尾承接充分才是健康结构',ref:'行业研究',max:4,score:1,deduct:'头部大词 "wireless earbuds" 独占 69.1% 流量，长尾承接严重不足，结构接近 7:3 与健康区间相反，扣 3 分'},
+     {name:'单一关键词流量占比 ≤ 25%',rule:'集中度风险指标；单词占比越高，排名波动的杀伤越大',ref:'卖家精灵API',max:3,score:0,deduct:'第一大词占比 69.1%，远超 25% 的集中度红线，属于单点依赖，扣 3 分'},
+     {name:'机会词（竞品有 / 本品无）覆盖率 ≥ 40%',rule:'机会词是竞品已吃到而本品尚未覆盖的词，是最确定的增量来源',ref:'竞对分析',max:3,score:1,deduct:'D 卡识别出 15 个机会词，当前仅覆盖少数，增量流量尚未拿到，扣 2 分'}
+   ]},
 ];
 
 const LS_SOURCE_COLOR = {官方:'#007aff',官方论文:'#007aff',行业研究:'#af52de',操作建议:'#ff9500',官方IDQ:'#5ac8fa','穿透数据':'#34c759','卖家精灵API':'#0aa','广告数据':'#ff9500','Sorftime VOC':'#ff3b30','Ozon官方':'#005bff','WB官方':'#cb11ab','竞对分析':'#ff9500','关键词研究':'#af52de'};
