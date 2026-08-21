@@ -6,7 +6,7 @@
 <title>SellerOS</title>
 </head>
 <body>
-<!-- deploy-marker: v9-selfcontained-20260821 -->
+<!-- deploy-marker: v10-selfcontained-20260821 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -7503,6 +7503,8 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
       #page-product_listing.pl-wizmode #pl-root{flex:1;min-height:0;display:flex;flex-direction:column}
       #page-product_listing.pl-wizmode .pl-wrap{flex:1;min-height:0;height:auto}
       #page-product_listing.pl-wizmode .pl-topbar{position:static;flex:none}
+      /* 详情态也走静态：原来是 sticky，页面一滚商品名条就压在状态卡上，看着像错位 */
+      #page-product_listing .pl-topbar{position:static}
       #page-product_listing.pl-wizmode .pl-body3{flex:1;min-height:0;overflow:hidden}
       #page-product_listing.pl-wizmode .pl-stage{overflow-y:auto;min-height:0}
       #page-product_listing.pl-wizmode .pl-vstepper{overflow-y:auto;min-height:0}
@@ -7934,18 +7936,19 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
       #page-product_listing .pl-l2col{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
       @media(max-width:1180px){#page-product_listing .pl-l2col{grid-template-columns:1fr}}
       /* ── 商品链接（成品页）── */
-      #page-product_listing .pl-detail{padding:4px 0 24px}
+      #page-product_listing .pl-detail{padding:16px 0 24px}
       #page-product_listing .pl-dhead{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
       #page-product_listing .pl-dh-ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:23px;color:#fff;flex:none}
       #page-product_listing .pl-dh-k{font-size:11px;font-weight:800;color:var(--accent);margin-bottom:3px}
       #page-product_listing .pl-dh-t{font-size:17px;font-weight:800;color:var(--t0);line-height:1.35;word-break:break-word}
       #page-product_listing .pl-dh-m{font-size:12px;color:var(--t3);margin-top:3px}
-      #page-product_listing .pl-dstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
-      #page-product_listing .pl-dstat{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid #ff9500;border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:4px}
+      #page-product_listing .pl-dstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:12px}
+      #page-product_listing .pl-dstat{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid #ff9500;border-radius:10px;padding:7px 11px;display:flex;align-items:center;gap:8px;line-height:1.3;min-width:0}
       #page-product_listing .pl-dstat.ok{border-left-color:#34c759}
-      #page-product_listing .pl-dstat .k{font-size:11.5px;font-weight:800;color:var(--t3)}
-      #page-product_listing .pl-dstat .v{font-size:13px;font-weight:700;color:var(--t0)}
-      #page-product_listing .pl-dstat .pl-btn{align-self:flex-start;margin-top:2px}
+      #page-product_listing .pl-dstat .k{flex:none;font-size:11.5px;font-weight:700;color:var(--t3)}
+      #page-product_listing .pl-dstat .v{flex:1;min-width:0;font-size:12.5px;font-weight:750;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      #page-product_listing .pl-dstat .go{flex:none;font-size:11px;font-weight:750;color:var(--accent);cursor:pointer;white-space:nowrap}
+      #page-product_listing .pl-dstat .go:hover{text-decoration:underline}
       #page-product_listing .pl-dfield{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border)}
       #page-product_listing .pl-dfield:last-child{border-bottom:none}
       #page-product_listing .pl-dfield .k{font-size:11.5px;font-weight:800;color:var(--t3);flex:none;width:62px;padding-top:2px}
@@ -8312,7 +8315,7 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
       function plBannerHTML(){
         var s=plSRC[plP.source];
         return '<div class="pl-banner"><div class="pl-bn-ico" style="background:'+s.color+'">'+s.ico+'</div><div style="min-width:0"><div class="pl-bn-k"><span class="pl-bn-src">来源 · '+s.name+'</span></div><div class="pl-bn-v">'+plEsc(plP.name)+'</div></div><div style="margin-left:auto;display:flex;gap:8px">'
-          +''
+          +(plS.view==='detail'?'<button class="pl-btn soft sm" onclick="plBackToFlow()">← 回到制作流程</button>':'')
           +'<button class="pl-btn ghost sm" onclick="plToEntry()">＋ 新建商品链接</button></div></div>';
       }
       // 顶部：4 个制作方案 tab（可随时切换来源）+ 当前商品
@@ -9188,22 +9191,18 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
           +l.bullets.map(function(b){return '<li>'+plEsc(b.txt)+'</li>';}).join('')+'</ul></div>'
           +'</div>';
         // 顶部工具条：这是预览不是真链接，得说清楚
-        var bar='<div class="pdp-bar"><div class="pdp-bar-l"><span class="pdp-badge">预览</span>'
-          +'<b>商品链接预览</b><span class="pdp-bar-src">来源 · '+s.name+'</span></div>'
-          +'<div class="pdp-bar-r"><button class="pl-btn ghost sm" onclick="plBackToFlow()">← 回到制作流程</button>'
-          +'<button class="pl-btn ghost sm" onclick="plCopyAll(\'listing\')">复制 Listing</button>'
-          +'<button class="pl-btn ghost sm" onclick="plToast(\'已导出 商品链接.zip（Listing 表格 + 图片 + A+）\')">⬇ 导出全部</button>'
-          +'<button class="pl-btn pri sm" onclick="plToast(\'已推送到「一键上架」，可选店铺提交\')">🚀 推送一键上架</button></div></div>';
+        var bar='';
         // 完成度条：没做的直接给「去补」
+        // 一行一张卡：名称 + 结果 + 未做的给个文字链，不再是两行加一个描边按钮
         function stat(name,ok,txt,step){
-          return '<div class="pl-dstat '+(ok?'ok':'')+'"><div class="k">'+name+'</div><div class="v">'+txt+'</div>'
-            +(ok?'':'<button class="pl-btn ghost sm" onclick="plGo('+step+');plBackToFlow()">去制作 →</button>')+'</div>';
+          return '<div class="pl-dstat '+(ok?'ok':'')+'"><span class="k">'+name+'</span><span class="v">'+txt+'</span>'
+            +(ok?'':'<a class="go" onclick="plGo('+step+');plBackToFlow()">去制作 →</a>')+'</div>';
         }
         var stats='<div class="pl-dstats">'
-          +stat('Listing','1','标题 / '+l.bullets.length+' 点 / 描述 / ST · 综合得分 '+calcTotal(plScoreModel()),2)
-          +stat('图片',imgDone>0,imgDone>0?(imgDone+' / '+imgs.length+' 张已出'):'未做（可跳过）',3)
-          +stat('A+',aplusDone,aplusDone?'6 模块已生成':'未做（可跳过）',3)
-          +stat('推广 SOP',sopDone,sopDone?'已生成 13 周计划':'未做（可跳过）',4)
+          +stat('Listing','1','得分 '+calcTotal(plScoreModel()),2)
+          +stat('图片',imgDone>0,imgDone>0?(imgDone+'/'+imgs.length+' 张'):'未做',3)
+          +stat('A+',aplusDone,aplusDone?'6 模块':'未做',3)
+          +stat('推广 SOP',sopDone,sopDone?'13 周计划':'未做',4)
           +'</div>';
         var h='<div class="pl-detail pl-fade">'+bar+stats
           +'<div class="pdp"><div class="pdp-crumb">'+plEsc(crumb)+'</div>'
@@ -9218,7 +9217,11 @@ https://www.amazon.com/dp/B0BG3CXY99</textarea>
         h+='<div class="pdp-sec"><h3>Backend Search Terms</h3><div class="kw-tags">'
           +(plKwUsed().length?plKwUsed().map(function(k){return '<span class="kw-tag">'+plEsc(k.w)+'</span>';}).join(''):'<span class="kw-tag">—</span>')
           +'</div><div class="pdp-note">买家看不到，仅后台检索用 · '+l.st.length+' / 249 字节</div></div>';
-        h+='</div><div class="pl-dfoot"><button class="pl-btn ghost" onclick="plToEntry()">＋ 再做一条链接</button></div>';
+        // 原来那条预览工具条删了，动作挪到页脚，返回入口放回顶部条
+        h+='</div><div class="pl-dfoot"><button class="pl-btn ghost" onclick="plToEntry()">＋ 再做一条链接</button><span style="flex:1"></span>'
+          +'<button class="pl-btn ghost" onclick="plCopyAll(\'listing\')">复制 Listing</button>'
+          +'<button class="pl-btn ghost" onclick="plToast(\'已导出 商品链接.zip（Listing 表格 + 图片 + A+）\')">⬇ 导出全部</button>'
+          +'<button class="pl-btn pri" onclick="plToast(\'已推送到「一键上架」，可选店铺提交\')">🚀 推送一键上架</button></div>';
         return h+'</div>';
       }
       // 把 plP 的数据折成主应用四维模型的 13 条细则得分，喂给 makeLsModel / buildListingScoreHTML
